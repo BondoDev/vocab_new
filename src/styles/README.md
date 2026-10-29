@@ -73,8 +73,7 @@ This order is deliberate and should not be casually changed.
 Current owner-local examples:
 
 - `src/app/components/layout/styles/header.scss` — owned by `Header.tsx`.
-- `src/app/pages/about-help.scss` — owned by `About.tsx` (name kept from
-  when Help shared it).
+- `src/app/pages/about/about-page.scss` — owned by `about/About.tsx`.
 - `src/app/pages/help/help-center.scss` — owned by `help/Help.tsx`.
 - `src/app/pages/home/new-home-page.scss` — owned by `NewHomePage.tsx`.
   The retired homepage's `language-page.scss` has been removed.

@@ -845,34 +845,84 @@
     }
   },
   "aboutPage": {
-    "back": "Back",
-    "p1": "FLUENTSTELLAR is designed for active vocabulary practice, not passive browsing.",
-    "p2": "You do not scroll through word lists or memorize definitions. You practice words by using them, through carefully designed exercises that train recall, spelling, and recognition.",
-    "p3": "There is no registration and no login. You choose your native language, the language you want to practice, and your CEFR level. If you do not know your level, a short test helps determine it.",
-    "filtersTitle": "You can optionally filter:",
-    "filters": {
-      "topics": "practice topics",
-      "wordTypes": "word types",
-      "exerciseTypes": "exercise types"
+    "hero": {
+      "eyebrow": "ABOUT FLUENTSTELLAR",
+      "title": "Build a vocabulary you can actually use",
+      "description": "FluentStellar is a multilingual vocabulary-learning platform designed to help you do more than recognize words. Through interactive exercises, guided learning, and regular review, you can develop your vocabulary, strengthen your memory, and make steady progress at your own pace."
     },
-    "p4": "Then you start a practice session.",
-    "p5": "All learning happens inside the session. Words are introduced, tested, repeated, and reinforced through different exercises, not shown as lists.",
-    "howTitle": "How practice works",
-    "howSubtitle": "The system uses multiple exercise types, such as:",
-    "howList": {
-      "wordTyping": "full word typing",
-      "partialCompletion": "partial word completion",
-      "wordAssembling": "word assembling",
-      "wordConnection": "word connection",
-      "listening": "listening (when enabled)"
+    "approach": {
+      "title": "Learning words is only the beginning",
+      "intro": "Recognizing a word in a list is different from remembering it when you need it. That's why FluentStellar focuses on active participation instead of passive memorization. Our approach brings together three essential parts of vocabulary learning.",
+      "principles": {
+        "activeRecall": {
+          "title": "Remember words actively",
+          "body": "Rather than simply reading translations or selecting familiar answers, you practice recalling words from memory. This encourages you to think, remember their spelling, and gradually become more confident with vocabulary you've encountered."
+        },
+        "repetition": {
+          "title": "Strengthen what you've learned",
+          "body": "Learning a word once doesn't mean you'll remember it forever. Regular reviews bring previously studied vocabulary back into practice, while spaced repetition helps you revisit words over time and reinforce your knowledge."
+        },
+        "meaningfulUse": {
+          "title": "Practice in different ways",
+          "body": "Different exercises challenge different aspects of your vocabulary knowledge. Writing complete words, filling in missing letters, assembling word fragments, matching meanings, and listening to pronunciation keep practice varied and engaging."
+        }
+      }
     },
-    "p6": "Some exercises train active recall, others provide light reinforcement. Words are counted only when you correctly recall them, revealing an answer does not count as learning.",
-    "p7": "This approach focuses on real vocabulary acquisition, not shortcuts.",
-    "accountTitle": "Why no account?",
-    "accountSubtitle": "FLUENTSTELLAR is intentionally session-based.",
-    "p8": "You can start practicing immediately, without creating an account or sharing personal data. Nothing is stored after you leave the session.",
-    "goalTitle": "The goal is simple:",
-    "goalText": "practice words effectively, with as little friction as possible."
+    "paths": {
+      "title": "Two ways to build your vocabulary",
+      "intro": "Whether you want a quick practice session or a structured learning routine, FluentStellar lets you choose an approach that fits your goals. You can start immediately without registering or create a free account for personalized learning.",
+      "customPractice": {
+        "badge": "No account required",
+        "title": "Custom Practice",
+        "description": "Take control of your vocabulary practice. Choose the languages you want to work with, focus on specific vocabulary, and select the exercises you enjoy most. There's no fixed session length, so you can practice for a few minutes or continue for as long as you like.",
+        "highlights": {
+          "chooseLanguages": "Choose your native language and the language you want to practice",
+          "chooseFilters": "Focus on vocabulary by CEFR level, topic, or word type",
+          "flexibleSessions": "Combine exercises and finish whenever you want"
+        }
+      },
+      "personalizedLearning": {
+        "badge": "Free account",
+        "title": "Personalized Learning",
+        "description": "Build your vocabulary through a guided learning system that introduces new words and helps you retain them. Study vocabulary step by step, review previously learned words using spaced repetition, and follow your progress as your personal vocabulary grows.",
+        "highlights": {
+          "guidedNewWords": "Discover new words with definitions, examples, and guided exercises",
+          "spacedReview": "Revisit studied vocabulary through spaced repetition",
+          "progressTracking": "Set daily goals and track your vocabulary and learning progress"
+        }
+      }
+    },
+    "platform": {
+      "title": "Built around the way you learn",
+      "intro": "FluentStellar combines flexible practice with useful learning tools, so you can explore new vocabulary, organize the words that matter to you, and keep improving over time.",
+      "items": {
+        "languagesLevels": {
+          "title": "Seven languages, six CEFR levels",
+          "body": "Explore vocabulary in English, Spanish, French, German, Italian, Portuguese, and Russian, with words organized across CEFR levels A1 to C2. Find vocabulary suited to your current knowledge or challenge yourself with more advanced words."
+        },
+        "exercisesPronunciation": {
+          "title": "Interactive exercises and pronunciation",
+          "body": "Move beyond reading word lists with exercises that develop spelling, recall, recognition, and listening. Listen to word pronunciation and practice vocabulary through several different types of challenges."
+        },
+        "listsFavorites": {
+          "title": "Personal word lists and favorites",
+          "body": "Collect useful or difficult words in your own vocabulary lists, mark important words as favorites, and create focused practice sessions using the vocabulary you've selected."
+        },
+        "progressReviews": {
+          "title": "Progress that builds over time",
+          "body": "Keep track of studied words, review activity, daily learning goals, and vocabulary growth. Return to previously learned words, recognize your milestones, and see how your efforts add up."
+        }
+      }
+    },
+    "cta": {
+      "title": "Your next word starts here",
+      "description": "You don't need to wait for the perfect learning plan. Start practicing vocabulary right away without an account, or create a free account to build a personalized learning routine and track your progress."
+    },
+    "actions": {
+      "startPractice": "Start Practicing",
+      "createAccount": "Create a Free Account",
+      "openLearning": "Open Personalized Learning"
+    }
   },
   "helpPage": {
     "back": "Back",

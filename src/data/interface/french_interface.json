@@ -845,34 +845,84 @@
     }
   },
   "aboutPage": {
-    "back": "Retour",
-    "p1": "FLUENTSTELLAR est concu pour la pratique active du vocabulaire, pas pour une navigation passive.",
-    "p2": "Vous ne parcourez pas de listes de mots et vous ne memorisez pas des definitions. Vous pratiquez les mots en les utilisant, avec des exercices soigneusement concus qui entrainent le rappel, l'orthographe et la reconnaissance.",
-    "p3": "Il n'y a ni inscription ni connexion. Vous choisissez votre langue maternelle, la langue que vous voulez pratiquer et votre niveau CECR. Si vous ne connaissez pas votre niveau, un test court vous aide a le determiner.",
-    "filtersTitle": "Vous pouvez filtrer en option :",
-    "filters": {
-      "topics": "themes de pratique",
-      "wordTypes": "types de mots",
-      "exerciseTypes": "types d'exercices"
+    "hero": {
+      "eyebrow": "À PROPOS DE FLUENTSTELLAR",
+      "title": "Développez un vocabulaire que vous saurez vraiment utiliser",
+      "description": "FluentStellar est une plateforme multilingue d'apprentissage du vocabulaire conçue pour vous aider à aller au-delà de la simple reconnaissance des mots. Grâce à des exercices interactifs, un apprentissage guidé et des révisions régulières, vous pouvez enrichir votre vocabulaire, renforcer votre mémoire et progresser régulièrement à votre propre rythme."
     },
-    "p4": "Ensuite, vous commencez une session de pratique.",
-    "p5": "Tout l'apprentissage se fait dans la session. Les mots sont introduits, testes, repetes et renforces via differents exercices, et non presentes sous forme de listes.",
-    "howTitle": "Comment fonctionne la pratique",
-    "howSubtitle": "Le systeme utilise plusieurs types d'exercices, par exemple :",
-    "howList": {
-      "wordTyping": "saisie du mot complet",
-      "partialCompletion": "completion partielle du mot",
-      "wordAssembling": "assemblage du mot",
-      "wordConnection": "association de mots",
-      "listening": "ecoute (si activee)"
+    "approach": {
+      "title": "Apprendre des mots n'est que le début",
+      "intro": "Reconnaître un mot dans une liste est une chose, s'en souvenir au moment où l'on en a besoin en est une autre. C'est pourquoi FluentStellar privilégie la participation active plutôt que la mémorisation passive. Notre approche réunit trois éléments essentiels de l'apprentissage du vocabulaire.",
+      "principles": {
+        "activeRecall": {
+          "title": "Retrouvez activement les mots en mémoire",
+          "body": "Au lieu de simplement lire des traductions ou de sélectionner des réponses familières, vous vous entraînez à retrouver les mots dans votre mémoire. Cela vous encourage à réfléchir, à vous souvenir de leur orthographe et à gagner progressivement en assurance avec le vocabulaire que vous avez déjà rencontré."
+        },
+        "repetition": {
+          "title": "Consolidez ce que vous avez appris",
+          "body": "Apprendre un mot une seule fois ne signifie pas que vous vous en souviendrez toujours. Les révisions régulières vous permettent de retravailler le vocabulaire déjà étudié, tandis que la répétition espacée vous aide à retrouver les mots au fil du temps et à consolider vos connaissances."
+        },
+        "meaningfulUse": {
+          "title": "Pratiquez de différentes manières",
+          "body": "Chaque type d'exercice sollicite des aspects différents de votre connaissance du vocabulaire. Saisir des mots entiers, compléter des lettres manquantes, assembler des fragments, associer des mots à leurs significations et écouter leur prononciation rendent la pratique variée et stimulante."
+        }
+      }
     },
-    "p6": "Certains exercices entrainent le rappel actif, d'autres apportent un renforcement leger. Les mots ne sont comptes que si vous les rappelez correctement ; afficher la reponse ne compte pas comme apprentissage.",
-    "p7": "Cette approche vise une acquisition reelle du vocabulaire, pas des raccourcis.",
-    "accountTitle": "Pourquoi pas de compte ?",
-    "accountSubtitle": "FLUENTSTELLAR est volontairement base sur des sessions.",
-    "p8": "Vous pouvez commencer immediatement, sans creer de compte ni partager de donnees personnelles. Rien n'est stocke lorsque vous quittez la session.",
-    "goalTitle": "L'objectif est simple :",
-    "goalText": "pratiquer les mots efficacement, avec le moins de friction possible."
+    "paths": {
+      "title": "Deux façons d'enrichir votre vocabulaire",
+      "intro": "Que vous souhaitiez faire une courte séance de pratique ou suivre une routine d'apprentissage structurée, FluentStellar vous permet de choisir la méthode qui correspond le mieux à vos objectifs. Vous pouvez commencer immédiatement sans inscription ou créer un compte gratuit pour accéder à l'apprentissage personnalisé.",
+      "customPractice": {
+        "badge": "Aucun compte nécessaire",
+        "title": "Pratique personnalisée",
+        "description": "Prenez le contrôle de vos séances de vocabulaire. Choisissez les langues que vous souhaitez travailler, concentrez-vous sur le vocabulaire qui vous intéresse et sélectionnez vos exercices préférés. Aucune durée de séance n'est imposée : vous pouvez pratiquer pendant quelques minutes ou continuer aussi longtemps que vous le souhaitez.",
+        "highlights": {
+          "chooseLanguages": "Choisissez votre langue maternelle et la langue que vous souhaitez pratiquer",
+          "chooseFilters": "Sélectionnez le vocabulaire par niveau du CECR, thème ou catégorie grammaticale",
+          "flexibleSessions": "Combinez les exercices et terminez votre séance quand vous le souhaitez"
+        }
+      },
+      "personalizedLearning": {
+        "badge": "Compte gratuit",
+        "title": "Apprentissage personnalisé",
+        "description": "Enrichissez votre vocabulaire grâce à un système d'apprentissage guidé qui introduit de nouveaux mots et vous aide à les retenir. Étudiez progressivement, révisez les mots déjà appris à l'aide de la répétition espacée et suivez vos progrès à mesure que votre vocabulaire personnel s'enrichit.",
+        "highlights": {
+          "guidedNewWords": "Découvrez de nouveaux mots grâce à des définitions, des exemples et des exercices guidés",
+          "spacedReview": "Retravaillez le vocabulaire étudié grâce à la répétition espacée",
+          "progressTracking": "Fixez des objectifs quotidiens et suivez votre vocabulaire et vos progrès"
+        }
+      }
+    },
+    "platform": {
+      "title": "Conçu pour s'adapter à votre façon d'apprendre",
+      "intro": "FluentStellar associe une pratique flexible à des outils d'apprentissage utiles pour vous permettre de découvrir de nouveaux mots, d'organiser le vocabulaire qui compte pour vous et de continuer à progresser au fil du temps.",
+      "items": {
+        "languagesLevels": {
+          "title": "Sept langues et six niveaux du CECR",
+          "body": "Explorez le vocabulaire en anglais, espagnol, français, allemand, italien, portugais et russe, organisé selon les niveaux du CECR, de A1 à C2. Trouvez des mots adaptés à votre niveau actuel ou relevez de nouveaux défis avec du vocabulaire plus avancé."
+        },
+        "exercisesPronunciation": {
+          "title": "Exercices interactifs et prononciation",
+          "body": "Allez au-delà de la simple lecture de listes de mots grâce à des exercices qui développent l'orthographe, la mémorisation, la reconnaissance et la compréhension orale. Écoutez la prononciation des mots et entraînez-vous à travers différents types d'activités."
+        },
+        "listsFavorites": {
+          "title": "Listes personnelles et mots favoris",
+          "body": "Rassemblez les mots utiles ou difficiles dans vos propres listes de vocabulaire, marquez les mots importants comme favoris et créez des séances de pratique ciblées à partir du vocabulaire que vous avez sélectionné."
+        },
+        "progressReviews": {
+          "title": "Des progrès qui se construisent avec le temps",
+          "body": "Suivez les mots étudiés, vos activités de révision, vos objectifs quotidiens et l'évolution de votre vocabulaire. Revenez sur les mots déjà appris, prenez conscience des étapes franchies et observez les résultats de vos efforts au fil du temps."
+        }
+      }
+    },
+    "cta": {
+      "title": "Votre prochain mot commence ici",
+      "description": "Vous n'avez pas besoin d'attendre d'avoir le programme d'apprentissage parfait. Commencez dès maintenant à pratiquer le vocabulaire sans créer de compte, ou inscrivez-vous gratuitement pour suivre un parcours d'apprentissage personnalisé et mesurer vos progrès."
+    },
+    "actions": {
+      "startPractice": "Commencer à pratiquer",
+      "createAccount": "Créer un compte gratuit",
+      "openLearning": "Ouvrir l'apprentissage personnalisé"
+    }
   },
   "helpPage": {
     "back": "Retour",

@@ -845,34 +845,84 @@
     }
   },
   "aboutPage": {
-    "back": "Indietro",
-    "p1": "FLUENTSTELLAR è pensato per la pratica attiva del vocabolario, non per la consultazione passiva.",
-    "p2": "Non scorri liste di parole e non memorizzi definizioni. Pratichi le parole usandole, con esercizi progettati con cura che allenano richiamo, ortografia e riconoscimento.",
-    "p3": "Non ci sono registrazione né login. Scegli la tua lingua madre, la lingua che vuoi praticare e il tuo livello CEFR. Se non conosci il tuo livello, un test breve ti aiuta a determinarlo.",
-    "filtersTitle": "Puoi filtrare facoltativamente:",
-    "filters": {
-      "topics": "argomenti di pratica",
-      "wordTypes": "tipi di parola",
-      "exerciseTypes": "tipi di esercizio"
+    "hero": {
+      "eyebrow": "SCOPRI FLUENTSTELLAR",
+      "title": "Costruisci un vocabolario che puoi usare davvero",
+      "description": "FluentStellar è una piattaforma multilingue per l'apprendimento del vocabolario, progettata per aiutarti ad andare oltre il semplice riconoscimento delle parole. Attraverso esercizi interattivi, un percorso di apprendimento guidato e ripassi regolari, puoi ampliare il tuo vocabolario, rafforzare la memoria e fare progressi costanti seguendo il tuo ritmo."
     },
-    "p4": "Poi avvii una sessione di pratica.",
-    "p5": "Tutto l'apprendimento avviene nella sessione. Le parole vengono introdotte, testate, ripetute e rinforzate con esercizi diversi, non mostrate come liste.",
-    "howTitle": "Come funziona la pratica",
-    "howSubtitle": "Il sistema usa vari tipi di esercizi, ad esempio:",
-    "howList": {
-      "wordTyping": "digitazione parola completa",
-      "partialCompletion": "completamento parziale",
-      "wordAssembling": "assemblaggio parola",
-      "wordConnection": "collegamento parole",
-      "listening": "ascolto (quando attivo)"
+    "approach": {
+      "title": "Imparare nuove parole è solo l'inizio",
+      "intro": "Riconoscere una parola in un elenco è diverso dal ricordarla quando ne hai bisogno. Per questo FluentStellar punta sull'apprendimento attivo anziché sulla memorizzazione passiva. Il nostro approccio combina tre elementi fondamentali per sviluppare il vocabolario.",
+      "principles": {
+        "activeRecall": {
+          "title": "Ricorda attivamente le parole",
+          "body": "Invece di limitarti a leggere traduzioni o selezionare risposte familiari, ti eserciti a richiamare le parole dalla memoria. Questo ti incoraggia a riflettere, a ricordarne l'ortografia e ad acquisire gradualmente maggiore sicurezza con il vocabolario che hai già incontrato."
+        },
+        "repetition": {
+          "title": "Consolida ciò che hai imparato",
+          "body": "Imparare una parola una sola volta non significa ricordarla per sempre. I ripassi regolari ti permettono di esercitarti nuovamente con il vocabolario già studiato, mentre la ripetizione dilazionata ti aiuta a ritrovare le parole a intervalli nel tempo e a consolidare le tue conoscenze."
+        },
+        "meaningfulUse": {
+          "title": "Esercitati in modi diversi",
+          "body": "Ogni tipo di esercizio allena aspetti differenti della tua conoscenza del vocabolario. Scrivere parole complete, inserire le lettere mancanti, ricomporre parole a partire da frammenti, abbinare le parole ai loro significati e ascoltarne la pronuncia rendono la pratica varia e coinvolgente."
+        }
+      }
     },
-    "p6": "Alcuni esercizi allenano il richiamo attivo, altri danno un rinforzo leggero. Le parole contano solo quando le ricordi correttamente; mostrare una risposta non conta come apprendimento.",
-    "p7": "Questo approccio punta all'acquisizione reale del vocabolario, non alle scorciatoie.",
-    "accountTitle": "Perché senza account?",
-    "accountSubtitle": "FLUENTSTELLAR è intenzionalmente basato su sessioni.",
-    "p8": "Puoi iniziare subito a praticare, senza creare un account o condividere dati personali. Nulla viene salvato quando lasci la sessione.",
-    "goalTitle": "L obiettivo e semplice:",
-    "goalText": "praticare le parole in modo efficace, con il minimo attrito possibile."
+    "paths": {
+      "title": "Due modi per ampliare il tuo vocabolario",
+      "intro": "Che tu voglia svolgere una breve sessione di pratica o seguire una routine di apprendimento strutturata, FluentStellar ti permette di scegliere il metodo più adatto ai tuoi obiettivi. Puoi iniziare subito senza registrarti oppure creare un account gratuito per accedere all'apprendimento personalizzato.",
+      "customPractice": {
+        "badge": "Non serve un account",
+        "title": "Pratica personalizzata",
+        "description": "Organizza le tue sessioni di vocabolario in completa autonomia. Scegli le lingue con cui vuoi esercitarti, concentrati sulle parole che ti interessano e seleziona gli esercizi che preferisci. Non esiste una durata prestabilita: puoi dedicare alla pratica pochi minuti oppure continuare per tutto il tempo che desideri.",
+        "highlights": {
+          "chooseLanguages": "Scegli la tua lingua madre e la lingua che vuoi esercitare",
+          "chooseFilters": "Seleziona il vocabolario per livello QCER, argomento o categoria grammaticale",
+          "flexibleSessions": "Combina diversi esercizi e termina la sessione quando vuoi"
+        }
+      },
+      "personalizedLearning": {
+        "badge": "Account gratuito",
+        "title": "Apprendimento personalizzato",
+        "description": "Amplia il tuo vocabolario attraverso un sistema di apprendimento guidato che introduce nuove parole e ti aiuta a ricordarle nel tempo. Studia passo dopo passo, ripassa le parole già apprese attraverso la ripetizione dilazionata e segui i tuoi progressi mentre il tuo vocabolario personale continua a crescere.",
+        "highlights": {
+          "guidedNewWords": "Scopri nuove parole con definizioni, esempi ed esercizi guidati",
+          "spacedReview": "Ripassa il vocabolario studiato attraverso la ripetizione dilazionata",
+          "progressTracking": "Imposta obiettivi giornalieri e monitora il tuo vocabolario e i tuoi progressi"
+        }
+      }
+    },
+    "platform": {
+      "title": "Progettato per adattarsi al tuo modo di imparare",
+      "intro": "FluentStellar combina la libertà di esercitarti come preferisci con strumenti di apprendimento utili, così puoi scoprire nuove parole, organizzare il vocabolario più importante per te e continuare a migliorare nel tempo.",
+      "items": {
+        "languagesLevels": {
+          "title": "Sette lingue e sei livelli QCER",
+          "body": "Esplora il vocabolario in inglese, spagnolo, francese, tedesco, italiano, portoghese e russo, organizzato secondo i livelli del QCER, da A1 a C2. Trova parole adatte alle tue conoscenze attuali oppure mettiti alla prova con un vocabolario più avanzato."
+        },
+        "exercisesPronunciation": {
+          "title": "Esercizi interattivi e pronuncia",
+          "body": "Vai oltre la semplice lettura di elenchi di parole con esercizi che allenano l'ortografia, il richiamo dalla memoria, il riconoscimento e la comprensione orale. Ascolta la pronuncia delle parole e consolida il vocabolario attraverso diversi tipi di attività."
+        },
+        "listsFavorites": {
+          "title": "Liste personali e parole preferite",
+          "body": "Raccogli le parole utili o difficili nelle tue liste di vocabolario, contrassegna quelle più importanti come preferite e crea sessioni di pratica mirate utilizzando le parole che hai selezionato."
+        },
+        "progressReviews": {
+          "title": "Progressi che crescono nel tempo",
+          "body": "Tieni traccia delle parole studiate, delle attività di ripasso, degli obiettivi giornalieri e della crescita del tuo vocabolario. Torna sulle parole già apprese, riconosci i traguardi raggiunti e osserva come i tuoi sforzi producono risultati nel tempo."
+        }
+      }
+    },
+    "cta": {
+      "title": "La tua prossima parola ti aspetta",
+      "description": "Non devi aspettare di avere il piano di apprendimento perfetto. Inizia subito a esercitarti con il vocabolario senza creare un account, oppure registrati gratuitamente per seguire un percorso di apprendimento personalizzato e monitorare i tuoi progressi."
+    },
+    "actions": {
+      "startPractice": "Inizia a esercitarti",
+      "createAccount": "Crea un account gratuito",
+      "openLearning": "Apri Apprendimento personalizzato"
+    }
   },
   "helpPage": {
     "back": "Indietro",

@@ -1,0 +1,635 @@
+// About page (/about). Owned by about/About.tsx.
+//
+// An editorial page built for long-form copy, deliberately unlike the Help
+// Center (no sidebar or sticky navigation). Each <section> paints a
+// full-width background band (a normal block child of the full-width route
+// column, so no 100vw tricks); its content sits in the one shared, centered
+// `__container`. From 768px the hero, section headers, and CTA text are
+// centered columns over content (rows, panels, grid) that spans the full
+// container, so the page is balanced on both sides.
+//
+// Paragraphs are capped at `--ab-measure` (~70 characters) for comfortable
+// reading; nothing has a fixed height, so longer translations simply grow.
+// Heading fonts come from theme.css (`.about-page h1–h4`).
+
+.about-page {
+  --ab-ink: #261943;
+  --ab-text: #29334a;
+  --ab-muted: #545b6d;
+  --ab-violet: #604095;
+  --ab-rule: #e6e2ee;
+  --ab-lavender: #f3effa;
+  --ab-surface: #fff;
+
+  // Accents. Each has a fill (rules, markers, tints) and a darker text shade
+  // that clears WCAG AA on white for numerals and badges.
+  --ab-indigo: #4f46e5;
+  --ab-indigo-text: #4338ca;
+  --ab-indigo-tint: #eef0fe;
+  --ab-amber: #f59e0b;
+  --ab-amber-text: #b45309;
+  --ab-amber-tint: #fef3e2;
+  --ab-teal: #0d9488;
+  --ab-teal-text: #0f766e;
+  --ab-teal-tint: #e3f6f3;
+  --ab-green: #16a34a;
+  --ab-green-text: #15803d;
+  --ab-green-tint: #e7f6ec;
+
+  // Darker than the theme primary so white button text clears WCAG AA.
+  --ab-action: var(--ab-indigo);
+  --ab-action-hover: var(--ab-indigo-text);
+  --ab-focus: #7850ad;
+
+  --ab-measure: 44rem;
+  --ab-body-size: 1.0625rem;
+  --ab-body-leading: 1.7;
+  // Spacing scale used throughout: 0.5 / 0.75 / 1 / 1.5 / 2 / 2.5 / 3rem,
+  // plus the fluid section padding below.
+  --ab-section-space: clamp(3.25rem, 2.5rem + 3vw, 5.5rem);
+
+  flex: 1;
+  min-width: 0;
+  background: var(--ab-surface);
+  color: var(--ab-text);
+
+  // Headings wrap only at word boundaries. `break-word` splits a word only
+  // when it alone is wider than the line (very long German/Russian
+  // compounds on 320px phones), and never inserts a hyphen.
+  h1,
+  h2,
+  h3 {
+    color: var(--ab-ink);
+    hyphens: manual;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+  }
+
+  &__container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+
+    @media (min-width: 640px) {
+      padding-inline: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      padding-inline: 2rem;
+    }
+  }
+
+  // ---- Hero --------------------------------------------------------------
+
+  &__hero {
+    // The fixed header's in-flow spacer (header.scss) is taller than the
+    // visible bar on desktop, which left a strip of the route background
+    // between the navbar and this band. Pulling the band up by the spacer
+    // height (and padding it back down) paints the hero behind the fixed
+    // header, so the lavender meets the navbar with no seam. Content
+    // position is unchanged.
+    --ab-header-overlap: var(--site-header-height, 4.875rem);
+
+    margin-top: calc(-1 * var(--ab-header-overlap));
+    padding-top: calc(var(--ab-header-overlap) + clamp(2.75rem, 2rem + 3vw, 4.75rem));
+    padding-bottom: clamp(2.75rem, 2rem + 3vw, 4.75rem);
+    background:
+      radial-gradient(ellipse 45% 90% at 100% 0%, rgba(245, 158, 11, 0.11), transparent 70%),
+      radial-gradient(ellipse 60% 120% at 0% 100%, rgba(99, 102, 241, 0.1), transparent 70%),
+      var(--ab-lavender);
+    border-bottom: 1px solid var(--ab-rule);
+
+    // From tablet width the intro text is a centered column, matching the
+    // centered section headers and CTA; phones keep left-aligned text.
+    @media (min-width: 768px) {
+      text-align: center;
+
+      h1,
+      .about-page__lead {
+        margin-inline: auto;
+      }
+
+      .about-page__eyebrow {
+        justify-content: center;
+      }
+    }
+
+    h1 {
+      max-width: 18em;
+      font-size: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ab-violet);
+
+    // Small two-tone marker; purely decorative.
+    &::before {
+      content: "";
+      flex: none;
+      width: 1.75rem;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--ab-indigo), var(--ab-amber));
+    }
+  }
+
+  &__lead {
+    max-width: var(--ab-measure);
+    margin-top: 1.5rem;
+    font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem);
+    line-height: 1.7;
+    color: var(--ab-muted);
+  }
+
+  // ---- Shared section rhythm ---------------------------------------------
+
+  &__section {
+    padding-block: var(--ab-section-space);
+
+    &--tinted {
+      background: var(--ab-lavender);
+      border-block: 1px solid var(--ab-rule);
+    }
+  }
+
+  &__section-header {
+    max-width: var(--ab-measure);
+    margin-bottom: clamp(2rem, 1.6rem + 1.5vw, 3rem);
+
+    // Centered over the full-width rows, panels, and grid below it.
+    @media (min-width: 768px) {
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.375rem);
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: var(--ab-body-size);
+      line-height: var(--ab-body-leading);
+      color: var(--ab-muted);
+    }
+  }
+
+  // ---- Our approach: three editorial rows --------------------------------
+  // Phones/tablets: marker beside the title, body below. From 1024px:
+  // marker | title | body, so a long body reads at full measure while the
+  // title stays a scannable column.
+
+  &__principles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ab-rule);
+
+    li {
+      display: grid;
+      grid-template-columns: 2.75rem minmax(0, 1fr);
+      grid-template-areas:
+        "marker title"
+        ". body";
+      column-gap: 1rem;
+      row-gap: 0.625rem;
+      align-items: center;
+      padding-block: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+      border-bottom: 1px solid var(--ab-rule);
+
+      @media (max-width: 479.98px) {
+        grid-template-areas:
+          "marker title"
+          "body body";
+      }
+
+      @media (min-width: 1024px) {
+        grid-template-columns: 2.75rem minmax(0, 17rem) minmax(0, 1fr);
+        grid-template-areas: "marker title body";
+        column-gap: 2rem;
+        align-items: start;
+      }
+    }
+
+    // Accent order follows ABOUT_PRINCIPLES in aboutPageStructure.ts.
+    li:nth-child(1) { --ab-item-text: var(--ab-indigo-text); --ab-item-tint: var(--ab-indigo-tint); }
+    li:nth-child(2) { --ab-item-text: var(--ab-amber-text); --ab-item-tint: var(--ab-amber-tint); }
+    li:nth-child(3) { --ab-item-text: var(--ab-teal-text); --ab-item-tint: var(--ab-teal-tint); }
+
+    h3 {
+      grid-area: title;
+      font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+      font-weight: 600;
+      line-height: 1.3;
+
+      @media (min-width: 1024px) {
+        // Optically centers the title against the 2.75rem marker.
+        padding-top: 0.5rem;
+      }
+    }
+
+    p {
+      grid-area: body;
+      max-width: var(--ab-measure);
+      font-size: var(--ab-body-size);
+      line-height: var(--ab-body-leading);
+      color: var(--ab-muted);
+
+      @media (min-width: 1024px) {
+        padding-top: 0.375rem;
+      }
+    }
+  }
+
+  &__ordinal {
+    grid-area: marker;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: var(--ab-item-tint);
+    font-family: var(--font-family-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ab-item-text);
+  }
+
+  // ---- Two ways to build your vocabulary ---------------------------------
+  // Side by side only from 1024px, where each panel still gets ~28rem; the
+  // descriptions are long enough that two 22rem columns at tablet width
+  // would read as a squeezed list.
+
+  &__paths {
+    display: grid;
+    gap: 1.25rem;
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  &__path {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    border-radius: 16px;
+    overflow: hidden;
+
+    h3 {
+      margin-top: 1rem;
+      font-size: clamp(1.5rem, 1.35rem + 0.6vw, 1.875rem);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    &--free {
+      background:
+        radial-gradient(ellipse 70% 45% at 100% 0%, rgba(13, 148, 136, 0.09), transparent 70%),
+        var(--ab-surface);
+      border: 1px solid #d3ebe7;
+      box-shadow: 0 1px 2px rgba(38, 25, 67, 0.04), 0 10px 28px -14px rgba(15, 118, 110, 0.22);
+
+      // Top accent strip gives the light panel the same weight as the dark one.
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 4px;
+        background: linear-gradient(90deg, var(--ab-teal), #2dd4bf);
+      }
+
+      .about-page__badge {
+        background: var(--ab-teal-tint);
+        color: var(--ab-teal-text);
+      }
+
+      .about-page__highlights {
+        border-top-color: #dcefeb;
+
+        svg {
+          color: var(--ab-teal-text);
+          background: var(--ab-teal-tint);
+        }
+      }
+    }
+
+    &--guided {
+      background:
+        radial-gradient(ellipse 70% 45% at 100% 0%, rgba(245, 158, 11, 0.16), transparent 70%),
+        linear-gradient(150deg, #2f2755 0%, #45326f 100%);
+      color: #f1edf9;
+      box-shadow: 0 10px 28px -14px rgba(38, 25, 67, 0.5);
+
+      h3 {
+        color: #fff;
+      }
+
+      .about-page__badge {
+        background: rgba(252, 211, 77, 0.16);
+        color: #fde68a;
+      }
+
+      .about-page__path-description {
+        color: #ddd3f0;
+      }
+
+      .about-page__action:focus-visible {
+        outline-color: #fff;
+      }
+
+      .about-page__highlights {
+        border-top-color: rgba(255, 255, 255, 0.14);
+
+        svg {
+          color: #fcd34d;
+          background: rgba(252, 211, 77, 0.14);
+        }
+      }
+    }
+  }
+
+  &__badge {
+    align-self: flex-start;
+    padding: 0.3125rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  &__path-description {
+    max-width: var(--ab-measure);
+    margin-top: 1rem;
+    font-size: var(--ab-body-size);
+    line-height: var(--ab-body-leading);
+    color: var(--ab-muted);
+  }
+
+  &__highlights {
+    display: grid;
+    gap: 1rem;
+    margin: 1.75rem 0 0;
+    padding: 1.75rem 0 0;
+    border-top: 1px solid var(--ab-rule);
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      line-height: 1.55;
+    }
+
+    // Icon sits in a small tinted disc so wrapped multi-line highlights
+    // still read as separate items.
+    svg {
+      flex: none;
+      box-sizing: content-box;
+      width: 0.875rem;
+      height: 0.875rem;
+      padding: 0.25rem;
+      margin-top: 0.0625rem;
+      border-radius: 999px;
+      stroke-width: 3;
+    }
+  }
+
+  // Pinned to the panel bottom so both actions line up on desktop when the
+  // two panels' text differs in length.
+  &__path-action {
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+
+  // ---- Built around the way you learn: two ruled columns -----------------
+
+  &__capabilities {
+    display: grid;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem clamp(2rem, 1rem + 3vw, 4rem);
+    }
+
+    li {
+      position: relative;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ab-rule);
+
+      // Short accent segment over the hairline: color identity without
+      // boxing each item.
+      &::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: 0;
+        width: 3rem;
+        height: 3px;
+        border-radius: 3px;
+        background: var(--ab-item-accent);
+      }
+    }
+
+    // Accent order follows ABOUT_CAPABILITIES in aboutPageStructure.ts:
+    // discovery (amber), practice (teal), personal lists (indigo),
+    // progress (green).
+    li:nth-child(1) { --ab-item-accent: var(--ab-amber); }
+    li:nth-child(2) { --ab-item-accent: var(--ab-teal); }
+    li:nth-child(3) { --ab-item-accent: var(--ab-indigo); }
+    li:nth-child(4) { --ab-item-accent: var(--ab-green); }
+
+    h3 {
+      font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    p {
+      margin-top: 0.75rem;
+      font-size: var(--ab-body-size);
+      line-height: var(--ab-body-leading);
+      color: var(--ab-muted);
+    }
+  }
+
+  // ---- Final call to action ----------------------------------------------
+  // Text above actions at every width: the description is a full sentence
+  // pair, and two buttons beside it would squeeze it into a narrow column.
+
+  &__cta {
+    padding-bottom: var(--ab-section-space);
+  }
+
+  &__cta-panel {
+    padding: clamp(1.75rem, 1.1rem + 2.6vw, 3.5rem);
+    border: 1px solid #eadff3;
+    border-radius: 16px;
+    background:
+      radial-gradient(ellipse 45% 90% at 100% 100%, rgba(245, 158, 11, 0.16), transparent 70%),
+      linear-gradient(115deg, #efeafb 0%, #f6effa 50%, #fdf3e7 100%);
+  }
+
+  &__cta-text {
+    max-width: var(--ab-measure);
+
+    @media (min-width: 768px) {
+      margin-inline: auto;
+      text-align: center;
+
+      &::before {
+        margin-inline: auto;
+      }
+    }
+
+    // Short indigo-to-amber rule echoing the hero eyebrow marker.
+    &::before {
+      content: "";
+      display: block;
+      width: 2.5rem;
+      height: 3px;
+      margin-bottom: 1.25rem;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--ab-indigo), var(--ab-amber));
+    }
+
+    h2 {
+      font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.375rem);
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: var(--ab-body-size);
+      line-height: var(--ab-body-leading);
+      // Slightly darker than --ab-muted: the warm end of the gradient lowers
+      // contrast for lighter grays.
+      color: #4a5163;
+    }
+  }
+
+  &__cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+
+    @media (min-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  // ---- Actions -----------------------------------------------------------
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.875rem;
+    padding: 0.625rem 1.375rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+
+    svg {
+      flex: none;
+      width: 1rem;
+      height: 1rem;
+      transition: transform 160ms ease;
+    }
+
+    &:hover svg {
+      transform: translateX(2px);
+    }
+
+    &--primary {
+      background: var(--ab-action);
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(67, 56, 202, 0.25);
+
+      &:hover {
+        background: var(--ab-action-hover);
+      }
+    }
+
+    &--secondary {
+      background: var(--ab-surface);
+      border-color: #d9cdef;
+      color: var(--ab-ink);
+
+      &:hover {
+        border-color: var(--ab-violet);
+      }
+    }
+
+    &--inverse {
+      background: var(--ab-surface);
+      color: var(--ab-ink);
+
+      &:hover {
+        background: #f0ecf8;
+      }
+    }
+
+    // Full-width, stacked actions on phones keep long translations readable.
+    @media (max-width: 479.98px) {
+      width: 100%;
+    }
+  }
+
+  &__action:focus-visible {
+    outline: 2px solid var(--ab-focus);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__action,
+    &__action svg {
+      transition: none;
+    }
+
+    &__action:hover svg {
+      transform: none;
+    }
+  }
+}

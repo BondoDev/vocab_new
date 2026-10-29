@@ -845,34 +845,84 @@
     }
   },
   "aboutPage": {
-    "back": "Zurück",
-    "p1": "FLUENTSTELLAR ist für aktives Wortschatztraining gedacht, nicht für passives Durchblättern.",
-    "p2": "Du scrollst nicht durch Wortlisten und lernst keine Definitionen auswendig. Du trainierst Wörter durch Anwendung in sorgfältig gestalteten Übungen, die Abruf, Rechtschreibung und Erkennung stärken.",
-    "p3": "Es gibt keine Registrierung und keinen Login. Du wählst deine Muttersprache, die Sprache, die du üben möchtest, und dein CEFR-Niveau. Wenn du dein Niveau nicht kennst, hilft ein kurzer Test bei der Einordnung.",
-    "filtersTitle": "Optional kannst du filtern:",
-    "filters": {
-      "topics": "Themen",
-      "wordTypes": "Wortarten",
-      "exerciseTypes": "Übungstypen"
+    "hero": {
+      "eyebrow": "ÜBER FLUENTSTELLAR",
+      "title": "Baue einen Wortschatz auf, den du wirklich nutzen kannst",
+      "description": "FluentStellar ist eine mehrsprachige Plattform zum Wortschatzlernen, die dir hilft, Wörter nicht nur wiederzuerkennen, sondern sie auch aktiv zu beherrschen. Mit interaktiven Übungen, angeleitetem Lernen und regelmäßigen Wiederholungen kannst du deinen Wortschatz erweitern, dein Gedächtnis stärken und in deinem eigenen Tempo kontinuierlich Fortschritte machen."
     },
-    "p4": "Danach startest du eine Übungssitzung.",
-    "p5": "Das gesamte Lernen passiert in der Sitzung. Wörter werden eingeführt, abgefragt, wiederholt und durch verschiedene Übungen gefestigt, nicht als Listen angezeigt.",
-    "howTitle": "So funktioniert das Training",
-    "howSubtitle": "Das System nutzt mehrere Übungstypen, zum Beispiel:",
-    "howList": {
-      "wordTyping": "vollständiges Wort tippen",
-      "partialCompletion": "teilweises Wort ergänzen",
-      "wordAssembling": "Wort zusammensetzen",
-      "wordConnection": "Wörter verbinden",
-      "listening": "Hören (wenn aktiviert)"
+    "approach": {
+      "title": "Wörter lernen ist erst der Anfang",
+      "intro": "Ein Wort in einer Liste wiederzuerkennen ist etwas anderes, als sich im richtigen Moment daran zu erinnern. Deshalb setzt FluentStellar auf aktives Lernen statt auf passives Auswendiglernen. Unser Lernansatz verbindet drei wesentliche Bestandteile eines erfolgreichen Wortschatztrainings.",
+      "principles": {
+        "activeRecall": {
+          "title": "Erinnere dich aktiv an Wörter",
+          "body": "Anstatt nur Übersetzungen zu lesen oder bekannte Antworten auszuwählen, übst du, Wörter selbstständig aus dem Gedächtnis abzurufen. Das regt dich zum Nachdenken an, hilft dir, dir die richtige Schreibweise einzuprägen, und gibt dir nach und nach mehr Sicherheit im Umgang mit bereits bekannten Wörtern."
+        },
+        "repetition": {
+          "title": "Festige, was du gelernt hast",
+          "body": "Ein Wort einmal zu lernen bedeutet nicht, dass du es für immer behältst. Regelmäßige Wiederholungen bringen bereits gelernte Wörter zurück in deine Übungen. Durch zeitlich verteilte Wiederholungen (Spaced Repetition) beschäftigst du dich in bestimmten Abständen erneut mit deinem Wortschatz und festigst so langfristig dein Wissen."
+        },
+        "meaningfulUse": {
+          "title": "Übe auf unterschiedliche Weise",
+          "body": "Verschiedene Übungsarten trainieren unterschiedliche Aspekte deines Wortschatzwissens. Ganze Wörter eintippen, fehlende Buchstaben ergänzen, Wortteile zusammensetzen, Wörter ihren Bedeutungen zuordnen und die Aussprache anhören – all das sorgt für abwechslungsreiches und motivierendes Lernen."
+        }
+      }
     },
-    "p6": "Einige Übungen trainieren den aktiven Abruf, andere sorgen für leichte Wiederholung. Wörter zählen nur, wenn du sie korrekt erinnerst; das Anzeigen der Lösung zählt nicht als gelernt.",
-    "p7": "Dieser Ansatz fokussiert echten Wortschatzerwerb statt Abkürzungen.",
-    "accountTitle": "Warum kein Konto?",
-    "accountSubtitle": "FLUENTSTELLAR ist bewusst sitzungsbasiert.",
-    "p8": "Du kannst sofort anfangen zu üben, ohne Konto und ohne persönliche Daten. Nach dem Verlassen der Sitzung wird nichts gespeichert.",
-    "goalTitle": "Das Ziel ist einfach:",
-    "goalText": "Wörter effektiv üben, mit so wenig Reibung wie möglich."
+    "paths": {
+      "title": "Zwei Wege, deinen Wortschatz zu erweitern",
+      "intro": "Egal, ob du nur kurz üben oder einer strukturierten Lernroutine folgen möchtest: FluentStellar lässt dich den Weg wählen, der zu deinen Zielen passt. Du kannst sofort ohne Registrierung loslegen oder ein kostenloses Konto für personalisiertes Lernen erstellen.",
+      "customPractice": {
+        "badge": "Kein Konto erforderlich",
+        "title": "Individuelles Üben",
+        "description": "Gestalte dein Wortschatztraining selbst. Wähle die Sprachen aus, mit denen du arbeiten möchtest, konzentriere dich auf bestimmte Wörter und entscheide, welche Übungen dir am besten gefallen. Es gibt keine feste Sitzungsdauer: Du kannst nur ein paar Minuten üben oder so lange weitermachen, wie du möchtest.",
+        "highlights": {
+          "chooseLanguages": "Wähle deine Muttersprache und die Sprache, die du üben möchtest",
+          "chooseFilters": "Wähle Wörter nach GER-Niveau, Thema oder Wortart aus",
+          "flexibleSessions": "Kombiniere Übungen und beende die Sitzung, wann du möchtest"
+        }
+      },
+      "personalizedLearning": {
+        "badge": "Kostenloses Konto",
+        "title": "Personalisiertes Lernen",
+        "description": "Erweitere deinen Wortschatz mit einem angeleiteten Lernsystem, das dir neue Wörter vorstellt und dir hilft, sie dauerhaft zu behalten. Lerne Schritt für Schritt, wiederhole bereits gelernte Wörter mithilfe von Spaced Repetition und verfolge deine Fortschritte, während dein persönlicher Wortschatz wächst.",
+        "highlights": {
+          "guidedNewWords": "Entdecke neue Wörter mit Definitionen, Beispielen und angeleiteten Übungen",
+          "spacedReview": "Wiederhole gelernte Wörter mithilfe zeitlich verteilter Wiederholungen",
+          "progressTracking": "Setze dir tägliche Lernziele und verfolge deinen Wortschatz und deine Fortschritte"
+        }
+      }
+    },
+    "platform": {
+      "title": "Auf deine Art zu lernen abgestimmt",
+      "intro": "FluentStellar verbindet flexibles Üben mit nützlichen Lernwerkzeugen. So kannst du neue Wörter entdecken, wichtigen Wortschatz organisieren und deine Sprachkenntnisse im Laufe der Zeit weiterentwickeln.",
+      "items": {
+        "languagesLevels": {
+          "title": "Sieben Sprachen und sechs GER-Niveaus",
+          "body": "Entdecke Wortschatz in Englisch, Spanisch, Französisch, Deutsch, Italienisch, Portugiesisch und Russisch, geordnet nach den GER-Niveaus von A1 bis C2. Finde Wörter, die zu deinem aktuellen Kenntnisstand passen, oder fordere dich mit anspruchsvollerem Wortschatz heraus."
+        },
+        "exercisesPronunciation": {
+          "title": "Interaktive Übungen und Aussprache",
+          "body": "Gehe über das bloße Lesen von Wortlisten hinaus und trainiere Rechtschreibung, aktives Erinnern, Wiedererkennen und Hörverständnis. Höre dir die Aussprache einzelner Wörter an und festige deinen Wortschatz mit verschiedenen Übungsformen."
+        },
+        "listsFavorites": {
+          "title": "Persönliche Wortlisten und Favoriten",
+          "body": "Sammle nützliche oder schwierige Wörter in deinen eigenen Wortlisten, markiere besonders wichtige Wörter als Favoriten und erstelle gezielte Übungssitzungen mit dem Wortschatz, den du selbst ausgewählt hast."
+        },
+        "progressReviews": {
+          "title": "Fortschritte, die sich mit der Zeit aufbauen",
+          "body": "Behalte den Überblick über gelernte Wörter, Wiederholungsaktivitäten, tägliche Lernziele und deinen wachsenden Wortschatz. Kehre zu bereits gelernten Wörtern zurück, erkenne deine erreichten Meilensteine und sieh, wie sich deine Anstrengungen nach und nach auszahlen."
+        }
+      }
+    },
+    "cta": {
+      "title": "Dein nächstes Wort wartet auf dich",
+      "description": "Du musst nicht auf den perfekten Lernplan warten. Beginne sofort und ohne Konto mit dem Wortschatztraining oder erstelle ein kostenloses Konto, um deiner persönlichen Lernroutine zu folgen und deine Fortschritte festzuhalten."
+    },
+    "actions": {
+      "startPractice": "Jetzt üben",
+      "createAccount": "Kostenloses Konto erstellen",
+      "openLearning": "Personalisiertes Lernen öffnen"
+    }
   },
   "helpPage": {
     "back": "Zurück",

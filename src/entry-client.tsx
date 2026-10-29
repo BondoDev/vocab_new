@@ -12,7 +12,7 @@ import "./styles/index.css";
 const { pathname } = window.location;
 const _lazyChunkPreload: Promise<unknown> | null =
   pathname === "/about" || pathname.startsWith("/about/")
-    ? import("./app/pages/About")
+    ? import("./app/pages/about/About")
     : pathname === "/help" || pathname.startsWith("/help/")
     ? import("./app/pages/help/Help")
     : pathname.includes("/languages/filters/exercises") && pathname.includes("/practice")

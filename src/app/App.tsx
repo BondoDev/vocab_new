@@ -116,7 +116,7 @@ const VocabularyLevelExam = lazy(() =>
   })),
 );
 const About = lazy(() =>
-  import("./pages/About").then((module) => ({
+  import("./pages/about/About").then((module) => ({
     default: module.About,
   })),
 );
@@ -1213,7 +1213,16 @@ function AppContent({
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="about" />
         <Suspense fallback={<RouteLoadingFallback />}>
-          <About onBack={() => navigate(ROUTES.language)} />
+          {/* Account actions follow the Help Center pattern: withheld until
+              auth resolves, then sign-up for guests or learning when signed in. */}
+          <About
+            onCreateAccount={
+              isAuthResolved && !authUserId
+                ? () => setRequestedHeaderAuthMode("signup")
+                : undefined
+            }
+            isSignedIn={isAuthResolved && Boolean(authUserId)}
+          />
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
