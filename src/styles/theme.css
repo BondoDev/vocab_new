@@ -134,6 +134,20 @@
     overflow: auto;
   }
 
+  /*
+   * Modal dialogs (Radix scroll lock) set `body { overflow: hidden }` and add
+   * a body `margin-right` equal to the scrollbar width, expecting the body's
+   * scrollbar to disappear. Here the page scrolls on <html>, so that
+   * scrollbar stays and the margin only narrows the page: centered content
+   * jumped ~8px left whenever the login dialog opened. Cancelling the
+   * compensation keeps the layout still; scrolling is still locked by
+   * Radix's wheel/touch blocking. This is a layered !important, which wins
+   * over the library's unlayered !important rule.
+   */
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
