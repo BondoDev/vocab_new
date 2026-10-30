@@ -1012,6 +1012,10 @@ $practice-page-backdrop: radial-gradient(
   font-weight: 600;
   line-height: 1;
   user-select: none;
+  // Long presses (accent popup, backspace repeat) must not open the iOS
+  // callout or trigger double-tap zoom.
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
   transition:
     transform 90ms ease,
     background-color 120ms ease,

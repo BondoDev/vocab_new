@@ -36,6 +36,12 @@ type LongPressPopupState = {
 };
 
 const LONG_PRESS_DELAY_MS = 280;
+// Holding backspace: one delete on press, then repeat after a pause like
+// native keyboards, speeding up once the hold lasts a while.
+const BACKSPACE_REPEAT_DELAY_MS = 420;
+const BACKSPACE_REPEAT_INTERVAL_MS = 90;
+const BACKSPACE_FAST_INTERVAL_MS = 45;
+const BACKSPACE_FAST_AFTER_REPEATS = 8;
 
 export function MobileKeyboard({
   language,
@@ -125,6 +131,84 @@ export function MobileKeyboard({
   const handleBackspace = () => {
     if (disabled || value.length === 0) return;
     onChange(value.slice(0, -1));
+  };
+
+  // The repeat timer outlives renders, so it reads the latest props from
+  // refs. valueRef is also advanced locally on each delete because the timer
+  // can tick again before the parent re-renders with the shorter value.
+  const valueRef = useRef(value);
+  const onChangeRef = useRef(onChange);
+  const disabledRef = useRef(disabled);
+  const backspaceRepeatTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    valueRef.current = value;
+    onChangeRef.current = onChange;
+    disabledRef.current = disabled;
+  }, [value, onChange, disabled]);
+
+  const stopBackspaceRepeat = useCallback(() => {
+    if (backspaceRepeatTimerRef.current !== null) {
+      window.clearTimeout(backspaceRepeatTimerRef.current);
+      backspaceRepeatTimerRef.current = null;
+    }
+  }, []);
+
+  const deleteOneFromLatest = useCallback((): boolean => {
+    const current = valueRef.current;
+    if (disabledRef.current || current.length === 0) return false;
+    const next = current.slice(0, -1);
+    valueRef.current = next;
+    onChangeRef.current(next);
+    return next.length > 0;
+  }, []);
+
+  const handleBackspacePointerDown = (
+    event: ReactPointerEvent<HTMLButtonElement>,
+  ) => {
+    if (disabled) return;
+    event.preventDefault();
+    stopBackspaceRepeat();
+    if (!deleteOneFromLatest()) return;
+
+    let repeats = 0;
+    const tick = () => {
+      if (!deleteOneFromLatest()) {
+        backspaceRepeatTimerRef.current = null;
+        return;
+      }
+      repeats += 1;
+      backspaceRepeatTimerRef.current = window.setTimeout(
+        tick,
+        repeats >= BACKSPACE_FAST_AFTER_REPEATS
+          ? BACKSPACE_FAST_INTERVAL_MS
+          : BACKSPACE_REPEAT_INTERVAL_MS,
+      );
+    };
+    backspaceRepeatTimerRef.current = window.setTimeout(
+      tick,
+      BACKSPACE_REPEAT_DELAY_MS,
+    );
+  };
+
+  useEffect(() => {
+    if (disabled) stopBackspaceRepeat();
+  }, [disabled, stopBackspaceRepeat]);
+
+  useEffect(() => stopBackspaceRepeat, [stopBackspaceRepeat]);
+
+  // Pointer input deletes on pointerdown; only keyboard-activated clicks
+  // (detail === 0) still go through onClick so Enter/Space keep working.
+  const backspaceKeyHandlers = {
+    onPointerDown: handleBackspacePointerDown,
+    onPointerUp: stopBackspaceRepeat,
+    onPointerCancel: stopBackspaceRepeat,
+    onPointerLeave: stopBackspaceRepeat,
+    onContextMenu: (event: { preventDefault: () => void }) =>
+      event.preventDefault(),
+    onClick: (event: { detail: number }) => {
+      if (event.detail === 0) handleSpecialKey("backspace");
+    },
   };
 
   const handleSpace = () => {
@@ -336,7 +420,7 @@ export function MobileKeyboard({
           type="button"
           className="mobile-keyboard-v2__key mobile-keyboard-v2__key--action mobile-keyboard-v2__key--edge mobile-keyboard-v2__key--backspace"
           onMouseDown={(event) => event.preventDefault()}
-          onClick={() => handleSpecialKey("backspace")}
+          {...backspaceKeyHandlers}
           aria-label={specialKeyLabels.backspace}
           disabled={disabled}
         >
@@ -418,7 +502,7 @@ export function MobileKeyboard({
             type="button"
             className="mobile-keyboard-v2__key mobile-keyboard-v2__key--action mobile-keyboard-v2__key--backspace"
             onMouseDown={(event) => event.preventDefault()}
-            onClick={() => handleSpecialKey("backspace")}
+            {...backspaceKeyHandlers}
             aria-label={specialKeyLabels.backspace}
             disabled={disabled}
           >
