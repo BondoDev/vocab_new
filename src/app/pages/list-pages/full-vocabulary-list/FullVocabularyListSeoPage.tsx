@@ -227,15 +227,21 @@ export function FullVocabularyListSeoPage({
   }, [grammarTypeLabels, rowsByLevel]);
 
   const isGlobalFilterActive = isFullVocabularyFilterActive(deferredGlobalFilter);
-  const globalMatchCount = useMemo(() => {
+  // Per-level global match counts, only once every word is loaded (partial
+  // SSR rows would wrongly report zero matches for some levels).
+  const globalMatchCountsByLevel = useMemo(() => {
     if (!rowsByLevel || !rowsComplete || !isGlobalFilterActive) {
       return null;
     }
-    return Object.values(rowsByLevel).reduce(
-      (sum, rows) => sum + filterFullVocabularyRows(rows, [deferredGlobalFilter]).length,
-      0,
-    );
+    const counts = {} as Record<Level, number>;
+    for (const [level, rows] of Object.entries(rowsByLevel) as [Level, FullVocabularyRowsByLevel[Level]][]) {
+      counts[level] = filterFullVocabularyRows(rows, [deferredGlobalFilter]).length;
+    }
+    return counts;
   }, [deferredGlobalFilter, isGlobalFilterActive, rowsByLevel, rowsComplete]);
+  const globalMatchCount = globalMatchCountsByLevel
+    ? Object.values(globalMatchCountsByLevel).reduce((sum, count) => sum + count, 0)
+    : null;
 
   if (!content) {
     return <NotFoundPage />;
@@ -255,6 +261,14 @@ export function FullVocabularyListSeoPage({
 
   const handleGlobalFilterChange = (next: FullVocabularyFilter) => {
     setRowsRequested(true);
+    // Clearing the search (or resetting every global filter) collapses all
+    // levels, so the list returns to its compact overview instead of leaving
+    // the levels opened while browsing matches expanded.
+    const queryCleared = globalFilter.query.trim() !== "" && next.query.trim() === "";
+    const filterCleared = isFullVocabularyFilterActive(globalFilter) && !isFullVocabularyFilterActive(next);
+    if (queryCleared || filterCleared) {
+      setOpenLevels(new Set());
+    }
     setGlobalFilter(next);
   };
 
@@ -314,10 +328,20 @@ export function FullVocabularyListSeoPage({
                 : null}
             </p>
           </div>
-          <div className="divide-y divide-foreground/10 overflow-hidden rounded-2xl border border-foreground/15 bg-card shadow-sm">
+          {/* While a global search/filter is active, levels with no matches
+              are hidden (not unmounted, so their local filters and Load More
+              progress survive) and reappear once they match or the filter is
+              cleared. Separators are drawn only between visible levels, since
+              divide-y would leave a stray border next to a hidden last item;
+              the whole box hides when no level matches. */}
+          <div
+            hidden={globalMatchCount === 0}
+            className="overflow-hidden rounded-2xl border border-foreground/25 bg-card shadow-sm [&>:not([hidden])~:not([hidden])]:border-t [&>:not([hidden])~:not([hidden])]:border-foreground/20"
+          >
             {content.levels.map((level) => (
               <FullVocabularyLevelSection
                 key={level.level}
+                hidden={globalMatchCountsByLevel?.[level.level] === 0}
                 uiLang={uiLang}
                 speechLang={FULL_VOCABULARY_SPEECH_LANG[targetLanguage]}
                 showTranslations={showTranslations}

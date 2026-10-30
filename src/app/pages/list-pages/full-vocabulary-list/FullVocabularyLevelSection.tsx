@@ -52,6 +52,8 @@ interface FullVocabularyLevelSectionProps {
   countSlotChars: number;
   // Optional "{level} English Vocabulary — {name}" heading template.
   levelHeadingTemplate?: string;
+  // The global filter matches nothing in this level (see the page).
+  hidden?: boolean;
 }
 
 function filterKey(filters: FullVocabularyFilter[]): string {
@@ -85,6 +87,7 @@ export function FullVocabularyLevelSection({
   levelWordCount,
   countSlotChars,
   levelHeadingTemplate,
+  hidden = false,
 }: FullVocabularyLevelSectionProps) {
   // "{total} words" puts the number first; "Слов: {total}" puts text first.
   const countNumberFirst = panelCopy.headerCountLabel.trimStart().startsWith("{");
@@ -165,7 +168,7 @@ export function FullVocabularyLevelSection({
   const countId = `${panelId}-count`;
 
   return (
-    <div className={isOpen ? "bg-muted/20 shadow-[inset_3px_0_0_0_var(--primary)]" : undefined}>
+    <div hidden={hidden} className={isOpen ? "bg-muted/20 shadow-[inset_3px_0_0_0_var(--primary)]" : undefined}>
       <h3>
         <button
           id={buttonId}
@@ -175,7 +178,7 @@ export function FullVocabularyLevelSection({
           aria-describedby={headingText ? (countLabel ? `${descriptionId} ${countId}` : descriptionId) : undefined}
           onClick={onToggle}
           className={`group flex w-full cursor-pointer items-center gap-4 px-4 py-4 text-left transition-colors hover:bg-primary/[0.07] focus-visible:bg-primary/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/40 sm:px-5 ${
-            isOpen ? "border-b border-foreground/10" : ""
+            isOpen ? "border-b border-dashed border-foreground/20" : ""
           }`}
         >
           {headingText ? <span className="sr-only">{headingText}</span> : null}
