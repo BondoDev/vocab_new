@@ -49,7 +49,11 @@ export function BrokenWordExercise({
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const rawWord: string = currentWord?.word_lemma ?? "";
-  const { fieldStyle } = getSharedExerciseFieldSizing(rawWord);
+  // Multi-word answers size the field as `max-content`, but the overlay is
+  // absolutely positioned and contributes no width, so without auto-fit the
+  // field falls back to the hidden <input>'s intrinsic (size=20) width.
+  const { fieldStyle, enableOverlayAutoFit } =
+    getSharedExerciseFieldSizing(rawWord);
 
   const wordSegments = useMemo(() => {
     const parts = rawWord.split(" ");
@@ -62,6 +66,10 @@ export function BrokenWordExercise({
   }, [rawWord]);
 
   const shouldWrapSingleWord = wordSegments.length === 1;
+
+  // Chunks hold letters only (spaces are never part of a chunk), so placed
+  // text and the expected answer are both compared/indexed without spaces.
+  const answerLetters = useMemo(() => rawWord.split(" ").join(""), [rawWord]);
 
   const placedJoinedWord = useMemo(() => placedChunks.join(""), [placedChunks]);
 
@@ -77,17 +85,17 @@ export function BrokenWordExercise({
     return map;
   }, [placedChunks]);
 
-  const splitWordIntoChunks = (word: string): string[] => {
-    const chunks: string[] = [];
-    for (let i = 0; i < word.length; i += 2) {
-      if (i + 1 < word.length) {
-        chunks.push(word.substring(i, i + 2));
-      } else {
-        chunks.push(word.substring(i));
+  // Chunk each word of a multi-word answer separately. Chunking across the
+  // space produced pieces like " e" whose space is invisible on the button,
+  // so learners placed "er" there instead and the answer could never match.
+  const splitWordIntoChunks = (word: string): string[] =>
+    word.split(" ").flatMap((part) => {
+      const chunks: string[] = [];
+      for (let i = 0; i < part.length; i += 2) {
+        chunks.push(part.substring(i, i + 2));
       }
-    }
-    return chunks;
-  };
+      return chunks;
+    });
 
   const initializeBrokenWord = useCallback(() => {
     const chunks = splitWordIntoChunks(currentWord.word_lemma);
@@ -188,7 +196,7 @@ export function BrokenWordExercise({
   const checkBrokenWordAnswer = (placed: string[]) => {
     // Validate against the full assembled string so duplicate chunks
     // are interchangeable and not tied to shuffled source indices.
-    const isCorrectOrder = placed.join("") === rawWord;
+    const isCorrectOrder = placed.join("") === answerLetters;
 
     if (isCorrectOrder) {
       setIsCorrect(true);
@@ -326,7 +334,7 @@ export function BrokenWordExercise({
         isCorrect={isCorrect}
         onSpeakWord={speakWord}
         fieldStyle={fieldStyle}
-        enableOverlayAutoFit={false}
+        enableOverlayAutoFit={enableOverlayAutoFit}
         overlay={
           <div className="absolute inset-0 flex items-center justify-start px-4 py-2">
             <div className="flex flex-wrap content-center gap-y-1 min-w-0 max-w-full">
@@ -346,14 +354,16 @@ export function BrokenWordExercise({
                 >
                   {segment.text.split("").map((_, offset) => {
                     const charIndex = segment.startIndex + offset;
-                    const placedChar = placedJoinedWord[charIndex];
+                    // Placed text has no spaces: skip one per earlier segment.
+                    const letterIndex = charIndex - segmentIndex;
+                    const placedChar = placedJoinedWord[letterIndex];
                     const hasPlacedChar =
                       typeof placedChar === "string" &&
                       placedChar.length > 0 &&
                       placedChar !== " ";
                     const displayChar = hasPlacedChar ? placedChar : "_";
                     const chunkIndex =
-                      placedChunkIndexByCharIndex[charIndex] ?? -1;
+                      placedChunkIndexByCharIndex[letterIndex] ?? -1;
                     const canRemoveChunk =
                       hasPlacedChar &&
                       chunkIndex === placedChunks.length - 1 &&
