@@ -2122,9 +2122,9 @@
  {
   "id": 213,
   "concept_id": "A1-00284",
-  "word_lemma": "verschieden",
-  "definiton": "Nicht gleich wie eine andere Person oder Sache.",
-  "sentence": "Die beiden Bilder sind verschieden.",
+  "word_lemma": "anders",
+  "definiton": "Nicht gleich wie jemand oder etwas anderes.",
+  "sentence": "Mein Hemd hat eine andere Farbe als deins.",
   "type": "adjective",
   "category": "abstract",
   "level": "A1"
