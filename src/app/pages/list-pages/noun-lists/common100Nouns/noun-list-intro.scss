@@ -1,0 +1,92 @@
+// ---------------------------------------------------------------------------
+// Noun list page intro (NounListSeoPage.tsx): the h1 and intro paragraph in
+// one panel above the table.
+//
+// Theme tokens only, so the light and dark themes both apply. The panel uses
+// the table's card surface and hairline border so the two read as one
+// reference block; its only decoration is a faint primary wash and a short
+// accent rule along the top edge. From 900px the heading and paragraph sit
+// side by side (the heading's column narrow enough to wrap into a compact
+// block), which keeps the panel short and the table near the top. Below that
+// they stack.
+// ---------------------------------------------------------------------------
+$nli-wide: 900px;
+
+.nli {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 0.625rem;
+  padding: 1.125rem 1.125rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background-color: var(--card);
+  background-image:
+    radial-gradient(
+      120% 140% at 0% 0%,
+      color-mix(in oklab, var(--primary) 9%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      80% 120% at 100% 100%,
+      color-mix(in oklab, var(--primary) 4%, transparent) 0%,
+      transparent 60%
+    );
+
+  // Accent rule: a short primary stroke fading out along the top edge.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(18rem, 60%);
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--primary),
+      color-mix(in oklab, var(--primary) 0%, transparent)
+    );
+    pointer-events: none;
+  }
+
+  @media (min-width: 640px) {
+    padding: 1.5rem 1.75rem 1.625rem;
+  }
+
+  @media (min-width: $nli-wide) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: 2.25rem;
+    padding: 1.75rem 2rem;
+  }
+}
+
+.nli-heading {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.125rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  // Long translated headings wrap into even lines; a single overlong word
+  // still breaks instead of overflowing the panel.
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.nli-intro {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: $nli-wide) {
+    // Hairline divider between the two columns.
+    padding-left: 2.25rem;
+    border-left: 1px solid var(--border);
+    font-size: 1rem;
+  }
+}

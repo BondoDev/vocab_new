@@ -6,6 +6,7 @@ import { loadVerbListRegistry } from "../lib/load-verb-list-registry.mjs";
 import { loadPastVerbFormsRegistry } from "../lib/load-past-verb-forms-registry.mjs";
 import { loadConjugatedVerbFormsRegistry } from "../lib/load-conjugated-verb-forms-registry.mjs";
 import { loadFullVocabularyListRegistry } from "../lib/load-full-vocabulary-list-registry.mjs";
+import { loadNounListRegistry } from "../lib/load-noun-list-registry.mjs";
 import { loadVocabularyLevelRoutes } from "../lib/load-vocabulary-level-routes.mjs";
 import { createLastmodLedger } from "../lib/sitemap-lastmod.mjs";
 
@@ -284,6 +285,7 @@ async function main() {
   const conjugatedVerbFormsRegistryLoader = loadConjugatedVerbFormsRegistry(".tmp-conjugated-verb-forms-registry-sitemap");
   const vocabularyLevelRoutesLoader = loadVocabularyLevelRoutes(".tmp-vocabulary-level-routes-sitemap");
   const fullVocabularyListRegistryLoader = loadFullVocabularyListRegistry(".tmp-full-vocabulary-list-registry-sitemap");
+  const nounListRegistryLoader = loadNounListRegistry(".tmp-noun-list-registry-sitemap");
   const publicDir = path.join(ROOT_DIR, "public");
   const sitemapsDir = path.join(publicDir, "sitemaps");
 
@@ -293,13 +295,13 @@ async function main() {
     const existingSubSitemapFiles = await fs.readdir(sitemapsDir);
     await Promise.all(
       existingSubSitemapFiles
-        .filter((name) => /^(sitemap-(core|cefr|words.*)|verb-lists)\.xml$/.test(name))
+        .filter((name) => /^(sitemap-(core|cefr|words.*)|verb-lists|noun-lists)\.xml$/.test(name))
         .map((name) => fs.rm(path.join(sitemapsDir, name), { force: true })),
     );
     const existingRootFiles = await fs.readdir(publicDir);
     await Promise.all(
       existingRootFiles
-        .filter((name) => /^(sitemap-(core|cefr|words.*)|verb-lists)\.xml$/.test(name))
+        .filter((name) => /^(sitemap-(core|cefr|words.*)|verb-lists|noun-lists)\.xml$/.test(name))
         .map((name) => fs.rm(path.join(publicDir, name), { force: true })),
     );
 
@@ -346,6 +348,25 @@ async function main() {
         paths: conjugatedVerbFormsRoutes,
       },
     ];
+    // 100-most-common-nouns pages get their own noun-lists.xml, holding only
+    // the indexable ones — the same rule as their robots meta
+    // (isNounListIndexable in src/seo/listPages/nounLists/common100Nouns/
+    // common100NounsMetadata.ts): the list is in LAUNCHED_NOUN_LISTS and has
+    // all its rows. With no launched list the file is not written and the
+    // index doesn't reference it.
+    const nounListRoutes = Array.from(
+      new Set(
+        nounListRegistryLoader.registry.getAllNounListPaths().filter((routePath) => {
+          const route = nounListRegistryLoader.registry.resolveNounListRoute(routePath);
+          const list = route ? nounListRegistryLoader.entries.getNounList(route.listId) : null;
+          return Boolean(
+            list &&
+              nounListRegistryLoader.launchStatus.LAUNCHED_NOUN_LISTS.has(list.id) &&
+              nounListRegistryLoader.entries.isNounListComplete(list),
+          );
+        }),
+      ),
+    ).sort();
     const wordRoutesByPair = INCLUDE_WORD_SITEMAPS
       ? await collectWordRoutes(manifestLoader.manifest)
       : new Map();
@@ -395,6 +416,20 @@ async function main() {
       sitemapFiles.push({ fileName: `sitemaps/${verbListsName}`, lastmod });
     }
 
+    if (nounListRoutes.length > 0) {
+      const nounListsName = "noun-lists.xml";
+      const lastmod = resolveLastmod(`sitemaps/${nounListsName}`);
+      await fs.writeFile(
+        path.join(sitemapsDir, nounListsName),
+        buildSitemapXml(nounListRoutes, {
+          comment: "Dedicated sitemap for noun-list SEO pages (100 essential nouns per language).",
+          lastmod,
+        }),
+        "utf8",
+      );
+      sitemapFiles.push({ fileName: `sitemaps/${nounListsName}`, lastmod });
+    }
+
     const pairKeys = Array.from(wordRoutesByPair.keys()).sort();
     for (const pairKey of pairKeys) {
       const pairData = wordRoutesByPair.get(pairKey);
@@ -429,13 +464,15 @@ async function main() {
       (sum, pairData) => sum + pairData.routes.length,
       0,
     );
-    const totalUrls = coreRoutes.length + cefrRoutes.length + verbListRoutes.length + totalWordUrls;
+    const totalUrls = coreRoutes.length + cefrRoutes.length + verbListRoutes.length + nounListRoutes.length + totalWordUrls;
     console.log(
       `Generated sitemap index (${sitemapFiles.length} files, ${totalUrls} URLs total) at ${indexPath}`,
     );
   } finally {
     verbListRegistryLoader.cleanup();
     pastVerbFormsRegistryLoader.cleanup();
+    conjugatedVerbFormsRegistryLoader.cleanup();
+    nounListRegistryLoader.cleanup();
     manifestLoader.cleanup();
     vocabularyLevelRoutesLoader.cleanup();
     fullVocabularyListRegistryLoader.cleanup();

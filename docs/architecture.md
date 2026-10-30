@@ -237,7 +237,10 @@ it, so the full table is in the HTML. Pages come from
 builder and per-list `LAUNCHED_NOUN_LISTS` set live in
 `src/seo/listPages/nounLists/common100Nouns/`. A list is indexable only when it is
 in that set and its dataset holds `expectedWordCount` rows; otherwise its
-pages serve "noindex, follow". The family is not in the sitemap yet.
+pages serve "noindex, follow". `generate-sitemap.mjs` applies the same rule
+(via `scripts/lib/load-noun-list-registry.mjs`): indexable pages go into a
+dedicated `noun-lists.xml`, which is not written (nor indexed) while no list
+is launched.
 `src/app/pages/word-pages/detail/` owns individual word-detail-page
 rendering — `WordSeoPage.tsx` (the client/production data-acquisition
 wrapper), `WordSeoPageView.tsx` (the SSR-safe presentational core), and
@@ -377,7 +380,8 @@ discrepancy:
 - `scripts/generation/generate-sitemap.mjs` runs during `npm run build`'s
   `prebuild` step and writes `public/sitemap.xml` plus three child sitemaps —
   `sitemap-core.xml`, `sitemap-cefr.xml` (CEFR vocabulary-level + level-test
-  routes), and `verb-lists.xml`. Individual word pages are intentionally
+  routes), and `verb-lists.xml` (plus `noun-lists.xml` once a noun list is
+  launched). Individual word pages are intentionally
   **excluded** from sitemap discovery: the generator's `INCLUDE_WORD_SITEMAPS`
   policy gate defaults to `false` (2026-07-24 sitemap-policy reconciliation),
   to focus sitemap discovery on the core/CEFR/verb-list families. This is a

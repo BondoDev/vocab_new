@@ -5,6 +5,14 @@
 // can never be indexed as a finished "100 words" page, even if added here
 // early. Until then its pages serve "noindex, follow" and stay out of the
 // sitemap and the Learning Resources links.
-export const LAUNCHED_NOUN_LISTS: ReadonlySet<string> = new Set<string>([]);
+export const LAUNCHED_NOUN_LISTS: ReadonlySet<string> = new Set<string>([
+  "english",
+  "spanish",
+  "french",
+  "german",
+  "italian",
+  "portuguese",
+  "russian",
+]);
 
 export const NOUN_LIST_PRELAUNCH_ROBOTS = "noindex, follow";

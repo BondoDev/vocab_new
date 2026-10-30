@@ -36,6 +36,7 @@ import {
   type NounListTableProps,
   type NounListTableRow,
 } from "./NounListTable";
+import "./noun-list-intro.scss";
 
 type LoadedNounListTableProps = Omit<NounListTableProps, "groups"> & {
   buildGroups: (details: NounDetailsFile | null) => NounListTableGroup[];
@@ -177,14 +178,10 @@ export function NounListSeoPage({
     <main className="min-h-screen bg-background px-4 py-6 md:px-8 md:py-8">
       <SEOHead metadata={seoMetadata} />
       <div className="mx-auto w-full max-w-5xl space-y-8">
-        <div className="space-y-5">
-          <header className="mx-auto max-w-3xl space-y-2 text-center">
-            <h1 className="text-2xl text-foreground md:text-3xl">
-              {content.hero.heading}
-            </h1>
-            <p className="text-base text-muted-foreground">
-              {content.hero.intro}
-            </p>
+        <div className="space-y-3 md:space-y-4">
+          <header className="nli">
+            <h1 className="nli-heading">{content.hero.heading}</h1>
+            <p className="nli-intro">{content.hero.intro}</p>
           </header>
           {/* The fallback only shows on client-side navigation to the page;
               prerendered HTML already contains the table. */}
@@ -216,8 +213,11 @@ export function NounListSeoPage({
           </Suspense>
         </div>
 
-        <div className="mx-auto max-w-3xl space-y-8">
-          <NounListGuideSections sections={content.guideSections} />
+        <div className="space-y-8 md:space-y-10">
+          <NounListGuideSections
+            sections={content.guideSections}
+            exampleLang={list.speechLang}
+          />
           <NounListPractice
             practice={content.practice}
             practicePath={practicePath}
