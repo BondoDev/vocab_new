@@ -6,6 +6,7 @@ import {
   buildConjugatedVerbFormsExploreTopic,
   buildFrenchExploreTopics,
   buildFullVocabularyListExploreTopic,
+  buildNounListExploreTopic,
   buildGermanExploreTopics,
   buildItalianExploreTopics,
   buildPastVerbFormsExploreTopic,
@@ -64,6 +65,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("english", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("english", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("english", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("english", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         englishExploreTopics,
@@ -73,6 +75,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -89,6 +92,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("spanish", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("spanish", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("spanish", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("spanish", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         spanishExploreTopics,
@@ -98,6 +102,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -114,6 +119,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("french", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("french", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("french", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("french", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         frenchExploreTopics,
@@ -123,6 +129,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -139,6 +146,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("german", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("german", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("german", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("german", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         germanExploreTopics,
@@ -148,6 +156,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -164,6 +173,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("italian", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("italian", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("italian", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("italian", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         italianExploreTopics,
@@ -173,6 +183,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -189,6 +200,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("portuguese", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("portuguese", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("portuguese", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("portuguese", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         portugueseExploreTopics,
@@ -198,6 +210,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -214,6 +227,7 @@ export function useExploreItems(
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("russian", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("russian", uiLanguage);
     const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("russian", uiLanguage);
+    const nounListTopic = buildNounListExploreTopic("russian", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         russianExploreTopics,
@@ -223,6 +237,7 @@ export function useExploreItems(
         examPath,
       ),
       ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
+      ...(nounListTopic ? [nounListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,

@@ -30,6 +30,7 @@ import { VerbListSeoPage } from "./pages/list-pages/verb-lists/common100Verbs/Ve
 import { PastVerbFormsSeoPage } from "./pages/list-pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
 import { ConjugatedVerbFormsSeoPage } from "./pages/list-pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage";
 import { FullVocabularyListSeoPage } from "./pages/list-pages/full-vocabulary-list/FullVocabularyListSeoPage";
+import { NounListSeoPage } from "./pages/list-pages/noun-lists/common100Nouns/NounListSeoPage";
 import { WordSeoPage } from "./pages/word-pages/detail/WordSeoPage";
 import { WordPageLayout } from "./pages/word-pages/detail/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
@@ -64,6 +65,7 @@ import {
   parseConjugatedVerbFormsSeoRoute,
   parseDevSeoCefrPlaceholderRoute,
   parseFullVocabularyListSeoRoute,
+  parseNounListSeoRoute,
   parseLevelTestSeoRoute,
   parsePastVerbFormsSeoRoute,
   parsePracticeRoute,
@@ -317,6 +319,7 @@ function AppContent({
     () => parseFullVocabularyListSeoRoute(location.pathname),
     [location.pathname],
   );
+  const nounListSeoRoute = useMemo(() => parseNounListSeoRoute(location.pathname), [location.pathname]);
   const seoHubRoute = useMemo(
     () => parseSeoHubRoute(location.pathname),
     [location.pathname],
@@ -461,6 +464,7 @@ function AppContent({
       case "pastVerbFormsSeo":
       case "conjugatedVerbFormsSeo":
       case "fullVocabularyListSeo":
+      case "nounListSeo":
       case "seoHub":
       case "wordSeoHub":
       case "devSeoCefrPlaceholder":
@@ -534,6 +538,7 @@ function AppContent({
         pastVerbFormsSeoRoute,
         conjugatedVerbFormsSeoRoute,
         fullVocabularyListSeoRoute,
+        nounListSeoRoute,
         seoHubRoute,
         wordSeoHubRoute,
         wordRoute,
@@ -546,6 +551,7 @@ function AppContent({
       pastVerbFormsSeoRoute,
       conjugatedVerbFormsSeoRoute,
       fullVocabularyListSeoRoute,
+      nounListSeoRoute,
       seoHubRoute,
       wordSeoHubRoute,
       wordRoute,
@@ -1517,6 +1523,48 @@ function AppContent({
               // before navigating, unless it equals the visitor's own
               // language (the setup requires the two to differ).
               const targetCode = TARGET_LANGUAGE_TO_UI_CODE[fullVocabularyListSeoRoute.targetLanguage];
+              if (yourLanguage !== targetCode) {
+                setPracticeLanguage(targetCode);
+              }
+            }}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "nounListSeo") {
+    if (!nounListSeoRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header {...sharedHeaderProps} activePage="notFound" />
+          <NotFoundPage message="Invalid word list page." />
+          {accountOnboardingDialog}
+          {passwordRecoveryDialog}
+          {accountIntroDialog}
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <NounListSeoPage
+            key={`${nounListSeoRoute.listId}-${nounListSeoRoute.uiLang}`}
+            uiLang={nounListSeoRoute.uiLang}
+            listId={nounListSeoRoute.listId}
+            authSession={authSession}
+            onRequestLogin={requestLoginStayingOnPage}
+            practicePath={ROUTES.exerciseSelection}
+            onPreparePractice={() => {
+              // Same preset as the full vocabulary list's practice action:
+              // skipped when the target equals the visitor's own language
+              // (the setup requires the two to differ).
+              const targetCode = TARGET_LANGUAGE_TO_UI_CODE[nounListSeoRoute.targetLanguage];
               if (yourLanguage !== targetCode) {
                 setPracticeLanguage(targetCode);
               }

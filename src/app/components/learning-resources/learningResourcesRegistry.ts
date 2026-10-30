@@ -16,6 +16,7 @@ import {
   getFullVocabularyListContent,
   getFullVocabularyListPath,
 } from "../../../data/seo/listPages/fullVocabularyList";
+import { getNounList, getNounListContent, getNounListPath } from "../../../data/seo/listPages/nounLists";
 import {
   getConjugatedVerbFormsContent,
   getConjugatedVerbFormsPath,
@@ -34,11 +35,13 @@ import {
 import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { getWordSeoHubSummaryPath } from "../../../data/seo/wordPages/wordHubRoutes";
 import { FULL_VOCABULARY_LIST_LAUNCHED } from "../../../seo/listPages/fullVocabularyList/fullVocabularyListLaunchStatus";
+import { isNounListIndexable } from "../../../seo/listPages/nounLists/common100Nouns/common100NounsMetadata";
 import { CONJUGATED_VERB_FORMS_LAUNCHED } from "../../../seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus";
 import { PAST_VERB_FORMS_LAUNCHED } from "../../../seo/listPages/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus";
 
 export type LearningResourceKind =
   | "fullVocabularyList"
+  | "commonNouns"
   | "commonVerbs"
   | "conjugations"
   | "pastForms"
@@ -82,6 +85,9 @@ export function getLanguageLearningResources(
     const href = buildLocalizedVocabularyPath(uiLang, targetLanguage, level);
     return href ? [{ level, href }] : [];
   });
+  // A noun list's id is its target language slug; it counts as launched only
+  // when released and complete (isNounListIndexable).
+  const nounList = getNounList(targetLanguage);
 
   // Order is user-visible: word lists, then verbs from base forms to
   // tenses, then the level test.
@@ -92,6 +98,14 @@ export function getLanguageLearningResources(
           "wordLists",
           getFullVocabularyListPath(targetLanguage, uiLang),
           getFullVocabularyListContent(targetLanguage, uiLang)?.entryButtonLabel,
+        )
+      : null,
+    nounList && isNounListIndexable(nounList)
+      ? toLink(
+          "commonNouns",
+          "wordLists",
+          getNounListPath(targetLanguage, uiLang),
+          getNounListContent(targetLanguage, uiLang)?.entryButtonLabel,
         )
       : null,
     toLink(

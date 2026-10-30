@@ -57,6 +57,12 @@ routes its effects touch), not where it happens to be called.
 - `useStoredAppPreferences` — language pair and exercise-filter selections,
   read/written across most interactive routes.
 
+**Public word-list actions**
+- `useAddToListAfterLogin` — the sign-in-then-"Add to list" flow, consumed
+  by two unrelated page families: the full vocabulary list
+  (`pages/list-pages/full-vocabulary-list/`) and the 100-most-common-nouns
+  lists (`pages/list-pages/noun-lists/common100Nouns/`).
+
 This is not meant to be a line-by-line API reference — read each file's
 own header comment for exact inputs/outputs.
 

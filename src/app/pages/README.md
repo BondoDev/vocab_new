@@ -28,6 +28,8 @@ src/app/pages/
   level-test/           # page family: level-test SEO page + its modal
   list-pages/           # grouping of list-style SEO page families (not a family)
     full-vocabulary-list/ # page family: full A1–C2 vocabulary list SEO page
+    noun-lists/
+      common100Nouns/     # domain (noun-lists) + concrete subtype
     verb-lists/
       common100Verbs/     # domain (verb-lists) + concrete subtype
   vocabulary/           # page family + local production runtime config

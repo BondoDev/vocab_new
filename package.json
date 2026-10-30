@@ -6,8 +6,9 @@
   "scripts": {
     "google:index": "node scripts/operations/google-index.mjs",
     "generate:word-hub-data": "node scripts/generation/generate-word-hub-data.mjs",
+    "generate:common100-nouns": "node scripts/generation/generate-common100-noun-details.mjs",
     "sitemap": "node scripts/generation/generate-sitemap.mjs",
-    "prebuild": "npm run -s generate:word-hub-data && npm run -s sitemap",
+    "prebuild": "npm run -s generate:word-hub-data && npm run -s generate:common100-nouns && npm run -s sitemap",
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/build/copy-ssr-template.mjs && node scripts/build/prerender.mjs && node ./scripts/build/verify-word-ssr-package.mjs",
     "dev": "vite",
     "lint": "eslint .",

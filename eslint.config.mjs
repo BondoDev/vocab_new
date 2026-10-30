@@ -39,6 +39,7 @@ export default [
       "src/data/seo/wordPages/word-hub-pages/**",
       "src/data/seo/wordPages/word-browse-shards/**",
       "src/data/seo/listPages/verbLists/shared/common100VerbLookup/**",
+      "src/data/seo/listPages/nounLists/common100Nouns/common100NounDetails/**",
     ],
   },
   {

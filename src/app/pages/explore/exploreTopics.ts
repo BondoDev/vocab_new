@@ -30,13 +30,14 @@ import {
   getFullVocabularyListContent,
   getFullVocabularyListPath,
 } from "../../../data/seo/listPages/fullVocabularyList";
+import { getNounListContent, getNounListPath } from "../../../data/seo/listPages/nounLists";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "../../utils/pageRouting";
 
 export type TranslateFn = (key: string) => string;
 
 export interface ExploreTopic {
   id: string;
-  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms" | "conjugatedVerbForms" | "fullVocabularyList";
+  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms" | "conjugatedVerbForms" | "fullVocabularyList" | "nounList";
   label: string;
   path: string;
   kind: "level" | "test" | "custom";
@@ -176,6 +177,31 @@ export function buildFullVocabularyListExploreTopic(
   return {
     id: "full-vocabulary-list",
     level: "fullVocabularyList",
+    label: content.entryButtonLabel,
+    path,
+    kind: "custom",
+    targetLanguage,
+  };
+}
+
+// Entry-point topic for the "100 most common nouns" page family
+// (src/data/seo/listPages/nounLists/). A noun list's id is its target
+// language slug; returns null for any (targetLanguage, uiLanguage) pair
+// without a list or an authored content record, so the dropdown omits it.
+export function buildNounListExploreTopic(
+  targetLanguage: TargetLanguageSlug,
+  uiLanguage: UILanguage,
+): ExploreTopic | null {
+  const content = getNounListContent(targetLanguage, uiLanguage);
+  const path = getNounListPath(targetLanguage, uiLanguage);
+
+  if (!content || !path) {
+    return null;
+  }
+
+  return {
+    id: "noun-list",
+    level: "nounList",
     label: content.entryButtonLabel,
     path,
     kind: "custom",

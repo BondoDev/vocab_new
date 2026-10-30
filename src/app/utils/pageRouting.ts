@@ -37,6 +37,7 @@ import {
   resolveVerbListRoute,
 } from "../../data/seo/listPages/verbLists";
 import { resolveFullVocabularyListRoute } from "../../data/seo/listPages/fullVocabularyList";
+import { resolveNounListRoute, type NounListRoute } from "../../data/seo/listPages/nounLists";
 
 // Shape of App.tsx's ROUTES map. The keys here must stay in sync with the
 // literal block in App.tsx (guarded by scripts/tests/routing/test-interactive-contracts.mjs).
@@ -63,6 +64,7 @@ export type PageKey =
   | "pastVerbFormsSeo"
   | "conjugatedVerbFormsSeo"
   | "fullVocabularyListSeo"
+  | "nounListSeo"
   | "seoHub"
   | "wordSeoHub"
   | "wordPage"
@@ -99,6 +101,8 @@ export interface ParsedFullVocabularyListSeoRoute {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
 }
+
+export type ParsedNounListSeoRoute = NounListRoute;
 
 export type ParsedWordSeoHubRoute = WordSeoHubRoute;
 
@@ -168,6 +172,10 @@ export function parseFullVocabularyListSeoRoute(path: string): ParsedFullVocabul
   return resolveFullVocabularyListRoute(path);
 }
 
+export function parseNounListSeoRoute(path: string): ParsedNounListSeoRoute | null {
+  return resolveNounListRoute(path);
+}
+
 export function parseSeoHubRoute(path: string): UiLanguageCode | null {
   return resolveSeoHubRoute(path);
 }
@@ -230,6 +238,7 @@ export function getRouteUILanguage(
     pastVerbFormsSeoRoute: ParsedPastVerbFormsSeoRoute | null;
     conjugatedVerbFormsSeoRoute: ParsedConjugatedVerbFormsSeoRoute | null;
     fullVocabularyListSeoRoute: ParsedFullVocabularyListSeoRoute | null;
+    nounListSeoRoute: ParsedNounListSeoRoute | null;
     seoHubRoute: UiLanguageCode | null;
     wordSeoHubRoute: ParsedWordSeoHubRoute | null;
     wordRoute: CanonicalWordPageRouteMatch | null;
@@ -248,6 +257,8 @@ export function getRouteUILanguage(
       return routes.conjugatedVerbFormsSeoRoute?.uiLang ?? null;
     case "fullVocabularyListSeo":
       return routes.fullVocabularyListSeoRoute?.uiLang ?? null;
+    case "nounListSeo":
+      return routes.nounListSeoRoute?.uiLang ?? null;
     case "seoHub":
       return routes.seoHubRoute ?? null;
     case "wordSeoHub":
@@ -339,6 +350,10 @@ export const pageFromPath = (
       // parsers, which would otherwise claim /{ui}/{slug} paths.
       if (parseFullVocabularyListSeoRoute(path)) {
         return "fullVocabularyListSeo";
+      }
+      // Same /{ui}/{slug} shape, so it must also precede those parsers.
+      if (parseNounListSeoRoute(path)) {
+        return "nounListSeo";
       }
       if (parseAnyWordRoute(path)) {
         return "wordPage";

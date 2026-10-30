@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import type { AddToListWord } from "../../../../features/user-profile";
-import type { StoredSupabaseSession } from "../../../../lib/supabaseAuth";
+import type { AddToListWord } from "../../features/user-profile";
+import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
 
-// Owns the "Add to list" flow of the full vocabulary list rows:
+// Owns the "Add to list" flow of the public word-list pages (the full
+// vocabulary list and the 100-most-common-nouns lists):
 // - signed in: opens the shared AddWordToListDialog for the word;
 // - signed out: remembers the word, asks App to open the login dialog in
 //   stay-on-page mode, and opens the dialog for that word once a session
 //   appears — including after a Google OAuth round-trip, which reloads the
 //   page (hence sessionStorage, scoped to this pathname and short-lived so an
 //   abandoned login can't pop the dialog open much later).
+//
+// The key keeps its original full-vocabulary-list name so a login already in
+// flight when this was shared still resumes; records are scoped by pathname,
+// so one key serves every page.
 const STORAGE_KEY = "fullVocabularyList.pendingAddToList";
 const MAX_AGE_MS = 15 * 60 * 1000;
 

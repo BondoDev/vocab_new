@@ -1,7 +1,7 @@
 {
   "targetLanguage": "spanish",
   "level": "A1",
-  "totalWords": 938,
+  "totalWords": 939,
   "totalPages": 18,
   "words": [
     {
@@ -87,6 +87,10 @@
     {
       "concept_id": "A1-00021",
       "word_lemma": "levantarse"
+    },
+    {
+      "concept_id": "A1-00022",
+      "word_lemma": "palabra"
     },
     {
       "concept_id": "A1-00025",
@@ -215,10 +219,6 @@
     {
       "concept_id": "A1-00062",
       "word_lemma": "pelota"
-    },
-    {
-      "concept_id": "A1-00063",
-      "word_lemma": "plátano"
     }
   ]
 }

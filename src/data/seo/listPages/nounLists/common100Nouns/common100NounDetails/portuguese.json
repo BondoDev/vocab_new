@@ -1,0 +1,2411 @@
+{
+  "listId": "portuguese",
+  "targetLanguage": "portuguese",
+  "byConceptId": {
+    "A1-00768": {
+      "word": "pessoa",
+      "definition": "Um ser humano individual, seja criança ou adulto.",
+      "sentence": "Ela é uma pessoa gentil.",
+      "sentenceForms": [
+        "pessoa"
+      ],
+      "translations": {
+        "en": "person",
+        "es": "persona",
+        "de": "Person",
+        "fr": "personne",
+        "ru": "человек",
+        "it": "persona"
+      },
+      "definitions": {
+        "en": "A single human being, whether an adult or child.",
+        "es": "Un solo ser humano, ya sea adulto o niño.",
+        "de": "Ein einzelner Mensch, unabhängig davon, ob erwachsen oder noch ein Kind.",
+        "fr": "Être humain considéré comme un individu, adulte ou enfant.",
+        "ru": "Один представитель человеческого рода, независимо от возраста или пола.",
+        "it": "Un singolo essere umano, indipendentemente dall'età o dal sesso."
+      }
+    },
+    "A1-00634": {
+      "word": "homem",
+      "definition": "Um ser humano adulto do sexo masculino.",
+      "sentence": "Aquele homem é meu pai.",
+      "sentenceForms": [
+        "homem"
+      ],
+      "translations": {
+        "en": "man",
+        "es": "hombre",
+        "de": "Mann",
+        "fr": "homme",
+        "ru": "мужчина",
+        "it": "uomo"
+      },
+      "definitions": {
+        "en": "An adult male person rather than a boy.",
+        "es": "Persona adulta de   sexo masculino, en contraste con un niño.",
+        "de": "Ein erwachsener männlicher Mensch und kein Junge mehr.",
+        "fr": "Personne adulte de sexe masculin, par opposition à un garçon.",
+        "ru": "Взрослый человек мужского пола, в отличие от мальчика.",
+        "it": "Una persona adulta di sesso maschile, non più un bambino."
+      }
+    },
+    "A1-01158": {
+      "word": "mulher",
+      "definition": "Um ser humano adulto do sexo feminino.",
+      "sentence": "Aquela mulher é minha professora.",
+      "sentenceForms": [
+        "mulher"
+      ],
+      "translations": {
+        "en": "woman",
+        "es": "mujer",
+        "de": "Frau",
+        "fr": "femme",
+        "ru": "женщина",
+        "it": "donna"
+      },
+      "definitions": {
+        "en": "An adult female person rather than a girl.",
+        "es": "Persona adulta de sexo femenino, en contraste con una niña.",
+        "de": "Ein erwachsener weiblicher Mensch und kein Mädchen mehr.",
+        "fr": "Personne adulte de sexe féminin, par opposition à une fille.",
+        "ru": "Взрослый человек женского пола, в отличие от девочки.",
+        "it": "Un essere umano adulto di sesso femminile."
+      }
+    },
+    "A1-00193": {
+      "word": "criança",
+      "definition": "Um ser humano jovem; um menino ou uma menina.",
+      "sentence": "Toda criança precisa de amor.",
+      "sentenceForms": [
+        "criança"
+      ],
+      "translations": {
+        "en": "child",
+        "es": "niño",
+        "de": "Kind",
+        "fr": "enfant",
+        "ru": "ребёнок",
+        "it": "bambino"
+      },
+      "definitions": {
+        "en": "A young human being; a boy or girl.",
+        "es": "Un ser humano joven; un chico o chica.",
+        "de": "Ein junger Mensch, der noch kein Erwachsener ist.",
+        "fr": "Jeune être humain qui n'a pas encore atteint l'âge adulte.",
+        "ru": "Молодой человек, который ещё не достиг взрослого возраста.",
+        "it": "Un giovane essere umano; un ragazzo o una ragazza."
+      }
+    },
+    "A1-00417": {
+      "word": "amigo",
+      "definition": "Pessoa que conhecemos bem e por quem sentimos carinho.",
+      "sentence": "Ela é minha melhor amiga.",
+      "sentenceForms": [
+        "amiga",
+        "amigo"
+      ],
+      "translations": {
+        "en": "friend",
+        "es": "amigo",
+        "de": "Freund",
+        "fr": "ami",
+        "ru": "друг",
+        "it": "amico"
+      },
+      "definitions": {
+        "en": "A person you know well and like.",
+        "es": "Una persona que conoces bien y te gusta.",
+        "de": "Eine Person, die man gut kennt und gerne mag.",
+        "fr": "Personne que l'on connaît bien et que l'on aime.",
+        "ru": "Человек, которого хорошо знаешь, которому доверяешь и который тебе нравится.",
+        "it": "Una persona che conosci bene e che ti piace."
+      }
+    },
+    "A1-00359": {
+      "word": "família",
+      "definition": "Um grupo de pessoas ligadas por parentesco ou casamento.",
+      "sentence": "Minha família tem quatro pessoas.",
+      "sentenceForms": [
+        "família"
+      ],
+      "translations": {
+        "en": "family",
+        "es": "familia",
+        "de": "Familie",
+        "fr": "famille",
+        "ru": "семья",
+        "it": "famiglia"
+      },
+      "definitions": {
+        "en": "A group of people related by blood or marriage.",
+        "es": "Un grupo de personas   relacionadas por sangre o matrimonio.",
+        "de": "Eine Gruppe von Menschen, die durch Verwandtschaft oder Heirat miteinander verbunden sind.",
+        "fr": "Groupe de personnes liées par la naissance, le mariage ou la parenté.",
+        "ru": "Группа людей, связанных кровным родством или браком.",
+        "it": "Un gruppo di persone unite da rapporti di parentela o matrimonio."
+      }
+    },
+    "A1-00675": {
+      "word": "mãe",
+      "definition": "Mulher que tem um filho ou uma filha.",
+      "sentence": "Minha mãe me ama.",
+      "sentenceForms": [
+        "mãe"
+      ],
+      "translations": {
+        "en": "mother",
+        "es": "madre",
+        "de": "Mutter",
+        "fr": "mère",
+        "ru": "мать",
+        "it": "madre"
+      },
+      "definitions": {
+        "en": "A female parent of a child or children.",
+        "es": "Progenitora de sexo femenino de uno o más hijos.",
+        "de": "Ein weiblicher Elternteil eines Kindes oder mehrerer Kinder.",
+        "fr": "Femme qui a donné naissance à un enfant ou qui joue le rôle de parent.",
+        "ru": "Женщина, которая является родителем одного или нескольких детей.",
+        "it": "Una donna che ha uno o più figli."
+      }
+    },
+    "A1-00367": {
+      "word": "pai",
+      "definition": "Homem que tem um filho ou uma filha.",
+      "sentence": "Meu pai é médico.",
+      "sentenceForms": [
+        "pai"
+      ],
+      "translations": {
+        "en": "father",
+        "es": "padre",
+        "de": "Vater",
+        "fr": "père",
+        "ru": "отец",
+        "it": "padre"
+      },
+      "definitions": {
+        "en": "A male parent of a child or children.",
+        "es": "Progenitor masculino   de uno o más hijos.",
+        "de": "Ein männlicher Elternteil eines Kindes oder mehrerer Kinder.",
+        "fr": "Homme qui est le parent d'un enfant ou de plusieurs enfants.",
+        "ru": "Мужчина, который является родителем ребёнка или нескольких детей.",
+        "it": "Un uomo che ha uno o più figli."
+      }
+    },
+    "A1-01017": {
+      "word": "professor",
+      "definition": "Pessoa que trabalha dando aulas e orientando o aprendizado dos alunos.",
+      "sentence": "O professor escreve no quadro.",
+      "sentenceForms": [
+        "professor"
+      ],
+      "translations": {
+        "en": "teacher",
+        "es": "profesor",
+        "de": "Lehrer",
+        "fr": "professeur",
+        "ru": "учитель",
+        "it": "insegnante"
+      },
+      "definitions": {
+        "en": "A person whose job is to help students learn.",
+        "es": "Persona cuyo trabajo consiste en ayudar a otras personas a aprender.",
+        "de": "Eine Person, deren Beruf es ist, Schüler zu unterrichten und ihnen beim Lernen zu helfen.",
+        "fr": "Personne dont le métier consiste à donner des cours et à transmettre des connaissances.",
+        "ru": "Человек, чья работа состоит в обучении учеников определённым знаниям и навыкам.",
+        "it": "Una persona che si occupa professionalmente di aiutare gli studenti ad apprendere."
+      }
+    },
+    "A1-00986": {
+      "word": "estudante",
+      "definition": "Uma pessoa que estuda em uma escola.",
+      "sentence": "Sou estudante nesta escola.",
+      "sentenceForms": [
+        "estudante"
+      ],
+      "translations": {
+        "en": "student",
+        "es": "estudiante",
+        "de": "Schüler",
+        "fr": "étudiant",
+        "ru": "ученик",
+        "it": "studente"
+      },
+      "definitions": {
+        "en": "A person who is studying at a school or college.",
+        "es": "Persona que aprende en una escuela, universidad u otro centro educativo.",
+        "de": "Eine Person, die an einer Schule lernt und unterrichtet wird.",
+        "fr": "Personne qui suit des cours pour apprendre dans un établissement d'enseignement.",
+        "ru": "Человек, который учится в школе или другом учебном заведении.",
+        "it": "Una persona che frequenta una scuola o un'università per imparare."
+      }
+    },
+    "A1-00525": {
+      "word": "casa",
+      "definition": "Construção destinada a servir de moradia para uma ou mais pessoas.",
+      "sentence": "Moro em uma casa grande.",
+      "sentenceForms": [
+        "casa"
+      ],
+      "translations": {
+        "en": "house",
+        "es": "casa",
+        "de": "Haus",
+        "fr": "maison",
+        "ru": "дом",
+        "it": "casa"
+      },
+      "definitions": {
+        "en": "A building where people live, usually as a family.",
+        "es": "Edificio destinado a servir como vivienda para una o varias personas.",
+        "de": "Ein Gebäude, in dem Menschen normalerweise zusammen wohnen.",
+        "fr": "Bâtiment construit pour servir de logement à une ou plusieurs personnes.",
+        "ru": "Здание, предназначенное для постоянного проживания одного или нескольких людей.",
+        "it": "Un edificio destinato a essere abitato da una o più persone."
+      }
+    },
+    "A1-00853": {
+      "word": "cômodo",
+      "definition": "Parte de uma casa ou de outro edifício, separada por paredes.",
+      "sentence": "A casa tem um cômodo para receber visitas.",
+      "sentenceForms": [
+        "cômodo"
+      ],
+      "translations": {
+        "en": "room",
+        "es": "habitación",
+        "de": "Zimmer",
+        "fr": "pièce",
+        "ru": "комната",
+        "it": "stanza"
+      },
+      "definitions": {
+        "en": "A part of a building with its own walls and ceiling.",
+        "es": "Una parte de un edificio con sus propias paredes y techo.",
+        "de": "Ein Teil eines Gebäudes mit eigenen Wänden und einer Decke.",
+        "fr": "Partie d'un bâtiment séparée des autres par des murs et généralement un plafond.",
+        "ru": "Отдельная часть здания, ограниченная стенами, полом и потолком.",
+        "it": "Una parte interna di un edificio delimitata da pareti e soffitto."
+      }
+    },
+    "A1-00299": {
+      "word": "porta",
+      "definition": "Peça móvel que permite abrir ou fechar a entrada de um espaço.",
+      "sentence": "Por favor, feche a porta.",
+      "sentenceForms": [
+        "porta"
+      ],
+      "translations": {
+        "en": "door",
+        "es": "puerta",
+        "de": "Tür",
+        "fr": "porte",
+        "ru": "дверь",
+        "it": "porta"
+      },
+      "definitions": {
+        "en": "A movable barrier that opens and closes the entrance to a building or room.",
+        "es": "Una barrera móvil que   abre y cierra la entrada a un edificio o habitación.",
+        "de": "Eine bewegliche Abtrennung, mit der man den Eingang zu einem Gebäude oder Raum öffnet und schließt.",
+        "fr": "Élément mobile qui permet d'ouvrir ou de fermer l'entrée d'une pièce ou d'un bâtiment.",
+        "ru": "Подвижная преграда, которая открывает и закрывает вход в здание или комнату.",
+        "it": "Una barriera mobile che apre e chiude l'ingresso a un edificio o stanza."
+      }
+    },
+    "A1-01153": {
+      "word": "janela",
+      "definition": "Abertura com vidro em parede ou veículo, que deixa entrar luz.",
+      "sentence": "Abra a janela, por favor.",
+      "sentenceForms": [
+        "janela"
+      ],
+      "translations": {
+        "en": "window",
+        "es": "ventana",
+        "de": "Fenster",
+        "fr": "fenêtre",
+        "ru": "окно",
+        "it": "finestra"
+      },
+      "definitions": {
+        "en": "An opening in a wall or vehicle with glass to let in light.",
+        "es": "Una abertura en una pared o vehículo con vidrio para dejar entrar la luz.",
+        "de": "Eine verglaste Öffnung in einer Wand oder einem Fahrzeug, durch die Licht hineinkommt.",
+        "fr": "Ouverture dans un mur ou un véhicule avec du verre pour laisser entrer la lumière.",
+        "ru": "Отверстие со стеклом в стене или транспортном средстве, пропускающее свет.",
+        "it": "Un'apertura in un muro o in un veicolo con vetro per lasciar entrare la luce."
+      }
+    },
+    "A1-01010": {
+      "word": "mesa",
+      "definition": "Um móvel com tampo plano e pernas.",
+      "sentence": "O livro está sobre a mesa.",
+      "sentenceForms": [
+        "mesa"
+      ],
+      "translations": {
+        "en": "table",
+        "es": "mesa",
+        "de": "Tisch",
+        "fr": "table",
+        "ru": "стол",
+        "it": "tavolo"
+      },
+      "definitions": {
+        "en": "A piece of furniture with a flat top and legs.",
+        "es": "Un mueble con una superficie plana y patas.",
+        "de": "Ein Möbelstück mit einer flachen Oberfläche und mehreren Beinen.",
+        "fr": "Meuble composé d'une surface plate soutenue généralement par plusieurs pieds.",
+        "ru": "Предмет мебели с плоской поверхностью, которую поддерживают ножки или опоры.",
+        "it": "Un mobile formato da un piano orizzontale sostenuto generalmente da gambe."
+      }
+    },
+    "A1-00185": {
+      "word": "cadeira",
+      "definition": "Móvel com assento e encosto, feito para uma pessoa sentar.",
+      "sentence": "Sente-se na cadeira, por favor.",
+      "sentenceForms": [
+        "cadeira"
+      ],
+      "translations": {
+        "en": "chair",
+        "es": "silla",
+        "de": "Stuhl",
+        "fr": "chaise",
+        "ru": "стул",
+        "it": "sedia"
+      },
+      "definitions": {
+        "en": "A piece of furniture for one person to sit on.",
+        "es": "Un mueble para que una persona se siente.",
+        "de": "Ein Möbelstück, auf dem normalerweise eine Person sitzen kann.",
+        "fr": "Meuble sur lequel une personne peut s'asseoir.",
+        "ru": "Предмет мебели, на котором может сидеть один человек.",
+        "it": "Un mobile su cui può sedersi una persona, generalmente con uno schienale."
+      }
+    },
+    "A1-00083": {
+      "word": "cama",
+      "definition": "Móvel com colchão no qual as pessoas se deitam para dormir.",
+      "sentence": "Eu vou para a cama às 10 da noite.",
+      "sentenceForms": [
+        "cama"
+      ],
+      "translations": {
+        "en": "bed",
+        "es": "cama",
+        "de": "Bett",
+        "fr": "lit",
+        "ru": "кровать",
+        "it": "letto"
+      },
+      "definitions": {
+        "en": "A piece of furniture that people sleep on.",
+        "es": "Mueble preparado para   que una persona duerma o descanse.",
+        "de": "Ein Möbelstück, auf dem Menschen normalerweise schlafen oder liegen.",
+        "fr": "Meuble sur lequel une personne se couche pour dormir.",
+        "ru": "Предмет мебели, предназначенный для сна и отдыха человека.",
+        "it": "Un mobile sul quale ci si sdraia per dormire."
+      }
+    },
+    "A1-00771": {
+      "word": "telefone",
+      "definition": "Aparelho que permite falar com alguém que está distante.",
+      "sentence": "Meu telefone está tocando.",
+      "sentenceForms": [
+        "telefone"
+      ],
+      "translations": {
+        "en": "phone",
+        "es": "teléfono",
+        "de": "Telefon",
+        "fr": "téléphone",
+        "ru": "телефон",
+        "it": "telefono"
+      },
+      "definitions": {
+        "en": "A device used to talk to someone who is not near.",
+        "es": "Un dispositivo usado para hablar con alguien que no está cerca.",
+        "de": "Ein Gerät, mit dem man mit einer entfernten Person sprechen kann.",
+        "fr": "Appareil qui permet de parler à distance avec une autre personne.",
+        "ru": "Устройство, с помощью которого разговаривают с человеком на расстоянии.",
+        "it": "Un dispositivo utilizzato per parlare a distanza con altre persone."
+      }
+    },
+    "A1-00232": {
+      "word": "computador",
+      "definition": "Uma máquina eletrônica que armazena e processa informações.",
+      "sentence": "Uso um computador para fazer minha lição.",
+      "sentenceForms": [
+        "computador"
+      ],
+      "translations": {
+        "en": "computer",
+        "es": "computadora",
+        "de": "Computer",
+        "fr": "ordinateur",
+        "ru": "компьютер",
+        "it": "computer"
+      },
+      "definitions": {
+        "en": "An electronic machine that can store and process information.",
+        "es": "Una máquina electrónica que puede almacenar y procesar información.",
+        "de": "Eine elektronische Maschine, die Informationen speichern und verarbeiten kann.",
+        "fr": "Machine électronique qui peut stocker et traiter des informations.",
+        "ru": "Электронная машина, которая может хранить и обрабатывать информацию.",
+        "it": "Una macchina elettronica che può memorizzare ed elaborare informazioni."
+      }
+    },
+    "A1-00571": {
+      "word": "chave",
+      "definition": "Um pequeno objeto de metal para abrir fechaduras.",
+      "sentence": "Preciso de uma chave para abrir a porta.",
+      "sentenceForms": [
+        "chave"
+      ],
+      "translations": {
+        "en": "key",
+        "es": "llave",
+        "de": "Schlüssel",
+        "fr": "clé",
+        "ru": "ключ",
+        "it": "chiave"
+      },
+      "definitions": {
+        "en": "A small metal object used to open a lock.",
+        "es": "Un pequeño objeto de   metal usado para abrir una cerradura.",
+        "de": "Ein kleiner Gegenstand aus Metall, mit dem man ein Schloss öffnet.",
+        "fr": "Petit objet métallique utilisé pour ouvrir une serrure.",
+        "ru": "Небольшой металлический предмет, который используют для открывания замка.",
+        "it": "Un piccolo oggetto di metallo usato per aprire una serratura."
+      }
+    },
+    "A1-01127": {
+      "word": "água",
+      "definition": "Líquido transparente, essencial à vida e presente em rios, lagos e mares.",
+      "sentence": "Eu bebo água todos os dias.",
+      "sentenceForms": [
+        "água"
+      ],
+      "translations": {
+        "en": "water",
+        "es": "agua",
+        "de": "Wasser",
+        "fr": "eau",
+        "ru": "вода",
+        "it": "acqua"
+      },
+      "definitions": {
+        "en": "A clear liquid that forms rivers, lakes, and seas, and is essential for life.",
+        "es": "Un líquido claro que forma ríos, lagos y mares, y es esencial para la vida.",
+        "de": "Eine klare Flüssigkeit, die Flüsse, Seen und Meere bildet und für Leben notwendig ist.",
+        "fr": "Liquide transparent qui forme les rivières, les lacs et les mers, et essentiel à la vie.",
+        "ru": "Прозрачная жидкость, необходимая для жизни и образующая реки, озёра и моря.",
+        "it": "Un liquido trasparente che forma fiumi, laghi e mari, ed è essenziale per la vita."
+      }
+    },
+    "A1-00401": {
+      "word": "comida",
+      "definition": "Alimentos que pessoas e animais consomem para obter energia e nutrientes.",
+      "sentence": "Compramos comida no supermercado.",
+      "sentenceForms": [
+        "comida"
+      ],
+      "translations": {
+        "en": "food",
+        "es": "comida",
+        "de": "Essen",
+        "fr": "nourriture",
+        "ru": "еда",
+        "it": "cibo"
+      },
+      "definitions": {
+        "en": "Things that people and animals eat to live and grow.",
+        "es": "Cosas que las   personas y los animales comen.",
+        "de": "Dinge, die Menschen und Tiere essen, um zu leben und zu wachsen.",
+        "fr": "Ensemble des choses que les êtres vivants mangent pour vivre et grandir.",
+        "ru": "То, что люди и животные употребляют, чтобы жить и расти.",
+        "it": "Le sostanze che persone e animali mangiano per nutrirsi e vivere."
+      }
+    },
+    "A1-00131": {
+      "word": "pão",
+      "definition": "Um alimento feito de farinha, água e fermento, assado no forno.",
+      "sentence": "Eu como pão com manteiga no café da manhã.",
+      "sentenceForms": [
+        "pão"
+      ],
+      "translations": {
+        "en": "bread",
+        "es": "pan",
+        "de": "Brot",
+        "fr": "pain",
+        "ru": "хлеб",
+        "it": "pane"
+      },
+      "definitions": {
+        "en": "A food made from flour, water, and yeast, baked in an oven.",
+        "es": "Un alimento hecho de harina, agua y levadura, horneado en un horno.",
+        "de": "Ein Lebensmittel aus Mehl, Wasser und Hefe, das im Ofen gebacken wird.",
+        "fr": "Aliment fait de farine, d'eau et de levure, cuit au four.",
+        "ru": "Продукт питания, приготовленный из муки, воды и дрожжей, выпеченный в печи.",
+        "it": "Un cibo fatto con farina, acqua e lievito, cotto al forno."
+      }
+    },
+    "A1-00656": {
+      "word": "leite",
+      "definition": "Líquido geralmente branco produzido pelas fêmeas dos mamíferos para alimentar os filhotes.",
+      "sentence": "Bebo leite todos os dias.",
+      "sentenceForms": [
+        "leite"
+      ],
+      "translations": {
+        "en": "milk",
+        "es": "leche",
+        "de": "Milch",
+        "fr": "lait",
+        "ru": "молоко",
+        "it": "latte"
+      },
+      "definitions": {
+        "en": "The white liquid produced by female mammals to feed their young.",
+        "es": "El líquido blanco   producido por los mamíferos hembras para alimentar a sus crías.",
+        "de": "Die weiße Flüssigkeit, die weibliche Säugetiere für ihre Jungen produzieren.",
+        "fr": "Liquide blanc produit par les mammifères femelles pour nourrir leurs petits.",
+        "ru": "Белая жидкость, которую самки млекопитающих производят для кормления детёнышей.",
+        "it": "Il liquido bianco prodotto dai mammiferi femmine per nutrire i loro piccoli."
+      }
+    },
+    "A1-00323": {
+      "word": "ovo",
+      "definition": "Estrutura geralmente oval produzida por aves e alguns outros animais.",
+      "sentence": "Eu como um ovo cozido no café da manhã.",
+      "sentenceForms": [
+        "ovo"
+      ],
+      "translations": {
+        "en": "egg",
+        "es": "huevo",
+        "de": "Ei",
+        "fr": "œuf",
+        "ru": "яйцо",
+        "it": "uovo"
+      },
+      "definitions": {
+        "en": "An oval object laid by a female bird or reptile.",
+        "es": "Un objeto ovalado   puesto por un ave o reptil hembra.",
+        "de": "Ein ovaler Gegenstand, der von einem weiblichen Vogel oder Reptil gelegt wird.",
+        "fr": "Objet ovale pondu par un oiseau ou certains autres animaux.",
+        "ru": "Овальный объект, который откладывает самка птицы или рептилии.",
+        "it": "Un corpo generalmente ovale prodotto dalle femmine degli uccelli e di altri animali."
+      }
+    },
+    "A1-00039": {
+      "word": "maçã",
+      "definition": "Uma fruta redonda com casca vermelha, verde ou amarela.",
+      "sentence": "Eu como uma maçã todos os dias.",
+      "sentenceForms": [
+        "maçã"
+      ],
+      "translations": {
+        "en": "apple",
+        "es": "manzana",
+        "de": "Apfel",
+        "fr": "pomme",
+        "ru": "яблоко",
+        "it": "mela"
+      },
+      "definitions": {
+        "en": "A round fruit with red, green, or yellow skin.",
+        "es": "Una fruta redonda con   piel roja, verde o amarilla.",
+        "de": "Eine runde Frucht mit roter, grüner oder gelber Schale.",
+        "fr": "Fruit rond à peau rouge, verte ou jaune.",
+        "ru": "Круглый фрукт с красной, зелёной или жёлтой кожурой.",
+        "it": "Un frutto rotondo con buccia rossa, verde o gialla."
+      }
+    },
+    "A1-00843": {
+      "word": "arroz",
+      "definition": "Grãos comestíveis de uma planta, geralmente cozidos antes de serem servidos.",
+      "sentence": "Eu como arroz no almoço.",
+      "sentenceForms": [
+        "arroz"
+      ],
+      "translations": {
+        "en": "rice",
+        "es": "arroz",
+        "de": "Reis",
+        "fr": "riz",
+        "ru": "рис",
+        "it": "riso"
+      },
+      "definitions": {
+        "en": "Small white or brown grains from a plant, used as food.",
+        "es": "Granos pequeños blancos o marrones de una planta, usados como comida.",
+        "de": "Kleine weiße oder braune Körner einer Pflanze, die als Nahrung gegessen werden.",
+        "fr": "Ensemble de petits grains blancs ou bruns provenant d'une plante et consommés comme aliment.",
+        "ru": "Небольшие белые или коричневые зёрна растения, используемые в пищу.",
+        "it": "Piccoli chicchi bianchi o marroni di una pianta, usati come cibo."
+      }
+    },
+    "A1-00648": {
+      "word": "carne",
+      "definition": "Parte do corpo de um animal utilizada como alimento.",
+      "sentence": "Como carne no jantar.",
+      "sentenceForms": [
+        "carne"
+      ],
+      "translations": {
+        "en": "meat",
+        "es": "carne",
+        "de": "Fleisch",
+        "fr": "viande",
+        "ru": "мясо",
+        "it": "carne"
+      },
+      "definitions": {
+        "en": "The flesh of an animal used as food.",
+        "es": "Tejido de un animal   que se utiliza como alimento.",
+        "de": "Das Gewebe eines Tieres, das von Menschen als Nahrung gegessen wird.",
+        "fr": "Chair d'un animal utilisée comme nourriture.",
+        "ru": "Части тела животного, которые люди используют в качестве пищи.",
+        "it": "La parte muscolare degli animali utilizzata come alimento."
+      }
+    },
+    "A1-00223": {
+      "word": "café",
+      "definition": "Uma bebida quente e marrom feita de grãos torrados.",
+      "sentence": "Meu pai toma café toda manhã.",
+      "sentenceForms": [
+        "café"
+      ],
+      "translations": {
+        "en": "coffee",
+        "es": "café",
+        "de": "Kaffee",
+        "fr": "café",
+        "ru": "кофе",
+        "it": "caffè"
+      },
+      "definitions": {
+        "en": "A hot, brown drink made from the roasted beans of a tropical plant.",
+        "es": "Una bebida caliente y marrón hecha de los granos tostados de una planta tropical.",
+        "de": "Ein heißes, braunes Getränk, das aus gerösteten Kaffeebohnen gemacht wird.",
+        "fr": "Boisson chaude et brune faite à partir des grains torréfiés d'une plante tropicale.",
+        "ru": "Горячий коричневый напиток, приготовленный из обжаренных зёрен тропического растения.",
+        "it": "Una bevanda calda e marrone fatta dai chicchi tostati di una pianta tropicale."
+      }
+    },
+    "A1-00134": {
+      "word": "café da manhã",
+      "definition": "A primeira refeição do dia, comida de manhã.",
+      "sentence": "Eu tomo café da manhã às 7 da manhã.",
+      "sentenceForms": [
+        "café da manhã"
+      ],
+      "translations": {
+        "en": "breakfast",
+        "es": "desayuno",
+        "de": "Frühstück",
+        "fr": "petit-déjeuner",
+        "ru": "завтрак",
+        "it": "colazione"
+      },
+      "definitions": {
+        "en": "The first meal of the day, eaten in the morning.",
+        "es": "La primera comida del día, que se come por la mañana.",
+        "de": "Die erste Mahlzeit des Tages, die man morgens isst.",
+        "fr": "Premier repas de la journée, pris le matin.",
+        "ru": "Первый приём пищи за день, который едят утром.",
+        "it": "Il primo pasto della giornata, consumato al mattino."
+      }
+    },
+    "A1-00201": {
+      "word": "cidade",
+      "definition": "Localidade urbana onde muitas pessoas vivem, trabalham e utilizam serviços.",
+      "sentence": "Eu moro em uma cidade grande.",
+      "sentenceForms": [
+        "cidade"
+      ],
+      "translations": {
+        "en": "city",
+        "es": "ciudad",
+        "de": "Stadt",
+        "fr": "ville",
+        "ru": "город",
+        "it": "città"
+      },
+      "definitions": {
+        "en": "A large and important town where many people live and work.",
+        "es": "Un lugar grande e importante donde mucha gente vive y trabaja.",
+        "de": "Eine große und wichtige Ortschaft, in der viele Menschen leben und arbeiten.",
+        "fr": "Grand centre important où beaucoup de personnes vivent et travaillent.",
+        "ru": "Крупный и важный населённый пункт, где живёт и работает много людей.",
+        "it": "Un centro abitato grande, con molti edifici, servizi e abitanti."
+      }
+    },
+    "A2-00298": {
+      "word": "país",
+      "definition": "Uma nação com governo e fronteiras próprias.",
+      "sentence": "A França é um país bonito.",
+      "sentenceForms": [
+        "país"
+      ],
+      "translations": {
+        "en": "country",
+        "es": "país",
+        "de": "Land",
+        "fr": "pays",
+        "ru": "страна",
+        "it": "paese"
+      },
+      "definitions": {
+        "en": "A nation with its own government, borders, and territory.",
+        "es": "Una nación con su propio gobierno y fronteras.",
+        "de": "Ein Staat mit eigener Regierung, eigenen Grenzen und einem bestimmten Gebiet.",
+        "fr": "Territoire avec des frontières, une population et généralement son propre gouvernement.",
+        "ru": "Территория с собственными границами, правительством и системой государственного управления.",
+        "it": "Una nazione con il proprio governo e i propri confini."
+      }
+    },
+    "A1-00983": {
+      "word": "rua",
+      "definition": "Via pública de uma cidade por onde circulam pessoas e veículos.",
+      "sentence": "Moro em uma rua tranquila.",
+      "sentenceForms": [
+        "rua"
+      ],
+      "translations": {
+        "en": "street",
+        "es": "calle",
+        "de": "Straße",
+        "fr": "rue",
+        "ru": "улица",
+        "it": "strada"
+      },
+      "definitions": {
+        "en": "A public road in a city or town.",
+        "es": "Una vía pública en una ciudad o pueblo.",
+        "de": "Ein öffentlicher Verkehrsweg innerhalb einer Stadt oder eines Ortes.",
+        "fr": "Voie publique située dans une ville ou un village, souvent bordée de bâtiments.",
+        "ru": "Общественная дорога в городе или посёлке, обычно окружённая зданиями.",
+        "it": "Una via pubblica di una città o di un paese, utilizzata per spostarsi."
+      }
+    },
+    "A1-00872": {
+      "word": "escola",
+      "definition": "Lugar onde crianças e outras pessoas frequentam aulas para aprender.",
+      "sentence": "Vou à escola de segunda a sexta.",
+      "sentenceForms": [
+        "escola"
+      ],
+      "translations": {
+        "en": "school",
+        "es": "escuela",
+        "de": "Schule",
+        "fr": "école",
+        "ru": "школа",
+        "it": "scuola"
+      },
+      "definitions": {
+        "en": "A place where children go to learn.",
+        "es": "Un lugar donde los niños van a aprender.",
+        "de": "Ein Ort, an dem Kinder unterrichtet werden und lernen.",
+        "fr": "Établissement où les enfants vont pour apprendre différentes matières avec des enseignants.",
+        "ru": "Место, где дети получают образование и занимаются с учителями.",
+        "it": "Un luogo dove gli studenti ricevono un'istruzione dagli insegnanti."
+      }
+    },
+    "A1-00898": {
+      "word": "loja",
+      "definition": "Estabelecimento comercial onde diferentes produtos são oferecidos para venda.",
+      "sentence": "Compro leite na loja.",
+      "sentenceForms": [
+        "loja"
+      ],
+      "translations": {
+        "en": "shop",
+        "es": "tienda",
+        "de": "Laden",
+        "fr": "magasin",
+        "ru": "магазин",
+        "it": "negozio"
+      },
+      "definitions": {
+        "en": "A place where goods are sold; a store.",
+        "es": "Lugar donde se venden productos directamente a los clientes.",
+        "de": "Ein Ort, an dem Waren angeboten und verkauft werden.",
+        "fr": "Endroit où l'on vend des produits que les clients peuvent acheter.",
+        "ru": "Место, где люди могут покупать различные товары за деньги.",
+        "it": "Un locale commerciale in cui si possono acquistare prodotti di vario tipo."
+      }
+    },
+    "A1-00839": {
+      "word": "restaurante",
+      "definition": "Um lugar onde se paga para comer uma refeição.",
+      "sentence": "Nós comemos em um restaurante.",
+      "sentenceForms": [
+        "restaurante"
+      ],
+      "translations": {
+        "en": "restaurant",
+        "es": "restaurante",
+        "de": "Restaurant",
+        "fr": "restaurant",
+        "ru": "ресторан",
+        "it": "ristorante"
+      },
+      "definitions": {
+        "en": "A place where you pay to sit and eat a meal.",
+        "es": "Un lugar donde pagas para sentarte y comer una comida.",
+        "de": "Ein Ort, an dem man gegen Bezahlung eine Mahlzeit essen kann.",
+        "fr": "Établissement où l'on peut acheter et manger des repas sur place.",
+        "ru": "Место, где посетители заказывают, оплачивают и едят приготовленную еду.",
+        "it": "Un luogo dove paghi per sederti e mangiare un pasto."
+      }
+    },
+    "A1-00520": {
+      "word": "hospital",
+      "definition": "Estabelecimento onde pessoas doentes ou feridas recebem atendimento médico.",
+      "sentence": "Minha mãe trabalha em um hospital.",
+      "sentenceForms": [
+        "hospital"
+      ],
+      "translations": {
+        "en": "hospital",
+        "es": "hospital",
+        "de": "Krankenhaus",
+        "fr": "hôpital",
+        "ru": "больница",
+        "it": "ospedale"
+      },
+      "definitions": {
+        "en": "A place where sick or injured people receive medical care.",
+        "es": "Lugar donde personas enfermas o heridas reciben atención médica.",
+        "de": "Ein Ort, an dem kranke oder verletzte Menschen medizinisch behandelt werden.",
+        "fr": "Établissement où les personnes malades ou blessées reçoivent des soins médicaux.",
+        "ru": "Место, где больные или раненые люди получают медицинскую помощь.",
+        "it": "Una struttura sanitaria dove le persone malate o ferite ricevono cure mediche."
+      }
+    },
+    "A1-00972": {
+      "word": "estação",
+      "definition": "Um local onde trens ou ônibus param.",
+      "sentence": "Espero o trem na estação.",
+      "sentenceForms": [
+        "estação"
+      ],
+      "translations": {
+        "en": "station",
+        "es": "estación",
+        "de": "Station",
+        "fr": "gare",
+        "ru": "станция",
+        "it": "stazione"
+      },
+      "definitions": {
+        "en": "A place where trains or buses stop.",
+        "es": "Un lugar donde paran trenes o autobuses.",
+        "de": "Ein Ort, an dem Züge oder Busse regelmäßig halten.",
+        "fr": "Lieu où les trains s'arrêtent pour laisser monter et descendre les voyageurs.",
+        "ru": "Место, где поезда, автобусы или другой транспорт останавливаются для пассажиров.",
+        "it": "Un luogo dove si fermano treni o autobus."
+      }
+    },
+    "A1-00171": {
+      "word": "carro",
+      "definition": "Um veículo de estrada com motor e quatro rodas.",
+      "sentence": "Nós dirigimos um carro vermelho.",
+      "sentenceForms": [
+        "carro"
+      ],
+      "translations": {
+        "en": "car",
+        "es": "coche",
+        "de": "Auto",
+        "fr": "voiture",
+        "ru": "машина",
+        "it": "macchina"
+      },
+      "definitions": {
+        "en": "A road vehicle with an engine and four wheels.",
+        "es": "Un vehículo de carretera con motor y cuatro ruedas.",
+        "de": "Ein Fahrzeug für die Straße mit einem Motor und vier Rädern.",
+        "fr": "Véhicule routier avec un moteur et quatre roues.",
+        "ru": "Дорожное транспортное средство с двигателем и четырьмя колёсами.",
+        "it": "Un veicolo stradale con un motore e quattro ruote."
+      }
+    },
+    "A1-00150": {
+      "word": "ônibus",
+      "definition": "Um veículo grande que leva passageiros por uma rota fixa.",
+      "sentence": "Eu vou para o trabalho de ônibus.",
+      "sentenceForms": [
+        "ônibus"
+      ],
+      "translations": {
+        "en": "bus",
+        "es": "autobús",
+        "de": "Bus",
+        "fr": "bus",
+        "ru": "автобус",
+        "it": "autobus"
+      },
+      "definitions": {
+        "en": "A large vehicle that carries passengers along a fixed route.",
+        "es": "Un vehículo grande que transporta pasajeros por una ruta fija.",
+        "de": "Ein großes Fahrzeug, das Fahrgäste auf einer festen Strecke befördert.",
+        "fr": "Grand véhicule qui transporte des passagers sur un itinéraire fixe.",
+        "ru": "Большое транспортное средство, которое перевозит пассажиров по фиксированному маршруту.",
+        "it": "Un grande veicolo che trasporta passeggeri lungo un percorso fisso."
+      }
+    },
+    "A1-00273": {
+      "word": "dia",
+      "definition": "Período de vinte e quatro horas, contado de uma meia-noite à seguinte.",
+      "sentence": "Há sete dias em uma semana.",
+      "sentenceForms": [
+        "dias",
+        "dia"
+      ],
+      "translations": {
+        "en": "day",
+        "es": "día",
+        "de": "Tag",
+        "fr": "jour",
+        "ru": "день",
+        "it": "giorno"
+      },
+      "definitions": {
+        "en": "A period of twenty-four hours from midnight to midnight.",
+        "es": "Período de   veinticuatro horas que va de una medianoche a la siguiente.",
+        "de": "Ein Zeitraum von vierundzwanzig Stunden, der von Mitternacht bis Mitternacht dauert.",
+        "fr": "Période de 24 heures qui commence et se termine à minuit.",
+        "ru": "Период времени продолжительностью двадцать четыре часа, от полуночи до полуночи.",
+        "it": "Un periodo di 24 ore che va da una mezzanotte alla successiva."
+      }
+    },
+    "A1-00702": {
+      "word": "noite",
+      "definition": "O período de escuridão entre um dia e outro.",
+      "sentence": "Eu durmo à noite.",
+      "sentenceForms": [
+        "noite"
+      ],
+      "translations": {
+        "en": "night",
+        "es": "noche",
+        "de": "Nacht",
+        "fr": "nuit",
+        "ru": "ночь",
+        "it": "notte"
+      },
+      "definitions": {
+        "en": "The time of darkness between one day and the next.",
+        "es": "El tiempo de oscuridad entre un día y el siguiente.",
+        "de": "Die dunkle Zeit zwischen einem Tag und dem nächsten.",
+        "fr": "Période d'obscurité entre le coucher et le lever du soleil.",
+        "ru": "Время темноты между одним днём и следующим.",
+        "it": "Il periodo di oscurità compreso tra la sera e il mattino successivo."
+      }
+    },
+    "A1-00673": {
+      "word": "manhã",
+      "definition": "A parte inicial do dia, até o meio-dia.",
+      "sentence": "Acordo cedo de manhã.",
+      "sentenceForms": [
+        "manhã"
+      ],
+      "translations": {
+        "en": "morning",
+        "es": "mañana",
+        "de": "Morgen",
+        "fr": "matin",
+        "ru": "утро",
+        "it": "mattina"
+      },
+      "definitions": {
+        "en": "The early part of the day, from sunrise until noon.",
+        "es": "La parte temprana del día, desde el amanecer hasta el mediodía.",
+        "de": "Die frühe Tageszeit vom Sonnenaufgang bis ungefähr zum Mittag.",
+        "fr": "Première partie de la journée, du lever du soleil jusqu'à midi.",
+        "ru": "Ранняя часть дня, от рассвета до полудня.",
+        "it": "La prima parte del giorno, dall'alba fino a mezzogiorno."
+      }
+    },
+    "A1-01133": {
+      "word": "semana",
+      "definition": "Período de sete dias consecutivos no calendário.",
+      "sentence": "Há sete dias em uma semana.",
+      "sentenceForms": [
+        "semana"
+      ],
+      "translations": {
+        "en": "week",
+        "es": "semana",
+        "de": "Woche",
+        "fr": "semaine",
+        "ru": "неделя",
+        "it": "settimana"
+      },
+      "definitions": {
+        "en": "A period of seven consecutive days in the calendar.",
+        "es": "Período de siete días consecutivos en el calendario.",
+        "de": "Ein Zeitraum von sieben aufeinanderfolgenden Tagen im Kalender.",
+        "fr": "Période de sept jours qui se suivent dans le calendrier.",
+        "ru": "Период времени, состоящий из семи последовательных календарных дней.",
+        "it": "Un periodo di sette giorni consecutivi nel calendario."
+      }
+    },
+    "A1-00670": {
+      "word": "mês",
+      "definition": "Uma das doze divisões de tempo que formam um ano.",
+      "sentence": "Janeiro é o primeiro mês.",
+      "sentenceForms": [
+        "mês"
+      ],
+      "translations": {
+        "en": "month",
+        "es": "mes",
+        "de": "Monat",
+        "fr": "mois",
+        "ru": "месяц",
+        "it": "mese"
+      },
+      "definitions": {
+        "en": "One of the twelve periods of time a year is divided into.",
+        "es": "Uno de los doce períodos de tiempo en que se divide un año.",
+        "de": "Einer der zwölf Zeitabschnitte, in die ein Jahr eingeteilt ist.",
+        "fr": "Une des douze périodes qui divisent une année.",
+        "ru": "Один из двенадцати периодов времени, на которые делится год.",
+        "it": "Uno dei dodici periodi di tempo in cui è diviso un anno."
+      }
+    },
+    "A1-01172": {
+      "word": "ano",
+      "definition": "Período de doze meses, com 365 ou 366 dias.",
+      "sentence": "Há doze meses em um ano.",
+      "sentenceForms": [
+        "ano"
+      ],
+      "translations": {
+        "en": "year",
+        "es": "año",
+        "de": "Jahr",
+        "fr": "année",
+        "ru": "год",
+        "it": "anno"
+      },
+      "definitions": {
+        "en": "A period of 365 or 366 days, starting on January 1st.",
+        "es": "Un período de 365 o 366 días, que comienza el 1 de enero.",
+        "de": "Ein Zeitraum von 365 oder 366 Tagen, der am ersten Januar beginnt.",
+        "fr": "Période de 365 ou 366 jours, commençant le 1er janvier.",
+        "ru": "Период времени продолжительностью 365 или 366 дней.",
+        "it": "Un periodo di 365 o 366 giorni, che inizia il 1° gennaio."
+      }
+    },
+    "A1-01055": {
+      "word": "hora",
+      "definition": "Momento específico do dia, indicado em horas e minutos.",
+      "sentence": "Qual é a hora da reunião?",
+      "sentenceForms": [
+        "hora"
+      ],
+      "translations": {
+        "en": "time",
+        "es": "hora",
+        "de": "Uhrzeit",
+        "fr": "heure",
+        "ru": "время",
+        "it": "ora"
+      },
+      "definitions": {
+        "en": "A point in the day shown in hours and minutes.",
+        "es": "Momento del día indicado mediante horas y minutos.",
+        "de": "Ein bestimmter Zeitpunkt des Tages, der in Stunden und Minuten angegeben wird.",
+        "fr": "Moment précis de la journée indiqué en heures et en minutes.",
+        "ru": "Определённый момент дня, который можно указать в часах и минутах.",
+        "it": "Il momento preciso della giornata, espresso mediante ore e minuti."
+      }
+    },
+    "A1-00524": {
+      "word": "hora",
+      "definition": "Unidade de tempo que corresponde a sessenta minutos.",
+      "sentence": "Uma hora tem sessenta minutos.",
+      "sentenceForms": [
+        "hora"
+      ],
+      "translations": {
+        "en": "hour",
+        "es": "hora",
+        "de": "Stunde",
+        "fr": "heure",
+        "ru": "час",
+        "it": "ora"
+      },
+      "definitions": {
+        "en": "A period of time equal to sixty minutes.",
+        "es": "Período de tiempo que equivale exactamente a sesenta minutos.",
+        "de": "Ein Zeitraum, der genau sechzig Minuten lang ist.",
+        "fr": "Unité de temps qui correspond exactement à soixante minutes.",
+        "ru": "Промежуток времени, который равен шестидесяти минутам.",
+        "it": "Un'unità di tempo che corrisponde a sessanta minuti."
+      }
+    },
+    "A1-00659": {
+      "word": "minuto",
+      "definition": "Unidade de tempo equivalente a sessenta segundos, ou um sessenta avos da hora.",
+      "sentence": "Um minuto tem sessenta segundos.",
+      "sentenceForms": [
+        "minuto"
+      ],
+      "translations": {
+        "en": "minute",
+        "es": "minuto",
+        "de": "Minute",
+        "fr": "minute",
+        "ru": "минута",
+        "it": "minuto"
+      },
+      "definitions": {
+        "en": "A period of time equal to sixty seconds.",
+        "es": "Un período de tiempo   igual a sesenta segundos.",
+        "de": "Ein Zeitraum, der genau sechzig Sekunden lang ist.",
+        "fr": "Période de temps égale à soixante secondes.",
+        "ru": "Промежуток времени, который равен шестидесяти секундам.",
+        "it": "Un periodo di tempo uguale a sessanta secondi."
+      }
+    },
+    "A1-01134": {
+      "word": "fim de semana",
+      "definition": "Período formado pelo sábado e pelo domingo.",
+      "sentence": "Visito meus pais no fim de semana.",
+      "sentenceForms": [
+        "fim de semana"
+      ],
+      "translations": {
+        "en": "weekend",
+        "es": "fin de semana",
+        "de": "Wochenende",
+        "fr": "week-end",
+        "ru": "выходные",
+        "it": "fine settimana"
+      },
+      "definitions": {
+        "en": "Saturday and Sunday, when many people do not work.",
+        "es": "Período formado por el sábado y el domingo.",
+        "de": "Samstag und Sonntag, an denen viele Menschen nicht arbeiten.",
+        "fr": "Période comprenant le samedi et le dimanche, pendant laquelle beaucoup de personnes ne travaillent pas.",
+        "ru": "Суббота и воскресенье, когда многие люди обычно не работают.",
+        "it": "Il periodo formato da sabato e domenica, durante il quale molte persone non lavorano."
+      }
+    },
+    "A1-00490": {
+      "word": "cabeça",
+      "definition": "A parte do corpo acima do pescoço.",
+      "sentence": "Minha cabeça dói.",
+      "sentenceForms": [
+        "cabeça"
+      ],
+      "translations": {
+        "en": "head",
+        "es": "cabeza",
+        "de": "Kopf",
+        "fr": "tête",
+        "ru": "голова",
+        "it": "testa"
+      },
+      "definitions": {
+        "en": "The upper part of your body above your neck.",
+        "es": "Parte superior del cuerpo situada por encima del cuello.",
+        "de": "Der obere Teil des Körpers, der sich über dem Hals befindet.",
+        "fr": "Partie supérieure du corps située au-dessus du cou et contenant le cerveau.",
+        "ru": "Верхняя часть тела человека, расположенная над шеей.",
+        "it": "La parte superiore del corpo, situata sopra il collo, che contiene il cervello."
+      }
+    },
+    "A1-00354": {
+      "word": "rosto",
+      "definition": "Parte frontal da cabeça, onde ficam os olhos, o nariz e a boca.",
+      "sentence": "Lave o rosto com água e sabão.",
+      "sentenceForms": [
+        "rosto"
+      ],
+      "translations": {
+        "en": "face",
+        "es": "cara",
+        "de": "Gesicht",
+        "fr": "visage",
+        "ru": "лицо",
+        "it": "viso"
+      },
+      "definitions": {
+        "en": "The front part of the head, including the eyes, nose, and mouth.",
+        "es": "La parte frontal de   la cabeza donde están ojos, nariz y boca.",
+        "de": "Der vordere Teil des Kopfes mit Augen, Nase und Mund.",
+        "fr": "Partie avant de la tête comprenant les yeux, le nez et la bouche.",
+        "ru": "Передняя часть головы, где находятся глаза, нос и рот.",
+        "it": "La parte anteriore della testa che comprende occhi, naso e bocca."
+      }
+    },
+    "A1-00353": {
+      "word": "olho",
+      "definition": "Órgão do corpo responsável por perceber a luz e permitir a visão.",
+      "sentence": "Tenho olhos azuis.",
+      "sentenceForms": [
+        "olhos",
+        "olho"
+      ],
+      "translations": {
+        "en": "eye",
+        "es": "ojo",
+        "de": "Auge",
+        "fr": "œil",
+        "ru": "глаз",
+        "it": "occhio"
+      },
+      "definitions": {
+        "en": "The part of the body you see with.",
+        "es": "La parte del cuerpo   con la que ves.",
+        "de": "Der Körperteil, mit dem Menschen und Tiere sehen.",
+        "fr": "Partie du corps située sur le visage qui permet de voir.",
+        "ru": "Часть тела человека или животного, которая позволяет видеть.",
+        "it": "La parte del corpo che permette di vedere ciò che ci circonda."
+      }
+    },
+    "A1-00479": {
+      "word": "mão",
+      "definition": "Parte do corpo localizada na ponta do braço e que possui dedos.",
+      "sentence": "Eu escrevo com a mão direita.",
+      "sentenceForms": [
+        "mão"
+      ],
+      "translations": {
+        "en": "hand",
+        "es": "mano",
+        "de": "Hand",
+        "fr": "main",
+        "ru": "рука",
+        "it": "mano"
+      },
+      "definitions": {
+        "en": "The part of the body with fingers.",
+        "es": "Parte del cuerpo situada al final del brazo y provista de dedos.",
+        "de": "Der Körperteil am Ende des Arms, an dem die Finger sind.",
+        "fr": "Partie du corps située au bout du bras et composée de doigts.",
+        "ru": "Часть тела от запястья до кончиков пальцев, которой берут предметы.",
+        "it": "La parte del corpo con le dita."
+      }
+    },
+    "A1-00043": {
+      "word": "braço",
+      "definition": "A parte do corpo do ombro até a mão.",
+      "sentence": "Eu machuquei meu braço.",
+      "sentenceForms": [
+        "braço"
+      ],
+      "translations": {
+        "en": "arm",
+        "es": "brazo",
+        "de": "Arm",
+        "fr": "bras",
+        "ru": "рука",
+        "it": "braccio"
+      },
+      "definitions": {
+        "en": "The part of the body from the shoulder to the hand.",
+        "es": "La parte del cuerpo   desde el hombro hasta la mano.",
+        "de": "Der Körperteil, der von der Schulter bis zur Hand reicht.",
+        "fr": "Partie du corps entre l'épaule et la main.",
+        "ru": "Часть тела человека от плеча до кисти включительно.",
+        "it": "La parte del corpo dalla spalla alla mano."
+      }
+    },
+    "A1-00598": {
+      "word": "perna",
+      "definition": "Uma das partes longas do corpo usadas para andar.",
+      "sentence": "Tenho duas pernas.",
+      "sentenceForms": [
+        "pernas",
+        "perna"
+      ],
+      "translations": {
+        "en": "leg",
+        "es": "pierna",
+        "de": "Bein",
+        "fr": "jambe",
+        "ru": "нога",
+        "it": "gamba"
+      },
+      "definitions": {
+        "en": "One of the long body parts used for walking and standing.",
+        "es": "Una de las partes   largas del cuerpo usadas para caminar y estar de pie.",
+        "de": "Einer der langen Körperteile, die zum Gehen und Stehen verwendet werden.",
+        "fr": "Une des longues parties du corps utilisées pour marcher et se tenir debout.",
+        "ru": "Одна из длинных частей тела, используемых человеком для ходьбы и стояния.",
+        "it": "Una delle lunghe parti del corpo usate per camminare e stare in piedi."
+      }
+    },
+    "A1-01210": {
+      "word": "pé",
+      "definition": "A extremidade inferior da perna sobre a qual a pessoa se apoia.",
+      "sentence": "Ele machucou o pé jogando futebol.",
+      "sentenceForms": [
+        "pé"
+      ],
+      "translations": {
+        "en": "foot",
+        "es": "pie",
+        "de": "Fuß",
+        "fr": "pied",
+        "ru": "стопа",
+        "it": "piede"
+      },
+      "definitions": {
+        "en": "The lower extremity of the leg on which a person stands.",
+        "es": "La extremidad inferior de la pierna sobre la que se sostiene una persona.",
+        "de": "Der untere Teil des Beins, auf dem eine Person steht.",
+        "fr": "Partie inférieure de la jambe qui permet de se tenir debout et de marcher.",
+        "ru": "Нижняя часть ноги, которой человек опирается на землю при стоянии и ходьбе.",
+        "it": "L'estremità inferiore della gamba che permette di stare in piedi e camminare."
+      }
+    },
+    "A2-01743": {
+      "word": "coração",
+      "definition": "Órgão localizado no peito que bombeia o sangue pelo corpo.",
+      "sentence": "Meu coração bate rápido quando corro.",
+      "sentenceForms": [
+        "coração"
+      ],
+      "translations": {
+        "en": "heart",
+        "es": "corazón",
+        "de": "Herz",
+        "fr": "cœur",
+        "ru": "сердце",
+        "it": "cuore"
+      },
+      "definitions": {
+        "en": "The organ in your chest that pumps blood around your body.",
+        "es": "Órgano del pecho que   impulsa la sangre por todo el cuerpo.",
+        "de": "Das Organ im Brustkorb, das Blut durch den Körper pumpt.",
+        "fr": "Organe situé dans la poitrine qui fait circuler le sang dans tout le corps.",
+        "ru": "Орган в груди, который обеспечивает движение крови по телу.",
+        "it": "L'organo situato nel petto che pompa il sangue in tutto il corpo."
+      }
+    },
+    "A1-00293": {
+      "word": "médico",
+      "definition": "Profissional de saúde que examina e trata pessoas doentes ou feridas.",
+      "sentence": "Você deve procurar um médico se estiver doente.",
+      "sentenceForms": [
+        "médico"
+      ],
+      "translations": {
+        "en": "doctor",
+        "es": "doctor",
+        "de": "Arzt",
+        "fr": "docteur",
+        "ru": "врач",
+        "it": "dottore"
+      },
+      "definitions": {
+        "en": "A person whose job is to treat people who are sick or injured.",
+        "es": "Una persona cuyo   trabajo es tratar a personas que están enfermas o lesionadas.",
+        "de": "Eine Person, deren Beruf es ist, kranke oder verletzte Menschen zu behandeln.",
+        "fr": "Personne dont le travail est de soigner les personnes malades ou blessées.",
+        "ru": "Человек, чья работа — лечить больных или раненых.",
+        "it": "Una persona il cui lavoro è curare persone malate o ferite."
+      }
+    },
+    "A1-00649": {
+      "word": "remédio",
+      "definition": "Substância utilizada para aliviar sintomas ou tratar uma doença.",
+      "sentence": "Tome este remédio quando estiver doente.",
+      "sentenceForms": [
+        "remédio"
+      ],
+      "translations": {
+        "en": "medicine",
+        "es": "medicina",
+        "de": "Medizin",
+        "fr": "médicament",
+        "ru": "лекарство",
+        "it": "medicina"
+      },
+      "definitions": {
+        "en": "A substance used to treat illness or disease.",
+        "es": "Sustancia utilizada   para tratar una enfermedad o mejorar la salud.",
+        "de": "Ein Mittel oder eine Substanz, die zur Behandlung von Krankheiten verwendet wird.",
+        "fr": "Substance que l'on prend pour soigner une maladie ou soulager des symptômes.",
+        "ru": "Вещество или средство, которое используют для лечения заболевания.",
+        "it": "Una sostanza utilizzata per curare o alleviare malattie e disturbi."
+      }
+    },
+    "A1-00996": {
+      "word": "sol",
+      "definition": "A estrela que dá luz e calor à Terra.",
+      "sentence": "O sol dá luz e calor à Terra.",
+      "sentenceForms": [
+        "sol"
+      ],
+      "translations": {
+        "en": "sun",
+        "es": "sol",
+        "de": "Sonne",
+        "fr": "soleil",
+        "ru": "солнце",
+        "it": "sole"
+      },
+      "definitions": {
+        "en": "The star that gives light and heat to the Earth.",
+        "es": "La estrella que da luz y calor a la Tierra.",
+        "de": "Der Stern, der der Erde Licht und Wärme gibt.",
+        "fr": "Étoile située au centre de notre système planétaire qui apporte lumière et chaleur à la Terre.",
+        "ru": "Звезда, которая даёт Земле естественный свет и тепло.",
+        "it": "La stella che dà luce e calore alla Terra."
+      }
+    },
+    "A1-00824": {
+      "word": "chuva",
+      "definition": "Gotas de água que caem das nuvens e chegam ao solo.",
+      "sentence": "A chuva deixa a grama molhada.",
+      "sentenceForms": [
+        "chuva"
+      ],
+      "translations": {
+        "en": "rain",
+        "es": "lluvia",
+        "de": "Regen",
+        "fr": "pluie",
+        "ru": "дождь",
+        "it": "pioggia"
+      },
+      "definitions": {
+        "en": "Drops of water that fall from clouds.",
+        "es": "Gotas de agua que caen de las nubes.",
+        "de": "Wassertropfen, die aus Wolken auf die Erde fallen.",
+        "fr": "Ensemble des gouttes d'eau qui tombent des nuages vers le sol.",
+        "ru": "Капли воды, которые падают на землю из облаков.",
+        "it": "Gocce d'acqua che cadono dalle nuvole verso il terreno."
+      }
+    },
+    "A1-00938": {
+      "word": "neve",
+      "definition": "Pequenos cristais de gelo que caem das nuvens em dias frios.",
+      "sentence": "As crianças brincam na neve.",
+      "sentenceForms": [
+        "neve"
+      ],
+      "translations": {
+        "en": "snow",
+        "es": "nieve",
+        "de": "Schnee",
+        "fr": "neige",
+        "ru": "снег",
+        "it": "neve"
+      },
+      "definitions": {
+        "en": "Soft, white frozen rain that falls in cold weather.",
+        "es": "Lluvia congelada, suave y blanca que cae en clima frío.",
+        "de": "Weiche, weiße gefrorene Niederschläge, die bei kaltem Wetter fallen.",
+        "fr": "Ensemble de petits cristaux de glace blancs qui tombent des nuages par temps froid.",
+        "ru": "Мягкие белые кристаллы замёрзшей воды, падающие зимой из облаков.",
+        "it": "Una precipitazione atmosferica formata da piccoli cristalli di ghiaccio che cadono dalle nuvole."
+      }
+    },
+    "A1-01152": {
+      "word": "vento",
+      "definition": "Ar que se movimenta naturalmente em ambientes ao ar livre.",
+      "sentence": "O vento está forte hoje.",
+      "sentenceForms": [
+        "vento"
+      ],
+      "translations": {
+        "en": "wind",
+        "es": "viento",
+        "de": "Wind",
+        "fr": "vent",
+        "ru": "ветер",
+        "it": "vento"
+      },
+      "definitions": {
+        "en": "Air that moves naturally from one place to another outdoors.",
+        "es": "Aire que se mueve de forma natural en el exterior.",
+        "de": "Luft, die sich draußen auf natürliche Weise von einem Ort zu einem anderen bewegt.",
+        "fr": "Air qui se déplace naturellement d'un endroit à un autre à l'extérieur.",
+        "ru": "Воздух, который естественным образом движется на открытом пространстве.",
+        "it": "Aria che si muove naturalmente all'aperto, talvolta con molta forza."
+      }
+    },
+    "A1-01079": {
+      "word": "árvore",
+      "definition": "Uma planta alta com tronco e galhos.",
+      "sentence": "A árvore tem muitas maçãs.",
+      "sentenceForms": [
+        "árvore"
+      ],
+      "translations": {
+        "en": "tree",
+        "es": "árbol",
+        "de": "Baum",
+        "fr": "arbre",
+        "ru": "дерево",
+        "it": "albero"
+      },
+      "definitions": {
+        "en": "A tall plant with a wooden trunk and branches.",
+        "es": "Una planta alta con un tronco leñoso y ramas.",
+        "de": "Eine hohe Pflanze mit einem hölzernen Stamm und mehreren Ästen.",
+        "fr": "Grande plante qui possède généralement un tronc en bois et des branches.",
+        "ru": "Высокое растение с твёрдым древесным стволом и ветвями.",
+        "it": "Una pianta alta con un tronco legnoso dal quale si sviluppano rami e foglie."
+      }
+    },
+    "A1-00395": {
+      "word": "flor",
+      "definition": "Parte de uma planta que geralmente tem pétalas e produz sementes.",
+      "sentence": "Ela me deu uma flor vermelha linda.",
+      "sentenceForms": [
+        "flor"
+      ],
+      "translations": {
+        "en": "flower",
+        "es": "flor",
+        "de": "Blume",
+        "fr": "fleur",
+        "ru": "цветок",
+        "it": "fiore"
+      },
+      "definitions": {
+        "en": "The colorful part of a plant that can produce seeds.",
+        "es": "La parte colorida de   una planta que puede producir semillas.",
+        "de": "Der farbige Teil einer Pflanze, aus dem Samen entstehen können.",
+        "fr": "Partie souvent colorée d'une plante qui peut produire des graines.",
+        "ru": "Яркая часть растения, из которой могут образовываться семена.",
+        "it": "La parte di una pianta, spesso colorata, da cui possono svilupparsi i semi."
+      }
+    },
+    "A1-00850": {
+      "word": "rio",
+      "definition": "Curso natural de água que atravessa uma região e desemboca em outro rio, lago ou mar.",
+      "sentence": "Cruzamos o rio por uma ponte pequena.",
+      "sentenceForms": [
+        "rio"
+      ],
+      "translations": {
+        "en": "river",
+        "es": "río",
+        "de": "Fluss",
+        "fr": "rivière",
+        "ru": "река",
+        "it": "fiume"
+      },
+      "definitions": {
+        "en": "A large natural stream of water flowing across the land.",
+        "es": "Una corriente natural grande de agua que fluye por la tierra.",
+        "de": "Ein großes natürliches Gewässer, das über das Land fließt.",
+        "fr": "Cours d'eau naturel qui traverse les terres et se jette dans un autre cours d'eau.",
+        "ru": "Большой естественный поток воды, постоянно текущий по поверхности суши.",
+        "it": "Un grande flusso naturale d'acqua che scorre attraverso la terra."
+      }
+    },
+    "A1-00676": {
+      "word": "montanha",
+      "definition": "Grande elevação natural do terreno, geralmente com encostas íngremes.",
+      "sentence": "Subimos uma montanha alta.",
+      "sentenceForms": [
+        "montanha"
+      ],
+      "translations": {
+        "en": "mountain",
+        "es": "montaña",
+        "de": "Berg",
+        "fr": "montagne",
+        "ru": "гора",
+        "it": "montagna"
+      },
+      "definitions": {
+        "en": "A very high area of land with steep sides.",
+        "es": "Un área de tierra muy alta con lados empinados.",
+        "de": "Ein sehr hohes Gebiet aus Land mit steilen Seiten.",
+        "fr": "Zone de terre très élevée avec des côtés escarpés.",
+        "ru": "Очень высокий участок земли с крутыми сторонами.",
+        "it": "Un rilievo naturale del terreno molto alto, generalmente con versanti ripidi."
+      }
+    },
+    "A1-00875": {
+      "word": "mar",
+      "definition": "A água salgada que cobre grande parte da Terra.",
+      "sentence": "Nadamos no mar no verão.",
+      "sentenceForms": [
+        "mar"
+      ],
+      "translations": {
+        "en": "sea",
+        "es": "mar",
+        "de": "Meer",
+        "fr": "mer",
+        "ru": "море",
+        "it": "mare"
+      },
+      "definitions": {
+        "en": "The salty water that covers most of the Earth's surface.",
+        "es": "El agua salada que cubre la mayor parte de la superficie de la Tierra.",
+        "de": "Das salzige Wasser, das einen großen Teil der Erdoberfläche bedeckt.",
+        "fr": "Grande étendue d'eau salée qui couvre une partie importante de la Terre.",
+        "ru": "Большое пространство солёной воды, являющееся частью мирового океана.",
+        "it": "L'acqua salata che copre la maggior parte della superficie terrestre."
+      }
+    },
+    "A1-00031": {
+      "word": "animal",
+      "definition": "Um ser vivo que não é planta, como um cachorro ou gato.",
+      "sentence": "Um gato é um animal.",
+      "sentenceForms": [
+        "animal"
+      ],
+      "translations": {
+        "en": "animal",
+        "es": "animal",
+        "de": "Tier",
+        "fr": "animal",
+        "ru": "животное",
+        "it": "animale"
+      },
+      "definitions": {
+        "en": "A living creature that is not a plant, like a dog or cat.",
+        "es": "Una criatura viva que   no es una planta, como un perro o un gato.",
+        "de": "Ein Lebewesen, das keine Pflanze ist, zum Beispiel ein Hund oder eine Katze.",
+        "fr": "Être vivant qui n'est pas une plante, comme un chien ou un chat.",
+        "ru": "Живое существо, которое не является растением, например, собака или кошка.",
+        "it": "Una creatura vivente che non è una pianta, come un cane o un gatto."
+      }
+    },
+    "A1-00562": {
+      "word": "trabalho",
+      "definition": "Atividade profissional realizada regularmente para receber dinheiro em troca.",
+      "sentence": "Meu pai tem um novo trabalho.",
+      "sentenceForms": [
+        "trabalho"
+      ],
+      "translations": {
+        "en": "job",
+        "es": "trabajo",
+        "de": "Job",
+        "fr": "emploi",
+        "ru": "работа",
+        "it": "lavoro"
+      },
+      "definitions": {
+        "en": "The regular work you do to earn money.",
+        "es": "Actividad regular que   una persona realiza para ganar dinero.",
+        "de": "Die regelmäßige Arbeit, die man macht, um Geld zu verdienen.",
+        "fr": "Travail régulier que l'on fait pour gagner de l'argent.",
+        "ru": "Регулярная деятельность, которую человек выполняет, чтобы получать за неё деньги.",
+        "it": "Un'attività professionale svolta regolarmente per guadagnare denaro."
+      }
+    },
+    "A1-01161": {
+      "word": "trabalho",
+      "definition": "Atividade física ou mental realizada como parte de uma ocupação profissional.",
+      "sentence": "Tenho muito trabalho hoje.",
+      "sentenceForms": [
+        "trabalho"
+      ],
+      "translations": {
+        "en": "work",
+        "es": "trabajo",
+        "de": "Arbeit",
+        "fr": "travail",
+        "ru": "работа",
+        "it": "lavoro"
+      },
+      "definitions": {
+        "en": "Mental or physical activity that you do as part of a job.",
+        "es": "Actividad mental o física que se realiza como parte de un empleo.",
+        "de": "Körperliche oder geistige Tätigkeit, die man als Teil eines Berufs ausführt.",
+        "fr": "Activité physique ou mentale effectuée dans le cadre d'un emploi.",
+        "ru": "Умственная или физическая деятельность, выполняемая как часть профессиональных обязанностей.",
+        "it": "Un'attività mentale o fisica svolta nell'ambito di un impiego o di una professione."
+      }
+    },
+    "A1-00721": {
+      "word": "escritório",
+      "definition": "Um cômodo ou prédio onde as pessoas trabalham.",
+      "sentence": "Meu pai trabalha em um escritório.",
+      "sentenceForms": [
+        "escritório"
+      ],
+      "translations": {
+        "en": "office",
+        "es": "oficina",
+        "de": "Büro",
+        "fr": "bureau",
+        "ru": "офис",
+        "it": "ufficio"
+      },
+      "definitions": {
+        "en": "A room or building where people work at desks.",
+        "es": "Una habitación o edificio donde la gente trabaja en escritorios.",
+        "de": "Ein Raum oder Gebäude, in dem Menschen meistens an Schreibtischen arbeiten.",
+        "fr": "Pièce ou bâtiment où des personnes travaillent généralement à des tables ou devant des ordinateurs.",
+        "ru": "Комната или здание, где люди работают за столами.",
+        "it": "Una stanza o un edificio in cui si svolge un lavoro, generalmente alla scrivania."
+      }
+    },
+    "A1-00668": {
+      "word": "dinheiro",
+      "definition": "Moedas, notas ou valores utilizados para pagar por produtos e serviços.",
+      "sentence": "Preciso de dinheiro para comprar um livro.",
+      "sentenceForms": [
+        "dinheiro"
+      ],
+      "translations": {
+        "en": "money",
+        "es": "dinero",
+        "de": "Geld",
+        "fr": "argent",
+        "ru": "деньги",
+        "it": "soldi"
+      },
+      "definitions": {
+        "en": "The coins and paper bills used to buy things.",
+        "es": "Las monedas y   billetes de papel utilizados para comprar cosas.",
+        "de": "Münzen und Geldscheine, die man verwendet, um Dinge zu bezahlen.",
+        "fr": "Pièces et billets utilisés pour acheter des choses.",
+        "ru": "Монеты и бумажные купюры, которыми люди оплачивают товары и услуги.",
+        "it": "Monete e banconote utilizzate per acquistare beni o pagare servizi."
+      }
+    },
+    "A1-00118": {
+      "word": "livro",
+      "definition": "Folhas de papel com palavras impressas, encadernadas juntas.",
+      "sentence": "Estou lendo um livro bom.",
+      "sentenceForms": [
+        "livro"
+      ],
+      "translations": {
+        "en": "book",
+        "es": "libro",
+        "de": "Buch",
+        "fr": "livre",
+        "ru": "книга",
+        "it": "libro"
+      },
+      "definitions": {
+        "en": "Sheets of paper with words printed on them, bound together.",
+        "es": "Hojas de papel con   palabras impresas, unidas entre sí.",
+        "de": "Zusammengebundene Seiten aus Papier, auf denen Wörter gedruckt sind.",
+        "fr": "Ensemble de feuilles imprimées qui sont reliées pour être lues.",
+        "ru": "Листы бумаги с напечатанными словами, скреплённые вместе.",
+        "it": "Fogli di carta con parole stampate, rilegati insieme."
+      }
+    },
+    "A1-00022": {
+      "word": "palavra",
+      "definition": "Um grupo de letras ou sons que tem um significado.",
+      "sentence": "Aprendo uma palavra nova todos os dias.",
+      "sentenceForms": [
+        "palavra"
+      ],
+      "translations": {
+        "en": "word",
+        "es": "palabra",
+        "de": "Wort",
+        "fr": "mot",
+        "ru": "слово",
+        "it": "parola"
+      },
+      "definitions": {
+        "en": "A group of letters or sounds that has a meaning.",
+        "es": "Un grupo de letras o sonidos que tiene un significado.",
+        "de": "Eine Gruppe von Buchstaben oder Lauten, die eine Bedeutung hat.",
+        "fr": "Un groupe de lettres ou de sons qui a un sens.",
+        "ru": "Группа букв или звуков, которая имеет значение.",
+        "it": "Un gruppo di lettere o suoni che ha un significato."
+      }
+    },
+    "A1-00819": {
+      "word": "pergunta",
+      "definition": "Frase ou expressão usada para pedir uma informação a alguém.",
+      "sentence": "Posso fazer uma pergunta?",
+      "sentenceForms": [
+        "pergunta"
+      ],
+      "translations": {
+        "en": "question",
+        "es": "pregunta",
+        "de": "Frage",
+        "fr": "question",
+        "ru": "вопрос",
+        "it": "domanda"
+      },
+      "definitions": {
+        "en": "A sentence worded to ask for information.",
+        "es": "Conjunto de palabras que se usa para pedir información.",
+        "de": "Ein Satz oder Ausdruck, mit dem man nach Informationen fragt.",
+        "fr": "Phrase que l'on utilise pour demander une information à quelqu'un.",
+        "ru": "Предложение или фраза, с помощью которых запрашивают информацию.",
+        "it": "Una frase formulata per chiedere informazioni."
+      }
+    },
+    "A1-00033": {
+      "word": "resposta",
+      "definition": "Aquilo que alguém diz ou escreve quando recebe uma pergunta.",
+      "sentence": "Você sabe a resposta da pergunta?",
+      "sentenceForms": [
+        "resposta"
+      ],
+      "translations": {
+        "en": "answer",
+        "es": "respuesta",
+        "de": "Antwort",
+        "fr": "réponse",
+        "ru": "ответ",
+        "it": "risposta"
+      },
+      "definitions": {
+        "en": "Something you say or write in reply to a question.",
+        "es": "Lo que se dice o   escribe para contestar una pregunta.",
+        "de": "Etwas, das man als Reaktion auf eine Frage sagt oder schreibt.",
+        "fr": "Ce qu'une personne dit ou écrit pour répondre à une question.",
+        "ru": "То, что человек говорит или пишет после заданного вопроса.",
+        "it": "Ciò che si dice o si scrive per replicare a una domanda."
+      }
+    },
+    "A1-00599": {
+      "word": "lição",
+      "definition": "Período de ensino em que alguém aprende determinado assunto.",
+      "sentence": "Nossa lição de inglês é divertida.",
+      "sentenceForms": [
+        "lição"
+      ],
+      "translations": {
+        "en": "lesson",
+        "es": "lección",
+        "de": "Unterricht",
+        "fr": "leçon",
+        "ru": "урок",
+        "it": "lezione"
+      },
+      "definitions": {
+        "en": "A period of time when someone teaches you something.",
+        "es": "Período de tiempo   durante el cual alguien enseña una materia.",
+        "de": "Eine bestimmte Zeit, in der jemand anderen etwas lehrt.",
+        "fr": "Période pendant laquelle une personne enseigne quelque chose à d'autres personnes.",
+        "ru": "Период времени, во время которого учитель обучает учеников определённому предмету.",
+        "it": "Un periodo durante il quale un insegnante trasmette conoscenze agli studenti."
+      }
+    },
+    "A1-00586": {
+      "word": "língua",
+      "definition": "Sistema de palavras e regras usado por pessoas para se comunicar.",
+      "sentence": "O inglês é uma língua.",
+      "sentenceForms": [
+        "língua"
+      ],
+      "translations": {
+        "en": "language",
+        "es": "idioma",
+        "de": "Sprache",
+        "fr": "langue",
+        "ru": "язык",
+        "it": "lingua"
+      },
+      "definitions": {
+        "en": "A system of communication used by a particular country or people.",
+        "es": "Un sistema de   comunicación usado por un país o pueblo en particular.",
+        "de": "Ein System zur Kommunikation, das von bestimmten Menschen oder Ländern verwendet wird.",
+        "fr": "Système de communication utilisé par un pays ou un peuple particulier.",
+        "ru": "Система слов и правил, которую определённый народ использует для общения.",
+        "it": "Un sistema di comunicazione usato da un particolare paese o popolo."
+      }
+    },
+    "A1-00896": {
+      "word": "camisa",
+      "definition": "Peça de roupa que cobre a parte superior do corpo e geralmente tem mangas e botões.",
+      "sentence": "Uso uma camisa branca na escola.",
+      "sentenceForms": [
+        "camisa"
+      ],
+      "translations": {
+        "en": "shirt",
+        "es": "camisa",
+        "de": "Hemd",
+        "fr": "chemise",
+        "ru": "рубашка",
+        "it": "camicia"
+      },
+      "definitions": {
+        "en": "A piece of clothing for the upper body with sleeves and buttons.",
+        "es": "Una prenda de vestir para la parte superior del cuerpo con mangas y botones.",
+        "de": "Ein Kleidungsstück für den Oberkörper mit Ärmeln und meist Knöpfen.",
+        "fr": "Vêtement pour le haut du corps, généralement avec des manches, un col et des boutons.",
+        "ru": "Предмет одежды для верхней части тела, обычно с рукавами и пуговицами.",
+        "it": "Un capo di abbigliamento per la parte superiore del corpo con maniche e bottoni."
+      }
+    },
+    "A1-01081": {
+      "word": "calças",
+      "definition": "Uma peça de roupa para as pernas.",
+      "sentence": "Ele usa calças pretas.",
+      "sentenceForms": [
+        "calças"
+      ],
+      "translations": {
+        "en": "trousers",
+        "es": "pantalones",
+        "de": "Hose",
+        "fr": "pantalon",
+        "ru": "брюки",
+        "it": "pantaloni"
+      },
+      "definitions": {
+        "en": "A piece of clothing covering the legs; pants.",
+        "es": "Prenda de vestir que cubre desde la cintura hasta las piernas.",
+        "de": "Ein Kleidungsstück, das den Unterkörper und beide Beine bedeckt.",
+        "fr": "Vêtement qui couvre les jambes séparément, généralement depuis la taille jusqu'aux chevilles.",
+        "ru": "Предмет одежды, который закрывает обе ноги от талии вниз.",
+        "it": "Un capo di abbigliamento che copre le gambe."
+      }
+    },
+    "A1-00897": {
+      "word": "sapato",
+      "definition": "Peça de calçado que protege o pé ao caminhar.",
+      "sentence": "Calço meus sapatos antes de sair.",
+      "sentenceForms": [
+        "sapatos",
+        "sapato"
+      ],
+      "translations": {
+        "en": "shoe",
+        "es": "zapato",
+        "de": "Schuh",
+        "fr": "chaussure",
+        "ru": "туфля",
+        "it": "scarpa"
+      },
+      "definitions": {
+        "en": "A covering for the foot, usually made of leather.",
+        "es": "Una cubierta para el pie, usualmente hecha de cuero.",
+        "de": "Eine Bedeckung für den Fuß, die oft aus Leder oder ähnlichem Material besteht.",
+        "fr": "Objet que l'on porte au pied pour le protéger en marchant.",
+        "ru": "Предмет обуви, который закрывает и защищает стопу человека.",
+        "it": "Una copertura per il piede, di solito fatta di pelle."
+      }
+    },
+    "A1-00221": {
+      "word": "casaco",
+      "definition": "Uma peça de roupa com mangas usada sobre outras roupas.",
+      "sentence": "Uso um casaco quente no inverno.",
+      "sentenceForms": [
+        "casaco"
+      ],
+      "translations": {
+        "en": "coat",
+        "es": "abrigo",
+        "de": "Mantel",
+        "fr": "manteau",
+        "ru": "пальто",
+        "it": "cappotto"
+      },
+      "definitions": {
+        "en": "A piece of clothing with sleeves that you wear over other clothes.",
+        "es": "Una prenda de vestir con mangas que usas sobre otra ropa.",
+        "de": "Ein Kleidungsstück mit Ärmeln, das man über anderer Kleidung trägt.",
+        "fr": "Vêtement à manches que l'on porte par-dessus ses autres vêtements.",
+        "ru": "Предмет одежды с рукавами, который носят поверх другой одежды.",
+        "it": "Un capo di abbigliamento con maniche che indossi sopra altri vestiti."
+      }
+    },
+    "A1-00305": {
+      "word": "vestido",
+      "definition": "Uma peça de roupa para mulheres ou meninas que cobre o corpo e as pernas.",
+      "sentence": "Ela usa um vestido azul na festa.",
+      "sentenceForms": [
+        "vestido"
+      ],
+      "translations": {
+        "en": "dress",
+        "es": "vestido",
+        "de": "Kleid",
+        "fr": "robe",
+        "ru": "платье",
+        "it": "vestito"
+      },
+      "definitions": {
+        "en": "A piece of clothing for women or girls that covers the body and legs.",
+        "es": "Una prenda de vestir   para mujeres o niñas que cubre el cuerpo y las piernas.",
+        "de": "Ein Kleidungsstück für Frauen oder Mädchen, das den Körper und die Beine bedeckt.",
+        "fr": "Vêtement généralement porté par les femmes ou les filles, couvrant le corps et une partie des jambes.",
+        "ru": "Предмет одежды для женщин или девочек, который покрывает тело и ноги.",
+        "it": "Un capo di abbigliamento per donne o ragazze che copre il corpo e le gambe."
+      }
+    },
+    "A1-00061": {
+      "word": "bolsa",
+      "definition": "Acessório geralmente feito de tecido, couro ou outro material, usado para carregar objetos.",
+      "sentence": "Eu levo meus livros em uma bolsa.",
+      "sentenceForms": [
+        "bolsa"
+      ],
+      "translations": {
+        "en": "bag",
+        "es": "bolsa",
+        "de": "Tasche",
+        "fr": "sac",
+        "ru": "сумка",
+        "it": "borsa"
+      },
+      "definitions": {
+        "en": "A container made of paper, cloth, or plastic to carry things.",
+        "es": "Un recipiente hecho   de papel, tela o plástico para llevar cosas.",
+        "de": "Ein Behälter aus Papier, Stoff oder Plastik zum Tragen von Dingen.",
+        "fr": "Contenant en papier, tissu ou plastique pour transporter des choses.",
+        "ru": "Предмет из ткани, кожи или другого материала для переноски вещей.",
+        "it": "Un contenitore di carta, stoffa o plastica per portare cose."
+      }
+    },
+    "A2-01398": {
+      "word": "carteira",
+      "definition": "Acessório pequeno e geralmente dobrável usado para guardar dinheiro, cartões e documentos.",
+      "sentence": "Guardo meu dinheiro e cartões na carteira.",
+      "sentenceForms": [
+        "carteira"
+      ],
+      "translations": {
+        "en": "wallet",
+        "es": "cartera",
+        "de": "Geldbörse",
+        "fr": "portefeuille",
+        "ru": "бумажник",
+        "it": "portafoglio"
+      },
+      "definitions": {
+        "en": "A small, flat case for carrying paper money and cards.",
+        "es": "Estuche pequeño y plano usado para llevar dinero, tarjetas y documentos.",
+        "de": "Eine kleine, flache Tasche, in der Papiergeld und Karten getragen werden.",
+        "fr": "Un petit étui plat pour transporter de l'argent en papier et des cartes.",
+        "ru": "Маленький плоский кошелек для бумажных денег и карт.",
+        "it": "Piccola custodia piatta usata per portare banconote e carte."
+      }
+    },
+    "A1-01126": {
+      "word": "relógio",
+      "definition": "Pequeno aparelho que mostra as horas e é usado no pulso.",
+      "sentence": "Meu relógio mostra a hora.",
+      "sentenceForms": [
+        "relógio"
+      ],
+      "translations": {
+        "en": "watch",
+        "es": "reloj",
+        "de": "Armbanduhr",
+        "fr": "montre",
+        "ru": "часы",
+        "it": "orologio"
+      },
+      "definitions": {
+        "en": "A small clock worn on the wrist.",
+        "es": "Pequeño instrumento que se lleva en la muñeca para saber la hora.",
+        "de": "Eine kleine Uhr, die man am Handgelenk trägt.",
+        "fr": "Petite horloge portée au poignet pour connaître l'heure.",
+        "ru": "Небольшое устройство для определения времени, которое носят на запястье.",
+        "it": "Un piccolo dispositivo che si porta al polso per conoscere l'ora."
+      }
+    },
+    "A1-00440": {
+      "word": "óculos",
+      "definition": "Um par de lentes usado para enxergar melhor.",
+      "sentence": "Meu avô usa óculos para ler.",
+      "sentenceForms": [
+        "óculos"
+      ],
+      "translations": {
+        "en": "glasses",
+        "es": "gafas",
+        "de": "Brille",
+        "fr": "lunettes",
+        "ru": "очки",
+        "it": "occhiali"
+      },
+      "definitions": {
+        "en": "A pair of lenses worn to see better.",
+        "es": "Un par de lentes que se usan para ver mejor.",
+        "de": "Eine Sehhilfe mit zwei Gläsern, die man vor den Augen trägt.",
+        "fr": "Objet composé de deux verres placés devant les yeux pour mieux voir.",
+        "ru": "Пара линз в оправе, которые носят, чтобы лучше видеть.",
+        "it": "Un paio di lenti montate su una struttura e indossate per vedere meglio."
+      }
+    },
+    "A1-01052": {
+      "word": "bilhete",
+      "definition": "Um papel que permite entrar ou viajar.",
+      "sentence": "Preciso de um bilhete para o trem.",
+      "sentenceForms": [
+        "bilhete"
+      ],
+      "translations": {
+        "en": "ticket",
+        "es": "billete",
+        "de": "Ticket",
+        "fr": "billet",
+        "ru": "билет",
+        "it": "biglietto"
+      },
+      "definitions": {
+        "en": "A piece of paper that allows you to enter a place or travel.",
+        "es": "Un trozo de papel que te permite entrar a un lugar o viajar.",
+        "de": "Ein Dokument, das die Fahrt oder den Eintritt zu einem Ort erlaubt.",
+        "fr": "Document imprimé ou électronique qui permet de voyager ou d'entrer dans un lieu.",
+        "ru": "Документ, который даёт право войти куда-либо или совершить поездку.",
+        "it": "Un documento di carta o elettronico che permette di entrare in un luogo o utilizzare un mezzo di trasporto."
+      }
+    },
+    "A1-00689": {
+      "word": "nome",
+      "definition": "Palavra ou conjunto de palavras usado para identificar alguém ou alguma coisa.",
+      "sentence": "Meu nome é David.",
+      "sentenceForms": [
+        "nome"
+      ],
+      "translations": {
+        "en": "name",
+        "es": "nombre",
+        "de": "Name",
+        "fr": "nom",
+        "ru": "имя",
+        "it": "nome"
+      },
+      "definitions": {
+        "en": "The word or words that a person, place, or thing is known by.",
+        "es": "La palabra o palabras por las que se conoce a una persona, lugar o cosa.",
+        "de": "Das Wort oder die Wörter, durch die eine Person, ein Ort oder eine Sache bekannt ist.",
+        "fr": "Mot ou ensemble de mots qui sert à identifier une personne, un lieu ou une chose.",
+        "ru": "Слово или слова, которыми известны человек, место или вещь.",
+        "it": "La parola o l'insieme di parole che identifica una persona, un luogo o una cosa."
+      }
+    },
+    "A1-00715": {
+      "word": "número",
+      "definition": "Um símbolo ou palavra que representa uma quantidade.",
+      "sentence": "O número de alunos na sala é vinte.",
+      "sentenceForms": [
+        "número"
+      ],
+      "translations": {
+        "en": "number",
+        "es": "número",
+        "de": "Zahl",
+        "fr": "nombre",
+        "ru": "число",
+        "it": "numero"
+      },
+      "definitions": {
+        "en": "A word or symbol that represents an amount or quantity.",
+        "es": "Una palabra o símbolo que representa una cantidad.",
+        "de": "Ein Wort oder Zeichen, das eine bestimmte Menge oder Anzahl darstellt.",
+        "fr": "Mot ou symbole qui représente une quantité ou une valeur.",
+        "ru": "Слово или символ, представляющий количество или величину.",
+        "it": "Una parola o un simbolo che rappresenta una quantità."
+      }
+    },
+    "A1-00534": {
+      "word": "ideia",
+      "definition": "Pensamento, plano ou sugestão sobre alguma coisa que se pode fazer.",
+      "sentence": "Essa é uma boa ideia.",
+      "sentenceForms": [
+        "ideia"
+      ],
+      "translations": {
+        "en": "idea",
+        "es": "idea",
+        "de": "Idee",
+        "fr": "idée",
+        "ru": "идея",
+        "it": "idea"
+      },
+      "definitions": {
+        "en": "A thought, plan, or suggestion about what to do.",
+        "es": "Pensamiento, plan o sugerencia sobre algo que se puede hacer.",
+        "de": "Ein Gedanke, Plan oder Vorschlag darüber, was man tun könnte.",
+        "fr": "Pensée, proposition ou projet qui vient à l'esprit d'une personne.",
+        "ru": "Мысль, план или предложение о том, что можно сделать.",
+        "it": "Un pensiero, un progetto o una proposta su cosa fare."
+      }
+    },
+    "A2-01548": {
+      "word": "problema",
+      "definition": "Situação difícil ou indesejada que precisa de uma solução.",
+      "sentence": "Tenho um problema com meu computador.",
+      "sentenceForms": [
+        "problema"
+      ],
+      "translations": {
+        "en": "problem",
+        "es": "problema",
+        "de": "Problem",
+        "fr": "problème",
+        "ru": "проблема",
+        "it": "problema"
+      },
+      "definitions": {
+        "en": "A situation that is difficult to deal with.",
+        "es": "Una situación que es   difícil de manejar.",
+        "de": "Eine Situation, die schwierig zu lösen oder zu bewältigen ist.",
+        "fr": "Situation difficile qui demande une solution ou qui cause des difficultés.",
+        "ru": "Трудная ситуация, с которой человеку нелегко справиться.",
+        "it": "Una situazione difficile che richiede una soluzione o deve essere affrontata."
+      }
+    },
+    "B1-02944": {
+      "word": "razão",
+      "definition": "Causa ou explicação que permite compreender por que algo aconteceu.",
+      "sentence": "A razão do atraso foi o trânsito.",
+      "sentenceForms": [
+        "razão"
+      ],
+      "translations": {
+        "en": "reason",
+        "es": "razón",
+        "de": "Grund",
+        "fr": "raison",
+        "ru": "причина",
+        "it": "motivo"
+      },
+      "definitions": {
+        "en": "A cause or explanation for an action or event.",
+        "es": "Una causa o explicación para una acción o evento.",
+        "de": "Eine Ursache oder Erklärung dafür, warum etwas geschieht oder getan wird.",
+        "fr": "Cause ou explication permettant de comprendre pourquoi une action ou un événement se produit.",
+        "ru": "Обстоятельство или объяснение, показывающее, почему что-либо произошло или было сделано.",
+        "it": "Una causa o spiegazione per un'azione o evento."
+      }
+    },
+    "A1-00980": {
+      "word": "história",
+      "definition": "Um relato de eventos reais ou imaginários.",
+      "sentence": "Meu pai conta uma história antes de dormir.",
+      "sentenceForms": [
+        "história"
+      ],
+      "translations": {
+        "en": "story",
+        "es": "historia",
+        "de": "Geschichte",
+        "fr": "histoire",
+        "ru": "история",
+        "it": "storia"
+      },
+      "definitions": {
+        "en": "A description of imaginary or real events told for entertainment.",
+        "es": "Una descripción de eventos imaginarios o reales contada para entretenimiento.",
+        "de": "Eine Erzählung über wirkliche oder erfundene Ereignisse, meist zur Unterhaltung.",
+        "fr": "Récit d'événements réels ou imaginaires racontés pour intéresser ou divertir quelqu'un.",
+        "ru": "Рассказ о реальных или вымышленных событиях, созданный для интереса или развлечения.",
+        "it": "Un racconto di avvenimenti reali o immaginari, fatto per intrattenere qualcuno."
+      }
+    },
+    "A1-00604": {
+      "word": "vida",
+      "definition": "Período durante o qual uma pessoa, animal ou planta permanece vivo.",
+      "sentence": "A vida daquela árvore durou mais de cem anos.",
+      "sentenceForms": [
+        "vida"
+      ],
+      "translations": {
+        "en": "life",
+        "es": "vida",
+        "de": "Leben",
+        "fr": "vie",
+        "ru": "жизнь",
+        "it": "vita"
+      },
+      "definitions": {
+        "en": "The period when a person, animal, or plant is alive.",
+        "es": "El período en que una   persona, animal o planta está vivo.",
+        "de": "Die Zeit, während der ein Mensch, Tier oder eine Pflanze lebendig ist.",
+        "fr": "Période pendant laquelle une personne, un animal ou une plante existe et reste en activité.",
+        "ru": "Период существования человека, животного или растения от рождения до смерти.",
+        "it": "Il periodo in cui una persona, animale o pianta è viva."
+      }
+    },
+    "A1-01163": {
+      "word": "mundo",
+      "definition": "A Terra e tudo o que existe nela.",
+      "sentence": "Vivemos em um grande mundo.",
+      "sentenceForms": [
+        "mundo"
+      ],
+      "translations": {
+        "en": "world",
+        "es": "mundo",
+        "de": "Welt",
+        "fr": "monde",
+        "ru": "мир",
+        "it": "mondo"
+      },
+      "definitions": {
+        "en": "The earth and all the people, places, and things on it.",
+        "es": "La Tierra y todas las personas, lugares y cosas en ella.",
+        "de": "Die Erde mit allen Menschen, Orten und Dingen, die darauf existieren.",
+        "fr": "La Terre et toutes les personnes, lieux et choses qui s'y trouvent.",
+        "ru": "Земля вместе со всеми людьми, местами и вещами на ней.",
+        "it": "La Terra e tutto ciò che contiene, comprese le persone, gli animali e i luoghi."
+      }
+    },
+    "A1-00781": {
+      "word": "lugar",
+      "definition": "Uma área, posição ou localização específica onde algo se encontra.",
+      "sentence": "Este é um bom lugar para sentar.",
+      "sentenceForms": [
+        "lugar"
+      ],
+      "translations": {
+        "en": "place",
+        "es": "lugar",
+        "de": "Ort",
+        "fr": "endroit",
+        "ru": "место",
+        "it": "posto"
+      },
+      "definitions": {
+        "en": "A particular area, position, or location where something is found.",
+        "es": "Una zona, posición o ubicación determinada donde está algo.",
+        "de": "Eine bestimmte Stelle, Fläche oder Position, an der sich etwas befindet.",
+        "fr": "Position, zone ou emplacement particulier où se trouve une personne ou une chose.",
+        "ru": "Определённая часть пространства, где находится человек, предмет или объект.",
+        "it": "Una posizione, un'area o un luogo particolare in cui si trova qualcosa."
+      }
+    },
+    "A1-01042": {
+      "word": "coisa",
+      "definition": "Objeto, elemento ou ideia que não é identificado pelo nome.",
+      "sentence": "O que é essa coisa?",
+      "sentenceForms": [
+        "coisa"
+      ],
+      "translations": {
+        "en": "thing",
+        "es": "cosa",
+        "de": "Ding",
+        "fr": "chose",
+        "ru": "вещь",
+        "it": "cosa"
+      },
+      "definitions": {
+        "en": "An object, item, or idea that is not specifically named.",
+        "es": "Un objeto, artículo o idea que no se nombra específicamente.",
+        "de": "Ein Gegenstand oder eine Idee, die nicht genauer benannt wird.",
+        "fr": "Objet, élément ou idée dont on ne précise pas le nom.",
+        "ru": "Отдельный предмет или объект, который не называется более точно.",
+        "it": "Un oggetto, elemento o idea che non è specificamente nominato."
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "targetLanguage": "english",
   "level": "A1",
-  "totalWords": 935,
+  "totalWords": 936,
   "totalPages": 18,
   "words": [
     {
@@ -83,6 +83,10 @@
     {
       "concept_id": "A1-00021",
       "word_lemma": "get up"
+    },
+    {
+      "concept_id": "A1-00022",
+      "word_lemma": "word"
     },
     {
       "concept_id": "A1-00025",
@@ -215,10 +219,6 @@
     {
       "concept_id": "A1-00063",
       "word_lemma": "banana"
-    },
-    {
-      "concept_id": "A1-00064",
-      "word_lemma": "band"
     }
   ]
 }

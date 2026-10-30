@@ -1,7 +1,7 @@
 {
   "targetLanguage": "portuguese",
   "level": "A1",
-  "totalWords": 945,
+  "totalWords": 946,
   "totalPages": 18,
   "words": [
     {
@@ -87,6 +87,10 @@
     {
       "concept_id": "A1-00021",
       "word_lemma": "levantar-se"
+    },
+    {
+      "concept_id": "A1-00022",
+      "word_lemma": "palavra"
     },
     {
       "concept_id": "A1-00025",
@@ -215,10 +219,6 @@
     {
       "concept_id": "A1-00062",
       "word_lemma": "bola"
-    },
-    {
-      "concept_id": "A1-00063",
-      "word_lemma": "banana"
     }
   ]
 }

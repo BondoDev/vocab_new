@@ -28,6 +28,7 @@ import {
   getAllFullVocabularyListPaths,
   resolveFullVocabularyListRoute,
 } from "./data/seo/listPages/fullVocabularyList";
+import { getAllNounListPaths, resolveNounListRoute } from "./data/seo/listPages/nounLists";
 import {
   buildFullVocabularyInitialData,
   FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID,
@@ -242,6 +243,10 @@ export function getPrerenderRoutes(): string[] {
     ...getAllPastVerbFormsPaths(),
     ...getAllConjugatedVerbFormsPaths(),
     ...getAllFullVocabularyListPaths(),
+    // Prerendered even before launch: unlaunched lists render with
+    // "noindex, follow" and stay out of the sitemap (see
+    // src/seo/listPages/nounLists/common100Nouns/common100NounsLaunchStatus.ts).
+    ...getAllNounListPaths(),
   ])];
 }
 
@@ -377,6 +382,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const fullVocabularyListRoute = resolveFullVocabularyListRoute(url);
   if (fullVocabularyListRoute) {
     return fullVocabularyListRoute.uiLang;
+  }
+
+  const nounListRoute = resolveNounListRoute(url);
+  if (nounListRoute) {
+    return nounListRoute.uiLang;
   }
 
   const seoHubRoute = resolveSeoHubRoute(url);

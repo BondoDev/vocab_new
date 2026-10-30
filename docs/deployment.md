@@ -40,10 +40,11 @@ Local development
 ## Frontend build
 
 - Build command: `npm run build`
-  - `prebuild`: `generate:word-hub-data` + `sitemap` (regenerates
+  - `prebuild`: `generate:word-hub-data` + `generate:common100-nouns` + `sitemap` (regenerates
     `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`,
     `src/data/seo/vocabularyLevels/level-browse-preview/`,
-    `src/data/seo/listPages/verbLists/shared/common100VerbLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
+    `src/data/seo/listPages/verbLists/shared/common100VerbLookup/`,
+    `src/data/seo/listPages/nounLists/common100Nouns/common100NounDetails/`, `public/sitemap.xml`, `public/sitemaps/`)
   - `vite build` → `dist/` (client bundle + prerender template)
   - `vite build --ssr src/entry-server.tsx --outDir server-build`
   - `scripts/build/copy-ssr-template.mjs` (copies `dist/index.html` →

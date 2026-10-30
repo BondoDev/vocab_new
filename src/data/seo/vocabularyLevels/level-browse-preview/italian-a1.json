@@ -1,7 +1,7 @@
 {
   "targetLanguage": "italian",
   "level": "A1",
-  "totalWords": 935,
+  "totalWords": 936,
   "totalPages": 18,
   "words": [
     {
@@ -79,6 +79,10 @@
     {
       "concept_id": "A1-00021",
       "word_lemma": "alzarsi"
+    },
+    {
+      "concept_id": "A1-00022",
+      "word_lemma": "parola"
     },
     {
       "concept_id": "A1-00025",
@@ -215,10 +219,6 @@
     {
       "concept_id": "A1-00064",
       "word_lemma": "gruppo"
-    },
-    {
-      "concept_id": "A1-00065",
-      "word_lemma": "banca"
     }
   ]
 }

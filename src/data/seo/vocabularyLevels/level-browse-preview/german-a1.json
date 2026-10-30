@@ -1,7 +1,7 @@
 {
   "targetLanguage": "german",
   "level": "A1",
-  "totalWords": 949,
+  "totalWords": 950,
   "totalPages": 18,
   "words": [
     {
@@ -87,6 +87,10 @@
     {
       "concept_id": "A1-00021",
       "word_lemma": "aufstehen"
+    },
+    {
+      "concept_id": "A1-00022",
+      "word_lemma": "Wort"
     },
     {
       "concept_id": "A1-00025",
@@ -215,10 +219,6 @@
     {
       "concept_id": "A1-00062",
       "word_lemma": "Ball"
-    },
-    {
-      "concept_id": "A1-00063",
-      "word_lemma": "Banane"
     }
   ]
 }

@@ -61,6 +61,8 @@ src/data/seo/
     verbLists/          Verb-list page-family umbrella
       common100Verbs/   100-most-common-verb pages
       shared/           Data shared only by verb-list subtypes
+    nounLists/          Noun-list page-family umbrella
+      common100Nouns/   100-most-common-noun pages (one list per target language)
     fullVocabularyList/ Full A1–C2 vocabulary list pages (one per target language)
   wordPages/          Word detail/hub pages
   shared/             Cross-family data contracts (not a page family)
@@ -157,7 +159,8 @@ to preserve by inspection and review.
 
 1. Does this data belong to exactly one existing family
    (`vocabularyLevels/`, `levelTests/`, `wordPages/`, or a list family
-   under `listPages/`: `verbLists/`, `fullVocabularyList/`)? Put it there.
+   under `listPages/`: `verbLists/`, `nounLists/`,
+   `fullVocabularyList/`)? Put it there.
    A new list page family gets its own folder under `listPages/`.
 2. Is it genuinely needed by two or more families, with no single owner?
    Only then consider `shared/`.

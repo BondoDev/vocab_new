@@ -38,7 +38,7 @@ import { RelatedLearningResources } from "../../../components/learning-resources
 import { NotFoundPage } from "../../NotFoundPage";
 import { FullVocabularyLevelSection, type FullVocabularyLoadStatus } from "./FullVocabularyLevelSection";
 import { VocabularyFilterBar } from "./VocabularyFilterBar";
-import { useAddToListAfterLogin } from "./useAddToListAfterLogin";
+import { useAddToListAfterLogin } from "../../../hooks/useAddToListAfterLogin";
 import {
   FullVocabularyCefrGuide,
   FullVocabularyFaq,

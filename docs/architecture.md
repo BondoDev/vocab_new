@@ -215,6 +215,29 @@ language differs from the table's language, the UI language's own
 `vocabulary.json` is loaded too and joined by `concept_id` into a
 Translation column (also searchable); same-language pages load one file
 and show no Translation column.
+`src/app/pages/list-pages/noun-lists/common100Nouns/` owns the "100 most
+common nouns" page family (the noun counterpart of `verb-lists/common100Verbs/`)
+— one page per (target-language list, UI language), e.g. "100 Essential
+English Nouns": `NounListSeoPage.tsx` (route entry),
+`NounListTable.tsx` (the page-owned word table — one `<tbody>` per
+category, opened by a full-width header row, so each list's categories must
+be contiguous; a fixed-layout table on desktop that reflows each row into a compact three-line entry below
+700px, keeping definition and sentence visible instead of the shared
+`VocabularyTable`'s Details toggle), and `NounListGuide.tsx`
+(educational and practice sections). Its route/content registry and per-list datasets live
+in `src/data/seo/listPages/nounLists/common100Nouns/` (re-exported by the
+`nounLists/index.ts` umbrella barrel); rows join by `concept_id` to generated
+per-list details (`common100NounDetails/`, from
+`npm run generate:common100-nouns`) for definition, example sentence,
+and UI-language translation. Each target language's details are their own
+lazy chunk (glob G13), rendered through `React.lazy`; prerendering waits for
+it, so the full table is in the HTML. Pages come from
+`common100NounContent.json` alone: one record per (`targetLanguage`,
+`uiLanguage`) short-code pair creates that page. Its metadata
+builder and per-list `LAUNCHED_NOUN_LISTS` set live in
+`src/seo/listPages/nounLists/common100Nouns/`. A list is indexable only when it is
+in that set and its dataset holds `expectedWordCount` rows; otherwise its
+pages serve "noindex, follow". The family is not in the sitemap yet.
 `src/app/pages/word-pages/detail/` owns individual word-detail-page
 rendering — `WordSeoPage.tsx` (the client/production data-acquisition
 wrapper), `WordSeoPageView.tsx` (the SSR-safe presentational core), and

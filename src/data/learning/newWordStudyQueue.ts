@@ -27,7 +27,7 @@ export const CEFR_LEVEL_RANK: Record<LanguageLevelCode, number> = {
 };
 
 // vocabulary_aranged.json's concept_id values already encode their CEFR
-// level as a leading "A1-"/"A2-"/.../"C2-" prefix (confirmed: all 10,572
+// level as a leading "A1-"/"A2-"/.../"C2-" prefix (confirmed: all 10,573
 // current entries match one of the six codes, zero exceptions) — the same
 // contract WORD_ROUTE_CONCEPT_ID_PATTERN enforces in
 // src/data/seo/wordPages/wordRouteManifest.ts for word SEO routes. That

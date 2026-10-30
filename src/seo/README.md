@@ -78,7 +78,9 @@ family. `levelTests/` groups the level-test SEO page family,
 `listPages/` groups the list-style page families, mirroring
 `src/data/seo/listPages/` (it owns no files itself):
 `listPages/fullVocabularyList/` holds the full A1–C2 vocabulary list
-page family (metadata builder plus its launch-status flag), and
+page family (metadata builder plus its launch-status flag),
+`listPages/nounLists/common100Nouns/` holds the "100 most common nouns"
+page family (metadata builder plus its per-list launch set), and
 `listPages/verbLists/` is the umbrella for verb-list SEO page families. Its
 `common100Verbs/` folder owns the current "100 most common verbs"
 runtime metadata implementation; future verb-list families such as

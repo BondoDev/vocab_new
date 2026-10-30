@@ -8,6 +8,7 @@ import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
 import { isSupportedUiLanguage } from "../../../data/seo/shared/slugs";
 import { getFullVocabularyListPath, resolveFullVocabularyListRoute } from "../../../data/seo/listPages/fullVocabularyList";
+import { getNounListPath, resolveNounListRoute } from "../../../data/seo/listPages/nounLists";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
 import {
   getConjugatedVerbFormsPath,
@@ -192,6 +193,17 @@ export function UILanguageSwitcher({
       const fullVocabularyListRoute = resolveFullVocabularyListRoute(location.pathname);
       if (fullVocabularyListRoute) {
         const nextPath = getFullVocabularyListPath(fullVocabularyListRoute.targetLanguage, code);
+        if (nextPath && nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
+      const nounListRoute = resolveNounListRoute(location.pathname);
+      if (nounListRoute) {
+        const nextPath = getNounListPath(nounListRoute.listId, code);
         if (nextPath && nextPath !== location.pathname) {
           navigate(nextPath);
         }

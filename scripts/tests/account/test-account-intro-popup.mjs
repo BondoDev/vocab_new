@@ -446,6 +446,7 @@ async function main() {
     "pastVerbFormsSeo",
     "conjugatedVerbFormsSeo",
     "fullVocabularyListSeo",
+    "nounListSeo",
     "seoHub",
     "wordSeoHub",
     "wordPage",
@@ -1097,7 +1098,7 @@ async function main() {
     );
   });
 
-  await test("all 9 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, conjugatedVerbFormsSeo, fullVocabularyListSeo, seoHub, wordSeoHub, wordPage)", () => {
+  await test("all 10 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, conjugatedVerbFormsSeo, fullVocabularyListSeo, nounListSeo, seoHub, wordSeoHub, wordPage)", () => {
     const seoPageKeys = [
       "vocabularyLevel",
       "levelTestSeo",
@@ -1105,6 +1106,7 @@ async function main() {
       "pastVerbFormsSeo",
       "conjugatedVerbFormsSeo",
       "fullVocabularyListSeo",
+      "nounListSeo",
       "seoHub",
       "wordSeoHub",
       "wordPage",
