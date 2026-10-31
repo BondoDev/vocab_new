@@ -210,8 +210,12 @@ export function HalfWrittenExercise({
     const missingPart = correctAnswer.substring(visibleLetterCount);
     const missingPartInflected = inflectedAnswer.substring(visibleLetterCount);
 
+    // For multi-word answers the visible prefix can end right before a
+    // space ("in der" + " Nähe"), so the missing part starts with a space.
+    // userAnswer is trimmed, so both sides must be trimmed to compare.
     const correct =
-      userAnswer === missingPart || userAnswer === missingPartInflected;
+      userAnswer === missingPart.trim() ||
+      userAnswer === missingPartInflected.trim();
 
     // Latches the instant the typed portion has reached the missing
     // portion's full length (same length inputProps.maxLength already caps
