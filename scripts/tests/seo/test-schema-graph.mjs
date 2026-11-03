@@ -8,7 +8,8 @@
  *
  * Expected rich-result enhancement: BreadcrumbList only.
  * DefinedTerm is retained for semantic accuracy.
- * FAQPage is retained as visible, accurate FAQ content.
+ * FAQPage is emitted only alongside visible, accurate FAQ content (CEFR
+ * pages: editorial v2 FAQ only, so currently none).
  * No Course, EducationalOccupationalProgram, Quiz, or LearningResource.
  */
 
@@ -203,7 +204,7 @@ if (wordDirs.length === 0) {
 console.log("\n[2] Vocabulary-level page @graph structure");
 
 const vocabPageNames = ["@context is schema.org", "@graph exists", "exactly 1 WebPage", "exactly 1 BreadcrumbList",
-  "exactly 1 FAQPage", "FAQPage mainEntity is array of Questions", "WebPage.breadcrumb → BreadcrumbList",
+  "FAQPage only with a visible FAQ section", "FAQPage questions match the visible FAQ", "WebPage.breadcrumb → BreadcrumbList",
   "BreadcrumbList positions sequential", "no Course or EducationalOccupationalProgram",
   "ItemList only if browsePreviewWords provided"];
 
@@ -240,17 +241,30 @@ if (vocabDirs.length === 0) {
     assert.equal(nodes.length, 1, `Found ${nodes.length}`);
   });
 
-  test("@graph contains exactly 1 FAQPage", () => {
+  // FAQPage must describe only questions the page visibly shows. CEFR pages
+  // show an FAQ section only for editorial (v2) FAQ content; legacy entries
+  // have none, so they must emit no FAQPage node.
+  const visibleFaqQuestions = [...vocabHtml.matchAll(/<details class="vlp-faq__item"><summary>([\s\S]*?)<\/summary>/g)].map(
+    (match) => match[1],
+  );
+
+  test("@graph has a FAQPage only when the page shows an FAQ section", () => {
     const nodes = jsonLd["@graph"].filter((n) => n["@type"] === "FAQPage");
-    assert.equal(nodes.length, 1, `Found ${nodes.length}`);
+    assert.equal(nodes.length, visibleFaqQuestions.length > 0 ? 1 : 0, `Found ${nodes.length}`);
   });
 
-  test("FAQPage.mainEntity is an array of Questions", () => {
+  test("FAQPage questions (if any) match the visible FAQ questions", () => {
     const faq = jsonLd["@graph"].find((n) => n["@type"] === "FAQPage");
+    if (!faq) {
+      assert.equal(visibleFaqQuestions.length, 0);
+      return;
+    }
     assert.ok(Array.isArray(faq.mainEntity), "mainEntity must be an array");
-    assert.ok(faq.mainEntity.length > 0, "mainEntity is empty");
-    assert.equal(faq.mainEntity[0]["@type"], "Question");
-    assert.ok(faq.mainEntity[0].acceptedAnswer?.text?.length > 0, "Question.acceptedAnswer.text missing");
+    assert.equal(faq.mainEntity.length, visibleFaqQuestions.length);
+    faq.mainEntity.forEach((question) => {
+      assert.equal(question["@type"], "Question");
+      assert.ok(question.acceptedAnswer?.text?.length > 0, "Question.acceptedAnswer.text missing");
+    });
   });
 
   test("WebPage.breadcrumb.@id points to BreadcrumbList node", () => {

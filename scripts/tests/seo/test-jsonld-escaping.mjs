@@ -992,10 +992,13 @@ if (distExists) {
       assert.equal(nodes.length, 1, `Found ${nodes.length}`);
     });
 
-    test("Prerendered vocab page @graph contains 1 FAQPage", () => {
+    // CEFR pages emit FAQPage only alongside a visible FAQ section (editorial
+    // v2 FAQ content); legacy entries show none and must emit none.
+    test("Prerendered vocab page @graph has a FAQPage only with a visible FAQ section", () => {
       const parsed = JSON.parse(vocabJsonLd[0].content);
       const nodes = parsed["@graph"].filter((n) => n["@type"] === "FAQPage");
-      assert.equal(nodes.length, 1, `Found ${nodes.length}`);
+      const hasVisibleFaq = vocabHtml.includes('class="vlp-faq__item"');
+      assert.equal(nodes.length, hasVisibleFaq ? 1 : 0, `Found ${nodes.length}`);
     });
 
     test("Prerendered vocab page BreadcrumbList has sequential positions", () => {

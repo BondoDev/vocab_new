@@ -56,10 +56,12 @@ it to produce metadata.
   copy/templates; `hubPages/hubTemplates.ts` owns hub metadata
   copy/templates. `levelTests/levelTestMetadata.ts` owns level-test page
   metadata.
-  `vocabularyLevels/seoFaq.ts` (FAQ section),
+  `vocabularyLevels/seoFaq.ts` (the FAQ items shared by the visible FAQ
+  section and the FAQPage schema — editorial v2 content only),
   `vocabularyLevels/seoSchema.ts` (JSON-LD graph), and
-  `vocabularyLevels/seoTemplates.ts` (vocabulary-level metadata templates
-  and FAQ item type) are exclusively owned by the vocabulary-level page
+  `vocabularyLevels/seoTemplates.ts` (FAQ item type; the page's localized
+  interface copy lives in `src/data/seo/vocabularyLevels/cefrPageCopy.ts`)
+  are exclusively owned by the vocabulary-level page
   family and live together in `vocabularyLevels/`.
 - Cross-family/shared behavior: `shared/seoAlternates.ts` (hreflang
   building), `routeMetadataPolicy.ts` (route-level indexing policy),

@@ -12,6 +12,11 @@
 // sole canonical content source, so this guard is what keeps its coverage
 // complete going forward.
 //
+// It is also the validation mechanism for the editorial schema migration:
+// every entry must satisfy either the legacy or the v2 schema in full (see
+// src/data/seo/vocabularyLevels/levelContent.ts), so v2 entries can replace
+// legacy ones one at a time.
+//
 // Run: node scripts/tests/architecture/test-vocabulary-level-content-coverage.mjs
 import assert from "node:assert/strict";
 import path from "node:path";
@@ -33,7 +38,11 @@ function test(name, fn) {
 
 const compiled = compileTsToCommonJs(".tmp-vocabulary-level-content-coverage", [
   path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels", "levelContent.ts"),
 ]);
+const { validateVocabularyLevelContent, resolveVocabularyLevelPageModel } = compiled.require(
+  "src/data/seo/vocabularyLevels/levelContent",
+);
 const {
   SUPPORTED_UI_LANGUAGES,
   SUPPORTED_TARGET_LANGUAGES,
@@ -165,6 +174,69 @@ test("actual unique-key set exactly equals the expected cartesian-product set", 
 
 console.log(`\nDerived expected combinations: ${expectedTotal}`);
 console.log(`Actual valid unique combinations: ${actualKeys.size}`);
+
+// ---------------------------------------------------------------------------
+// Editorial schema validation (legacy and v2), via the same
+// validateVocabularyLevelContent() the page renders through
+// (src/data/seo/vocabularyLevels/levelContent.ts). Entries may be migrated
+// to the v2 schema one at a time; each entry must fully satisfy whichever
+// schema its shape declares (`hero` = v2, `levelExplanation` = legacy).
+// ---------------------------------------------------------------------------
+console.log("\n=== editorial content schema (legacy / v2) ===\n");
+
+const schemaProblems = [];
+const formatCounts = { legacy: 0, v2: 0 };
+content.forEach((entry, index) => {
+  const label = `index ${index} (${entry?.uiLanguage}|${entry?.targetLanguage}|${entry?.level})`;
+  const { format, problems } = validateVocabularyLevelContent(entry?.content);
+  if (format) formatCounts[format]++;
+  if (problems.length > 0) {
+    schemaProblems.push(`${label}: ${problems.slice(0, 3).join("; ")}`);
+  } else if (!resolveVocabularyLevelPageModel(entry.content)) {
+    schemaProblems.push(`${label}: validated but did not resolve to a page model`);
+  }
+});
+
+test("every entry satisfies the legacy or the v2 editorial schema", () => {
+  assert.deepEqual(
+    schemaProblems.slice(0, 10),
+    [],
+    `${schemaProblems.length} invalid entr${schemaProblems.length === 1 ? "y" : "ies"} (showing up to 10)`,
+  );
+});
+
+test("schema detection rejects ambiguous and unknown shapes", () => {
+  assert.equal(validateVocabularyLevelContent({ hero: {}, levelExplanation: {} }).format, null);
+  assert.equal(validateVocabularyLevelContent({ title: "x" }).format, null);
+  assert.equal(validateVocabularyLevelContent(null).format, null);
+});
+
+test("a complete v2 entry validates and maps without legacy fields", () => {
+  const v2 = {
+    metaTitle: "T",
+    metaDescription: "D",
+    hero: { title: "H", introduction: "I" },
+    levelGuide: { heading: "L", paragraphs: ["P"], learningOutcomes: ["O"] },
+    topicGuide: { heading: "G", introduction: "GI", topics: [{ name: "N", description: "ND" }] },
+    studyAdvice: { heading: "S", tips: ["Tip"] },
+    faq: [],
+    finalCta: { heading: "F", description: "FD" },
+  };
+  assert.deepEqual(validateVocabularyLevelContent(v2), { format: "v2", problems: [] });
+  const model = resolveVocabularyLevelPageModel(v2);
+  assert.equal(model.format, "v2");
+  assert.deepEqual(model.faq, []);
+  assert.equal(model.levelGuide.lead, null);
+  assert.deepEqual(model.topicGuide.groups, []);
+  const broken = { ...v2, faq: [{ question: "Q", answer: "" }], studyAdvice: { heading: "S", tips: [] } };
+  const result = validateVocabularyLevelContent(broken);
+  assert.equal(result.format, "v2");
+  assert.ok(result.problems.some((problem) => problem.startsWith("faq[0].answer")), result.problems.join("; "));
+  assert.ok(result.problems.some((problem) => problem.startsWith("studyAdvice.tips")), result.problems.join("; "));
+  assert.equal(resolveVocabularyLevelPageModel(broken), null);
+});
+
+console.log(`\nEditorial schema: ${formatCounts.legacy} legacy, ${formatCounts.v2} v2`);
 
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);

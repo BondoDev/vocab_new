@@ -5,20 +5,20 @@ import {
   SUPPORTED_TARGET_LANGUAGES,
   type TargetLanguageSlug,
 } from "../../../data/seo/shared/slugs";
-import type {
-  CefrLevelCode,
-  UiLanguageCode,
-  VocabularyLevelContent,
-} from "../../../data/seo/vocabularyLevels";
+import type { CefrLevelCode, UiLanguageCode } from "../../../data/seo/vocabularyLevels";
+import type { VocabularyLevelEditorialContent } from "../../../data/seo/vocabularyLevels/levelContent";
 
 type PreviewTargetLanguage = TargetLanguageSlug | UiLanguageCode;
 
 export type SeoCefrContentItem = {
   uiLanguage: UiLanguageCode;
   targetLanguage: PreviewTargetLanguage;
-  targetLanguageDisplayName: string;
+  // Legacy entries carry an English display name; the page no longer shows
+  // it (localized names come from cefrPageCopy.ts), and v2 entries may omit it.
+  targetLanguageDisplayName?: string;
   level: CefrLevelCode;
-  content: VocabularyLevelContent;
+  // Either editorial schema; see levelContent.ts for detection/validation.
+  content: VocabularyLevelEditorialContent;
 };
 
 const previewItems = sampleContent as SeoCefrContentItem[];

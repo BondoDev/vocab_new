@@ -7,7 +7,13 @@ import type {
   UiLanguageCode,
 } from "../../../data/seo/vocabularyLevels";
 import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
-import { buildVocabularyFaqSection, buildVocabularyJsonLdGraph } from "../../../seo/metadata";
+import { getVocabularyFaqItems, buildVocabularyJsonLdGraph } from "../../../seo/metadata";
+import {
+  resolveVocabularyLevelPageModel,
+  type VocabularyLevelPageModel,
+} from "../../../data/seo/vocabularyLevels/levelContent";
+import { getCefrLevelCode, getCefrPageCopy } from "../../../data/seo/vocabularyLevels/cefrPageCopy";
+import type { LevelExplorerInitialData } from "../../../data/seo/vocabularyLevels/levelExplorerRows";
 import {
   DEV_CEFR_PREVIEW_PATH,
   findSeoCefrPreviewItem,
@@ -15,242 +21,12 @@ import {
   normalizeTargetLanguage,
   type SeoCefrContentItem,
 } from "./devSeoCefrPreviewData";
-import type { LevelBrowsePreviewData } from "../../../data/seo/vocabularyLevels/levelBrowseWords";
 
-const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
-  UiLanguageCode,
-  Record<TargetLanguageSlug, string>
-> = {
-  en: {
-    english: "English",
-    german: "German",
-    spanish: "Spanish",
-    french: "French",
-    italian: "Italian",
-    portuguese: "Portuguese",
-    russian: "Russian",
-  },
-  es: {
-    english: "inglés",
-    german: "alemán",
-    spanish: "español",
-    french: "francés",
-    italian: "italiano",
-    portuguese: "portugués",
-    russian: "ruso",
-  },
-  de: {
-    english: "Englisch",
-    german: "Deutsch",
-    spanish: "Spanisch",
-    french: "Französisch",
-    italian: "Italienisch",
-    portuguese: "Portugiesisch",
-    russian: "Russisch",
-  },
-  fr: {
-    english: "anglais",
-    german: "allemand",
-    spanish: "espagnol",
-    french: "français",
-    italian: "italien",
-    portuguese: "portugais",
-    russian: "russe",
-  },
-  it: {
-    english: "inglese",
-    german: "tedesco",
-    spanish: "spagnolo",
-    french: "francese",
-    italian: "italiano",
-    portuguese: "portoghese",
-    russian: "russo",
-  },
-  pt: {
-    english: "inglês",
-    german: "alemão",
-    spanish: "espanhol",
-    french: "francês",
-    italian: "italiano",
-    portuguese: "português",
-    russian: "russo",
-  },
-  ru: {
-    english: "английскому",
-    german: "немецкому",
-    spanish: "испанскому",
-    french: "французскому",
-    italian: "итальянскому",
-    portuguese: "португальскому",
-    russian: "русскому",
-  },
-};
-
-const PREVIEW_BROWSE_LANGUAGE_NAMES: Record<
-  UiLanguageCode,
-  Record<TargetLanguageSlug, string>
-> = {
-  en: {
-    english: "English",
-    german: "German",
-    spanish: "Spanish",
-    french: "French",
-    italian: "Italian",
-    portuguese: "Portuguese",
-    russian: "Russian",
-  },
-  es: {
-    english: "inglés",
-    german: "alemán",
-    spanish: "español",
-    french: "francés",
-    italian: "italiano",
-    portuguese: "portugués",
-    russian: "ruso",
-  },
-  de: {
-    english: "Englisch",
-    german: "Deutsch",
-    spanish: "Spanisch",
-    french: "Französisch",
-    italian: "Italienisch",
-    portuguese: "Portugiesisch",
-    russian: "Russisch",
-  },
-  fr: {
-    english: "anglais",
-    german: "allemand",
-    spanish: "espagnol",
-    french: "français",
-    italian: "italien",
-    portuguese: "portugais",
-    russian: "russe",
-  },
-  it: {
-    english: "inglese",
-    german: "tedesco",
-    spanish: "spagnolo",
-    french: "francese",
-    italian: "italiano",
-    portuguese: "portoghese",
-    russian: "russo",
-  },
-  pt: {
-    english: "inglês",
-    german: "alemão",
-    spanish: "espanhol",
-    french: "francês",
-    italian: "italiano",
-    portuguese: "português",
-    russian: "russo",
-  },
-  ru: {
-    english: "английского",
-    german: "немецкого",
-    spanish: "испанского",
-    french: "французского",
-    italian: "итальянского",
-    portuguese: "португальского",
-    russian: "русского",
-  },
-};
-
-const PREVIEW_FAQ_LANGUAGE_NAMES: Record<
-  UiLanguageCode,
-  Record<TargetLanguageSlug, string>
-> = {
-  en: {
-    english: "English",
-    german: "German",
-    spanish: "Spanish",
-    french: "French",
-    italian: "Italian",
-    portuguese: "Portuguese",
-    russian: "Russian",
-  },
-  es: {
-    english: "inglés",
-    german: "alemán",
-    spanish: "español",
-    french: "francés",
-    italian: "italiano",
-    portuguese: "portugués",
-    russian: "ruso",
-  },
-  de: {
-    english: "englischen",
-    german: "deutschen",
-    spanish: "spanischen",
-    french: "französischen",
-    italian: "italienischen",
-    portuguese: "portugiesischen",
-    russian: "russischen",
-  },
-  fr: {
-    english: "anglais",
-    german: "allemand",
-    spanish: "espagnol",
-    french: "français",
-    italian: "italien",
-    portuguese: "portugais",
-    russian: "russe",
-  },
-  it: {
-    english: "inglese",
-    german: "tedesco",
-    spanish: "spagnolo",
-    french: "francese",
-    italian: "italiano",
-    portuguese: "portoghese",
-    russian: "russo",
-  },
-  pt: {
-    english: "inglês",
-    german: "alemão",
-    spanish: "espanhol",
-    french: "francês",
-    italian: "italiano",
-    portuguese: "português",
-    russian: "russo",
-  },
-  ru: {
-    english: "английского",
-    german: "немецкого",
-    spanish: "испанского",
-    french: "французского",
-    italian: "итальянского",
-    portuguese: "португальского",
-    russian: "русского",
-  },
-};
-
-const PREVIEW_HERO_SUFFIX_TEMPLATES: Record<
-  UiLanguageCode,
-  (args: { words: number; language: string }) => string
-> = {
-  en: ({ words, language }) => `Mastering ${words} ${language} words`,
-  es: ({ words, language }) => `domina ${words} palabras de ${language}`,
-  de: ({ words, language }) => `${words} ${language} Wörter meistern`,
-  fr: ({ words, language }) => `maîtrisez ${words} mots de ${language}`,
-  it: ({ words, language }) => `padroneggia ${words} parole di ${language}`,
-  pt: ({ words, language }) => `domine ${words} palavras de ${language}`,
-  ru: ({ words, language }) => `освойте ${words} слов по ${language}`,
-};
-
-function buildPreviewHeroTitle(item: SeoCefrContentItem): string {
-  const normalizedTargetLanguage = normalizeTargetLanguage(item.targetLanguage);
-  const words = item.content.wordCount.value;
-  const suffixLanguage =
-    PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
-    item.targetLanguageDisplayName;
-  const suffixTemplate =
-    PREVIEW_HERO_SUFFIX_TEMPLATES[item.uiLanguage] ?? PREVIEW_HERO_SUFFIX_TEMPLATES.en;
-  const suffix = suffixTemplate({ words, language: suffixLanguage });
-
-  return item.content.title.includes(String(words))
-    ? item.content.title
-    : `${item.content.title} - ${suffix}`;
-}
+// Despite the legacy name (see src/app/pages/README.md, "Known legacy
+// naming"), this is the production entry point of every CEFR
+// vocabulary-level page: it resolves the page's editorial entry, maps it
+// through the legacy/v2 compatibility layer (levelContent.ts), builds the
+// page metadata, and renders VocabularyLevelPage.
 
 function buildItemPath(item: SeoCefrContentItem, pathPrefix: string): string {
   return (
@@ -262,28 +38,15 @@ function buildItemPath(item: SeoCefrContentItem, pathPrefix: string): string {
   );
 }
 
-function buildSeoMetadata(item: SeoCefrContentItem, pathPrefix: string): SeoMetadata {
-  const wordsUnitByUiLang = {
-    en: "words",
-    es: "palabras",
-    de: "Wörter",
-    fr: "mots",
-    it: "parole",
-    pt: "palavras",
-    ru: "слов",
-  } as const;
-  const wordsUnit = wordsUnitByUiLang[item.uiLanguage] ?? wordsUnitByUiLang.en;
+function buildSeoMetadata(
+  item: SeoCefrContentItem,
+  model: VocabularyLevelPageModel,
+  pathPrefix: string,
+): SeoMetadata {
   const normalizedTargetLanguage = normalizeTargetLanguage(item.targetLanguage);
-  const faqLanguageName =
-    PREVIEW_FAQ_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
-    item.targetLanguageDisplayName;
-  const faqSection = buildVocabularyFaqSection(
-    item.uiLanguage,
-    faqLanguageName,
-    item.level.toUpperCase(),
-    item.content,
-    wordsUnit,
-  );
+  const copy = getCefrPageCopy(item.uiLanguage);
+  // The canonical is always the bare CEFR path: explorer search/page query
+  // parameters (?q=, ?page=) never create separate canonical pages.
   const canonicalPath = buildItemPath(item, pathPrefix);
   const alternateItems = getSeoCefrPreviewItems().filter(
     (candidate) =>
@@ -294,9 +57,8 @@ function buildSeoMetadata(item: SeoCefrContentItem, pathPrefix: string): SeoMeta
     alternateItems.find((candidate) => candidate.uiLanguage === "en") ?? item;
   const origin = "https://www.fluentstellar.com";
   const canonical = `${origin}${canonicalPath}`;
-  const title = item.content.metaTitle ?? item.content.title;
-  const description = item.content.metaDescription ?? "";
-  const breadcrumbLabel = `${item.targetLanguageDisplayName} ${item.level.toUpperCase()} Vocabulary`;
+  const title = model.metaTitle;
+  const description = model.metaDescription;
 
   return {
     title,
@@ -319,8 +81,9 @@ function buildSeoMetadata(item: SeoCefrContentItem, pathPrefix: string): SeoMeta
       origin,
       title,
       description,
-      breadcrumbLabel,
-      faqItems: faqSection.items,
+      breadcrumbHomeLabel: copy.breadcrumbHome,
+      breadcrumbLabel: copy.vocabularyHeading(normalizedTargetLanguage, getCefrLevelCode(item.level)),
+      faqItems: getVocabularyFaqItems(model),
     }),
   };
 }
@@ -330,7 +93,7 @@ export function DevSeoCefrPlaceholderPage({
   routeParams,
   onStartPractice,
   pathPrefix = "/test",
-  initialBrowsePreview = null,
+  initialExplorerData = null,
 }: {
   item?: SeoCefrContentItem | null;
   routeParams?: {
@@ -340,7 +103,8 @@ export function DevSeoCefrPlaceholderPage({
   } | null;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
   pathPrefix?: string;
-  initialBrowsePreview?: LevelBrowsePreviewData | null;
+  // SSR only; the browser reads the same rows from the page's embedded JSON.
+  initialExplorerData?: LevelExplorerInitialData | null;
 }) {
   const resolvedItem = useMemo(() => {
     if (item) {
@@ -362,7 +126,7 @@ export function DevSeoCefrPlaceholderPage({
       resolvedItem={resolvedItem}
       onStartPractice={onStartPractice}
       pathPrefix={pathPrefix}
-      initialBrowsePreview={initialBrowsePreview}
+      initialExplorerData={initialExplorerData}
     />
   );
 }
@@ -371,52 +135,40 @@ function ResolvedSeoCefrPage({
   resolvedItem,
   onStartPractice,
   pathPrefix,
-  initialBrowsePreview,
+  initialExplorerData,
 }: {
   resolvedItem: SeoCefrContentItem;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
   pathPrefix: string;
-  initialBrowsePreview: LevelBrowsePreviewData | null;
+  initialExplorerData: LevelExplorerInitialData | null;
 }) {
+  const model = useMemo(() => resolveVocabularyLevelPageModel(resolvedItem.content), [resolvedItem.content]);
   const seoMetadata = useMemo(
-    () => buildSeoMetadata(resolvedItem, pathPrefix),
-    [resolvedItem, pathPrefix],
+    () => (model ? buildSeoMetadata(resolvedItem, model, pathPrefix) : null),
+    [resolvedItem, model, pathPrefix],
   );
   const normalizedTargetLanguage = useMemo(
     () => normalizeTargetLanguage(resolvedItem.targetLanguage),
     [resolvedItem.targetLanguage],
   );
-  const browseLanguageNameOverride = useMemo(
-    () =>
-      PREVIEW_BROWSE_LANGUAGE_NAMES[resolvedItem.uiLanguage]?.[normalizedTargetLanguage] ??
-      resolvedItem.targetLanguageDisplayName,
-    [resolvedItem.targetLanguageDisplayName, resolvedItem.uiLanguage, normalizedTargetLanguage],
-  );
-  const faqLanguageNameOverride = useMemo(
-    () =>
-      PREVIEW_FAQ_LANGUAGE_NAMES[resolvedItem.uiLanguage]?.[normalizedTargetLanguage] ??
-      resolvedItem.targetLanguageDisplayName,
-    [resolvedItem.targetLanguageDisplayName, resolvedItem.uiLanguage, normalizedTargetLanguage],
-  );
-  const heroTitle = useMemo(() => buildPreviewHeroTitle(resolvedItem), [resolvedItem]);
+
+  // App.tsx already routes invalid content to the not-found page (it runs
+  // the same validation), so this only guards direct/preview use.
+  if (!model || !seoMetadata) {
+    return <div className="p-6 text-sm text-muted-foreground">Vocabulary content unavailable.</div>;
+  }
 
   return (
     <VocabularyLevelPage
+      // Keyed per page so client-side navigation to another level or
+      // language starts with fresh explorer state (rows, search, page).
+      key={`${resolvedItem.uiLanguage}-${normalizedTargetLanguage}-${resolvedItem.level}`}
       uiLang={resolvedItem.uiLanguage}
       targetLanguage={normalizedTargetLanguage}
       level={resolvedItem.level}
       onStartPractice={onStartPractice}
-      heroTitleOverride={heroTitle}
-      browseLanguageNameOverride={browseLanguageNameOverride}
-      faqLanguageNameOverride={faqLanguageNameOverride}
-      initialBrowsePreview={initialBrowsePreview}
-      contentOverride={{
-        file: {
-          targetLanguage: normalizedTargetLanguage,
-          targetLanguageDisplayName: resolvedItem.targetLanguageDisplayName,
-        },
-        levelContent: resolvedItem.content,
-      }}
+      initialExplorerData={initialExplorerData}
+      contentOverride={{ model }}
       seoMetadataOverride={seoMetadata}
     />
   );

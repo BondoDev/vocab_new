@@ -11,9 +11,11 @@ const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const cefrSource = read("src/app/pages/vocabulary/DevSeoCefrPlaceholderPage.tsx");
 const keyboardSource = read("src/features/practice/exercises/MobileKeyboard.tsx");
 const fixture = {
-  uiLanguage: "en", targetLanguage: "french", targetLanguageDisplayName: "French", level: "a1",
-  content: { title: "French vocabulary", wordCount: { value: 100 }, metaDescription: "Practice French" },
+  uiLanguage: "en", targetLanguage: "french", level: "a1",
+  content: { title: "French vocabulary", valid: true },
 };
+// Stand-in for levelContent.ts's resolved page model.
+const pageModel = { metaTitle: "French A1 vocabulary list", metaDescription: "Practice French", faq: [] };
 
 function compile(source) {
   let localSource = source;
@@ -38,13 +40,19 @@ function loadModule(compiled, bindings) {
 function cefrBindings(React, item) {
   return {
     React, useMemo: React.useMemo,
-    VocabularyLevelPage: (props) => React.createElement("article", { "data-page": JSON.stringify(props) }, props.heroTitleOverride),
+    VocabularyLevelPage: (props) => React.createElement("article", { "data-page": JSON.stringify(props) }),
     DEV_CEFR_PREVIEW_PATH: "/test/en/french-a1-vocabulary-practice",
     normalizeTargetLanguage: (language) => language,
     findSeoCefrPreviewItem: (params) => params.level === item.level ? item : null,
     getSeoCefrPreviewItems: () => [item],
     buildLocalizedVocabularyPath: (ui, language, level) => `/${ui}/${language}-${level}-vocabulary-practice`,
-    buildVocabularyFaqSection: (...args) => ({ items: args }),
+    resolveVocabularyLevelPageModel: (content) => (content?.valid ? pageModel : null),
+    getVocabularyFaqItems: (model) => model.faq,
+    getCefrLevelCode: (level) => level.toUpperCase(),
+    getCefrPageCopy: () => ({
+      breadcrumbHome: "Home",
+      vocabularyHeading: (language, level) => `${language} ${level} vocabulary`,
+    }),
     buildVocabularyJsonLdGraph: (params) => params,
   };
 }
@@ -67,26 +75,31 @@ function render(element) {
   return render(next);
 }
 const startPractice = () => {};
-const browsePreview = { marker: "initial browse data" };
-const pageProps = { onStartPractice: startPractice, initialBrowsePreview: browsePreview, pathPrefix: "" };
+const explorerData = { marker: "initial explorer data" };
+const pageProps = { onStartPractice: startPractice, initialExplorerData: explorerData, pathPrefix: "" };
 const renderPage = (props) => render(virtualReact.createElement(DevSeoCefrPlaceholderPage, { ...pageProps, ...props }));
 assert.equal(renderPage({}).type, "div");
 const resolved = renderPage({ routeParams: { level: "a1" } });
 assert.equal(resolved.type, "article");
 const forwarded = JSON.parse(resolved.props["data-page"]);
-assert.equal(forwarded.heroTitleOverride, "French vocabulary - Mastering 100 French words");
-assert.equal(forwarded.browseLanguageNameOverride, "French");
-assert.equal(forwarded.faqLanguageNameOverride, "French");
+assert.equal(forwarded.key, "en-french-a1", "page is keyed per UI language, target language, and level");
+assert.deepEqual(forwarded.contentOverride, { model: pageModel });
 assert.equal(forwarded.seoMetadataOverride.canonical, "https://www.fluentstellar.com/en/french-a1-vocabulary-practice");
 assert.deepEqual(forwarded.seoMetadataOverride.alternates, [
   { hreflang: "en", href: "https://www.fluentstellar.com/en/french-a1-vocabulary-practice" },
   { hreflang: "x-default", href: "https://www.fluentstellar.com/en/french-a1-vocabulary-practice" },
 ]);
-assert.equal(forwarded.seoMetadataOverride.title, fixture.content.title);
-assert.equal(forwarded.seoMetadataOverride.description, fixture.content.metaDescription);
-assert.deepEqual(forwarded.contentOverride.levelContent, fixture.content);
-assert.deepEqual(forwarded.initialBrowsePreview, browsePreview);
-assert.equal(forwarded.seoMetadataOverride.jsonLd.faqItems[1], "French");
+assert.equal(forwarded.seoMetadataOverride.title, pageModel.metaTitle);
+assert.equal(forwarded.seoMetadataOverride.description, pageModel.metaDescription);
+assert.deepEqual(forwarded.initialExplorerData, explorerData);
+assert.deepEqual(forwarded.seoMetadataOverride.jsonLd.faqItems, []);
+assert.equal(forwarded.seoMetadataOverride.jsonLd.breadcrumbHomeLabel, "Home");
+assert.equal(forwarded.seoMetadataOverride.jsonLd.breadcrumbLabel, "french A1 vocabulary");
+assert.equal(
+  renderPage({ item: { ...fixture, content: { valid: false } } }).type,
+  "div",
+  "content failing schema validation renders the unavailable message, with stable Hook counts",
+);
 assert.equal(renderPage({ routeParams: { level: "invalid" } }).type, "div");
 assert.equal(renderPage({ item: fixture, routeParams: { level: "invalid" } }).type, "article", "explicit content takes precedence");
 assert.equal(renderPage({ item: null }).type, "div");

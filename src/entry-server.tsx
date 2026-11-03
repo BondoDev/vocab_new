@@ -53,7 +53,11 @@ import {
   type ResolvedWordPageData,
   type WordPageVocabEntry,
 } from "./data/seo/wordPages/wordPageData";
-import { getLevelBrowsePreviewData, type LevelBrowsePreviewData } from "./data/seo/vocabularyLevels/levelBrowseWords";
+import { buildLevelExplorerInitialData } from "./data/seo/vocabularyLevels/levelExplorerData";
+import {
+  LEVEL_EXPLORER_INITIAL_DATA_ELEMENT_ID,
+  type LevelExplorerInitialData,
+} from "./data/seo/vocabularyLevels/levelExplorerRows";
 import { getAllWordSeoHubPaths } from "./data/seo/wordPages/wordHubData";
 import { resolveWordSeoHubRoute } from "./data/seo/wordPages/wordHubRoutes";
 
@@ -160,8 +164,13 @@ function getInitialWordBrowsePage(resolution: WordSeoRequestResolution): number 
   return resolution.kind === "canonical" ? resolution.wordRoute.browsePage : 1;
 }
 
-async function getInitialBrowsePreviewData(url: string): Promise<LevelBrowsePreviewData | null> {
-  const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+// CEFR vocabulary-level pages: the explorer's first page of words (with
+// meanings), rendered into the HTML and embedded for hydration (see
+// levelExplorerData.ts). Always page 1 with no search query — the canonical
+// state; ?q=/?page= are applied in the browser after hydration.
+async function getInitialLevelExplorerData(url: string): Promise<LevelExplorerInitialData | null> {
+  const pathname = url.split(/[?#]/, 1)[0] || "/";
+  const match = pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
   if (!match) {
     return null;
   }
@@ -172,7 +181,12 @@ async function getInitialBrowsePreviewData(url: string): Promise<LevelBrowsePrev
     return null;
   }
 
-  return getLevelBrowsePreviewData(vocabularyRoute.targetLanguage, vocabularyRoute.level);
+  return buildLevelExplorerInitialData(
+    pathname,
+    vocabularyRoute.uiLang,
+    vocabularyRoute.targetLanguage,
+    vocabularyRoute.level,
+  );
 }
 
 // Full vocabulary list pages: the first rows of each level, rendered into the
@@ -427,7 +441,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const initialWordPageData =
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
   const initialWordBrowsePage = getInitialWordBrowsePage(wordSeoResolution);
-  const initialBrowsePreviewData = await getInitialBrowsePreviewData(url);
+  const initialLevelExplorerData = await getInitialLevelExplorerData(url);
   const initialFullVocabularyData = await getInitialFullVocabularyData(url);
   const ssrWordRouteMatch = (() => {
     return resolveWordPageRoute(pathname);
@@ -463,7 +477,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
         <App
           initialUILanguage={initialUILanguage}
           initialTranslationData={initialInterfaceData}
-          initialBrowsePreviewData={initialBrowsePreviewData}
+          initialLevelExplorerData={initialLevelExplorerData}
           initialFullVocabularyData={initialFullVocabularyData}
           initialWordPageData={initialWordPageData}
           ssrRouteOverride={ssrRouteOverride}
@@ -505,6 +519,10 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const fullVocabularyDataScript = initialFullVocabularyData
     ? `\n    <script type="application/json" id="${FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID}">${escapeJsonForHtml(initialFullVocabularyData)}</script>`
     : "";
+  const levelExplorerDataScript = initialLevelExplorerData
+    ? `
+    <script type="application/json" id="${LEVEL_EXPLORER_INITIAL_DATA_ELEMENT_ID}">${escapeJsonForHtml(initialLevelExplorerData)}</script>`
+    : "";
   const interfaceDataScript = `\n    <script type="application/json" id="initial-interface-data">${escapeJsonForHtml({ lang: initialUILanguage, data: initialInterfaceData })}</script>`;
   const fallbackMetadata =
     shouldUseWordNotFoundMetadata || classifyRouteMetadata(pathname) === "invalid"
@@ -516,7 +534,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
     headTags:
       renderSeoTags(
         seoManager.metadata ?? fallbackMetadata,
-      ) + routeDataScript + fullVocabularyDataScript + interfaceDataScript,
+      ) + routeDataScript + fullVocabularyDataScript + levelExplorerDataScript + interfaceDataScript,
     htmlLang: initialUILanguage,
   };
 }

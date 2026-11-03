@@ -41,7 +41,8 @@ import {
 } from "../contexts/LanguageContext";
 import type { TargetLanguageSlug } from "../data/seo/shared/slugs";
 import type { CanonicalWordPageRouteMatch } from "../data/seo/wordPages/wordSlugs";
-import type { LevelBrowsePreviewData } from "../data/seo/vocabularyLevels/levelBrowseWords";
+import type { LevelExplorerInitialData } from "../data/seo/vocabularyLevels/levelExplorerRows";
+import { resolveVocabularyLevelPageModel } from "../data/seo/vocabularyLevels/levelContent";
 import type { FullVocabularyInitialData } from "../data/seo/listPages/fullVocabularyList/fullVocabularyListEntries";
 import {
   SEOHead,
@@ -182,12 +183,13 @@ const ROUTES = {
 
 function AppContent({
   initialWordPageData,
-  initialBrowsePreviewData,
+  initialLevelExplorerData,
   initialFullVocabularyData,
   ssrRouteOverride,
 }: {
   initialWordPageData?: ResolvedWordPageData | null;
-  initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+  // SSR only; the browser reads the same rows from the page's embedded JSON.
+  initialLevelExplorerData?: LevelExplorerInitialData | null;
   initialFullVocabularyData?: FullVocabularyInitialData | null;
   ssrRouteOverride?: {
     page: "wordPage" | "notFound";
@@ -515,13 +517,29 @@ function AppContent({
     accountLanguageConfirm.attemptContinue();
   };
 
+  // CEFR vocabulary-level pages: practice exactly this page's target
+  // language and level. The practice language is always preset (like the
+  // full vocabulary list and level-test pages do), never left at a
+  // previously stored language. Native and practice language must differ,
+  // so a stored native language equal to this target is cleared and the
+  // visitor picks theirs on the setup screen; visitors with no native
+  // language yet go there too. Only a complete, valid pair skips straight
+  // to the filters, already set to this level.
   const handleStartVocabularyPractice = (
-    _targetLanguage: TargetLanguageSlug,
+    targetLanguage: TargetLanguageSlug,
     level: string,
   ) => {
+    const targetCode = TARGET_LANGUAGE_TO_UI_CODE[targetLanguage];
     resetFiltersForLevel(level);
+    setPracticeLanguage(targetCode);
 
-    if (isContinueDisabled) {
+    if (yourLanguage === targetCode) {
+      setYourLanguage("");
+      navigate(ROUTES.exerciseSelection);
+      return;
+    }
+
+    if (!yourLanguage) {
       navigate(ROUTES.exerciseSelection);
       return;
     }
@@ -1622,9 +1640,12 @@ function AppContent({
           level: vocabularyRoute.level,
         })
       : null;
+    // Content must also pass the legacy/v2 schema validation the page
+    // renders through (levelContent.ts); test:vocabulary-level-coverage
+    // guards that every entry does, so this is a safety net only.
     const vocabularyLevelRenderDecision = resolveVocabularyLevelRenderDecision(
       Boolean(vocabularyRoute),
-      Boolean(jsonBackedVocabularyItem),
+      Boolean(jsonBackedVocabularyItem && resolveVocabularyLevelPageModel(jsonBackedVocabularyItem.content)),
     );
 
     if (vocabularyLevelRenderDecision.kind === "not-found") {
@@ -1647,7 +1668,7 @@ function AppContent({
             item={jsonBackedVocabularyItem}
             onStartPractice={handleStartVocabularyPractice}
             pathPrefix=""
-            initialBrowsePreview={initialBrowsePreviewData}
+            initialExplorerData={initialLevelExplorerData}
           />
         </Suspense>
         {accountOnboardingDialog}
@@ -1830,7 +1851,8 @@ interface AppProps {
   seoManager?: SeoManager;
   siteOrigin?: string;
   initialWordPageData?: ResolvedWordPageData | null;
-  initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+  // SSR only; the browser reads the same rows from the page's embedded JSON.
+  initialLevelExplorerData?: LevelExplorerInitialData | null;
   // SSR only; the browser reads the same rows from the page's embedded JSON.
   initialFullVocabularyData?: FullVocabularyInitialData | null;
   ssrRouteOverride?: {
@@ -1845,7 +1867,7 @@ export default function App({
   seoManager,
   siteOrigin = DEFAULT_SITE_ORIGIN,
   initialWordPageData,
-  initialBrowsePreviewData,
+  initialLevelExplorerData,
   initialFullVocabularyData,
   ssrRouteOverride,
 }: AppProps) {
@@ -1858,7 +1880,7 @@ export default function App({
         <>
           <AppContent
             initialWordPageData={initialWordPageData}
-            initialBrowsePreviewData={initialBrowsePreviewData}
+            initialLevelExplorerData={initialLevelExplorerData}
             initialFullVocabularyData={initialFullVocabularyData}
             ssrRouteOverride={ssrRouteOverride}
           />

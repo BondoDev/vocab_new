@@ -1,0 +1,1001 @@
+// ---------------------------------------------------------------------------
+// CEFR vocabulary-level page (VocabularyLevelPage.tsx, VocabularyLevelExplorer.tsx).
+//
+// Short classes instead of long Tailwind strings: the explorer's rows are
+// server-rendered, so per-row markup size matters. Colors follow DESIGN.md
+// with one purpose each:
+//   Stellar Indigo (--primary)  actions, the current level, focus
+//   Lavender Haze / Rule        hero surface
+//   Atlas Blue                  navigation links and the language fact
+//   Progress Green              learning outcomes and the word-count fact
+//   Night Ink                   headings and word links
+// Breakpoints: 640px (compact explorer rows / pagination), 1024px (two-column
+// learning guide).
+// ---------------------------------------------------------------------------
+$night-ink: #261943;
+$deep-slate: #293546;
+$lavender-haze: #f0ecf8;
+$lavender-rule: #d9cdef;
+$atlas-blue: #3457b8;
+$atlas-tint: #eaf0fe;
+$green-text: #15803d;
+$green-icon: #16a34a;
+$primary-04: color-mix(in oklab, var(--primary) 4%, transparent);
+$primary-10: color-mix(in oklab, var(--primary) 10%, transparent);
+$primary-30: color-mix(in oklab, var(--primary) 30%, transparent);
+$focus-ring: 0 0 0 3px color-mix(in oklab, var(--primary) 35%, transparent);
+$heading-font: var(--font-family-heading);
+
+@mixin focus-visible {
+  &:focus-visible {
+    outline: none;
+    box-shadow: $focus-ring;
+  }
+}
+
+.vlp-shell {
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
+  max-width: 64rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.25rem 1rem 3rem;
+
+  @media (min-width: 768px) {
+    gap: 2rem;
+    padding: 2rem 2rem 4rem;
+  }
+}
+
+.vlp-h2 {
+  font-family: $heading-font;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: $night-ink;
+}
+
+.vlp-h3 {
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: $deep-slate;
+}
+
+.vlp-text {
+  margin-top: 0.75rem;
+  line-height: 1.65;
+  color: var(--foreground);
+}
+
+.vlp-lead {
+  margin-top: 0.75rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: $deep-slate;
+}
+
+// ---- Buttons --------------------------------------------------------------
+
+.vlp-btn {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.125rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: background-color 150ms, border-color 150ms, color 150ms;
+  @include focus-visible;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.vlp-btn--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+
+  &:hover {
+    background: #7375f2;
+  }
+}
+
+.vlp-btn--secondary {
+  border: 1px solid $primary-30;
+  background: var(--card);
+  color: $night-ink;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
+.vlp-btn--light {
+  flex-shrink: 0;
+  background: var(--card);
+  color: $night-ink;
+
+  &:hover {
+    background: $lavender-haze;
+  }
+}
+
+// ---- 1. Hero --------------------------------------------------------------
+
+.vlp-hero {
+  border: 1px solid $lavender-rule;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, $lavender-haze 0%, #eef0fd 55%, var(--card) 100%);
+  padding: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding: 1.75rem 2rem;
+  }
+}
+
+.vlp-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// White chips with a colored inset ring: tinted fills disappear on the
+// hero's lavender gradient.
+.vlp-fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 999px;
+  background: var(--card);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.vlp-fact--level {
+  box-shadow: inset 0 0 0 1px $primary-30;
+  color: #4338ca;
+}
+
+.vlp-fact__code {
+  border-radius: 999px;
+  background: var(--primary);
+  padding: 0 0.4375rem;
+  color: var(--primary-foreground);
+  font-weight: 700;
+}
+
+.vlp-fact--language {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, $atlas-blue 30%, transparent);
+  color: $atlas-blue;
+}
+
+.vlp-fact--count {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, $green-text 30%, transparent);
+  color: $green-text;
+}
+
+.vlp-fact__pending {
+  display: inline-block;
+  width: 4.5rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, $green-text 18%, transparent);
+}
+
+.vlp-hero__title {
+  margin-top: 0.875rem;
+  font-family: $heading-font;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: $night-ink;
+
+  @media (min-width: 768px) {
+    font-size: 1.875rem;
+  }
+}
+
+.vlp-hero__intro {
+  margin-top: 0.625rem;
+  max-width: 46rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $deep-slate;
+
+  @media (min-width: 768px) {
+    font-size: 1.0625rem;
+  }
+}
+
+.vlp-hero__actions {
+  margin-top: 1.125rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+
+  // Phones: equal full-width buttons instead of two ragged rows.
+  @media (max-width: 479px) {
+    flex-direction: column;
+
+    .vlp-btn {
+      width: 100%;
+    }
+  }
+}
+
+// ---- 2. Vocabulary explorer -------------------------------------------------
+
+.vle {
+  scroll-margin-top: 5.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background: var(--card);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.vle-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 1.125rem 1.25rem 0;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem 1.5rem 0;
+  }
+}
+
+.vle-head__title {
+  font-family: $heading-font;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $night-ink;
+}
+
+.vle-head__summary {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $green-text;
+}
+
+.vle-search {
+  position: relative;
+  margin: 0.875rem 1.25rem 0;
+
+  @media (min-width: 768px) {
+    margin: 1rem 1.5rem 0;
+  }
+
+  // Very narrow phones: a little more room so the placeholder fits.
+  @media (max-width: 374px) {
+    margin: 0.875rem 0.75rem 0;
+
+    .vle-search__icon {
+      left: 0.75rem;
+    }
+
+    .vle-search__input {
+      padding-left: 2.375rem;
+      padding-right: 2.25rem;
+
+      &::placeholder {
+        font-size: 0.9375rem;
+      }
+    }
+  }
+}
+
+.vle-search__icon {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 0.875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+}
+
+.vle-search__input {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 22%, var(--border));
+  border-radius: 0.5rem;
+  background: var(--background);
+  padding: 0.5rem 2.75rem;
+  font-size: 1rem;
+  color: $night-ink;
+  transition: border-color 150ms, box-shadow 150ms, background-color 150ms;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  // The clear button only exists once there is text, so the placeholder may
+  // use that space.
+  &:placeholder-shown {
+    padding-right: 0.875rem;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--card);
+    box-shadow: $focus-ring;
+  }
+
+  // The custom clear button replaces the browser's own.
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+.vle-search__clear {
+  position: absolute;
+  top: 50%;
+  right: 0.375rem;
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  transform: translateY(-50%);
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  @include focus-visible;
+
+  &:hover {
+    background: $primary-10;
+    color: var(--primary);
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.vle-body {
+  margin-top: 0.75rem;
+  min-height: 12rem;
+}
+
+.vle-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+
+  thead th {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--secondary);
+    padding: 0.5rem 1.5rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+
+    &:first-child {
+      width: 38%;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background-color 120ms;
+
+    &:hover {
+      background: $primary-04;
+    }
+  }
+
+  tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .vle-word,
+  .vle-meaning {
+    padding: 0.5625rem 1.5rem;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+}
+
+.vle-word {
+  font-weight: 600;
+}
+
+.vle-word__link,
+.vle-word__text {
+  overflow-wrap: anywhere;
+  color: $night-ink;
+}
+
+.vle-word__link {
+  border-radius: 0.25rem;
+  text-decoration: none;
+  @include focus-visible;
+
+  &:hover {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.vle-word__type {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.vle-meaning {
+  overflow-wrap: anywhere;
+  color: var(--foreground);
+}
+
+// Compact rows: word (with its type) on one line, meaning below it.
+@media (max-width: 639px) {
+  .vle-table {
+    thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      display: block;
+      padding: 0.625rem 1.25rem;
+    }
+
+    tbody tr:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .vle-word,
+    .vle-meaning {
+      display: block;
+      padding: 0;
+    }
+
+    .vle-meaning {
+      margin-top: 0.125rem;
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+  }
+}
+
+.vle-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  color: var(--foreground);
+}
+
+.vle-state--error p {
+  color: var(--destructive);
+}
+
+.vle-state__action {
+  border: 1px solid $primary-30;
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+  @include focus-visible;
+
+  &:hover {
+    background: $primary-10;
+  }
+}
+
+.vle-loading {
+  border-top: 1px solid var(--border);
+  padding: 0.75rem 1.25rem 1rem;
+
+  @media (min-width: 768px) {
+    padding: 0.75rem 1.5rem 1rem;
+  }
+}
+
+.vle-loading__row {
+  display: block;
+  height: 1.25rem;
+  margin: 0.625rem 0;
+  border-radius: 0.375rem;
+  background: var(--muted);
+  animation: vle-pulse 1.4s ease-in-out infinite;
+
+  &:nth-child(odd) {
+    width: 82%;
+  }
+
+  &:nth-child(even) {
+    width: 64%;
+  }
+}
+
+.vle-loading__text {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+@keyframes vle-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vle-loading__row {
+    animation: none;
+  }
+}
+
+.vle-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+  padding: 0.875rem 1.25rem;
+
+  @media (min-width: 768px) {
+    padding: 1rem 1.5rem;
+  }
+}
+
+.vle-foot__range {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.vle-pages {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  @media (max-width: 639px) {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.vle-pages__list {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  @media (max-width: 639px) {
+    display: none;
+  }
+}
+
+.vle-pages__compact {
+  display: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: $deep-slate;
+
+  @media (max-width: 639px) {
+    display: inline;
+  }
+}
+
+.vle-pages__step,
+.vle-pages__num {
+  display: inline-flex;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: $deep-slate;
+  transition: background-color 120ms, border-color 120ms, color 120ms;
+  @include focus-visible;
+
+  &:hover:not(:disabled) {
+    border-color: $primary-30;
+    color: var(--primary);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.vle-pages__num[aria-current="page"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+
+  &:hover {
+    color: var(--primary-foreground);
+  }
+}
+
+.vle-pages__gap {
+  padding: 0 0.125rem;
+  color: var(--muted-foreground);
+}
+
+// ---- 3 + 4. Learning guide ---------------------------------------------------
+
+.vlp-guide {
+  display: grid;
+  gap: 1.5rem;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 2rem;
+  }
+}
+
+.vlp-panel {
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.vlp-panel--level {
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+// Quieter than the explorer: no card, a left rule marks the section.
+.vlp-panel--topics {
+  border-left: 3px solid $lavender-rule;
+  border-radius: 0;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+
+  @media (min-width: 768px) {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.vlp-outcomes {
+  margin-top: 0.5rem;
+  display: grid;
+  gap: 0.5rem;
+
+  li {
+    display: flex;
+    gap: 0.625rem;
+    line-height: 1.55;
+    color: var(--foreground);
+  }
+
+  svg {
+    margin-top: 0.1875rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: $green-icon;
+  }
+}
+
+.vlp-group {
+  margin-top: 0.25rem;
+}
+
+.vlp-list {
+  margin-top: 0.5rem;
+  display: grid;
+  gap: 0.375rem;
+
+  li {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.55;
+    color: var(--foreground);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.6em;
+      left: 0;
+      width: 0.375rem;
+      height: 0.375rem;
+      border-radius: 999px;
+      background: var(--primary);
+      opacity: 0.55;
+    }
+  }
+}
+
+.vlp-topics {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.vlp-topics__item {
+  dt {
+    font-weight: 700;
+    color: $deep-slate;
+  }
+
+  dd {
+    margin-top: 0.125rem;
+    line-height: 1.55;
+    color: var(--foreground);
+  }
+}
+
+.vlp-advice__tips {
+  margin-top: 0.5rem;
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+  list-style: decimal;
+
+  li {
+    line-height: 1.55;
+    color: var(--foreground);
+  }
+}
+
+// ---- 5. Related resources -----------------------------------------------------
+
+.vlp-related {
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background: var(--card);
+  padding: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.vlp-related__grid {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1.25rem;
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1.15fr 1fr 1fr;
+    gap: 0;
+  }
+}
+
+.vlp-related__group {
+  @media (min-width: 900px) {
+    padding: 0 1.25rem;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+
+    & + & {
+      border-left: 1px solid var(--border);
+    }
+  }
+
+  @media (max-width: 899px) {
+    & + & {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+  }
+}
+
+.vlp-related__title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+// Columns only as wide as the longest single-word level name allows
+// ("C2 Профессиональный", "C2 Sehr fortgeschritten"): one column in the
+// narrow related-resources column, two or three when there is room.
+.vlp-levels {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.375rem;
+}
+
+.vlp-level {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.4375rem 0.625rem;
+  font-size: 0.875rem;
+  color: $deep-slate;
+  transition: border-color 120ms, background-color 120ms, color 120ms;
+  @include focus-visible;
+
+  &:hover {
+    border-color: $primary-30;
+    background: $primary-04;
+    color: var(--primary);
+  }
+}
+
+.vlp-level__code {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.vlp-level__name {
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.vlp-level--current {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+
+  .vlp-level__code {
+    color: var(--primary-foreground);
+  }
+
+  &:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+.vlp-chips {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.vlp-chip {
+  display: inline-flex;
+  border-radius: 999px;
+  background: $atlas-tint;
+  padding: 0.3125rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $atlas-blue;
+  transition: background-color 120ms;
+  @include focus-visible;
+
+  &:hover {
+    background: #dbe5fd;
+  }
+}
+
+.vlp-links {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+
+  a {
+    border-radius: 0.25rem;
+    font-size: 0.9375rem;
+    color: $atlas-blue;
+    @include focus-visible;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+// ---- 6. FAQ -----------------------------------------------------------------
+
+.vlp-faq__list {
+  margin-top: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background: var(--card);
+}
+
+.vlp-faq__item {
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+
+  summary {
+    cursor: pointer;
+    padding: 0.875rem 1.25rem;
+    font-weight: 600;
+    color: $night-ink;
+    border-radius: 0.875rem;
+    @include focus-visible;
+  }
+
+  p {
+    padding: 0 1.25rem 1rem;
+    line-height: 1.6;
+    color: var(--foreground);
+  }
+}
+
+// ---- 7. Final call to action ----------------------------------------------------
+
+.vlp-final {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  border-radius: 0.875rem;
+  background: linear-gradient(120deg, #4f46e5 0%, var(--primary) 55%, #7850ad 100%);
+  padding: 1.25rem;
+  color: #fff;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.5rem 1.75rem;
+  }
+
+  p {
+    margin-top: 0.375rem;
+    max-width: 44rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.9);
+  }
+}
+
+.vlp-final__title {
+  font-family: $heading-font;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #fff;
+}

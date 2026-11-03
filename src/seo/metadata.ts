@@ -2,7 +2,7 @@
 // (Issue 15) but every symbol below is re-exported here unchanged so existing
 // production imports of "../../seo/metadata" / "./metadata" keep working.
 export type { FaqItem } from "./vocabularyLevels/seoTemplates";
-export { buildVocabularyFaqSection } from "./vocabularyLevels/seoFaq";
+export { getVocabularyFaqItems } from "./vocabularyLevels/seoFaq";
 export { buildVerbListSeoMetadata } from "./listPages/verbLists/common100Verbs/common100VerbsMetadata";
 export { buildVocabularyJsonLdGraph } from "./vocabularyLevels/seoSchema";
 export { buildLevelTestSeoMetadata } from "./levelTests/levelTestMetadata";

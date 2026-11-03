@@ -9,8 +9,8 @@
 //   - workers/word-ssr/tests/test-worker-bundle-size.mjs already asserts
 //     WordSeoPageView.tsx has no import.meta.glob and no vocabulary-*.js
 //     chunk reaches the Worker bundle.
-//   - scripts/tests/routing/test-level-browse-preview-completeness.mjs already asserts
-//     the exact 42-key match set for level-browse-preview/*.json.
+//   - npm run test:level-explorer-data already asserts the level-explorer/
+//     files are current with vocabulary.json.
 //
 // Run: node scripts/tests/architecture/test-import-boundaries.mjs
 import assert from "node:assert/strict";
@@ -107,6 +107,32 @@ test("src/data/seo/listPages/verbLists/shared/common100VerbLookup/*.json — exa
   );
 });
 
+test("src/data/seo/vocabularyLevels/level-explorer/*.json — word list + definitions file per language x CEFR level", () => {
+  const expected = SUPPORTED_TARGET_LANGUAGES.flatMap((lang) =>
+    SUPPORTED_LEVELS.flatMap((level) => [`${lang}-${level}.json`, `${lang}-${level}-definitions.json`]),
+  );
+  assertExactMatchSet(
+    "src/data/seo/vocabularyLevels/level-explorer",
+    "src/data/seo/vocabularyLevels/level-explorer",
+    expected,
+  );
+});
+
+// Former G8: VocabularyLevelPage.tsx globbed the ~3 MB vocabulary.json
+// files and downloaded one on every CEFR page view. The page now reads the
+// compact generated level-explorer files through levelExplorerData.ts (G8).
+test("CEFR vocabulary-level page components do not glob the full vocabulary.json files", () => {
+  for (const relFile of [
+    "src/app/pages/vocabulary/VocabularyLevelPage.tsx",
+    "src/app/pages/vocabulary/VocabularyLevelExplorer.tsx",
+    "src/app/pages/vocabulary/useLevelExplorerRows.ts",
+  ]) {
+    const source = fs.readFileSync(path.join(ROOT_DIR, relFile), "utf8");
+    assert.ok(!source.includes("import.meta.glob"), `${relFile} must load words through levelExplorerData.ts, not its own glob`);
+    assert.ok(!source.includes("vocabulary.json"), `${relFile} must not reference the multi-megabyte vocabulary.json files`);
+  }
+});
+
 console.log("\n=== eager/lazy contract guards ===\n");
 
 // [consumer relative path, glob pattern substring, required option substring or null for "must stay lazy"]
@@ -118,8 +144,7 @@ const EAGER_LAZY_CONTRACT = [
   ["src/data/seo/wordPages/wordBrowseSearchData.ts", "./word-browse-shards/*.json", null],
   ["src/data/seo/listPages/verbLists/common100Verbs/common100VerbList.ts", "../shared/common100VerbLookup/*.json", "eager: true"],
   ["src/app/pages/word-pages/detail/WordSeoPage.tsx", "../../../../data/vocabulary/*/vocabulary.json", null],
-  ["src/app/pages/vocabulary/VocabularyLevelPage.tsx", "../../../data/vocabulary/*/vocabulary.json", null],
-  ["src/data/seo/vocabularyLevels/levelBrowseWords.ts", "./level-browse-preview/*.json", null],
+  ["src/data/seo/vocabularyLevels/levelExplorerData.ts", "./level-explorer/*.json", null],
 ];
 
 for (const [relFile, patternSubstring, requiredOption] of EAGER_LAZY_CONTRACT) {

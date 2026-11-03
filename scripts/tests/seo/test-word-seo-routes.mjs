@@ -345,12 +345,13 @@ assert.equal(
   "Русский",
 );
 
+// CEFR vocabulary-level word links live in the page's explorer component.
 const vocabularyLevelPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "pages", "vocabulary", "VocabularyLevelPage.tsx"),
+  path.join(rootDir, "src", "app", "pages", "vocabulary", "VocabularyLevelExplorer.tsx"),
   "utf8",
 );
 assert.ok(
-  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*word\.word_lemma,\s*word\.concept_id,\s*\)/m.test(
+  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*row\.word,\s*row\.conceptId\s*\)/m.test(
     vocabularyLevelPageSource,
   ),
   "vocabulary level links should use canonical concept IDs",
@@ -401,8 +402,8 @@ const generateWordHubDataSource = fs.readFileSync(
   path.join(rootDir, "scripts", "generation", "generate-word-hub-data.mjs"),
   "utf8",
 );
-const levelBrowseWordsSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "levelBrowseWords.ts"),
+const levelExplorerDataSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "levelExplorerData.ts"),
   "utf8",
 );
 const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
@@ -488,12 +489,12 @@ assert.ok(
   "shared verb list data should not statically import full vocabulary JSON files",
 );
 assert.ok(
-  levelBrowseWordsSource.includes('import.meta.glob("./level-browse-preview/*.json"'),
-  "level browse data should read compact preview JSON files",
+  levelExplorerDataSource.includes('import.meta.glob("./level-explorer/*.json")'),
+  "CEFR level explorer data should read compact generated level-explorer JSON files",
 );
 assert.ok(
-  !levelBrowseWordsSource.includes('import.meta.glob("../vocabulary/*/vocabulary.json"'),
-  "level browse data should not eagerly import full vocabulary JSON files",
+  !/(import\s*\(|import\.meta\.glob\(|from)\s*["'][^"']*vocabulary\.json/.test(levelExplorerDataSource),
+  "CEFR level explorer data should not import full vocabulary JSON files",
 );
 assert.ok(
   entryServerSource.includes('import.meta.glob("./data/vocabulary/*/vocabulary.json"'),
