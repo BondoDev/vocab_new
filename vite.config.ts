@@ -20,5 +20,15 @@ export default defineConfig(({ mode }) => {
         '@': '/src',
       },
     },
+    build: {
+      rollupOptions: {
+        // Same file-descriptor guard as workers/word-ssr/build/vite.worker.config.mjs:
+        // the client build also loads all ~3.5k modules behind lucide-react's
+        // barrel export, and Rollup 4's default of 1000 parallel file reads
+        // can exhaust the open-file limit on Cloudflare Workers Builds (EMFILE).
+        // Concurrency only; output is unchanged.
+        maxParallelFileOps: 20,
+      },
+    },
   }
 })

@@ -39,6 +39,20 @@ export default defineConfig({
   ssr: {
     noExternal: true,
   },
+  build: {
+    rollupOptions: {
+      // Caps how many module files Rollup reads at once. Rollup 4 defaults
+      // to 1000 in flight; with noExternal above, this build loads every
+      // module behind lucide-react's barrel export (~3.5k icon files) before
+      // tree-shaking. On Cloudflare Workers Builds (Linux, per-process
+      // open-file limit) that burst, plus the descriptors the CommonJS
+      // resolver opens alongside it, failed with `EMFILE: too many open
+      // files`. Windows has no comparable per-process limit, so local builds
+      // never reproduced it. 20 is Rollup 3's former default; it only bounds
+      // concurrency and does not change the bundle output.
+      maxParallelFileOps: 20,
+    },
+  },
   define: {
     // React's CJS-interop shims (e.g. react/jsx-runtime's production/dev
     // split) reference process.env.NODE_ENV at module scope. Workers has no
