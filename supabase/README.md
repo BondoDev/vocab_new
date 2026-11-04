@@ -2432,6 +2432,29 @@ no public API change (PostgREST callers, including
 change). No table, index, RLS policy, or membership row is touched;
 `20260811170000_my_lists_corrective_word_id_membership.sql` is not edited.
 
+## Minimum registration age 16 (2026-11-05)
+
+`migrations/20261105120000_enforce_minimum_registration_age_16.sql` raises
+the minimum accepted `user_age` from 10 to 16 (maximum stays 100) in the
+only two write paths for that column: `complete_user_profile_onboarding`
+and `update_user_profile_demographics`. Both functions are recreated from
+their current definitions with only the age validation changed; signatures,
+return shapes, `SECURITY DEFINER`, `search_path`, and grants are unchanged.
+
+- **Existing accounts are untouched.** No row is updated or deleted, and
+  `user_profiles_user_age_range_check` deliberately stays at 10-100: a 16+
+  `CHECK` (even `NOT VALID`) would be re-checked on every `UPDATE` of an
+  existing 10-15 row and break unrelated writes such as timezone or nickname
+  edits for those users.
+- **Legacy ages in Settings.** `update_user_profile_demographics` accepts a
+  value below 16 only when it equals the caller's own stored age, so a
+  pre-16-rule account can still edit its birth date. It can never set or
+  lower an age below 16. The frontend mirrors this with
+  `isAllowedProfileAge` in `src/app/utils/accountOnboardingAge.ts`.
+- **Deploy order.** Apply this migration before (or together with) the
+  frontend build that enforces 16+. The old frontend remains compatible with
+  it: its 10-15 submissions are simply rejected server-side.
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a

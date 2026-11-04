@@ -15,11 +15,19 @@
 // default, used by AccountOnboardingDialog.tsx both for the input's initial
 // display string and for the effect that pushes it into the form's
 // authoritative state on open - so the two can never drift apart again.
-// clampOnboardingAge is the pre-existing min/max range clamp, moved here
-// unchanged (still 10-100, still rounds) so this fix doesn't touch its
-// behavior at all.
+// clampOnboardingAge is the min/max range clamp used by the step buttons.
+//
+// Minimum registration age (2026-11-05): new registrations and age edits
+// must be 16-100. The backend enforces the same bound in
+// complete_user_profile_onboarding / update_user_profile_demographics
+// (supabase/migrations/20261105120000_enforce_minimum_registration_age_16.sql).
+// Accounts created under the earlier 10-100 rule keep their stored age:
+// the user_profiles CHECK constraint and normalizeAge
+// (accountProfileCompleteness.ts) still accept 10-100, so those accounts
+// are never treated as incomplete or blocked from signing in, and Settings
+// may save their unchanged legacy age (isAllowedProfileAge).
 
-export const ONBOARDING_MIN_AGE = 10;
+export const ONBOARDING_MIN_AGE = 16;
 export const ONBOARDING_MAX_AGE = 100;
 export const DEFAULT_ONBOARDING_AGE = 18;
 
@@ -28,6 +36,24 @@ export function clampOnboardingAge(value: number): number {
     ONBOARDING_MAX_AGE,
     Math.max(ONBOARDING_MIN_AGE, Math.round(value)),
   );
+}
+
+export type OnboardingAgeIssue = "belowMinimum" | "aboveMaximum" | "notWholeNumber";
+
+// Typed values are validated, never silently clamped: clamping 12 up to 16
+// would register an under-age visitor without telling them why.
+export function getOnboardingAgeIssue(age: number): OnboardingAgeIssue | null {
+  if (!Number.isFinite(age) || !Number.isInteger(age)) return "notWholeNumber";
+  if (age < ONBOARDING_MIN_AGE) return "belowMinimum";
+  if (age > ONBOARDING_MAX_AGE) return "aboveMaximum";
+  return null;
+}
+
+// Settings variant: an age within 16-100, or the caller's own unchanged
+// stored age (a pre-16-rule account editing only its birth date). Mirrors
+// update_user_profile_demographics' server-side rule exactly.
+export function isAllowedProfileAge(age: number, storedAge: number | null): boolean {
+  return getOnboardingAgeIssue(age) === null || (storedAge !== null && age === storedAge);
 }
 
 export function resolveOnboardingAgeDefault(age: number | null): number {

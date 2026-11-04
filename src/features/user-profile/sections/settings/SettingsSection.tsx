@@ -18,8 +18,8 @@ import { normalizeNewPasswordInput } from "../../../../app/utils/settingsPasswor
 import { formatTimezoneOffset, getTimezoneCityLabel } from "../../../../app/utils/timezoneOptions";
 import { useLanguage, type UILanguage } from "../../../../contexts/LanguageContext";
 import {
-  clampOnboardingAge,
   DEFAULT_ONBOARDING_AGE,
+  isAllowedProfileAge,
   ONBOARDING_MAX_AGE,
   ONBOARDING_MIN_AGE,
   resolveOnboardingAgeDefault,
@@ -520,11 +520,12 @@ export function SettingsSection({
   }, [userProfile.age, userProfile.birthMonth, userProfile.birthDay]);
 
   const parsedAgeDraft = Number(ageDraft);
+  // 16-100, or the account's own unchanged stored age: an account created
+  // under the earlier 10+ rule can still edit its birth date without being
+  // forced to change (or being blocked by) its existing age. Same rule as
+  // update_user_profile_demographics on the server.
   const isAgeDraftValid =
-    Number.isFinite(parsedAgeDraft) &&
-    Number.isInteger(parsedAgeDraft) &&
-    parsedAgeDraft >= ONBOARDING_MIN_AGE &&
-    parsedAgeDraft <= ONBOARDING_MAX_AGE;
+    ageDraft.trim() !== "" && isAllowedProfileAge(parsedAgeDraft, userProfile.age);
   const confirmedAge = resolveOnboardingAgeDefault(userProfile.age);
   const isDemographicsUnchanged =
     isAgeDraftValid &&
@@ -552,7 +553,9 @@ export function SettingsSection({
       return;
     }
 
-    const nextAge = clampOnboardingAge(parsedAgeDraft);
+    // Already validated by isAgeDraftValid; never clamped, so a legacy
+    // stored age is saved back unchanged rather than raised to 16.
+    const nextAge = parsedAgeDraft;
     setIsSavingDemographics(true);
     setDemographicsError(null);
 
@@ -1274,7 +1277,9 @@ export function SettingsSection({
                   return;
                 }
 
-                setAgeDraft(String(clampOnboardingAge(parsedValue)));
+                // Rounded only: an out-of-range age stays visible with the
+                // inline error instead of being silently clamped.
+                setAgeDraft(String(Math.round(parsedValue)));
               }}
               disabled={isSavingDemographics || !authSession}
               aria-invalid={!isAgeDraftValid ? true : undefined}

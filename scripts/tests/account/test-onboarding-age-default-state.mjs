@@ -36,6 +36,13 @@
 // already document for sibling hooks/utils. Both are instead pinned as
 // source-text/data-flow checks, the same tradeoff those files use.
 //
+// Minimum registration age 16 (2026-11-05): ONBOARDING_MIN_AGE is now 16.
+// Typed ages are validated (getOnboardingAgeIssue) instead of silently
+// clamped, so prepareAccountOnboardingSubmit gained one range check after
+// the null check; only the step buttons still clamp. Settings uses
+// isAllowedProfileAge, which also accepts the account's unchanged legacy
+// stored age. Sections [1], [2e], [3c] and [5] below cover that change.
+//
 // Run: node --experimental-strip-types scripts/tests/account/test-onboarding-age-default-state.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -43,6 +50,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   clampOnboardingAge,
+  getOnboardingAgeIssue,
+  isAllowedProfileAge,
   resolveOnboardingAgeDefault,
   DEFAULT_ONBOARDING_AGE,
   ONBOARDING_MIN_AGE,
@@ -83,13 +92,35 @@ async function main() {
     assert.equal(resolveOnboardingAgeDefault(10), 10);
   });
 
-  test("5a. existing min/max range validation still works: values are clamped to [10, 100], not silently accepted or nulled", () => {
-    assert.equal(ONBOARDING_MIN_AGE, 10);
+  test("5a. the step-button clamp keeps values within [16, 100]", () => {
+    assert.equal(ONBOARDING_MIN_AGE, 16);
     assert.equal(ONBOARDING_MAX_AGE, 100);
-    assert.equal(clampOnboardingAge(5), 10);
+    assert.equal(clampOnboardingAge(5), 16);
+    assert.equal(clampOnboardingAge(15), 16);
     assert.equal(clampOnboardingAge(150), 100);
-    assert.equal(clampOnboardingAge(10), 10);
+    assert.equal(clampOnboardingAge(16), 16);
     assert.equal(clampOnboardingAge(100), 100);
+  });
+
+  test("5c. minimum age 16: 15 rejected, 16 accepted, 100 accepted, 101 rejected, fractions rejected", () => {
+    assert.equal(getOnboardingAgeIssue(15), "belowMinimum");
+    assert.equal(getOnboardingAgeIssue(10), "belowMinimum");
+    assert.equal(getOnboardingAgeIssue(16), null);
+    assert.equal(getOnboardingAgeIssue(18), null);
+    assert.equal(getOnboardingAgeIssue(100), null);
+    assert.equal(getOnboardingAgeIssue(101), "aboveMaximum");
+    assert.equal(getOnboardingAgeIssue(16.5), "notWholeNumber");
+    assert.equal(getOnboardingAgeIssue(Number.NaN), "notWholeNumber");
+  });
+
+  test("5d. Settings: 16-100 allowed; below 16 only as the account's own unchanged stored (legacy) age", () => {
+    assert.equal(isAllowedProfileAge(15, null), false);
+    assert.equal(isAllowedProfileAge(15, 30), false);
+    assert.equal(isAllowedProfileAge(16, null), true);
+    assert.equal(isAllowedProfileAge(100, 12), true);
+    assert.equal(isAllowedProfileAge(101, 30), false);
+    assert.equal(isAllowedProfileAge(12, 12), true, "legacy account keeps its stored age");
+    assert.equal(isAllowedProfileAge(11, 12), false, "legacy account cannot lower its age");
   });
 
   test("5b. clampOnboardingAge still rounds to the nearest whole year, exactly as before this fix", () => {
@@ -104,7 +135,7 @@ async function main() {
   test("2a. imports the shared helpers instead of redefining its own local clamp/default logic", () => {
     assert.match(
       dialogSource,
-      /import \{\s*clampOnboardingAge,\s*DEFAULT_ONBOARDING_AGE,\s*ONBOARDING_MAX_AGE,\s*ONBOARDING_MIN_AGE,\s*resolveOnboardingAgeDefault,\s*\} from "\.\.\/\.\.\/utils\/accountOnboardingAge";/,
+      /import \{\s*clampOnboardingAge,\s*DEFAULT_ONBOARDING_AGE,\s*getOnboardingAgeIssue,\s*ONBOARDING_MAX_AGE,\s*ONBOARDING_MIN_AGE,\s*resolveOnboardingAgeDefault,\s*\} from "\.\.\/\.\.\/utils\/accountOnboardingAge";/,
     );
     assert.doesNotMatch(dialogSource, /function clampAge\(/, "the old local clampAge redefinition must be gone");
   });
@@ -129,10 +160,14 @@ async function main() {
     assert.match(dialogSource, /\}, \[open\]\);/);
   });
 
-  test("2e. handleAgeChange (requirement: changing age still works) still routes every real change through clampOnboardingAge - the range clamp is unchanged, only the default-state wiring changed", () => {
+  test("2e. handleAgeChange stores typed ages as entered (no silent clamp to 16), the inline error comes from getOnboardingAgeIssue, and only the step buttons clamp", () => {
     const handlerMatch = dialogSource.match(/const handleAgeChange = \(nextValue: number \| null\) => \{([\s\S]*?)\n {2}\};/);
     assert.ok(handlerMatch, "could not locate handleAgeChange");
-    assert.match(handlerMatch[1], /clampOnboardingAge\(nextValue\)/);
+    assert.match(handlerMatch[1], /onProfileChange\(\{ age: nextValue \}\)/);
+    assert.doesNotMatch(handlerMatch[1], /clampOnboardingAge/);
+    assert.match(dialogSource, /getOnboardingAgeIssue\(profile\.age\)/);
+    assert.match(dialogSource, /accountOnboarding\.errors\.ageMinimum/);
+    assert.equal((dialogSource.match(/clampOnboardingAge\(displayedAgeValue [+-] 1\)/g) ?? []).length, 2);
   });
 
   console.log("\n[3] prepareAccountOnboardingSubmit — validation contract preserved, never weakened into a silent default");
@@ -151,7 +186,13 @@ async function main() {
     assert.doesNotMatch(validationSource, /age \|\| 18/);
   });
 
-  test("3c. age is gated by exactly that one null check and nothing else - any non-null age (18, or any other value the control resolved/clamped to) reaches the success branch unconditionally and is passed through unchanged, never re-derived", () => {
+  test("3d. a non-null age outside 16-100 is rejected with ageMinimum/ageOutOfRange via getOnboardingAgeIssue", () => {
+    assert.match(validationSource, /const ageIssue = getOnboardingAgeIssue\(age\);/);
+    assert.match(validationSource, /accountOnboarding\.errors\.ageMinimum/);
+    assert.match(validationSource, /accountOnboarding\.errors\.ageOutOfRange/);
+  });
+
+  test("3c. besides getOnboardingAgeIssue, age is gated only by the null check - a valid age reaches the success branch and is passed through unchanged, never re-derived", () => {
     // Exactly one conditional keyed on the standalone `age` variable (the
     // null check) across the whole file - proves nothing else in
     // prepareAccountOnboardingSubmit can reject a resolved/clamped age

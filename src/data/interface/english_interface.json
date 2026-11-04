@@ -190,6 +190,8 @@
       "nicknameStartsWithLetter": "Nickname must start with a letter.",
       "levelRequired": "Please choose your language level.",
       "ageRequired": "Please set your age.",
+      "ageMinimum": "You must be at least 16 years old to create an account.",
+      "ageOutOfRange": "Please enter an age between 16 and 100.",
       "birthDateRequired": "Please choose your birth month and day.",
       "languagesRequired": "Please choose both languages."
     }
@@ -202,6 +204,7 @@
     "googleError": "We could not start Google sign-in. Please try again.",
     "signupCheckEmail": "If this email is new, we sent a confirmation link. If you already have an account, log in or continue with Google.",
     "passwordRequirementHint": "At least 8 characters",
+    "ageRequirement": "You must be at least 16 years old to create an account.",
     "passwordRequirementMetSr": "Requirement met.",
     "passwordRequirementNotMetSr": "Requirement not yet met.",
     "passwordsMatch": "Passwords match",
@@ -777,7 +780,7 @@
         "explanation": "These details help keep your profile consistent with the information you entered during signup.",
         "savedToast": "Profile details updated.",
         "saveError": "We could not update your profile details. Please try again.",
-        "ageInvalid": "Age must be between 10 and 100.",
+        "ageInvalid": "Age must be between 16 and 100.",
         "months": {
           "january": "January",
           "february": "February",

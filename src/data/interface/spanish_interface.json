@@ -190,6 +190,8 @@
       "nicknameStartsWithLetter": "El apodo debe empezar con una letra.",
       "levelRequired": "Elige tu nivel de idioma.",
       "ageRequired": "Indica tu edad.",
+      "ageMinimum": "Debes tener al menos 16 años para crear una cuenta.",
+      "ageOutOfRange": "Introduce una edad entre 16 y 100.",
       "birthDateRequired": "Elige el mes y el día de tu nacimiento.",
       "languagesRequired": "Elige ambos idiomas."
     }
@@ -202,6 +204,7 @@
     "googleError": "No pudimos iniciar el acceso con Google. Intentalo de nuevo.",
     "signupCheckEmail": "Si este correo electrónico es nuevo, hemos enviado un enlace de confirmación. Si ya tienes una cuenta, inicia sesión o continúa con Google.",
     "passwordRequirementHint": "Al menos 8 caracteres",
+    "ageRequirement": "Debes tener al menos 16 años para crear una cuenta.",
     "passwordRequirementMetSr": "Requisito cumplido.",
     "passwordRequirementNotMetSr": "Requisito aún no cumplido.",
     "passwordsMatch": "Las contraseñas coinciden",
@@ -777,7 +780,7 @@
         "explanation": "These details help keep your profile consistent with the information you entered during signup.",
         "savedToast": "Profile details updated.",
         "saveError": "We could not update your profile details. Please try again.",
-        "ageInvalid": "Age must be between 10 and 100.",
+        "ageInvalid": "La edad debe estar entre 16 y 100 años.",
         "months": {
           "january": "January",
           "february": "February",

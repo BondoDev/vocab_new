@@ -59,6 +59,10 @@ export function normalizeAge(value: unknown): number | null {
   }
 
   const rounded = Math.round(value);
+  // Deliberately the legacy 10-100 storage range, not the 16+ registration
+  // minimum (ONBOARDING_MIN_AGE): profiles created before the 16+ rule must
+  // still read as complete, or those users would be pushed back into
+  // onboarding on sign-in.
   if (rounded < 10 || rounded > 100) {
     return null;
   }

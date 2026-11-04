@@ -2,6 +2,7 @@ import {
   startsWithLetter,
   type UserProfile,
 } from "../../lib/userProfile";
+import { getOnboardingAgeIssue } from "./accountOnboardingAge";
 
 interface PrepareAccountOnboardingSubmitParams {
   authUserId: string | null;
@@ -58,6 +59,17 @@ export function prepareAccountOnboardingSubmit({
 
   if (age === null) {
     return { ok: false, errorKey: "accountOnboarding.errors.ageRequired" };
+  }
+
+  const ageIssue = getOnboardingAgeIssue(age);
+  if (ageIssue) {
+    return {
+      ok: false,
+      errorKey:
+        ageIssue === "belowMinimum"
+          ? "accountOnboarding.errors.ageMinimum"
+          : "accountOnboarding.errors.ageOutOfRange",
+    };
   }
 
   if (!birthMonth || !birthDay) {

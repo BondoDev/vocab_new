@@ -24,6 +24,7 @@ import type { UserProfile } from "../../../lib/userProfile";
 import {
   clampOnboardingAge,
   DEFAULT_ONBOARDING_AGE,
+  getOnboardingAgeIssue,
   ONBOARDING_MAX_AGE,
   ONBOARDING_MIN_AGE,
   resolveOnboardingAgeDefault,
@@ -103,11 +104,21 @@ export function AccountOnboardingDialog({
   );
   const displayedAgeValue =
     Number(ageInputValue) || resolveOnboardingAgeDefault(profile.age);
+  // Typed ages are stored as entered, not clamped: an out-of-range value
+  // must stay visible with an error (and fail prepareAccountOnboardingSubmit)
+  // rather than being silently raised to the 16+ minimum. Only the step
+  // buttons clamp, since they can never produce an invalid value anyway.
   const handleAgeChange = (nextValue: number | null) => {
-    onProfileChange({
-      age: nextValue === null ? null : clampOnboardingAge(nextValue),
-    });
+    onProfileChange({ age: nextValue });
   };
+  const ageIssue = profile.age === null ? null : getOnboardingAgeIssue(profile.age);
+  const ageErrorMessage = ageIssue
+    ? t(
+        ageIssue === "belowMinimum"
+          ? "accountOnboarding.errors.ageMinimum"
+          : "accountOnboarding.errors.ageOutOfRange",
+      )
+    : null;
 
   // Root cause of the "must touch age then set it back to 18" bug:
   // resolveOnboardingAgeDefault's 18 was only ever ageInputValue's own
@@ -288,6 +299,8 @@ export function AccountOnboardingDialog({
                       max={ONBOARDING_MAX_AGE}
                       inputMode="numeric"
                       value={ageInputValue}
+                      aria-invalid={ageErrorMessage ? true : undefined}
+                      aria-describedby={ageErrorMessage ? "account-onboarding-age-error" : undefined}
                       onChange={(event) => {
                         const nextValue = event.target.value;
                         setAgeInputValue(nextValue);
@@ -297,11 +310,7 @@ export function AccountOnboardingDialog({
                         }
 
                         const parsedValue = Number(nextValue);
-                        if (
-                          Number.isFinite(parsedValue) &&
-                          parsedValue >= ONBOARDING_MIN_AGE &&
-                          parsedValue <= ONBOARDING_MAX_AGE
-                        ) {
+                        if (Number.isFinite(parsedValue)) {
                           handleAgeChange(parsedValue);
                         }
                       }}
@@ -317,9 +326,9 @@ export function AccountOnboardingDialog({
                           return;
                         }
 
-                        const clampedValue = clampOnboardingAge(parsedValue);
-                        setAgeInputValue(String(clampedValue));
-                        handleAgeChange(clampedValue);
+                        const roundedValue = Math.round(parsedValue);
+                        setAgeInputValue(String(roundedValue));
+                        handleAgeChange(roundedValue);
                       }}
                       className="h-12 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-4 pr-9 text-center text-base font-semibold text-[#261943] [appearance:textfield] focus-visible:ring-[#8f7dff]/35 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
@@ -327,8 +336,8 @@ export function AccountOnboardingDialog({
                       <button
                         type="button"
                         onClick={() => {
-                          const nextValue = displayedAgeValue + 1;
-                          setAgeInputValue(String(clampOnboardingAge(nextValue)));
+                          const nextValue = clampOnboardingAge(displayedAgeValue + 1);
+                          setAgeInputValue(String(nextValue));
                           handleAgeChange(nextValue);
                         }}
                         className="inline-flex h-4 w-4 items-center justify-center rounded text-[#6f6290]"
@@ -339,8 +348,8 @@ export function AccountOnboardingDialog({
                       <button
                         type="button"
                         onClick={() => {
-                          const nextValue = displayedAgeValue - 1;
-                          setAgeInputValue(String(clampOnboardingAge(nextValue)));
+                          const nextValue = clampOnboardingAge(displayedAgeValue - 1);
+                          setAgeInputValue(String(nextValue));
                           handleAgeChange(nextValue);
                         }}
                         className="inline-flex h-4 w-4 items-center justify-center rounded text-[#6f6290]"
@@ -350,6 +359,15 @@ export function AccountOnboardingDialog({
                       </button>
                     </div>
                   </div>
+                  {ageErrorMessage ? (
+                    <p
+                      id="account-onboarding-age-error"
+                      role="alert"
+                      className="text-center text-sm font-medium text-red-700"
+                    >
+                      {ageErrorMessage}
+                    </p>
+                  ) : null}
                   <Label className="justify-center text-sm font-semibold text-[#37275b]">
                     {t("accountOnboarding.birthDate")}
                   </Label>

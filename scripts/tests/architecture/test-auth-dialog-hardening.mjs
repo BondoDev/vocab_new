@@ -242,6 +242,8 @@ test("13. The new auth.* locale keys (including the neutral no-session copy) exi
     "pleaseWait",
     "signupDescription",
     "loginDescription",
+    // Minimum registration age 16 notice, shown in both dialog modes.
+    "ageRequirement",
   ].sort();
   for (const fileName of LOCALE_FILES) {
     const data = JSON.parse(read(`src/data/interface/${fileName}`));

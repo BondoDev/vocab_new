@@ -1219,6 +1219,14 @@ export function Header({
                     ? t("auth.loginDescription")
                     : t("auth.signupDescription")}
                 </DialogDescription>
+                {/* 16+ requirement, shown before either sign-up path (Google
+                    or email) creates the account. Onboarding's age field and
+                    the backend RPCs enforce it; this only communicates it. */}
+                {authMode === "signup" ? (
+                  <p className="text-sm font-medium text-[#5d5279]">
+                    {t("auth.ageRequirement")}
+                  </p>
+                ) : null}
               </DialogHeader>
 
               <form className="mt-6 space-y-4" onSubmit={handlePasswordAuthSubmit}>
@@ -1430,6 +1438,9 @@ export function Header({
                   >
                     {signupLabel}
                   </Button>
+                  {/* "Continue with Google" above can also create a new
+                      account, so the requirement is visible in login mode too. */}
+                  <p className="text-xs text-[#70658b]">{t("auth.ageRequirement")}</p>
                 </div>
               ) : (
                 <div className="space-y-3 text-center">
