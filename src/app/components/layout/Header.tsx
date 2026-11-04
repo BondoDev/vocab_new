@@ -1416,17 +1416,17 @@ export function Header({
               </form>
             </div>
 
-            <div className="border-t border-[#ebe4f7] bg-white px-6 py-5">
+            <div className="border-t border-[#ddd2f7] bg-[#f4effe] px-6 py-5">
               {authMode === "login" ? (
                 <div className="space-y-3 text-center">
-                  <p className="text-sm text-[#70658b]">
+                  <p className="text-sm font-medium text-[#4f4470]">
                     {t("auth.noAccountYet")}
                   </p>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={openSignupDialog}
-                    className="h-11 w-full rounded-xl border-[#d9cffd] bg-[#faf7ff] font-semibold text-[#49368f] hover:bg-[#f3ecff]"
+                    className="h-11 w-full rounded-xl border-2 border-[#6b5cf6] bg-white font-semibold text-[#4b3bd1] shadow-sm hover:bg-[#ede7ff] hover:text-[#3f30b8]"
                   >
                     {signupLabel}
                   </Button>
