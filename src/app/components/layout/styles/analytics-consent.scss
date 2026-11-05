@@ -1,0 +1,289 @@
+// Analytics consent banner (AnalyticsConsentBanner.tsx) and the minimal
+// global footer that reopens it (SiteFooter.tsx). Light theme only.
+//
+// The banner is deliberately non-modal: no backdrop, no scroll lock, and it
+// sits below dialogs (z-50) so auth and onboarding dialogs always cover it.
+
+.consent-banner {
+  position: fixed;
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  left: max(0.75rem, env(safe-area-inset-left, 0px));
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  max-width: 58rem;
+  margin: 0 auto;
+  padding: 0.875rem 1rem 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: calc(var(--radius) + 0.25rem);
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.06);
+  font-family: var(--font-family-sans);
+  animation: consent-banner-in 220ms ease-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  @media (min-width: 768px) {
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.25rem;
+  }
+}
+
+.consent-banner--preferences {
+  // Room for the close control in the top-right corner.
+  padding-right: 2.75rem;
+
+  @media (min-width: 768px) {
+    padding-right: 3.25rem;
+  }
+}
+
+.consent-banner__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.consent-banner__title {
+  margin: 0 0 0.25rem;
+  color: #1f2937;
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.consent-banner__description,
+.consent-banner__status {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+
+  @media (min-width: 768px) {
+    font-size: 0.875rem;
+  }
+}
+
+.consent-banner__description {
+  color: var(--foreground);
+}
+
+.consent-banner__status {
+  margin-top: 0.375rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.consent-banner__link {
+  // #4f46e5 (the site's strong indigo) keeps AA contrast for small text on
+  // white; the base --primary falls just short.
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+
+  &:hover {
+    color: #4338ca;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.consent-banner__actions {
+  // Equal columns on phones so both choices are equally prominent; the
+  // button primitive's nowrap/shrink-0 would otherwise size them by label.
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.consent-banner__button {
+  min-width: 0;
+  min-height: 2.75rem;
+  white-space: normal;
+  line-height: 1.2;
+  padding-inline: 1.125rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  @media (min-width: 768px) {
+    min-height: 2.5rem;
+    white-space: nowrap;
+  }
+}
+
+.consent-banner__button.consent-banner__button--accept {
+  background: #4f46e5;
+  color: #ffffff;
+
+  &:hover {
+    background: #4338ca;
+  }
+}
+
+.consent-banner__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    background: var(--accent);
+    color: #1f2937;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+}
+
+@keyframes consent-banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Avoids the desktop scroll-to-top button sitting on top of the banner.
+body.has-consent-banner .scroll-top-button {
+  display: none;
+}
+
+// Fixed footer height so the viewport-filling page roots above it can give
+// that space back (see the min-height rule below).
+:root {
+  --site-footer-height: calc(2.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--site-footer-height);
+  padding: 0 1rem env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+
+// Page roots fill the viewport with `min-h-screen` (100vh) or, for Custom
+// Practice setup, 100dvh. Rendered after them, the footer would make every
+// short page scroll by its own height. Subtracting the footer height from
+// each viewport-filling element keeps short pages at exactly one viewport
+// and leaves taller pages' scroll length as it was before the footer
+// existed (nested min-h-screen elements under the header are covered too).
+// Unlayered, so it wins over Tailwind's layered utility. Not applied while a
+// learning session is mounted, because the footer is hidden then.
+#root:not(:has(.immersive-session-frame)) {
+  .min-h-screen {
+    min-height: calc(100vh - var(--site-footer-height));
+  }
+
+  .custom-practice-setup {
+    min-height: calc(100dvh - var(--site-footer-height));
+  }
+
+  // NotFoundPage's <main> fills the viewport below the header.
+  .min-h-\[calc\(100vh-80px\)\] {
+    min-height: calc(100vh - 80px - var(--site-footer-height));
+  }
+}
+
+// Link (Privacy Policy) and button (Cookie Preferences) share one look.
+// Kept on a single line: the footer's fixed height (--site-footer-height)
+// is what the min-height subtraction above relies on.
+.site-footer__link {
+  padding: 0.25rem 0.5rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-family: var(--font-family-sans);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    color: #1f2937;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+
+  // Narrow phones: the longest pair (Russian) must still fit on one line.
+  @media (max-width: 380px) {
+    padding-inline: 0.3rem;
+    font-size: 0.75rem;
+  }
+}
+
+.site-footer__separator {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+// Learning sessions get the whole screen: neither the footer nor the banner
+// may sit over or below a running session (on any device, not only in the
+// phone immersive layout). A first-visit banner simply appears after the
+// session ends, since its state lives in the App root.
+#root:has(.immersive-session-frame) .site-footer,
+body:has(.immersive-session-frame) .consent-banner {
+  display: none;
+}

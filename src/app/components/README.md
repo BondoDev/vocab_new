@@ -81,7 +81,10 @@ app.
 **Current examples:** `Header.tsx`, `ScrollToTopButton.tsx`,
 `UILanguageSwitcher.tsx`, and `ImmersiveSessionFrame.tsx` (hides this chrome
 on phones while any learning session — Custom Practice, Study New Words,
-Review Words — is running).
+Review Words — is running). `AnalyticsConsentBanner.tsx` (the single
+Zaraz-backed analytics consent banner) and `SiteFooter.tsx` (its "Cookie
+Preferences" reopen control) are mounted once in `App.tsx`'s root; the
+consent logic itself is framework-free in `src/lib/analyticsConsent.ts`.
 
 Placement is based on global ownership and breadth of use, not on the word
 "Layout" in a filename.

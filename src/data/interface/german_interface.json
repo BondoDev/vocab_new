@@ -1708,5 +1708,16 @@
     "browse": "Alle Lernmaterialien ansehen",
     "back": "Zurück zu den Lernmaterialien",
     "homeDescription": "Vokabellisten nach Niveau, häufige Verben, Konjugationen und Niveautests für sieben Sprachen."
+  },
+  "cookieConsent": {
+    "title": "Hilf uns, FluentStellar zu verbessern",
+    "description": "Wir nutzen optionale Analysen, um zu verstehen, wie Besucher unsere Website verwenden. Du kannst zustimmen oder ablehnen.",
+    "accept": "Analysen akzeptieren",
+    "decline": "Ablehnen",
+    "privacyPolicy": "Datenschutzerklärung",
+    "cookiePreferences": "Cookie-Einstellungen",
+    "close": "Schließen",
+    "currentAccepted": "Aktuelle Auswahl: Analysen akzeptiert.",
+    "currentDeclined": "Aktuelle Auswahl: Analysen abgelehnt."
   }
 }

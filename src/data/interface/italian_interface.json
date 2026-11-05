@@ -1708,5 +1708,16 @@
     "browse": "Vedi tutte le risorse di apprendimento",
     "back": "Torna alle risorse di apprendimento",
     "homeDescription": "Liste di vocabolario per livello, verbi comuni, coniugazioni e test di livello per sette lingue."
+  },
+  "cookieConsent": {
+    "title": "Aiutaci a migliorare FluentStellar",
+    "description": "Usiamo statistiche facoltative per capire come i visitatori utilizzano il nostro sito. Puoi accettarle o rifiutarle.",
+    "accept": "Accetta le statistiche",
+    "decline": "Rifiuta",
+    "privacyPolicy": "Informativa sulla privacy",
+    "cookiePreferences": "Preferenze cookie",
+    "close": "Chiudi",
+    "currentAccepted": "Scelta attuale: statistiche accettate.",
+    "currentDeclined": "Scelta attuale: statistiche rifiutate."
   }
 }

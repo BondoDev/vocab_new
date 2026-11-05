@@ -1713,5 +1713,16 @@
     "browse": "Browse all learning resources",
     "back": "Back to learning resources",
     "homeDescription": "Vocabulary lists by level, common verbs, conjugations, and level tests for seven languages."
+  },
+  "cookieConsent": {
+    "title": "Help us improve FluentStellar",
+    "description": "We use optional analytics to understand how visitors use our website. You can accept or decline.",
+    "accept": "Accept analytics",
+    "decline": "Decline",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePreferences": "Cookie Preferences",
+    "close": "Close",
+    "currentAccepted": "Current choice: analytics accepted.",
+    "currentDeclined": "Current choice: analytics declined."
   }
 }

@@ -1708,5 +1708,16 @@
     "browse": "Ver todos los recursos de aprendizaje",
     "back": "Volver a los recursos de aprendizaje",
     "homeDescription": "Listas de vocabulario por nivel, verbos comunes, conjugaciones y pruebas de nivel para siete idiomas."
+  },
+  "cookieConsent": {
+    "title": "Ayúdanos a mejorar FluentStellar",
+    "description": "Usamos analíticas opcionales para entender cómo los visitantes usan nuestro sitio web. Puedes aceptarlas o rechazarlas.",
+    "accept": "Aceptar analíticas",
+    "decline": "Rechazar",
+    "privacyPolicy": "Política de privacidad",
+    "cookiePreferences": "Preferencias de cookies",
+    "close": "Cerrar",
+    "currentAccepted": "Elección actual: analíticas aceptadas.",
+    "currentDeclined": "Elección actual: analíticas rechazadas."
   }
 }

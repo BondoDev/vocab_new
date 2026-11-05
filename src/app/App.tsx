@@ -21,6 +21,8 @@ import { NewHomePage } from "./pages/home/NewHomePage";
 import { CustomPracticePreviewPage } from "./pages/CustomPracticePreviewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
+import { AnalyticsConsentBanner } from "./components/layout/AnalyticsConsentBanner";
+import { SiteFooter } from "./components/layout/SiteFooter";
 import { ImmersiveSessionFrame } from "./components/layout/ImmersiveSessionFrame";
 import { exitSessionFullscreen, requestSessionFullscreen } from "./utils/immersiveSession";
 import { UserProfileDashboardPage } from "../features/user-profile";
@@ -1907,7 +1909,11 @@ export default function App({
             initialFullVocabularyData={initialFullVocabularyData}
             ssrRouteOverride={ssrRouteOverride}
           />
+          <SiteFooter />
           <ScrollToTopButton />
+          {/* Single global instance: lives outside the routed content so it
+              persists across client-side navigation without duplicating. */}
+          <AnalyticsConsentBanner />
         </>
       </LanguageProvider>
     </SeoProvider>
