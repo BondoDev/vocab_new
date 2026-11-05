@@ -12,7 +12,9 @@
     "practice": "Practice",
     "signUp": "Sign Up",
     "help": "Help",
-    "levelTest": "Level Test"
+    "levelTest": "Level Test",
+    "privacy": "Privacy",
+    "terms": "Terms"
   },
   "legalPages": {
     "tableOfContents": "Contents",

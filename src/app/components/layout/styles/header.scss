@@ -267,6 +267,43 @@
       transform 180ms ease;
   }
 
+  // "More" row (a <button> toggling Privacy/Terms): same look as the link
+  // rows, with native button chrome removed.
+  .header-mobile-nav-item--more {
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  // Doubled class for specificity: these must beat the sideways hover nudge
+  // (`.header-mobile-nav-item:hover .header-mobile-nav-item__chevron`)
+  // declared later in this file, which suits link rows but not a toggle.
+  .header-mobile-nav-item.header-mobile-nav-item--more .header-mobile-nav-item__chevron,
+  .header-mobile-nav-item.header-mobile-nav-item--more:hover .header-mobile-nav-item__chevron {
+    transform: none;
+  }
+
+  .header-mobile-nav-item.header-mobile-nav-item--more.is-open .header-mobile-nav-item__chevron,
+  .header-mobile-nav-item.header-mobile-nav-item--more.is-open:hover .header-mobile-nav-item__chevron {
+    transform: rotate(180deg);
+  }
+
+  .header-mobile-more-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.38rem;
+    padding-left: 1.1rem;
+  }
+
+  .header-mobile-nav-item--sub {
+    min-height: 2.6rem;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    font-size: 0.74rem;
+  }
+
   .header-mobile-nav-item:hover {
     color: #352758;
     background: rgba(124, 104, 217, 0.08);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   BookOpenText,
   ChartSpline,
@@ -9,6 +9,8 @@ import {
   CircleHelp,
   Compass,
   Dumbbell,
+  Ellipsis,
+  FileText,
   GraduationCap,
   House,
   Info,
@@ -17,12 +19,15 @@ import {
   Menu,
   ListPlus,
   Settings,
+  ShieldCheck,
   Target,
   UserRound,
   X,
   XCircle,
 } from "lucide-react";
+import { useNavigate } from "react-router";
 import { UILanguageSwitcher } from "./UILanguageSwitcher";
+import { getPrivacyPolicyPath } from "../../../data/seo/legalPages/privacyPolicy/privacyPolicyRoutes";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
 import type { LanguageLevelCode } from "../../../lib/userProfile";
 import {
@@ -73,6 +78,11 @@ const NAV_HREFS = {
   help: "/help",
   exam: "/languages/level-test",
   profile: "/profile",
+  // Terms of Service: planned route, linked from "More" (desktop) and the
+  // mobile menu. No App.tsx ROUTES entry or App-level handler yet, so the
+  // link navigates directly via react-router. (Privacy is localized —
+  // /{ui}/privacy — and built by getPrivacyPolicyPath below.)
+  terms: "/terms",
 } as const;
 
 type AccountProfileSection = "dashboard" | "learning" | "vocabulary" | "myLists" | "progress" | "settings";
@@ -351,6 +361,14 @@ export function Header({
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
+  // Mobile counterpart of the desktop "More" dropdown: an expandable row
+  // under Help in the mobile menu. Collapsed again whenever the menu closes.
+  const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setIsMobileMoreOpen(false);
+    }
+  }, [isMenuOpen]);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
@@ -388,7 +406,9 @@ export function Header({
     }),
     [starSeeds],
   );
-  const { t } = useLanguage();
+  const { t, uiLanguage } = useLanguage();
+  const navigate = useNavigate();
+  const privacyHref = getPrivacyPolicyPath(uiLanguage);
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
   const loginLabel = t("header.logIn") === "header.logIn" ? "Log In" : t("header.logIn");
   const signupLabel = t("header.signUp") === "header.signUp" ? "Sign Up" : t("header.signUp");
@@ -864,6 +884,8 @@ export function Header({
     setIsDesktopMoreOpen(false);
     action();
   };
+  const goToPrivacy = () => navigate(privacyHref);
+  const goToTerms = () => navigate(NAV_HREFS.terms);
   const mobileNavItems = [
     {
       id: "about",
@@ -913,6 +935,10 @@ export function Header({
       activePages: ["exam"] as const,
       icon: GraduationCap,
     },
+  ] as const;
+  const mobileMoreItems = [
+    { id: "privacy", href: privacyHref, label: t("header.privacy"), onClick: goToPrivacy, icon: ShieldCheck },
+    { id: "terms", href: NAV_HREFS.terms, label: t("header.terms"), onClick: goToTerms, icon: FileText },
   ] as const;
 
   return (
@@ -985,7 +1011,7 @@ export function Header({
                   />
                 </button>
                 {isDesktopMoreOpen ? (
-                  <div className="header-desktop-more-panel absolute left-1/2 z-50 w-40 -translate-x-1/2 rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
+                  <div className="header-desktop-more-panel absolute left-1/2 z-50 w-max min-w-40 -translate-x-1/2 rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
                     <a
                       href={NAV_HREFS.about}
                       onClick={createNavClickHandler(onAbout)}
@@ -1015,6 +1041,22 @@ export function Header({
                     >
                       <Compass size={12} strokeWidth={1.8} aria-hidden="true" />
                       {t("header.explore")}
+                    </a>
+                    <a
+                      href={privacyHref}
+                      onClick={createNavClickHandler(goToPrivacy)}
+                      className="header-desktop-more-item text-white/90"
+                    >
+                      <ShieldCheck size={12} strokeWidth={1.8} aria-hidden="true" />
+                      {t("header.privacy")}
+                    </a>
+                    <a
+                      href={NAV_HREFS.terms}
+                      onClick={createNavClickHandler(goToTerms)}
+                      className="header-desktop-more-item text-white/90"
+                    >
+                      <FileText size={12} strokeWidth={1.8} aria-hidden="true" />
+                      {t("header.terms")}
                     </a>
                   </div>
                 ) : null}
@@ -1169,8 +1211,8 @@ export function Header({
                 const itemIsActive = isActive(...item.activePages);
 
                 return (
+                  <Fragment key={item.id}>
                   <a
-                    key={item.id}
                     href={item.href}
                     onClick={createNavClickHandler(item.onClick)}
                     className={`header-mobile-nav-item ${
@@ -1186,6 +1228,53 @@ export function Header({
                       <ChevronRight size={16} strokeWidth={1.7} />
                     </span>
                   </a>
+                  {item.id === "help" ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setIsMobileMoreOpen((open) => !open)}
+                        className={`header-mobile-nav-item header-mobile-nav-item--more ${
+                          isMobileMoreOpen ? "is-open" : ""
+                        }`}
+                        aria-expanded={isMobileMoreOpen}
+                        aria-controls="header-mobile-more-list"
+                      >
+                        <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                        <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                          <Ellipsis size={17} strokeWidth={1.8} />
+                        </span>
+                        <span suppressHydrationWarning className="header-mobile-nav-item__label">{moreLabel}</span>
+                        <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                          <ChevronDown size={16} strokeWidth={1.7} />
+                        </span>
+                      </button>
+                      {isMobileMoreOpen ? (
+                        <div id="header-mobile-more-list" className="header-mobile-more-list">
+                          {mobileMoreItems.map((moreItem) => {
+                            const MoreIcon = moreItem.icon;
+                            return (
+                              <a
+                                key={moreItem.id}
+                                href={moreItem.href}
+                                onClick={createNavClickHandler(moreItem.onClick)}
+                                className="header-mobile-nav-item header-mobile-nav-item--sub"
+                              >
+                                <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                                <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                                  <MoreIcon size={16} strokeWidth={1.8} />
+                                </span>
+                                <span suppressHydrationWarning className="header-mobile-nav-item__label">{moreItem.label}</span>
+                                <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                                  <ChevronRight size={16} strokeWidth={1.7} />
+                                </span>
+                              </a>
+                            );
+                          })}
+                        </div>
+                      ) : null}
+                    </>
+                  ) : null}
+                  </Fragment>
                 );
               })}
             </div>

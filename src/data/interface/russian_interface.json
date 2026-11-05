@@ -12,7 +12,9 @@
     "help": "Помощь",
     "levelTest": "Тест уровня",
     "filters": "Фильтры",
-    "exercises": "Упражнения"
+    "exercises": "Упражнения",
+    "privacy": "Конфиденциальность",
+    "terms": "Условия"
   },
   "legalPages": {
     "tableOfContents": "Содержание",
