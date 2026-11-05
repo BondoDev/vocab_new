@@ -1,6 +1,34 @@
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import deFlag from "../../assets/flags/de.svg";
+import esFlag from "../../assets/flags/es.svg";
+import frFlag from "../../assets/flags/fr.svg";
+import gbFlag from "../../assets/flags/gb.svg";
+import itFlag from "../../assets/flags/it.svg";
+import ptFlag from "../../assets/flags/pt.svg";
+import ruFlag from "../../assets/flags/ru.svg";
+
+// Self-hosted copies of the hampusborgos/country-flags SVGs this component
+// formerly loaded from jsDelivr (true-proportion flags, unlike flag-icons'
+// fixed 4:3 `.fi` classes used elsewhere). Imported through Vite so URLs are
+// fingerprinted and follow `base`; tiny files may be inlined as data: URIs,
+// which CSP img-src already allows. Only the seven supported-language flags
+// are bundled — a code missing here renders no flag rather than a broken
+// image.
+const FLAG_SRC_BY_CODE: Record<string, string> = {
+  de: deFlag,
+  es: esFlag,
+  fr: frFlag,
+  gb: gbFlag,
+  it: itFlag,
+  pt: ptFlag,
+  ru: ruFlag,
+};
+
+function getFlagSrc(flagCode?: string): string | undefined {
+  return flagCode ? FLAG_SRC_BY_CODE[flagCode.toLowerCase()] : undefined;
+}
 
 interface LanguageSelectorProps {
   label: string;
@@ -82,6 +110,7 @@ export function LanguageSelector({
   );
 
   const selectedLanguage = languages.find((lang) => lang.code === value);
+  const selectedFlagSrc = getFlagSrc(selectedLanguage?.flagCode);
 
   const handleSelect = (code: string) => {
     if (!disabledLanguages.includes(code)) {
@@ -97,6 +126,7 @@ export function LanguageSelector({
         filteredLanguages.map((lang) => {
           const isDisabled = disabledLanguages.includes(lang.code);
           const isSelected = lang.code === value;
+          const flagSrc = getFlagSrc(lang.flagCode);
 
           return (
             <button
@@ -113,10 +143,10 @@ export function LanguageSelector({
               }`}
             >
               <span className="inline-flex items-center gap-3 w-full overflow-hidden">
-                {lang.flagCode && (
+                {flagSrc && (
                   <div className="flex-shrink-0 flex items-center justify-center">
                     <img
-                      src={`https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/${lang.flagCode.toLowerCase()}.svg`}
+                      src={flagSrc}
                       alt=""
                       className="language-selector-option-flag w-[18px] h-auto md:w-[22px] rounded-[1px] shadow-sm border border-black/5"
                     />
@@ -153,10 +183,10 @@ export function LanguageSelector({
           className="language-selector-trigger w-full bg-input-background border border-border rounded-lg px-4 py-3 md:px-6 md:py-5 md:text-lg pr-10 cursor-pointer hover:border-primary/40 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-left"
         >
           <span className="flex min-w-0 items-center gap-2">
-            {selectedLanguage?.flagCode && (
+            {selectedFlagSrc && (
               <div className="flex-shrink-0 flex items-center justify-center">
                 <img
-                  src={`https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/${selectedLanguage.flagCode.toLowerCase()}.svg`}
+                  src={selectedFlagSrc}
                   alt=""
                   className="language-selector-selected-flag w-[20px] h-auto md:w-[24px] rounded-[2px] shadow-sm border border-black/5"
                 />
