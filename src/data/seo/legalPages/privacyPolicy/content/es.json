@@ -4,7 +4,7 @@
   "title": "Política de privacidad",
   "description": "Conoce qué información recopila FluentStellar, cómo la utilizamos para ofrecer nuestros servicios de aprendizaje de vocabulario, qué proveedores intervienen y qué opciones tienes para controlar tus datos.",
   "effectiveDate": "2026-11-05",
-  "lastUpdated": "2026-11-05",
+  "lastUpdated": "2026-11-06",
   "sections": [
     {
       "id": "introduction",
@@ -394,14 +394,7 @@
                 "type": "bold",
                 "text": "Google"
               },
-              " — proporciona el inicio de sesión con Google, si eliges utilizarlo; Google Analytics 4, si aceptas el análisis; y Google Fonts, que suministra las fuentes utilizadas en el sitio web y recibe tu dirección IP y datos del navegador cuando se cargan dichas fuentes."
-            ],
-            [
-              {
-                "type": "bold",
-                "text": "jsDelivr"
-              },
-              " — distribuye algunas imágenes de banderas de países utilizadas en el sitio web. Las solicitudes de estas imágenes pueden revelar al proveedor de distribución de contenido información técnica, incluida tu dirección IP y datos del navegador."
+              " — proporciona el inicio de sesión con Google, si eliges utilizarlo, y Google Analytics 4, si aceptas el análisis."
             ]
           ]
         },

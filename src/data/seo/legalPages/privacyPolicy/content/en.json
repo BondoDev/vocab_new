@@ -4,7 +4,7 @@
   "title": "Privacy Policy",
   "description": "What information FluentStellar collects, how it is used to provide vocabulary learning, which service providers are involved, and the choices you have.",
   "effectiveDate": "2026-11-05",
-  "lastUpdated": "2026-11-05",
+  "lastUpdated": "2026-11-06",
   "sections": [
     {
       "id": "introduction",
@@ -394,14 +394,7 @@
                 "type": "bold",
                 "text": "Google"
               },
-              " — Google sign-in, if you choose it; Google Analytics 4, if you consent to analytics; and Google Fonts, which provides the fonts used on the website and receives your IP address and browser details when the fonts load."
-            ],
-            [
-              {
-                "type": "bold",
-                "text": "jsDelivr"
-              },
-              " — delivers some country-flag images used on the website. Requests for those images can disclose technical information, including your IP address and browser details, to the content-delivery provider."
+              " — Google sign-in, if you choose it, and Google Analytics 4, if you consent to analytics."
             ]
           ]
         },

@@ -4,7 +4,7 @@
   "title": "Datenschutzerklärung",
   "description": "Erfahren Sie, welche personenbezogenen Daten FluentStellar erhebt, wie wir diese für unsere Vokabellernangebote verwenden, welche Dienstleister beteiligt sind und welche Wahlmöglichkeiten Sie haben.",
   "effectiveDate": "2026-11-05",
-  "lastUpdated": "2026-11-05",
+  "lastUpdated": "2026-11-06",
   "sections": [
     {
       "id": "introduction",
@@ -394,14 +394,7 @@
                 "type": "bold",
                 "text": "Google"
               },
-              " — stellt die Google-Anmeldung bereit, sofern Sie diese auswählen, Google Analytics 4, sofern Sie der Analyse zustimmen, sowie Google Fonts. Google Fonts liefert die auf der Website verwendeten Schriftarten aus. Beim Laden der Schriftarten erhält Google Ihre IP-Adresse und Browserinformationen."
-            ],
-            [
-              {
-                "type": "bold",
-                "text": "jsDelivr"
-              },
-              " — liefert einige auf unserer Website verwendete Länderflaggenbilder aus. Beim Abruf dieser Bilder können technische Informationen, einschließlich Ihrer IP-Adresse und Browserdaten, an den Inhaltsauslieferungsdienst übermittelt werden."
+              " — stellt die Google-Anmeldung bereit, sofern Sie diese auswählen, sowie Google Analytics 4, sofern Sie der Analyse zustimmen."
             ]
           ]
         },
