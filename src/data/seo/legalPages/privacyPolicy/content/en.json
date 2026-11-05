@@ -348,6 +348,7 @@
           "items": [
             ["your sign-in session, including the tokens that keep you signed in, and a temporary verification value used during Google sign-in;"],
             ["a copy of your profile, so that pages load quickly after sign-in;"],
+            ["when you practice one of your vocabulary lists, a snapshot of that practice session (the list's name, the list's ID, and the IDs of the selected words), so that the session can continue if the page is reloaded; it is removed when you leave the session or sign out;"],
             ["your interface language and your practice selections, such as languages, levels, categories, and exercise types;"],
             ["information used during a visit, such as returning you to the page you were on after signing in, and timing used to decide when to suggest creating an account."]
           ]
@@ -355,7 +356,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Signing out ends your authentication session, but the locally cached copy of your profile may remain on that device after sign-out. Deleting your account from a browser also removes its locally cached profile copy in that browser. Other stored preferences may remain until you clear the website's data in your browser settings. On shared devices, consider clearing site data after signing out."
+            "Signing out ends your authentication session and removes the locally cached copy of your profile and any vocabulary-list practice snapshot from that browser. This data is also removed from the browser when the website detects that your session has expired and can no longer be renewed, when a different account signs in, or when you delete your account from that browser. Signing out does not delete your account or the learning progress saved on our servers. Other stored preferences, such as your interface language and practice selections, are not linked to your account and may remain until you clear the website's data in your browser settings. On shared devices, you can clear site data after signing out to remove these preferences as well."
           ]
         }
       ]

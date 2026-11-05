@@ -348,6 +348,7 @@
           "items": [
             ["Ihre Anmeldesitzung einschließlich der Tokens, mit denen Sie angemeldet bleiben, sowie einen temporären Prüfwert, der während der Google-Anmeldung verwendet wird;"],
             ["eine Kopie Ihrer Profildaten, damit Seiten nach der Anmeldung schneller geladen werden;"],
+            ["wenn Sie eine Ihrer Vokabellisten üben, eine Momentaufnahme dieser Übungssitzung (den Namen der Liste, die ID der Liste und die IDs der ausgewählten Wörter), damit die Sitzung nach einem Neuladen der Seite fortgesetzt werden kann; sie wird entfernt, wenn Sie die Sitzung verlassen oder sich abmelden;"],
             ["Ihre Oberflächensprache und Ihre Übungseinstellungen, darunter Sprachen, Niveaustufen, Kategorien und Übungstypen;"],
             ["Informationen, die während Ihres Besuchs verwendet werden, beispielsweise um Sie nach der Anmeldung zur zuvor besuchten Seite zurückzuführen und um zu bestimmen, wann Ihnen die Erstellung eines Benutzerkontos vorgeschlagen wird."]
           ]
@@ -355,7 +356,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Wenn Sie sich abmelden, wird Ihre Authentifizierungssitzung beendet. Eine lokal gespeicherte Kopie Ihrer Profildaten kann jedoch auch nach der Abmeldung auf dem Gerät verbleiben. Wenn Sie Ihr Konto über einen Browser löschen, wird die lokal gespeicherte Profilkopie auch aus diesem Browser entfernt. Andere gespeicherte Einstellungen können bestehen bleiben, bis Sie die Website-Daten in den Einstellungen Ihres Browsers löschen. Auf gemeinsam genutzten Geräten empfehlen wir, nach der Abmeldung die Website-Daten zu löschen."
+            "Wenn Sie sich abmelden, wird Ihre Authentifizierungssitzung beendet, und die lokal gespeicherte Kopie Ihrer Profildaten sowie eine etwaige Momentaufnahme einer Vokabellisten-Übung werden aus diesem Browser entfernt. Diese Daten werden außerdem aus dem Browser entfernt, wenn die Website feststellt, dass Ihre Sitzung abgelaufen ist und nicht mehr verlängert werden kann, wenn sich ein anderes Konto anmeldet oder wenn Sie Ihr Konto über diesen Browser löschen. Durch die Abmeldung werden weder Ihr Konto noch Ihr auf unseren Servern gespeicherter Lernfortschritt gelöscht. Andere gespeicherte Einstellungen, etwa Ihre Oberflächensprache und Ihre Übungseinstellungen, sind nicht mit Ihrem Konto verknüpft und können bestehen bleiben, bis Sie die Website-Daten in den Einstellungen Ihres Browsers löschen. Auf gemeinsam genutzten Geräten können Sie nach der Abmeldung die Website-Daten löschen, um auch diese Einstellungen zu entfernen."
           ]
         }
       ]

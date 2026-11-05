@@ -348,6 +348,7 @@
           "items": [
             ["tu sesión de inicio de sesión, incluidos los tokens que permiten mantenerla activa, y un valor temporal de verificación utilizado durante el inicio de sesión con Google;"],
             ["una copia de tu perfil para que las páginas se carguen rápidamente después de iniciar sesión;"],
+            ["cuando practicas con una de tus listas de vocabulario, una instantánea de esa sesión de práctica (el nombre de la lista, el ID de la lista y los ID de las palabras seleccionadas) para que la sesión pueda continuar si se vuelve a cargar la página; se elimina cuando sales de la sesión o cierras sesión;"],
             ["el idioma de la interfaz y tus preferencias de práctica, como idiomas, niveles, categorías y tipos de ejercicios;"],
             ["información utilizada durante una visita, como la necesaria para devolverte a la página en la que estabas después de iniciar sesión y los tiempos utilizados para decidir cuándo sugerirte que crees una cuenta."]
           ]
@@ -355,7 +356,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Al cerrar sesión, finaliza tu sesión de autenticación, pero la copia de tu perfil almacenada localmente puede permanecer en el dispositivo. Si eliminas tu cuenta desde un navegador, también se elimina de ese navegador la copia local de tu perfil. Otras preferencias almacenadas pueden permanecer hasta que borres los datos del sitio web desde la configuración de tu navegador. Si utilizas un dispositivo compartido, considera borrar los datos del sitio después de cerrar sesión."
+            "Al cerrar sesión, finaliza tu sesión de autenticación y se eliminan de ese navegador la copia de tu perfil almacenada localmente y cualquier instantánea de práctica de listas de vocabulario. Estos datos también se eliminan del navegador cuando el sitio web detecta que tu sesión ha caducado y ya no puede renovarse, cuando inicia sesión otra cuenta o cuando eliminas tu cuenta desde ese navegador. Cerrar sesión no elimina tu cuenta ni el progreso de aprendizaje guardado en nuestros servidores. Otras preferencias almacenadas, como el idioma de la interfaz y tus preferencias de práctica, no están vinculadas a tu cuenta y pueden permanecer hasta que borres los datos del sitio web desde la configuración de tu navegador. Si utilizas un dispositivo compartido, puedes borrar los datos del sitio después de cerrar sesión para eliminar también estas preferencias."
           ]
         }
       ]

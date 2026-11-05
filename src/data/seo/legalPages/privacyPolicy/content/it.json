@@ -348,6 +348,7 @@
           "items": [
             ["la tua sessione di accesso, inclusi i token che ti permettono di rimanere connesso, e un valore di verifica temporaneo utilizzato durante l'accesso con Google;"],
             ["una copia del tuo profilo, per consentire un caricamento più rapido delle pagine dopo l'accesso;"],
+            ["quando ti eserciti con uno dei tuoi elenchi di vocaboli, un'istantanea di quella sessione di esercitazione (il nome dell'elenco, l'ID dell'elenco e gli ID delle parole selezionate), così che la sessione possa proseguire se la pagina viene ricaricata; viene rimossa quando esci dalla sessione o ti disconnetti;"],
             ["la lingua dell'interfaccia e le tue preferenze di esercitazione, come lingue, livelli, categorie e tipi di esercizi;"],
             ["informazioni utilizzate durante una visita, ad esempio per riportarti alla pagina che stavi consultando prima dell'accesso e per stabilire quando suggerirti di creare un account."]
           ]
@@ -355,7 +356,7 @@
         {
           "type": "paragraph",
           "content": [
-            "La disconnessione termina la tua sessione di autenticazione, ma una copia del tuo profilo memorizzata localmente potrebbe rimanere sul dispositivo anche dopo la disconnessione. Se elimini il tuo account da un browser, viene rimossa anche la copia locale del profilo presente in quel browser. Altre preferenze memorizzate possono rimanere sul dispositivo finché non cancelli i dati del sito dalle impostazioni del browser. Se utilizzi un dispositivo condiviso, ti consigliamo di cancellare i dati del sito dopo esserti disconnesso."
+            "La disconnessione termina la tua sessione di autenticazione e rimuove da quel browser la copia del tuo profilo memorizzata localmente e qualsiasi istantanea di esercitazione su un elenco di vocaboli. Questi dati vengono rimossi dal browser anche quando il sito rileva che la tua sessione è scaduta e non può più essere rinnovata, quando accede un altro account o quando elimini il tuo account da quel browser. La disconnessione non elimina il tuo account né i progressi di apprendimento salvati sui nostri server. Altre preferenze memorizzate, come la lingua dell'interfaccia e le tue preferenze di esercitazione, non sono collegate al tuo account e possono rimanere sul dispositivo finché non cancelli i dati del sito dalle impostazioni del browser. Se utilizzi un dispositivo condiviso, puoi cancellare i dati del sito dopo esserti disconnesso per rimuovere anche queste preferenze."
           ]
         }
       ]

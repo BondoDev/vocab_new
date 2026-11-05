@@ -348,6 +348,7 @@
           "items": [
             ["votre session de connexion, y compris les jetons qui permettent de rester connecté, ainsi qu'une valeur de vérification temporaire utilisée lors de la connexion avec Google ;"],
             ["une copie de votre profil, afin que les pages se chargent rapidement après votre connexion ;"],
+            ["lorsque vous vous entraînez avec l'une de vos listes de vocabulaire, un instantané de cette session d'entraînement (le nom de la liste, l'identifiant de la liste et les identifiants des mots sélectionnés), afin que la session puisse se poursuivre si la page est rechargée ; il est supprimé lorsque vous quittez la session ou vous déconnectez ;"],
             ["la langue de l'interface et vos préférences d'entraînement, notamment les langues, niveaux, catégories et types d'exercices ;"],
             ["des informations utilisées pendant votre visite, notamment pour vous ramener à la page consultée avant la connexion et pour déterminer à quel moment vous proposer de créer un compte."]
           ]
@@ -355,7 +356,7 @@
         {
           "type": "paragraph",
           "content": [
-            "La déconnexion met fin à votre session d'authentification, mais une copie de votre profil enregistrée localement peut rester sur l'appareil après votre déconnexion. La suppression de votre compte depuis un navigateur entraîne également la suppression de la copie locale de votre profil dans ce navigateur. D'autres préférences enregistrées peuvent subsister jusqu'à ce que vous effaciez les données du site dans les paramètres de votre navigateur. Sur un appareil partagé, pensez à effacer les données du site après vous être déconnecté."
+            "La déconnexion met fin à votre session d'authentification et supprime de ce navigateur la copie de votre profil enregistrée localement ainsi que tout instantané d'entraînement sur une liste de vocabulaire. Ces données sont également supprimées du navigateur lorsque le site détecte que votre session a expiré et ne peut plus être renouvelée, lorsqu'un autre compte se connecte ou lorsque vous supprimez votre compte depuis ce navigateur. La déconnexion ne supprime ni votre compte ni la progression d'apprentissage enregistrée sur nos serveurs. D'autres préférences enregistrées, comme la langue de l'interface et vos préférences d'entraînement, ne sont pas liées à votre compte et peuvent subsister jusqu'à ce que vous effaciez les données du site dans les paramètres de votre navigateur. Sur un appareil partagé, vous pouvez effacer les données du site après vous être déconnecté afin de supprimer également ces préférences."
           ]
         }
       ]

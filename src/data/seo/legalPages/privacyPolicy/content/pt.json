@@ -348,6 +348,7 @@
           "items": [
             ["sua sessão de login, incluindo os tokens que mantêm você conectado, e um valor temporário de verificação usado durante o login com o Google;"],
             ["uma cópia do seu perfil, para que as páginas carreguem mais rapidamente depois que você fizer login;"],
+            ["quando você pratica com uma das suas listas de vocabulário, um registro instantâneo dessa sessão de prática (o nome da lista, o ID da lista e os IDs das palavras selecionadas), para que a sessão possa continuar se a página for recarregada; ele é removido quando você sai da sessão ou da conta;"],
             ["o idioma da interface e suas preferências de prática, como idiomas, níveis, categorias e tipos de exercícios;"],
             ["informações usadas durante uma visita, como as necessárias para levar você de volta à página em que estava depois de fazer login e os tempos usados para determinar quando sugerir a criação de uma conta."]
           ]
@@ -355,7 +356,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Ao sair da conta, sua sessão de autenticação é encerrada, mas uma cópia do seu perfil salva localmente pode permanecer no dispositivo. Se você excluir sua conta por meio de um navegador, a cópia local do perfil também é removida desse navegador. Outras preferências salvas podem permanecer até que você apague os dados do site nas configurações do navegador. Se você usar um dispositivo compartilhado, considere apagar os dados do site depois de sair da conta."
+            "Ao sair da conta, sua sessão de autenticação é encerrada, e a cópia do seu perfil salva localmente e qualquer registro instantâneo de prática de listas de vocabulário são removidos desse navegador. Esses dados também são removidos do navegador quando o site detecta que sua sessão expirou e não pode mais ser renovada, quando outra conta faz login ou quando você exclui sua conta por meio desse navegador. Sair da conta não exclui sua conta nem o progresso de aprendizagem salvo em nossos servidores. Outras preferências salvas, como o idioma da interface e suas preferências de prática, não estão vinculadas à sua conta e podem permanecer até que você apague os dados do site nas configurações do navegador. Se você usar um dispositivo compartilhado, pode apagar os dados do site depois de sair da conta para remover também essas preferências."
           ]
         }
       ]
