@@ -206,14 +206,6 @@
       "languagesRequired": "Bitte wähle beide Sprachen."
     }
   },
-  "ageConfirmation": {
-    "title": "Bestätige dein Alter",
-    "description": "Bitte bestätige dein aktuelles Alter und deinen Geburtstag. Ab jetzt wird dein Alter an deinem Geburtstag automatisch aktualisiert.",
-    "confirm": "Bestätigen",
-    "later": "Später",
-    "saving": "Wird gespeichert...",
-    "saveError": "Dein Alter konnte nicht gespeichert werden. Bitte versuche es erneut."
-  },
   "auth": {
     "loginError": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuche es erneut.",
     "loginUnconfirmedEmail": "Bitte bestätige deine E-Mail-Adresse, bevor du dich anmeldest.",

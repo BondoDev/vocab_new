@@ -187,9 +187,6 @@ export function normalizeUserProfile(value: Partial<UserProfile> | null | undefi
     timezoneUpdatedAt: normalizeTimestamp(value?.timezoneUpdatedAt),
     birthYear: normalizeBirthYear(value?.birthYear),
     ageConfirmedAt: normalizeTimestamp(value?.ageConfirmedAt),
-    // Only meaningful while no birth year is known; a confirmed age clears it.
-    ageConfirmationRequired:
-      Boolean(value?.ageConfirmationRequired) && normalizeBirthYear(value?.birthYear) === null,
   };
 }
 

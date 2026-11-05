@@ -206,14 +206,6 @@
       "languagesRequired": "Veuillez choisir les deux langues."
     }
   },
-  "ageConfirmation": {
-    "title": "Confirmez votre âge",
-    "description": "Veuillez confirmer votre âge actuel et votre date d'anniversaire. Désormais, votre âge sera mis à jour automatiquement le jour de votre anniversaire.",
-    "confirm": "Confirmer",
-    "later": "Plus tard",
-    "saving": "Enregistrement...",
-    "saveError": "Nous n'avons pas pu enregistrer votre âge. Veuillez réessayer."
-  },
   "auth": {
     "loginError": "E-mail ou mot de passe incorrect. Veuillez reessayer.",
     "loginUnconfirmedEmail": "Veuillez verifier votre e-mail avant de vous connecter.",

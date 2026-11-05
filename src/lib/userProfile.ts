@@ -94,12 +94,11 @@ export interface UserProfile {
   // Automatic age (supabase/migrations/20261105160000_add_inferred_birth_year_and_current_age.sql,
   // src/app/utils/accountAge.ts). `age` is the CURRENT age: the server's
   // current_age when a birth year is known, otherwise the stored declared
-  // age. birthYear/ageConfirmedAt are null until the age was declared or
-  // confirmed after that migration; ageConfirmationRequired then asks an
-  // existing user once to confirm their age.
+  // age. birthYear/ageConfirmedAt are null for accounts created before that
+  // migration until the user voluntarily saves age/birthday in Settings;
+  // they are never asked to.
   birthYear: number | null;
   ageConfirmedAt: string | null;
-  ageConfirmationRequired: boolean;
 }
 
 export const EMPTY_USER_PROFILE: UserProfile = {
@@ -117,7 +116,6 @@ export const EMPTY_USER_PROFILE: UserProfile = {
   timezoneUpdatedAt: null,
   birthYear: null,
   ageConfirmedAt: null,
-  ageConfirmationRequired: false,
 };
 
 function canUseLocalStorage(): boolean {
@@ -204,10 +202,6 @@ function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partia
     age: normalizeAge(typeof row.current_age === "number" ? row.current_age : row.user_age),
     birthYear: normalizeBirthYear(row.birth_year),
     ageConfirmedAt: normalizeTimestamp(row.age_confirmed_at),
-    // Only when the server supports automatic age (the column was returned)
-    // and this completed account has never confirmed its age.
-    ageConfirmationRequired:
-      "birth_year" in row && row.birth_year === null && Boolean(row.onboarding_completed),
     birthMonth:
       typeof row.birth_month === "number"
         ? String(row.birth_month).padStart(2, "0")
@@ -483,7 +477,6 @@ function fromCompleteUserProfileOnboardingResult(
     birthDay: String(result.birthDay).padStart(2, "0"),
     birthYear: result.birthYear,
     ageConfirmedAt: result.ageConfirmedAt,
-    ageConfirmationRequired: false,
     onboardingCompleted: result.onboardingCompleted,
     dailyGoal: result.dailyGoal,
     timezone: result.timezone,
@@ -676,11 +669,11 @@ function fromUpdateUserProfileDemographicsResult(
     birthMonth: String(result.birthMonth).padStart(2, "0"),
     birthDay: String(result.birthDay).padStart(2, "0"),
     updatedAt: result.updatedAt,
-    // Every successful save re-infers the birth year server-side. A null
-    // birthYear here means the database predates automatic age; keep the
-    // confirmation prompt off in that case so it cannot loop.
+    // Every successful save re-infers the birth year server-side, which is
+    // also how an account created before automatic age starts using it. A
+    // null birthYear means the database predates automatic age.
     ...(result.birthYear !== null
-      ? { birthYear: result.birthYear, ageConfirmedAt: result.ageConfirmedAt, ageConfirmationRequired: false }
+      ? { birthYear: result.birthYear, ageConfirmedAt: result.ageConfirmedAt }
       : {}),
   };
 }

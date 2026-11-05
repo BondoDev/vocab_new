@@ -189,10 +189,10 @@ await test("current ages above the 100 input maximum still read as complete", ()
   assert.equal(normalizeAge(101), 101);
   assert.equal(normalizeAge(9), null);
 });
-await test("a known birth year always clears the confirmation request", () => {
-  assert.equal(normalizeUserProfile({ ageConfirmationRequired: true, birthYear: null }).ageConfirmationRequired, true);
-  assert.equal(normalizeUserProfile({ ageConfirmationRequired: true, birthYear: 2000 }).ageConfirmationRequired, false);
+await test("birth year normalization keeps only plausible years", () => {
+  assert.equal(normalizeUserProfile({ birthYear: 2000 }).birthYear, 2000);
   assert.equal(normalizeUserProfile({ birthYear: 1800 }).birthYear, null);
+  assert.equal("ageConfirmationRequired" in normalizeUserProfile({}), false, "no confirmation-prompt state");
 });
 await test("demographics parser: new fields parsed; legacy response still parses", () => {
   const base = { user_age: 30, birth_month: 5, birth_day: 9, updated_at: "2026-11-05T10:00:00Z" };
@@ -264,20 +264,13 @@ await test("new/confirmed user: the server's current_age is the displayed age", 
   const result = await profile.readSupabaseUserProfile(session);
   assert.equal(result.age, 22);
   assert.equal(result.birthYear, 2004);
-  assert.equal(result.ageConfirmationRequired, false);
   assert.match(requests.at(-1), /select=.*birth_year,age_confirmed_at,current_age/);
 });
-await test("existing user without a birth year: stored age kept, one-time confirmation requested", async () => {
+await test("existing user without a birth year: stored age displayed, nothing guessed", async () => {
   respond = () => ({ status: 200, body: [{ ...row, user_age: 20, birth_year: null, age_confirmed_at: null, current_age: null }] });
   const result = await profile.readSupabaseUserProfile(session);
   assert.equal(result.age, 20, "no birth year is guessed from updated_at");
   assert.equal(result.birthYear, null);
-  assert.equal(result.ageConfirmationRequired, true);
-});
-await test("incomplete profile (onboarding pending) is not asked for confirmation", async () => {
-  respond = () => ({ status: 200, body: [{ ...row, onboarding_completed: false, birth_year: null, age_confirmed_at: null, current_age: null }] });
-  const result = await profile.readSupabaseUserProfile(session);
-  assert.equal(result.ageConfirmationRequired, false);
 });
 await test("database without the migration: falls back to the legacy columns, no prompt", async () => {
   requests.length = 0;
@@ -287,7 +280,7 @@ await test("database without the migration: falls back to the legacy columns, no
   const result = await profile.readSupabaseUserProfile(session);
   assert.equal(requests.length, 2);
   assert.equal(result.age, 20);
-  assert.equal(result.ageConfirmationRequired, false);
+  assert.equal(result.birthYear, null);
 });
 await test("other read errors are not swallowed by the fallback", async () => {
   respond = () => ({ status: 500, body: { code: "XX000", message: "boom" } });
@@ -321,7 +314,30 @@ await test("onboarding request carries no time-zone field (time-zone writes stay
   assert.equal(Object.keys(bodies[0]).some((key) => /timezone/i.test(key)), false);
   assert.equal(result.age, 20);
   assert.equal(result.birthYear, 2006);
-  assert.equal(result.ageConfirmationRequired, false);
+});
+await test("a voluntary Settings save initializes automatic age for an existing user", async () => {
+  const bodies = [];
+  globalThis.fetch = async (url, init) => {
+    bodies.push({ url: String(url), body: JSON.parse(init.body) });
+    return { ok: true, status: 200, json: async () => [{
+      user_age: 21, birth_month: 8, birth_day: 20, updated_at: "2026-11-05T10:00:00Z",
+      birth_year: 2005, age_confirmed_at: "2026-11-05T10:00:00Z", current_age: 21,
+    }] };
+  };
+  const result = await profile.updateUserProfileDemographics(session, { age: 21, birthMonth: "08", birthDay: "20" });
+  assert.match(bodies[0].url, /\/rpc\/update_user_profile_demographics$/);
+  assert.deepEqual(bodies[0].body, { p_user_age: 21, p_birth_month: 8, p_birth_day: 20 });
+  assert.equal(result.age, 21);
+  assert.equal(result.birthYear, 2005);
+  assert.equal(result.ageConfirmedAt, "2026-11-05T10:00:00Z");
+});
+await test("against a database without the migration a Settings save still works (no birth year)", async () => {
+  globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => [{
+    user_age: 21, birth_month: 8, birth_day: 20, updated_at: "2026-11-05T10:00:00Z",
+  }] });
+  const result = await profile.updateUserProfileDemographics(session, { age: 21, birthMonth: "08", birthDay: "20" });
+  assert.equal(result.age, 21);
+  assert.equal("birthYear" in result, false);
 });
 fs.rmSync(bundleDir, { recursive: true, force: true });
 
@@ -337,21 +353,18 @@ await test("Settings blocks impossible dates and limits day options", () => {
   assert.match(source, /birthDateIssue === null/);
   assert.match(source, /birthDayValuesForMonth\(birthMonthDraft\)/);
 });
-await test("age confirmation is wired into every App route branch, skippable, never over other flows", () => {
-  const app = read("src/app/App.tsx");
-  const recoveryCount = (app.match(/\{passwordRecoveryDialog\}/g) ?? []).length;
-  assert.equal((app.match(/\{ageConfirmationDialog\}/g) ?? []).length, recoveryCount);
-  assert.match(app, /isAccountOnboardingOpen \|\|\s*isPasswordRecoveryActive \|\|\s*accountLanguageConfirm\.isOpen \|\|\s*isLearningSessionActive/);
-  const hook = read("src/app/hooks/useAgeConfirmation.ts");
-  assert.match(hook, /sessionStorage\.setItem\(AGE_CONFIRMATION_SNOOZE_KEY, "1"\)/);
-  assert.match(hook, /updateUserProfileDemographics\(/);
+await test("existing users are never prompted: no age-confirmation popup, hook, state, or strings", () => {
+  for (const removed of ["src/app/components/dialogs/AgeConfirmationDialog.tsx", "src/app/hooks/useAgeConfirmation.ts"]) {
+    assert.equal(fs.existsSync(path.join(ROOT_DIR, removed)), false, removed);
+  }
+  for (const file of ["src/app/App.tsx", "src/lib/userProfile.ts", "src/app/utils/accountProfileCompleteness.ts"]) {
+    assert.doesNotMatch(read(file), /ageConfirmation(Dialog|Required)|useAgeConfirmation/, file);
+  }
 });
-await test("all seven interface files define the new strings", () => {
+await test("all seven interface files keep the date errors and drop the popup strings", () => {
   for (const language of ["english", "spanish", "french", "german", "italian", "portuguese", "russian"]) {
     const data = JSON.parse(read(`src/data/interface/${language}_interface.json`));
-    for (const key of ["title", "description", "confirm", "later", "saving", "saveError"]) {
-      assert.ok(data.ageConfirmation?.[key], `${language} ageConfirmation.${key}`);
-    }
+    assert.equal(data.ageConfirmation, undefined, `${language} ageConfirmation removed`);
     assert.ok(data.accountOnboarding.errors.birthDateInvalid, `${language} birthDateInvalid`);
     assert.ok(data.accountOnboarding.errors.birthDateLeapDay, `${language} birthDateLeapDay`);
   }

@@ -16,7 +16,6 @@ import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingD
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
 import { AccountIntroDialog } from "./components/dialogs/AccountIntroDialog";
 import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDialog";
-import { AgeConfirmationDialog } from "./components/dialogs/AgeConfirmationDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { NewHomePage } from "./pages/home/NewHomePage";
 import { CustomPracticePreviewPage } from "./pages/CustomPracticePreviewPage";
@@ -101,7 +100,6 @@ import { useExploreItems } from "./pages/explore/useExploreItems";
 import { useAccountIntroPopup } from "./hooks/useAccountIntroPopup";
 import { useAccountIntroSeoEngagement } from "./hooks/useAccountIntroSeoEngagement";
 import { usePracticeListSession } from "./hooks/usePracticeListSession";
-import { useAgeConfirmation } from "./hooks/useAgeConfirmation";
 import type { PracticeListStartConfig } from "../features/user-profile/sections/my-lists/MyListsSection";
 
 const LevelCategorySelection = lazy(() =>
@@ -838,9 +836,10 @@ function AppContent({
     setPracticeLanguage(change.practiceLanguage);
   };
 
-  // Shared by Settings' Profile Details save and the one-time age
-  // confirmation dialog. A birthYear in the change means the server inferred
-  // it (automatic age), which also settles the confirmation request.
+  // Settings' Profile Details save. A birthYear in the change means the
+  // server inferred it (automatic age); from then on the age shown is the
+  // server's current_age. This is the only way an account created before
+  // automatic age starts using it - nothing prompts the user to do so.
   const handleProfileDemographicsChange = (change: {
     age: number;
     birthMonth: string;
@@ -859,27 +858,10 @@ function AppContent({
         ? {
             birthYear: change.birthYear,
             ageConfirmedAt: change.ageConfirmedAt ?? null,
-            ageConfirmationRequired: false,
           }
         : {}),
     }));
   };
-
-  // One-time age confirmation for accounts that predate automatic age. Never
-  // stacks on another account dialog or interrupts a learning session.
-  const ageConfirmation = useAgeConfirmation({
-    authSession,
-    authUserId,
-    isAuthResolved,
-    userProfile,
-    isProfileLoaded,
-    isBlocked:
-      isAccountOnboardingOpen ||
-      isPasswordRecoveryActive ||
-      accountLanguageConfirm.isOpen ||
-      isLearningSessionActive,
-    onConfirmed: handleProfileDemographicsChange,
-  });
 
   const handleProfileTimezoneChange = (change: { timezone: string; timezoneUpdatedAt: string }) => {
     setUserProfile((previous) => ({
@@ -1030,20 +1012,6 @@ function AppContent({
     />
   );
 
-  const ageConfirmationDialog = (
-    <AgeConfirmationDialog
-      open={ageConfirmation.isOpen}
-      initialAge={userProfile.age}
-      initialBirthMonth={userProfile.birthMonth}
-      initialBirthDay={userProfile.birthDay}
-      timezone={userProfile.timezone}
-      isSaving={ageConfirmation.isSaving}
-      error={ageConfirmation.saveErrorKey ? t(ageConfirmation.saveErrorKey) : null}
-      onConfirm={ageConfirmation.handleConfirm}
-      onLater={ageConfirmation.handleLater}
-    />
-  );
-
   const handleStartExam = () => {
     navigate(ROUTES.exam);
   };
@@ -1159,7 +1127,6 @@ function AppContent({
         <RouteLoadingFallback />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1233,7 +1200,6 @@ function AppContent({
         </div>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </>
     );
@@ -1266,7 +1232,6 @@ function AppContent({
         </div>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1280,7 +1245,6 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="exam" />
           {levelTestLanguageModal}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1312,7 +1276,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </>
     );
@@ -1337,7 +1300,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1370,7 +1332,6 @@ function AppContent({
         />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1396,7 +1357,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1420,7 +1380,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1445,7 +1404,6 @@ function AppContent({
         />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1469,7 +1427,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1483,7 +1440,6 @@ function AppContent({
           <NotFoundPage message="Invalid level test page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1506,7 +1462,6 @@ function AppContent({
         {levelTestLanguageModal}
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1520,7 +1475,6 @@ function AppContent({
           <NotFoundPage message="Invalid verbs page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1538,7 +1492,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1552,7 +1505,6 @@ function AppContent({
           <NotFoundPage message="Invalid past-verb-forms page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1570,7 +1522,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1584,7 +1535,6 @@ function AppContent({
           <NotFoundPage message="Invalid conjugated-verb-forms page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1602,7 +1552,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1616,7 +1565,6 @@ function AppContent({
           <NotFoundPage message="Invalid vocabulary list page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1651,7 +1599,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1665,7 +1612,6 @@ function AppContent({
           <NotFoundPage message="Invalid word list page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1695,7 +1641,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1710,7 +1655,6 @@ function AppContent({
           </WordPageLayout>
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </>
       );
@@ -1733,7 +1677,6 @@ function AppContent({
         </WordPageLayout>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </>
     );
@@ -1762,7 +1705,6 @@ function AppContent({
           <NotFoundPage message={vocabularyLevelRenderDecision.message} />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1781,7 +1723,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1795,7 +1736,6 @@ function AppContent({
           <NotFoundPage message="Invalid SEO page index." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1809,7 +1749,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1824,7 +1763,6 @@ function AppContent({
         <PrivacyPolicyPage uiLang={privacyPolicyRoute} />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1838,7 +1776,6 @@ function AppContent({
           <NotFoundPage message="Invalid word SEO page index." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1855,7 +1792,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1871,7 +1807,6 @@ function AppContent({
           <NotFoundPage message="Invalid preview page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
-          {ageConfirmationDialog}
           {accountIntroDialog}
         </div>
       );
@@ -1892,7 +1827,6 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );
@@ -1936,7 +1870,6 @@ function AppContent({
           />
         ) : null}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </>
     );
@@ -1955,7 +1888,6 @@ function AppContent({
           onStartPracticing={() => navigate(ROUTES.exerciseSelection)}
         />
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </>
     );
@@ -1969,7 +1901,6 @@ function AppContent({
         <NotFoundPage />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        {ageConfirmationDialog}
         {accountIntroDialog}
       </div>
     );

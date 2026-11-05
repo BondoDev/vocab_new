@@ -2463,8 +2463,12 @@ keeps every account's age current without any periodic write.
 - **Columns.** Adds nullable `birth_year` and `age_confirmed_at` to
   `user_profiles`. Existing rows are **not backfilled**: their age has no
   trustworthy declaration date (`updated_at` moves on every edit), so their
-  birth year cannot be inferred. The app asks those users once to confirm
-  their age (`useAgeConfirmation`), which fills both columns.
+  birth year cannot be inferred. They keep their stored age, and are never
+  prompted; a voluntary age/birthday save in Settings fills both columns
+  and switches them to automatic age. (The migration header still mentions
+  a one-time confirmation prompt: that app-side prompt was removed on
+  2026-11-05 after the migration was applied; the database behavior is
+  unchanged.)
 - **Inference.** `complete_user_profile_onboarding` and
   `update_user_profile_demographics` infer `birth_year` from the declared
   age, birth month/day, and "today" from the **server clock** in the stored
@@ -2493,8 +2497,8 @@ keeps every account's age current without any periodic write.
   is shown. Signatures of all three recreated RPCs are unchanged.
 - **Tests.** `scripts/tests/account/test-account-age.mjs` (calendar rules,
   time zones, leap years, minimum age, profile mapping, SQL contract) and
-  `scripts/tests/browser/age-confirmation.spec.ts` (dialog and Settings
-  against a mocked backend). The SQL itself was not executed locally (no
+  `scripts/tests/browser/automatic-age.spec.ts` (Settings and existing
+  users against a mocked backend). The SQL itself was not executed locally (no
   local Postgres); run the read-only pre-flight checks in the migration
   header before applying it and the post-checks at its end afterwards.
 - **Atomic.** The file is wrapped in `begin; ... commit;`. A failure rolls

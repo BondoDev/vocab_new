@@ -62,8 +62,8 @@ merge, validation, and decision functions that sit above `lib/userProfile.ts`
 across more than one account-related hook, which is what keeps them here
 instead of beside a single dialog. `accountAge.ts` holds the calendar rules
 for automatic age (the TypeScript mirror of the SQL helpers that infer the
-birth year and compute `current_age`), shared by onboarding, Settings, the
-age-confirmation dialog, and `lib/userProfile.ts`'s profile cache.
+birth year and compute `current_age`), shared by onboarding, Settings, and
+`lib/userProfile.ts`'s profile cache.
 
 **Persisted-preference and redirect policy** —
 `practiceRouteCanonicalizationPolicy.ts`, `storedLanguageAutoRedirectPolicy.ts`,

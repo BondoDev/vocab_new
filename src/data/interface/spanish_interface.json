@@ -206,14 +206,6 @@
       "languagesRequired": "Elige ambos idiomas."
     }
   },
-  "ageConfirmation": {
-    "title": "Confirma tu edad",
-    "description": "Confirma tu edad actual y tu cumpleaños. A partir de ahora, tu edad se actualizará automáticamente el día de tu cumpleaños.",
-    "confirm": "Confirmar",
-    "later": "Más tarde",
-    "saving": "Guardando...",
-    "saveError": "No pudimos guardar tu edad. Inténtalo de nuevo."
-  },
   "auth": {
     "loginError": "Correo electronico o contrasena incorrectos. Intentalo de nuevo.",
     "loginUnconfirmedEmail": "Por favor verifica tu correo electronico antes de iniciar sesion.",

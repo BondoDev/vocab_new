@@ -49,7 +49,7 @@ export function getOnboardingAgeIssue(age: number): OnboardingAgeIssue | null {
   return null;
 }
 
-// Settings / age-confirmation variant: an age within 16-100, or - only for
+// Settings variant: an age within 16-100, or - only for
 // an account that is itself still below 16 (registered under the earlier 10+
 // rule) - a whole number not below that account's current age, so it can
 // confirm its true, higher age without any new under-16 value being

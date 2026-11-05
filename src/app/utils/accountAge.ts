@@ -140,7 +140,7 @@ const BIRTH_MONTH_VALUES = [
 // { month: "long" } format yields the nominative form (e.g. Russian
 // "январь", not the genitive "января"), which is what a dropdown needs.
 // Some locales lowercase month names, so the first letter is capitalized
-// for list display. Shared by onboarding and the age-confirmation dialog.
+// for list display. Used by the onboarding dialog.
 export function getBirthMonthOptions(uiLanguage: string): { value: string; label: string }[] {
   const formatter = new Intl.DateTimeFormat(uiLanguage, { month: "long", timeZone: "UTC" });
   return BIRTH_MONTH_VALUES.map((value) => {

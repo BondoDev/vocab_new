@@ -206,14 +206,6 @@
       "languagesRequired": "Scegli entrambe le lingue."
     }
   },
-  "ageConfirmation": {
-    "title": "Conferma la tua età",
-    "description": "Conferma la tua età attuale e il tuo compleanno. D'ora in poi la tua età verrà aggiornata automaticamente nel giorno del tuo compleanno.",
-    "confirm": "Conferma",
-    "later": "Più tardi",
-    "saving": "Salvataggio...",
-    "saveError": "Non siamo riusciti a salvare la tua età. Riprova."
-  },
   "auth": {
     "loginError": "Email o password non corretti. Riprova.",
     "loginUnconfirmedEmail": "Verifica la tua email prima di accedere.",
