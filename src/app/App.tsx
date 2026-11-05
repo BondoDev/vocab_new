@@ -402,11 +402,11 @@ function AppContent({
   // the Zaraz consent cookie are intentionally untouched; nothing is
   // deleted server-side. Gated on isAuthResolved because authUserId is null
   // during the pre-hydration render, which is not a real sign-out.
-  const previousAuthUserIdRef = useRef<string | null>(null);
+  const lastCleanedAuthUserIdRef = useRef<string | null>(null);
   useEffect(() => {
     if (!isAuthResolved) return;
-    const previousAuthUserId = previousAuthUserIdRef.current;
-    previousAuthUserIdRef.current = authUserId;
+    const previousAuthUserId = lastCleanedAuthUserIdRef.current;
+    lastCleanedAuthUserIdRef.current = authUserId;
     clearStoredUserProfilesExcept(authUserId);
     if (!authUserId || (previousAuthUserId && previousAuthUserId !== authUserId)) {
       setPracticeListSession(null);
