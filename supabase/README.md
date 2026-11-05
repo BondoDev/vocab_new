@@ -2455,6 +2455,82 @@ return shapes, `SECURITY DEFINER`, `search_path`, and grants are unchanged.
   frontend build that enforces 16+. The old frontend remains compatible with
   it: its 10-15 submissions are simply rejected server-side.
 
+## Automatic age — inferred birth year + current_age (2026-11-05)
+
+`migrations/20261105160000_add_inferred_birth_year_and_current_age.sql`
+keeps every account's age current without any periodic write.
+
+- **Columns.** Adds nullable `birth_year` and `age_confirmed_at` to
+  `user_profiles`. Existing rows are **not backfilled**: their age has no
+  trustworthy declaration date (`updated_at` moves on every edit), so their
+  birth year cannot be inferred. The app asks those users once to confirm
+  their age (`useAgeConfirmation`), which fills both columns.
+- **Inference.** `complete_user_profile_onboarding` and
+  `update_user_profile_demographics` infer `birth_year` from the declared
+  age, birth month/day, and "today" from the **server clock** in the stored
+  time zone (UTC when none): `year(today) - age - (birthday not yet reached
+  this year ? 1 : 0)`. A new profile has no time zone during onboarding, so
+  `initialize_user_timezone` re-infers the birth year once, from the same
+  declaration instant (`age_confirmed_at`) in the user's real zone, when it
+  stores the first zone. Time-zone writes stay exclusive to the two
+  time-zone RPCs.
+- **Reading.** `current_age(user_profiles)` is a PostgREST computed field
+  (`select=...,current_age`), evaluated with the server clock on every read.
+  `user_age` keeps meaning "age as declared at `age_confirmed_at`".
+- **Calendar rules.** Real dates only (Feb 30, Apr 31, ... are rejected by
+  both RPCs; existing rows holding such a date are untouched until the user
+  confirms). Feb 29 birthdays age on March 1 in non-leap years, and a
+  declared age implying a non-leap birth year for Feb 29 is rejected. The
+  TypeScript mirror is `src/app/utils/accountAge.ts`.
+- **Minimum age.** Onboarding still requires 16-100. Settings/confirmation
+  still accepts 16-100, and below 16 only for an account that is itself
+  below 16 (registered under the earlier 10+ rule) and never below that
+  account's current age — such an account can confirm its true, higher age,
+  but no new under-16 value can be introduced.
+- **Deploy order.** Apply this migration before deploying the frontend that
+  selects `current_age`. Reversed order degrades safely: the profile read
+  retries with the legacy column list on `42703`, and no confirmation prompt
+  is shown. Signatures of all three recreated RPCs are unchanged.
+- **Tests.** `scripts/tests/account/test-account-age.mjs` (calendar rules,
+  time zones, leap years, minimum age, profile mapping, SQL contract) and
+  `scripts/tests/browser/age-confirmation.spec.ts` (dialog and Settings
+  against a mocked backend). The SQL itself was not executed locally (no
+  local Postgres); run the read-only pre-flight checks in the migration
+  header before applying it and the post-checks at its end afterwards.
+- **Atomic.** The file is wrapped in `begin; ... commit;`. A failure rolls
+  everything back, leaving the previous RPCs (and registration) intact.
+- **Rollback.** The app needs no rollback: its profile read falls back to the
+  legacy columns on `42703`. To revert the database, run in one transaction:
+
+  ```sql
+  begin;
+  alter table public.user_profiles
+    drop constraint if exists user_profiles_birth_year_date_check,
+    drop constraint if exists user_profiles_birth_year_confirmation_pair_check,
+    drop constraint if exists user_profiles_birth_year_range_check;
+  drop function if exists public.complete_user_profile_onboarding(text, text, text, text, integer, integer, integer);
+  drop function if exists public.update_user_profile_demographics(integer, integer, integer);
+  -- Paste here: both CREATE FUNCTION blocks and their GRANT/REVOKE lines
+  -- from 20261105120000_enforce_minimum_registration_age_16.sql, and the
+  -- initialize_user_timezone CREATE OR REPLACE block from
+  -- 20260806120000_add_user_timezone_foundation.sql.
+  drop function if exists public.current_age(public.user_profiles);
+  drop function if exists public.user_local_date(text);
+  drop function if exists public.infer_birth_year(integer, integer, integer, date);
+  drop function if exists public.age_on_date(integer, integer, integer, date);
+  drop function if exists public.birthday_in_year(integer, integer, integer);
+  drop function if exists public.birth_year_matches_birthday(integer, integer, integer);
+  drop function if exists public.birth_date_is_valid(integer, integer);
+  -- Drop (not keep) the columns: the restored RPCs would no longer update
+  -- birth_year, so a kept value could go stale and be trusted again if this
+  -- migration is re-applied later. Users are simply asked to confirm again.
+  alter table public.user_profiles
+    drop column if exists birth_year,
+    drop column if exists age_confirmed_at;
+  notify pgrst, 'reload schema';
+  commit;
+  ```
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a
