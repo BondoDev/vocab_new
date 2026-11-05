@@ -14,6 +14,12 @@
     "help": "Hilfe",
     "levelTest": "Niveautest"
   },
+  "legalPages": {
+    "tableOfContents": "Inhalt",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "effectiveDate": "Gültig ab",
+    "placeholderNotice": "Entwurf: Diese Seite zeigt derzeit Platzhaltertext. Die endgültige Fassung wird hier veröffentlicht."
+  },
   "home": {
     "personalizedLearning": {
       "title": "Personalisiertes Lernen",

@@ -1,0 +1,592 @@
+{
+  "schemaVersion": 1,
+  "status": "published",
+  "title": "Política de Privacidade",
+  "description": "Saiba quais informações a FluentStellar coleta, como as utilizamos para oferecer nossos serviços de aprendizagem de vocabulário, quais prestadores de serviços estão envolvidos e quais opções você tem em relação aos seus dados.",
+  "effectiveDate": "2026-11-05",
+  "lastUpdated": "2026-11-05",
+  "sections": [
+    {
+      "id": "introduction",
+      "heading": "1. Introdução",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "A FluentStellar (",
+            {
+              "type": "link",
+              "text": "www.fluentstellar.com",
+              "href": "https://www.fluentstellar.com"
+            },
+            ") é uma plataforma online de aprendizagem de idiomas dedicada ao desenvolvimento do vocabulário, à prática interativa e à aprendizagem personalizada. Nesta Política de Privacidade, os termos “FluentStellar”, “nós” e “nosso” referem-se ao serviço e ao seu responsável."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Esta política explica quais dados pessoais tratamos quando você visita nosso site, faz exercícios sem uma conta, cria e utiliza uma conta ou entra em contato conosco. Também descreve os prestadores de serviços envolvidos e as opções à sua disposição."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Se você tiver dúvidas sobre esta política ou sobre seus dados pessoais, entre em contato conosco pelo e-mail ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "information-we-collect",
+      "heading": "2. Informações que coletamos",
+      "blocks": [
+        {
+          "type": "subheading",
+          "id": "using-without-an-account",
+          "text": "Uso da FluentStellar sem uma conta"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Você pode consultar as páginas públicas de vocabulário e fazer exercícios sem criar uma conta. Nesse caso, não armazenamos seu progresso de aprendizagem em nossos servidores. Suas preferências de prática, como os idiomas, níveis, categorias de palavras e tipos de exercícios selecionados, são salvas apenas no seu navegador (consulte a seção 6)."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "account-information",
+          "text": "Informações da conta"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Você pode criar uma conta utilizando um endereço de e-mail e uma senha ou por meio do Google. Nas contas criadas com e-mail, tratamos seu endereço e as mensagens de confirmação, login e redefinição de senha necessárias para gerenciar a conta. As senhas são gerenciadas pelo nosso provedor de autenticação, o Supabase Auth; a FluentStellar não armazena sua senha no banco de dados do aplicativo."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Se você selecionar ",
+            {
+              "type": "bold",
+              "text": "Continuar com o Google"
+            },
+            ", o Google compartilha conosco, por meio do Supabase, as informações básicas do seu perfil do Google: seu endereço de e-mail, um identificador exclusivo da sua conta do Google e, quando fornecidos pelo Google, seu nome e sua foto de perfil. Utilizamos seu endereço de e-mail e seu identificador para criar sua conta e permitir que você faça login. Atualmente, a FluentStellar não exibe seu nome nem sua foto de perfil do Google, mas essas informações ficam armazenadas nos dados da sua conta. Não recebemos sua senha do Google nem temos acesso a outros dados da sua conta do Google."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "profile-information",
+          "text": "Informações do perfil"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Quando você completa seu perfil ou o altera posteriormente em Configurações, armazenamos:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["seu nome de usuário ou apelido;"],
+            ["sua idade;"],
+            ["o mês e o dia do seu nascimento (não solicitamos o ano de nascimento);"],
+            ["sua língua materna e o idioma que você está aprendendo;"],
+            ["seu nível de proficiência no idioma, de acordo com sua própria avaliação;"],
+            ["seu objetivo diário de aprendizagem;"],
+            ["seu fuso horário, detectado automaticamente pelo navegador e alterável em Configurações, que utilizamos para calcular seus dias de aprendizagem."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Também armazenamos informações técnicas da conta, como as datas de criação e da última atualização da conta e do perfil."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "learning-activity",
+          "text": "Atividade de aprendizagem e conteúdos salvos"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Quando você está conectado, registramos sua atividade de aprendizagem para salvar seu progresso e programar as revisões:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["as palavras que você estudou, o respectivo estado de aprendizagem, o cronograma de revisões, as sequências de respostas corretas e as datas em que você estudou e praticou essas palavras pela última vez;"],
+            ["as palavras que você marca como favoritas;"],
+            ["o histórico das suas revisões de palavras, incluindo o resultado de cada revisão (correto, incorreto ou ignorado), o estado de aprendizagem da palavra antes e depois da revisão e a data em que ela ocorreu;"],
+            ["as estatísticas diárias, como as novas palavras concluídas, as revisões realizadas e o tempo dedicado ao estudo de novas palavras, às revisões e à prática personalizada;"],
+            ["as listas de vocabulário que você cria, os respectivos nomes e as palavras que você adiciona a essas listas."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Não armazenamos o texto das respostas que você digita nos exercícios. No entanto, registramos os resultados de cada revisão e os dados relativos ao tempo de prática, conforme descrito acima. Suas seleções de exercícios e as informações das sessões em andamento também podem ser salvas no navegador."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "technical-information",
+          "text": "Informações técnicas"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Quando você visita nosso site, nossos provedores de hospedagem e distribuição de conteúdo, incluindo a Cloudflare, tratam informações técnicas como seu endereço IP, dados do navegador, páginas solicitadas e horários das solicitações. O Supabase trata informações técnicas quando você utiliza a autenticação ou outros recursos ligados aos seus serviços. Outros provedores podem receber informações técnicas quando seus recursos ou serviços são utilizados, conforme descrito na seção 7. Essas informações nos ajudam a disponibilizar, gerenciar, proteger e solucionar problemas do serviço."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "communications",
+          "text": "Mensagens que você nos envia"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Se você nos enviar um e-mail, tratamos seu endereço de e-mail e o conteúdo da mensagem para responder a você."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "how-we-use-information",
+      "heading": "3. Como utilizamos as informações",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Utilizamos os dados pessoais para:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["criar, proteger e gerenciar sua conta e permitir que você faça login;"],
+            ["salvar seu progresso de aprendizagem, programar revisões e exibir suas estatísticas, sequências de dias de estudo e objetivos;"],
+            ["aplicar as preferências que você seleciona, como idiomas, nível, objetivo diário e fuso horário;"],
+            ["aplicar o requisito de idade mínima para o cadastro;"],
+            ["medir o uso e o desempenho do site, conforme descrito na seção 5;"],
+            ["proteger o site e seus usuários contra abusos, fraudes e ameaças à segurança;"],
+            ["responder às suas mensagens e solicitações;"],
+            ["cumprir as obrigações legais."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Não vendemos seus dados pessoais nem os utilizamos para publicidade direcionada. A FluentStellar não exibe anúncios."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "age-requirement",
+      "heading": "4. Idade mínima e informações sobre a idade",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "É necessário ter pelo menos 16 anos para criar uma conta na FluentStellar. A idade é declarada pelo próprio usuário ao completar o perfil, e não solicitamos documentos de identificação para verificá-la. Não é possível informar uma idade inferior a 16 anos, e essa restrição é aplicada tanto no aplicativo quanto em nossos servidores."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "As páginas públicas de vocabulário e as atividades de prática sem conta continuam disponíveis para visitantes de qualquer idade, sem necessidade de informar a idade."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Utilizamos a idade que você informa para aplicar o requisito de idade mínima. No futuro, também poderemos utilizar informações sobre a idade de forma agregada para entender melhor as características demográficas dos nossos usuários e aprimorar a plataforma. Atualmente, não realizamos essas análises demográficas nem enviamos informações sobre a idade aos nossos provedores de serviços de análise."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Se tomarmos conhecimento de que uma conta pertence a uma pessoa com menos de 16 anos, poderemos restringir o acesso a ela ou excluí-la. Se você acredita que essa situação se aplica a alguma conta, entre em contato conosco pelo e-mail ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "analytics",
+      "heading": "5. Análise do site e consentimento",
+      "blocks": [
+        {
+          "type": "subheading",
+          "id": "cloudflare-web-analytics",
+          "text": "Cloudflare Web Analytics"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Utilizamos o Cloudflare Web Analytics para conhecer o número geral de visitantes e monitorar o desempenho do site. Esse serviço funciona para todos os visitantes. Segundo a Cloudflare, ele não utiliza cookies nem armazenamento local para identificar ou rastrear visitantes individualmente. Ele coleta informações como a página visitada, a página de origem, o tipo de navegador e dispositivo e o desempenho de carregamento das páginas."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "google-analytics",
+          "text": "Google Analytics 4 (opcional)"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Com o seu consentimento, também utilizamos o Google Analytics 4 para entender como os visitantes usam o site, por exemplo, quais páginas são consultadas e por quanto tempo eles interagem com elas. O Google Analytics está ",
+            {
+              "type": "bold",
+              "text": "desativado por padrão"
+            },
+            ". Ele só é ativado depois que você seleciona ",
+            {
+              "type": "bold",
+              "text": "Aceitar análises"
+            },
+            " no nosso aviso de consentimento."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "O Google Analytics é gerenciado por meio do Cloudflare Zaraz, que o executa a partir dos servidores da Cloudflare em vez de carregar o script de rastreamento do Google no seu navegador. Quando você ativa as análises, são enviadas ao Google informações sobre sua visita, como as páginas consultadas, a página de origem, os dados do navegador e do dispositivo, sua localização aproximada e os eventos de interação, junto com um identificador pseudônimo. Não enviamos ao Google Analytics os dados da sua conta, seu endereço de e-mail, sua idade ou seus registros de aprendizagem."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "managing-consent",
+          "text": "Gerenciar seu consentimento"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Sua escolha é salva em um cookie chamado zaraz-consent (consulte a seção 6). Você pode alterá-la a qualquer momento pelo link ",
+            {
+              "type": "bold",
+              "text": "Preferências de cookies"
+            },
+            " no rodapé de cada página. Se você retirar o consentimento, o Google Analytics deixa de coletar novos dados a partir do próximo carregamento da página. Os dados enviados anteriormente ao Google continuam sujeitos às configurações de retenção de dados da nossa propriedade do Google Analytics e às políticas do Google."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cookies-and-browser-storage",
+      "heading": "6. Cookies e armazenamento no navegador",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "A FluentStellar utiliza um número limitado de cookies, além do armazenamento local e do armazenamento de sessão do seu navegador. Nenhuma dessas tecnologias é utilizada para publicidade."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "cookies",
+          "text": "Cookies"
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            [
+              {
+                "type": "bold",
+                "text": "cf_clearance"
+              },
+              " — definido pela Cloudflare para proteger o site contra bots e atividades automatizadas abusivas."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "cf_zaraz_client"
+              },
+              " — definido pelo Cloudflare Zaraz, o serviço que gerencia nossas ferramentas de consentimento e análise."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "zaraz-consent"
+              },
+              " — salva sua escolha em relação às análises, para que não seja necessário perguntar novamente a cada visita. Ele permanece salvo até expirar ou até você excluí-lo; seu prazo de validade é configurado pelo Cloudflare Zaraz."
+            ]
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "browser-storage",
+          "text": "Armazenamento local e de sessão"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Salvamos as seguintes informações no seu dispositivo para garantir o funcionamento adequado do site:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["sua sessão de login, incluindo os tokens que mantêm você conectado, e um valor temporário de verificação usado durante o login com o Google;"],
+            ["uma cópia do seu perfil, para que as páginas carreguem mais rapidamente depois que você fizer login;"],
+            ["o idioma da interface e suas preferências de prática, como idiomas, níveis, categorias e tipos de exercícios;"],
+            ["informações usadas durante uma visita, como as necessárias para levar você de volta à página em que estava depois de fazer login e os tempos usados para determinar quando sugerir a criação de uma conta."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Ao sair da conta, sua sessão de autenticação é encerrada, mas uma cópia do seu perfil salva localmente pode permanecer no dispositivo. Se você excluir sua conta por meio de um navegador, a cópia local do perfil também é removida desse navegador. Outras preferências salvas podem permanecer até que você apague os dados do site nas configurações do navegador. Se você usar um dispositivo compartilhado, considere apagar os dados do site depois de sair da conta."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "service-providers",
+      "heading": "7. Prestadores de serviços",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Recorremos aos seguintes prestadores para o funcionamento da FluentStellar. Eles tratam informações em nosso nome ou no âmbito dos serviços que oferecem:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            [
+              {
+                "type": "bold",
+                "text": "Supabase"
+              },
+              " — fornece a autenticação dos usuários, incluindo o login por e-mail e pelo Google, o envio de e-mails de autenticação e o banco de dados onde são armazenadas as informações das contas, dos perfis e da aprendizagem."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "Cloudflare"
+              },
+              " — fornece a hospedagem e a distribuição do site, a segurança e a proteção contra bots, o Cloudflare Web Analytics e o gerenciamento de consentimento e tags por meio do Cloudflare Zaraz."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "Google"
+              },
+              " — fornece o login com o Google, caso você escolha utilizá-lo; o Google Analytics 4, caso você aceite as análises; e o Google Fonts, que disponibiliza as fontes usadas no site e recebe seu endereço IP e dados do navegador quando essas fontes são carregadas."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "jsDelivr"
+              },
+              " — disponibiliza algumas imagens de bandeiras de países usadas no site. As solicitações dessas imagens podem transmitir ao provedor de distribuição de conteúdo informações técnicas, incluindo seu endereço IP e dados do navegador."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Os recursos de pronúncia utilizam a síntese de voz integrada ao seu navegador ou dispositivo. Dependendo do navegador utilizado, o texto pronunciado pode ser tratado pelo fornecedor do navegador ou do sistema operacional."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Cada prestador trata as informações de acordo com seus próprios termos e políticas de privacidade. Também podemos divulgar informações quando exigido por lei ou quando necessário para proteger os direitos ou a segurança dos nossos usuários, do público ou da FluentStellar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "international-processing",
+      "heading": "8. Tratamento internacional de dados",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "A FluentStellar é gerenciada a partir da Geórgia e utilizada por pessoas de vários países. Por isso, suas informações podem ser tratadas fora do seu país de residência."
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["Nosso banco de dados Supabase e o serviço de autenticação estão hospedados na União Europeia, na região de Frankfurt (Alemanha) do Supabase."],
+            ["A Cloudflare opera uma rede global, por isso as solicitações normalmente são processadas em um data center próximo à sua localização, que pode estar situado em outro país."],
+            ["O Google pode tratar informações nos Estados Unidos e em outros países."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "O tratamento e as transferências internacionais de dados dependem do prestador e do serviço envolvido. Para obter mais informações sobre os locais de tratamento e as garantias aplicadas, consulte os avisos de privacidade dos respectivos prestadores. Forneceremos informações adicionais sobre os mecanismos de transferência quando exigido pela legislação aplicável."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data-retention",
+      "heading": "9. Conservação dos dados",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Conservamos os dados da sua conta, do seu perfil e das suas atividades de aprendizagem enquanto sua conta existir. Você pode excluir determinados dados de aprendizagem antes disso: ao redefinir o progresso de um idioma, são excluídos o progresso salvo, o histórico de revisões, os registros do tempo de prática e as estatísticas diárias desse idioma."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Quando você exclui sua conta, ela e os dados associados ao perfil, à aprendizagem e às listas de vocabulário são removidos imediatamente do nosso banco de dados ativo (consulte a seção 11)."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Algumas cópias podem permanecer por um período limitado nos backups dos nossos prestadores e nos registros de segurança ou autenticação, até expirarem de acordo com as respectivas práticas de retenção ou quando a lei exigir sua preservação. Os dados de análise são conservados de acordo com as configurações de retenção dos respectivos serviços de análise. Os e-mails que você nos envia são guardados pelo tempo necessário para atender à sua solicitação. As informações armazenadas no navegador permanecem até serem excluídas, conforme descrito na seção 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "heading": "10. Segurança",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Aplicamos medidas técnicas destinadas a proteger suas informações, incluindo conexões criptografadas (HTTPS), regras de acesso ao banco de dados que limitam cada conta aos seus próprios dados e funções restritas no servidor para alterar os dados da conta e da aprendizagem. Para excluir uma conta protegida por senha, é necessário digitar a senha novamente."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Nenhum site ou sistema pode garantir segurança absoluta. Recomendamos que você use uma senha forte, mantenha suas credenciais de acesso em sigilo e entre em contato conosco se suspeitar de acesso não autorizado à sua conta."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "account-deletion",
+      "heading": "11. Exclusão da conta",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Você pode excluir definitivamente sua conta a qualquer momento em ",
+            {
+              "type": "bold",
+              "text": "Configurações → Dados e conta → Excluir conta"
+            },
+            ". Para confirmar a operação, você deve digitar DELETE. Nas contas que usam senha, também é necessário digitá-la novamente; nas contas que usam login com o Google, a confirmação é feita por meio da sessão do Google atualmente ativa."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "A exclusão remove sua conta, incluindo o perfil, o progresso de aprendizagem, o histórico de revisões, as estatísticas e as listas de vocabulário. Essa ação é irreversível. Excluir a conta é diferente de redefinir o progresso de um idioma, pois esta última opção mantém a conta. Se você não conseguir acessar sua conta, entre em contato conosco pelo e-mail ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "your-rights",
+      "heading": "12. Suas opções e direitos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Você pode consultar e atualizar as informações do seu perfil e as preferências de aprendizagem em Configurações, redefinir o progresso de um idioma, alterar sua escolha sobre as análises em Preferências de cookies e excluir sua conta."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Dependendo da legislação aplicável, você também poderá ter o direito de solicitar acesso aos seus dados pessoais, sua correção ou exclusão, a limitação de determinados tratamentos ou a oposição a eles, uma cópia dos seus dados em formato portável e a revogação do consentimento dado anteriormente. A revogação do consentimento não afeta a legalidade dos tratamentos realizados antes dela."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Para fazer uma solicitação, entre em contato conosco pelo e-mail ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            ". Podemos solicitar informações para confirmar que a solicitação foi feita pelo titular da conta. Você também poderá ter o direito de apresentar uma reclamação a uma autoridade de proteção de dados do seu país."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "policy-changes",
+      "heading": "13. Alterações nesta política",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Podemos atualizar esta política quando nossos recursos, prestadores de serviços ou práticas mudarem. A versão em vigor estará sempre disponível nesta página, e a data de “Última atualização” indica quando ela foi modificada pela última vez. Quando exigido por lei, forneceremos um aviso adicional ou solicitaremos seu consentimento."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "heading": "14. Contato",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Para dúvidas sobre esta Política de Privacidade, seus dados pessoais ou seus direitos em matéria de proteção de dados, você pode entrar em contato com a FluentStellar pelos seguintes meios."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "E-mail: ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            ". Site: ",
+            {
+              "type": "link",
+              "text": "www.fluentstellar.com",
+              "href": "https://www.fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    }
+  ]
+}

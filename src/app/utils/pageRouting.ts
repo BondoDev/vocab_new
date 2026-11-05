@@ -26,6 +26,7 @@ import {
   resolveWordPageRoute,
 } from "../../data/seo/wordPages/wordSlugs";
 import { resolveSeoHubRoute } from "../../data/seo/shared/hub";
+import { resolvePrivacyPolicyRoute } from "../../data/seo/legalPages/privacyPolicy/privacyPolicyRoutes";
 import {
   resolveWordSeoHubRoute,
   type WordSeoHubRoute,
@@ -66,6 +67,7 @@ export type PageKey =
   | "fullVocabularyListSeo"
   | "nounListSeo"
   | "seoHub"
+  | "privacyPolicy"
   | "wordSeoHub"
   | "wordPage"
   | "devSeoCefrPlaceholder"
@@ -180,6 +182,10 @@ export function parseSeoHubRoute(path: string): UiLanguageCode | null {
   return resolveSeoHubRoute(path);
 }
 
+export function parsePrivacyPolicyRoute(path: string): UiLanguageCode | null {
+  return resolvePrivacyPolicyRoute(path);
+}
+
 export function parseWordSeoHubRoute(path: string): ParsedWordSeoHubRoute | null {
   return resolveWordSeoHubRoute(path);
 }
@@ -240,6 +246,7 @@ export function getRouteUILanguage(
     fullVocabularyListSeoRoute: ParsedFullVocabularyListSeoRoute | null;
     nounListSeoRoute: ParsedNounListSeoRoute | null;
     seoHubRoute: UiLanguageCode | null;
+    privacyPolicyRoute: UiLanguageCode | null;
     wordSeoHubRoute: ParsedWordSeoHubRoute | null;
     wordRoute: CanonicalWordPageRouteMatch | null;
   },
@@ -261,6 +268,8 @@ export function getRouteUILanguage(
       return routes.nounListSeoRoute?.uiLang ?? null;
     case "seoHub":
       return routes.seoHubRoute ?? null;
+    case "privacyPolicy":
+      return routes.privacyPolicyRoute ?? null;
     case "wordSeoHub":
       return routes.wordSeoHubRoute?.uiLang ?? null;
     case "wordPage":
@@ -330,6 +339,11 @@ export const pageFromPath = (
       }
       if (parseSeoHubRoute(path)) {
         return "seoHub";
+      }
+      // Exact /{ui}/privacy paths. Must precede the word-page and broad
+      // /:uiLang/:slug vocabulary parsers, which match the same shape.
+      if (parsePrivacyPolicyRoute(path)) {
+        return "privacyPolicy";
       }
       if (parseWordSeoHubRoute(path)) {
         return "wordSeoHub";

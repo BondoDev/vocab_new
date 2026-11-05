@@ -6,6 +6,10 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
+import {
+  getPrivacyPolicyPath,
+  resolvePrivacyPolicyRoute,
+} from "../../../data/seo/legalPages/privacyPolicy/privacyPolicyRoutes";
 import { isSupportedUiLanguage } from "../../../data/seo/shared/slugs";
 import { getFullVocabularyListPath, resolveFullVocabularyListRoute } from "../../../data/seo/listPages/fullVocabularyList";
 import { getNounListPath, resolveNounListRoute } from "../../../data/seo/listPages/nounLists";
@@ -100,6 +104,19 @@ export function UILanguageSwitcher({
       const seoHubRoute = resolveSeoHubRoute(location.pathname);
       if (seoHubRoute) {
         const nextPath = getSeoHubPath(code);
+        if (nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
+      // Same page in the newly chosen language, opened at the top. Any
+      // #section anchor is deliberately dropped: carrying it over made the
+      // new language jump straight to that section (often the page bottom).
+      if (resolvePrivacyPolicyRoute(location.pathname)) {
+        const nextPath = getPrivacyPolicyPath(code);
         if (nextPath !== location.pathname) {
           navigate(nextPath);
         }

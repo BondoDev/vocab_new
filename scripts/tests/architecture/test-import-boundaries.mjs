@@ -145,6 +145,7 @@ const EAGER_LAZY_CONTRACT = [
   ["src/data/seo/listPages/verbLists/common100Verbs/common100VerbList.ts", "../shared/common100VerbLookup/*.json", "eager: true"],
   ["src/app/pages/word-pages/detail/WordSeoPage.tsx", "../../../../data/vocabulary/*/vocabulary.json", null],
   ["src/data/seo/vocabularyLevels/levelExplorerData.ts", "./level-explorer/*.json", null],
+  ["src/data/seo/legalPages/privacyPolicy/privacyPolicyContent.ts", "./content/*.json", null],
 ];
 
 for (const [relFile, patternSubstring, requiredOption] of EAGER_LAZY_CONTRACT) {

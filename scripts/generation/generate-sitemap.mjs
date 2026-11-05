@@ -51,6 +51,24 @@ const CORE_ROUTES = [
   "/help",
 ];
 
+// Privacy Policy pages (/{ui}/privacy) are prerendered in every language but
+// join sitemap-core.xml only once that language's document is "published"
+// (src/data/seo/legalPages/privacyPolicy/content/{ui}.json `status`). A
+// "placeholder" document is served "noindex, follow" by
+// src/seo/legalPages/privacyPolicyMetadata.ts, which reads the same field.
+async function collectPublishedPrivacyPolicyRoutes() {
+  const contentDir = path.join(ROOT_DIR, "src", "data", "seo", "legalPages", "privacyPolicy", "content");
+  const files = (await fs.readdir(contentDir)).filter((name) => name.endsWith(".json")).sort();
+  const routes = [];
+  for (const fileName of files) {
+    const document = JSON.parse(await fs.readFile(path.join(contentDir, fileName), "utf8"));
+    if (document.status === "published") {
+      routes.push(`/${path.basename(fileName, ".json")}/privacy`);
+    }
+  }
+  return routes;
+}
+
 const UI_LANGUAGE_NAMES = {
   en: "english",
   es: "spanish",
@@ -382,7 +400,7 @@ async function main() {
 
     const sitemapFiles = [];
 
-    const coreRoutes = Array.from(new Set(CORE_ROUTES));
+    const coreRoutes = Array.from(new Set([...CORE_ROUTES, ...(await collectPublishedPrivacyPolicyRoutes())]));
     if (coreRoutes.length > 0) {
       const coreName = "sitemap-core.xml";
       const lastmod = resolveLastmod(`sitemaps/${coreName}`);

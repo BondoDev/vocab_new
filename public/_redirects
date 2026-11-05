@@ -32,3 +32,11 @@
 /pt/paginas-seo/    /pt/learning-resources  301
 /ru/seo-stranicy    /ru/learning-resources  301
 /ru/seo-stranicy/   /ru/learning-resources  301
+
+# Privacy Policy: the page lives at /{ui}/privacy
+# (src/data/seo/legalPages/privacyPolicy/privacyPolicyRoutes.ts). The bare
+# /privacy path was briefly linked (navbar, consent banner) before the
+# localized routes existed; a static rule cannot know the visitor's UI
+# language, so it sends them to the English page (x-default).
+/privacy            /en/privacy             301
+/privacy/           /en/privacy             301

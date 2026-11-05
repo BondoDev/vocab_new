@@ -76,7 +76,10 @@ the repository has adopted a dedicated folder for that owner.
 `shared/` currently owns `seoAlternates.ts`, the one file with no
 single page-family owner. `wordPages/` groups the individual word-page
 page family. `hubPages/` groups the SEO hub and word-SEO-hub page
-family. `levelTests/` groups the level-test SEO page family,
+family. `legalPages/` mirrors `src/data/seo/legalPages/`:
+`privacyPolicyMetadata.ts` builds the Privacy Policy's canonical,
+hreflang, JSON-LD, and placeholder-document `noindex, follow` directive.
+`levelTests/` groups the level-test SEO page family,
 `listPages/` groups the list-style page families, mirroring
 `src/data/seo/listPages/` (it owns no files itself):
 `listPages/fullVocabularyList/` holds the full A1–C2 vocabulary list

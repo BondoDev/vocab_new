@@ -25,6 +25,7 @@ src/app/pages/
   explore/              # page family: explore route + its exclusive hook
   help/                 # page family: Help Center + its section config and styles
   home/                 # page family: homepage + its exclusive components
+  legal/                # page family: legal documents (/{ui}/privacy) + shared renderer and styles
   level-test/           # page family: level-test SEO page + its modal
   list-pages/           # grouping of list-style SEO page families (not a family)
     full-vocabulary-list/ # page family: full A1–C2 vocabulary list SEO page

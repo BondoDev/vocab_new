@@ -64,6 +64,9 @@ src/data/seo/
     nounLists/          Noun-list page-family umbrella
       common100Nouns/   100-most-common-noun pages (one list per target language)
     fullVocabularyList/ Full A1–C2 vocabulary list pages (one per target language)
+  legalPages/         Legal documents (Privacy Policy; Terms planned)
+    legalDocument.ts    Shared JSON content model + validator (no HTML)
+    privacyPolicy/      /{ui}/privacy routes, lazy content loader, content/{ui}.json
   wordPages/          Word detail/hub pages
   shared/             Cross-family data contracts (not a page family)
 ```

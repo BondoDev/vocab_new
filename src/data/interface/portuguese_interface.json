@@ -14,6 +14,12 @@
     "help": "Ajuda",
     "levelTest": "Teste de nível"
   },
+  "legalPages": {
+    "tableOfContents": "Índice",
+    "lastUpdated": "Última atualização",
+    "effectiveDate": "Data de vigência",
+    "placeholderNotice": "Rascunho: esta página mostra por enquanto um texto provisório. A versão final será publicada aqui."
+  },
   "home": {
     "personalizedLearning": {
       "title": "Aprendizagem personalizada",

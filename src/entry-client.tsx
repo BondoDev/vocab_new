@@ -1,6 +1,8 @@
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./app/App";
+import { resolvePrivacyPolicyRoute } from "./data/seo/legalPages/privacyPolicy/privacyPolicyRoutes";
+import { loadPrivacyPolicyDocument } from "./data/seo/legalPages/privacyPolicy/privacyPolicyContent";
 import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
 
@@ -10,8 +12,14 @@ import "./styles/index.css";
 // throws #421. Starting the import here gives the module a head-start so
 // it is often already cached by the time hydrateRoot encounters the boundary.
 const { pathname } = window.location;
+const privacyPolicyLanguage = resolvePrivacyPolicyRoute(pathname);
 const _lazyChunkPreload: Promise<unknown> | null =
-  pathname === "/about" || pathname.startsWith("/about/")
+  // Privacy Policy: load the document itself (not just a chunk) so
+  // PrivacyPolicyPage renders it synchronously and never suspends during
+  // hydration; see the comment in src/app/pages/legal/PrivacyPolicyPage.tsx.
+  privacyPolicyLanguage
+    ? loadPrivacyPolicyDocument(privacyPolicyLanguage)
+    : pathname === "/about" || pathname.startsWith("/about/")
     ? import("./app/pages/about/About")
     : pathname === "/help" || pathname.startsWith("/help/")
     ? import("./app/pages/help/Help")

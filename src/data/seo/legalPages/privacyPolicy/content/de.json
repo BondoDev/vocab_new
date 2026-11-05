@@ -1,0 +1,592 @@
+{
+  "schemaVersion": 1,
+  "status": "published",
+  "title": "Datenschutzerklärung",
+  "description": "Erfahren Sie, welche personenbezogenen Daten FluentStellar erhebt, wie wir diese für unsere Vokabellernangebote verwenden, welche Dienstleister beteiligt sind und welche Wahlmöglichkeiten Sie haben.",
+  "effectiveDate": "2026-11-05",
+  "lastUpdated": "2026-11-05",
+  "sections": [
+    {
+      "id": "introduction",
+      "heading": "1. Einleitung",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "FluentStellar (",
+            {
+              "type": "link",
+              "text": "www.fluentstellar.com",
+              "href": "https://www.fluentstellar.com"
+            },
+            ") ist eine Online-Sprachlernplattform, die sich auf den Aufbau des Wortschatzes, interaktive Übungen und personalisiertes Lernen konzentriert. In dieser Datenschutzerklärung beziehen sich die Bezeichnungen „FluentStellar“, „wir“, „uns“ und „unser“ auf den Dienst und die für ihn verantwortliche Person."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Diese Datenschutzerklärung erläutert, welche personenbezogenen Daten wir verarbeiten, wenn Sie unsere Website besuchen, ohne Benutzerkonto üben, ein Benutzerkonto erstellen und nutzen oder mit uns Kontakt aufnehmen. Außerdem informieren wir Sie über die beteiligten Dienstleister und Ihre Wahlmöglichkeiten."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie Fragen zu dieser Datenschutzerklärung oder Ihren personenbezogenen Daten haben, kontaktieren Sie uns unter ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "information-we-collect",
+      "heading": "2. Welche Daten wir erheben",
+      "blocks": [
+        {
+          "type": "subheading",
+          "id": "using-without-an-account",
+          "text": "Nutzung von FluentStellar ohne Benutzerkonto"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Sie können öffentlich zugängliche Vokabelseiten aufrufen und Übungen durchführen, ohne ein Benutzerkonto zu erstellen. In diesem Fall speichern wir Ihren Lernfortschritt nicht auf unseren Servern. Ihre Übungseinstellungen, beispielsweise ausgewählte Sprachen, Niveaustufen, Wortkategorien und Übungstypen, werden ausschließlich in Ihrem Browser gespeichert (siehe Abschnitt 6)."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "account-information",
+          "text": "Kontodaten"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Sie können ein Benutzerkonto mit einer E-Mail-Adresse und einem Passwort oder über Google erstellen. Bei der Registrierung mit einer E-Mail-Adresse verarbeiten wir diese sowie die für die Kontoverwaltung erforderlichen Bestätigungs-, Anmelde- und Passwortzurücksetzungsnachrichten. Die Passwörter werden von unserem Authentifizierungsanbieter Supabase Auth verarbeitet. FluentStellar speichert Ihr Passwort nicht in der Anwendungsdatenbank."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie ",
+            {
+              "type": "bold",
+              "text": "Mit Google fortfahren"
+            },
+            " auswählen, übermittelt Google uns über Supabase grundlegende Profildaten Ihres Google-Kontos: Ihre E-Mail-Adresse, eine eindeutige Google-Konto-ID sowie, sofern von Google bereitgestellt, Ihren Namen und Ihr Profilbild. Wir verwenden Ihre E-Mail-Adresse und Ihre Konto-ID, um Ihr Benutzerkonto zu erstellen und Ihre Anmeldung zu ermöglichen. Derzeit zeigt FluentStellar Ihren Google-Namen und Ihr Profilbild nicht an. Diese Informationen werden jedoch in Ihren Kontodaten gespeichert. Wir erhalten weder Ihr Google-Passwort noch Zugriff auf andere Daten Ihres Google-Kontos."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "profile-information",
+          "text": "Profilinformationen"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie Ihr Profil vervollständigen oder später in den Einstellungen ändern, speichern wir folgende Angaben:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["Ihren Benutzernamen bzw. Spitznamen;"],
+            ["Ihr Alter;"],
+            ["Ihren Geburtsmonat und Geburtstag (Ihr Geburtsjahr fragen wir nicht ab);"],
+            ["Ihre Muttersprache und die Sprache, die Sie lernen;"],
+            ["Ihr selbst eingeschätztes Sprachniveau;"],
+            ["Ihr tägliches Lernziel;"],
+            ["Ihre Zeitzone, die automatisch über Ihren Browser erkannt wird und in den Einstellungen geändert werden kann. Wir verwenden sie zur Berechnung Ihrer Lerntage."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Darüber hinaus speichern wir technische Kontoinformationen, beispielsweise den Zeitpunkt der Erstellung und der letzten Aktualisierung Ihres Benutzerkontos und Profils."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "learning-activity",
+          "text": "Lernaktivitäten und gespeicherte Inhalte"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie angemeldet sind, erfassen wir Ihre Lernaktivitäten, um Ihren Fortschritt zu speichern und Wiederholungen zu planen:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["die von Ihnen gelernten Wörter, deren Lernstatus, geplante Wiederholungen, Serien richtiger Antworten sowie die Zeitpunkte, zu denen Sie die Wörter gelernt und zuletzt geübt haben;"],
+            ["Wörter, die Sie als Favoriten markieren;"],
+            ["den Verlauf Ihrer Wortwiederholungen einschließlich des jeweiligen Ergebnisses (richtig, falsch oder übersprungen), des Lernstatus vor und nach der Wiederholung sowie des Zeitpunkts der Wiederholung;"],
+            ["tägliche Statistiken, beispielsweise die Anzahl neu gelernter Wörter und abgeschlossener Wiederholungen sowie die Zeit, die Sie mit dem Lernen neuer Wörter, mit Wiederholungen und mit benutzerdefinierten Übungen verbracht haben;"],
+            ["die von Ihnen erstellten Vokabellisten, deren Namen und die darin gespeicherten Wörter."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir speichern nicht den Wortlaut der Antworten, die Sie bei Übungen eingeben. Die Ergebnisse einzelner Wiederholungen und Aufzeichnungen über Ihre Übungsdauer werden jedoch wie oben beschrieben gespeichert. Ihre Übungsauswahl und Informationen zu laufenden Übungseinheiten können außerdem in Ihrem Browser gespeichert werden."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "technical-information",
+          "text": "Technische Informationen"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie unsere Website besuchen, verarbeiten unsere Hosting- und Auslieferungsdienstleister, darunter Cloudflare, technische Informationen wie Ihre IP-Adresse, Browserdaten, angeforderte Seiten und Zeitpunkte der Anfragen. Supabase verarbeitet technische Informationen, wenn Sie die Authentifizierung oder andere mit Supabase verbundene Funktionen nutzen. Weitere Dienstleister können technische Informationen erhalten, wenn ihre Ressourcen oder Dienste verwendet werden, wie in Abschnitt 7 beschrieben. Diese Informationen helfen uns dabei, den Dienst bereitzustellen, zu betreiben, Fehler zu beheben und seine Sicherheit zu gewährleisten."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "communications",
+          "text": "Nachrichten, die Sie uns senden"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie uns eine E-Mail senden, verarbeiten wir Ihre E-Mail-Adresse und den Inhalt Ihrer Nachricht, um Ihre Anfrage zu beantworten."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "how-we-use-information",
+      "heading": "3. Wie wir Ihre Daten verwenden",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir verwenden personenbezogene Daten für folgende Zwecke:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["Erstellung, Absicherung und Verwaltung Ihres Benutzerkontos sowie Ermöglichung Ihrer Anmeldung;"],
+            ["Speicherung Ihres Lernfortschritts, Planung von Wiederholungen und Anzeige Ihrer Statistiken, Lernserien und Ziele;"],
+            ["Anwendung Ihrer gewählten Einstellungen wie Sprachen, Sprachniveau, Tagesziel und Zeitzone;"],
+            ["Durchsetzung des Mindestalters für die Registrierung;"],
+            ["Messung der Nutzung und Leistung der Website, wie in Abschnitt 5 beschrieben;"],
+            ["Schutz der Website und ihrer Nutzer vor Missbrauch, Betrug und Sicherheitsbedrohungen;"],
+            ["Beantwortung Ihrer Nachrichten und Anfragen;"],
+            ["Erfüllung gesetzlicher Verpflichtungen."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir verkaufen Ihre personenbezogenen Daten nicht und verwenden sie nicht für personalisierte Werbung. FluentStellar zeigt keine Werbung an."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "age-requirement",
+      "heading": "4. Mindestalter und Altersangaben",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Sie müssen mindestens 16 Jahre alt sein, um ein FluentStellar-Benutzerkonto zu erstellen. Ihr Alter geben Sie beim Vervollständigen Ihres Profils selbst an. Wir verlangen keine Ausweisdokumente, um diese Angabe zu überprüfen. Ein Alter unter 16 Jahren kann nicht übermittelt werden. Diese Beschränkung wird sowohl in der Anwendung als auch auf unseren Servern durchgesetzt."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Öffentlich zugängliche Vokabelseiten und Übungen ohne Benutzerkonto stehen Besuchern jeden Alters zur Verfügung. Dafür müssen Sie uns Ihr Alter nicht mitteilen."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir verwenden Ihr angegebenes Alter, um die Einhaltung des Mindestalters zu gewährleisten. In Zukunft könnten wir Altersangaben außerdem in zusammengefasster Form auswerten, um die Altersstruktur unserer Nutzer besser zu verstehen und die Plattform zu verbessern. Derzeit führen wir solche demografischen Auswertungen nicht durch und übermitteln keine Altersangaben an unsere Analysedienstleister."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn wir erfahren, dass ein Benutzerkonto einer Person unter 16 Jahren gehört, können wir den Zugang einschränken oder das Konto löschen. Wenn Sie vermuten, dass dies auf ein Konto zutrifft, kontaktieren Sie uns unter ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "analytics",
+      "heading": "5. Website-Analyse und Einwilligung",
+      "blocks": [
+        {
+          "type": "subheading",
+          "id": "cloudflare-web-analytics",
+          "text": "Cloudflare Web Analytics"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir verwenden Cloudflare Web Analytics, um die allgemeine Besucherzahl und die Leistung unserer Website zu erfassen. Dieser Dienst wird bei allen Besuchern eingesetzt. Laut Cloudflare verwendet er weder Cookies noch lokalen Browserspeicher, um einzelne Besucher zu identifizieren oder zu verfolgen. Er erfasst unter anderem die besuchten Seiten, die zuvor besuchte verweisende Seite, Browser- und Gerätetypen sowie Informationen zur Ladeleistung der Seiten."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "google-analytics",
+          "text": "Google Analytics 4 (optional)"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Mit Ihrer Einwilligung verwenden wir außerdem Google Analytics 4, um zu verstehen, wie Besucher unsere Website nutzen, beispielsweise welche Seiten aufgerufen werden und wie lange Besucher mit ihnen interagieren. Google Analytics ist ",
+            {
+              "type": "bold",
+              "text": "standardmäßig deaktiviert"
+            },
+            ". Der Dienst wird erst aktiviert, wenn Sie in unserem Einwilligungsbanner ",
+            {
+              "type": "bold",
+              "text": "Analysen akzeptieren"
+            },
+            " auswählen."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Google Analytics wird über Cloudflare Zaraz verwaltet. Dabei erfolgt die Ausführung über die Server von Cloudflare, anstatt das Tracking-Skript von Google in Ihrem Browser zu laden. Wenn Sie der Analyse zustimmen, werden Informationen über Ihren Besuch an Google übermittelt. Dazu können die aufgerufenen Seiten, die verweisende Seite, Browser- und Geräteinformationen, Ihr ungefährer Standort sowie Interaktionsereignisse gehören. Diese Informationen werden zusammen mit einer pseudonymen Kennung übermittelt. Wir senden keine Angaben zu Ihrem Benutzerkonto, Ihre E-Mail-Adresse, Ihr Alter oder Ihre Lernaufzeichnungen an Google Analytics."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "managing-consent",
+          "text": "Einwilligung verwalten"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Ihre Entscheidung wird in einem Cookie namens zaraz-consent gespeichert (siehe Abschnitt 6). Sie können Ihre Entscheidung jederzeit über den Link ",
+            {
+              "type": "bold",
+              "text": "Cookie-Einstellungen"
+            },
+            " am Ende jeder Seite ändern. Wenn Sie Ihre Einwilligung widerrufen, erfasst Google Analytics ab dem nächsten Laden der Seite keine weiteren Daten mehr. Bereits an Google übermittelte Daten unterliegen weiterhin den Aufbewahrungseinstellungen unserer Google-Analytics-Property und den Datenschutzbestimmungen von Google."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cookies-and-browser-storage",
+      "heading": "6. Cookies und Browserspeicher",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "FluentStellar verwendet eine begrenzte Anzahl von Cookies sowie den lokalen Speicher und Sitzungsspeicher Ihres Browsers. Diese Technologien werden nicht für Werbung eingesetzt."
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "cookies",
+          "text": "Cookies"
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            [
+              {
+                "type": "bold",
+                "text": "cf_clearance"
+              },
+              " — wird von Cloudflare gesetzt, um die Website vor Bots und automatisiertem Missbrauch zu schützen."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "cf_zaraz_client"
+              },
+              " — wird von Cloudflare Zaraz gesetzt, dem Dienst zur Verwaltung unserer Einwilligungs- und Analysewerkzeuge."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "zaraz-consent"
+              },
+              " — speichert Ihre Entscheidung zur Analyse, damit wir nicht bei jedem Besuch erneut danach fragen müssen. Das Cookie bleibt bis zu seinem Ablauf oder bis zu seiner Löschung durch Sie gespeichert. Seine Gültigkeitsdauer wird über Cloudflare Zaraz konfiguriert."
+            ]
+          ]
+        },
+        {
+          "type": "subheading",
+          "id": "browser-storage",
+          "text": "Lokaler Speicher und Sitzungsspeicher"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir speichern folgende Informationen auf Ihrem Gerät, damit die Website wie vorgesehen funktioniert:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["Ihre Anmeldesitzung einschließlich der Tokens, mit denen Sie angemeldet bleiben, sowie einen temporären Prüfwert, der während der Google-Anmeldung verwendet wird;"],
+            ["eine Kopie Ihrer Profildaten, damit Seiten nach der Anmeldung schneller geladen werden;"],
+            ["Ihre Oberflächensprache und Ihre Übungseinstellungen, darunter Sprachen, Niveaustufen, Kategorien und Übungstypen;"],
+            ["Informationen, die während Ihres Besuchs verwendet werden, beispielsweise um Sie nach der Anmeldung zur zuvor besuchten Seite zurückzuführen und um zu bestimmen, wann Ihnen die Erstellung eines Benutzerkontos vorgeschlagen wird."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie sich abmelden, wird Ihre Authentifizierungssitzung beendet. Eine lokal gespeicherte Kopie Ihrer Profildaten kann jedoch auch nach der Abmeldung auf dem Gerät verbleiben. Wenn Sie Ihr Konto über einen Browser löschen, wird die lokal gespeicherte Profilkopie auch aus diesem Browser entfernt. Andere gespeicherte Einstellungen können bestehen bleiben, bis Sie die Website-Daten in den Einstellungen Ihres Browsers löschen. Auf gemeinsam genutzten Geräten empfehlen wir, nach der Abmeldung die Website-Daten zu löschen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "service-providers",
+      "heading": "7. Dienstleister",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Für den Betrieb von FluentStellar nutzen wir die folgenden Dienstleister. Diese verarbeiten Informationen in unserem Auftrag oder im Rahmen der von ihnen erbrachten Dienstleistungen:"
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            [
+              {
+                "type": "bold",
+                "text": "Supabase"
+              },
+              " — stellt die Benutzerauthentifizierung einschließlich E-Mail- und Google-Anmeldung, Authentifizierungs-E-Mails und die Datenbank zur Speicherung von Konto-, Profil- und Lerndaten bereit."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "Cloudflare"
+              },
+              " — stellt Website-Hosting und Inhaltsauslieferung, Sicherheits- und Bot-Schutzfunktionen, Cloudflare Web Analytics sowie die Einwilligungs- und Tag-Verwaltung über Cloudflare Zaraz bereit."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "Google"
+              },
+              " — stellt die Google-Anmeldung bereit, sofern Sie diese auswählen, Google Analytics 4, sofern Sie der Analyse zustimmen, sowie Google Fonts. Google Fonts liefert die auf der Website verwendeten Schriftarten aus. Beim Laden der Schriftarten erhält Google Ihre IP-Adresse und Browserinformationen."
+            ],
+            [
+              {
+                "type": "bold",
+                "text": "jsDelivr"
+              },
+              " — liefert einige auf unserer Website verwendete Länderflaggenbilder aus. Beim Abruf dieser Bilder können technische Informationen, einschließlich Ihrer IP-Adresse und Browserdaten, an den Inhaltsauslieferungsdienst übermittelt werden."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Die Aussprachefunktionen nutzen die in Ihrem Browser oder Gerät integrierte Sprachausgabe. Je nach verwendetem Browser kann der auszusprechende Text durch den Anbieter des Browsers oder Betriebssystems verarbeitet werden."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Jeder Dienstleister verarbeitet Informationen gemäß seinen eigenen Nutzungsbedingungen und Datenschutzbestimmungen. Wir können Informationen außerdem offenlegen, wenn wir gesetzlich dazu verpflichtet sind oder wenn dies zum Schutz der Rechte oder der Sicherheit unserer Nutzer, der Öffentlichkeit oder von FluentStellar erforderlich ist."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "international-processing",
+      "heading": "8. Internationale Datenverarbeitung",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "FluentStellar wird von Georgien aus betrieben und von Menschen in zahlreichen Ländern genutzt. Daher können Ihre Daten auch außerhalb Ihres Wohnsitzlandes verarbeitet werden."
+          ]
+        },
+        {
+          "type": "list",
+          "style": "bullet",
+          "items": [
+            ["Unsere Supabase-Datenbank und unser Authentifizierungsdienst werden innerhalb der Europäischen Union in der Supabase-Region Frankfurt am Main (Deutschland) gehostet."],
+            ["Cloudflare betreibt ein weltweites Netzwerk. Anfragen werden daher in der Regel in einem Rechenzentrum in Ihrer Nähe verarbeitet, das sich auch in einem anderen Land befinden kann."],
+            ["Google kann Informationen in den Vereinigten Staaten und anderen Ländern verarbeiten."]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Die internationale Verarbeitung und Übermittlung von Daten hängt vom jeweiligen Dienstleister und Dienst ab. Weitere Informationen zu den Verarbeitungsorten und Schutzmaßnahmen finden Sie in den Datenschutzhinweisen der entsprechenden Anbieter. Soweit gesetzlich vorgeschrieben, stellen wir zusätzliche Informationen über die jeweiligen Übermittlungsregelungen zur Verfügung."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data-retention",
+      "heading": "9. Speicherdauer",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir speichern Ihre Konto-, Profil- und Lerndaten, solange Ihr Benutzerkonto besteht. Sie können bestimmte Lerndaten bereits vorher löschen: Wenn Sie den Lernfortschritt für eine Sprache zurücksetzen, werden der gespeicherte Fortschritt, der Wiederholungsverlauf, Aufzeichnungen über die Übungsdauer und die täglichen Statistiken für diese Sprache gelöscht."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie Ihr Benutzerkonto löschen, werden das Konto und die zugehörigen Profil-, Lern- und Vokabellistendaten unmittelbar aus unserer aktiven Datenbank entfernt (siehe Abschnitt 11)."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Kopien können für begrenzte Zeit in den Sicherungskopien unserer Dienstleister sowie in Sicherheits- oder Authentifizierungsprotokollen verbleiben, bis sie gemäß den Aufbewahrungsfristen der jeweiligen Dienstleister ablaufen oder eine gesetzliche Aufbewahrungspflicht besteht. Analysedaten werden entsprechend den Aufbewahrungseinstellungen des jeweiligen Analysedienstes gespeichert. E-Mails, die Sie uns senden, bewahren wir so lange auf, wie es zur Bearbeitung Ihrer Anfrage erforderlich ist. In Ihrem Browser gespeicherte Informationen verbleiben dort, bis sie wie in Abschnitt 6 beschrieben entfernt werden."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "heading": "10. Sicherheit",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir setzen technische Maßnahmen zum Schutz Ihrer Informationen ein. Dazu gehören verschlüsselte Verbindungen (HTTPS), Datenbank-Zugriffsregeln, die den Zugriff jedes Benutzerkontos auf seine eigenen Daten beschränken, sowie zugriffsbeschränkte serverseitige Funktionen für Änderungen an Konto- und Lerndaten. Für die Löschung eines passwortgeschützten Kontos muss das Passwort erneut eingegeben werden."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Keine Website und kein System kann vollständige Sicherheit garantieren. Bitte verwenden Sie ein sicheres Passwort, behandeln Sie Ihre Zugangsdaten vertraulich und kontaktieren Sie uns, wenn Sie einen unbefugten Zugriff auf Ihr Benutzerkonto vermuten."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "account-deletion",
+      "heading": "11. Löschung des Benutzerkontos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Sie können Ihr Benutzerkonto jederzeit dauerhaft unter ",
+            {
+              "type": "bold",
+              "text": "Einstellungen → Daten & Konto → Konto löschen"
+            },
+            " löschen. Zur Bestätigung müssen Sie DELETE eingeben. Bei passwortgeschützten Konten muss zusätzlich das Passwort erneut eingegeben werden. Bei Konten mit Google-Anmeldung erfolgt die Bestätigung über die bestehende Google-Anmeldesitzung."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Durch die Löschung werden Ihr Benutzerkonto sowie Ihr Profil, Ihr Lernfortschritt, Ihr Wiederholungsverlauf, Ihre Statistiken und Ihre Vokabellisten entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden. Die Kontolöschung unterscheidet sich vom Zurücksetzen des Lernfortschritts für eine einzelne Sprache, bei dem Ihr Benutzerkonto bestehen bleibt. Wenn Sie keinen Zugriff auf Ihr Benutzerkonto haben, kontaktieren Sie uns unter ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "your-rights",
+      "heading": "12. Ihre Wahlmöglichkeiten und Rechte",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Sie können Ihre Profilinformationen und Lerneinstellungen in den Einstellungen einsehen und aktualisieren, Ihren Lernfortschritt für eine Sprache zurücksetzen, Ihre Entscheidung zur Analyse über die Cookie-Einstellungen ändern und Ihr Benutzerkonto löschen."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Je nach anwendbarem Recht haben Sie möglicherweise außerdem das Recht, Auskunft über Ihre personenbezogenen Daten, deren Berichtigung oder Löschung, die Einschränkung bestimmter Verarbeitungsvorgänge oder einen Widerspruch dagegen sowie eine Kopie Ihrer Daten in einem übertragbaren Format zu verlangen und eine erteilte Einwilligung zu widerrufen. Der Widerruf einer Einwilligung berührt nicht die Rechtmäßigkeit der Verarbeitung, die vor dem Widerruf erfolgt ist."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "Um eine entsprechende Anfrage zu stellen, schreiben Sie uns an ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            ". Wir können Informationen anfordern, um zu überprüfen, ob die Anfrage vom Inhaber des betreffenden Benutzerkontos stammt. Sie haben möglicherweise auch das Recht, Beschwerde bei einer zuständigen Datenschutzaufsichtsbehörde einzulegen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "policy-changes",
+      "heading": "13. Änderungen dieser Datenschutzerklärung",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Wir können diese Datenschutzerklärung aktualisieren, wenn sich unsere Funktionen, Dienstleister oder Datenschutzpraktiken ändern. Die jeweils aktuelle Version ist auf dieser Seite verfügbar. Das Datum unter „Zuletzt aktualisiert“ gibt an, wann die Erklärung zuletzt geändert wurde. Soweit gesetzlich erforderlich, informieren wir Sie zusätzlich oder holen Ihre Einwilligung ein."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "heading": "14. Kontakt",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": [
+            "Wenn Sie Fragen zu dieser Datenschutzerklärung, Ihren personenbezogenen Daten oder Ihren Datenschutzrechten haben, können Sie FluentStellar unter den folgenden Kontaktdaten erreichen."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            "E-Mail: ",
+            {
+              "type": "link",
+              "text": "contact@fluentstellar.com",
+              "href": "mailto:contact@fluentstellar.com"
+            },
+            ". Website: ",
+            {
+              "type": "link",
+              "text": "www.fluentstellar.com",
+              "href": "https://www.fluentstellar.com"
+            },
+            "."
+          ]
+        }
+      ]
+    }
+  ]
+}

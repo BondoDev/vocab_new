@@ -15,6 +15,10 @@ import {
 } from "./data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { getUiVocabularyLanguage, type UiLanguageCode } from "./data/seo/shared/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/shared/hub";
+import {
+  getAllPrivacyPolicyPaths,
+  resolvePrivacyPolicyRoute,
+} from "./data/seo/legalPages/privacyPolicy/privacyPolicyRoutes";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/seo/levelTests";
 import {
   getAllConjugatedVerbFormsPaths,
@@ -251,6 +255,9 @@ export function getPrerenderRoutes(): string[] {
     ...practiceRoutes,
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
     ...getAllSeoHubPaths(),
+    // /{ui}/privacy: prerendered (200) in every language; indexability is
+    // decided per document (placeholder => noindex, see privacyPolicyMetadata.ts).
+    ...getAllPrivacyPolicyPaths(),
     ...getAllWordSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
     ...getAllVerbListPaths(),
@@ -406,6 +413,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const seoHubRoute = resolveSeoHubRoute(url);
   if (seoHubRoute) {
     return seoHubRoute;
+  }
+
+  const privacyPolicyRoute = resolvePrivacyPolicyRoute(url.split(/[?#]/, 1)[0] || "/");
+  if (privacyPolicyRoute) {
+    return privacyPolicyRoute;
   }
 
   const wordSeoHubRoute = resolveWordSeoHubRoute(url);

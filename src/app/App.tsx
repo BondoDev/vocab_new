@@ -26,6 +26,7 @@ import { exitSessionFullscreen, requestSessionFullscreen } from "./utils/immersi
 import { UserProfileDashboardPage } from "../features/user-profile";
 import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
+import { PrivacyPolicyPage } from "./pages/legal/PrivacyPolicyPage";
 import { VerbListSeoPage } from "./pages/list-pages/verb-lists/common100Verbs/VerbListSeoPage";
 import { PastVerbFormsSeoPage } from "./pages/list-pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
 import { ConjugatedVerbFormsSeoPage } from "./pages/list-pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage";
@@ -71,6 +72,7 @@ import {
   parsePastVerbFormsSeoRoute,
   parsePracticeRoute,
   parseSeoHubRoute,
+  parsePrivacyPolicyRoute,
   parseVerbListSeoRoute,
   parseVocabularyRoute,
   parseWordRoute,
@@ -326,6 +328,10 @@ function AppContent({
     () => parseSeoHubRoute(location.pathname),
     [location.pathname],
   );
+  const privacyPolicyRoute = useMemo(
+    () => parsePrivacyPolicyRoute(location.pathname),
+    [location.pathname],
+  );
   const wordSeoHubRoute = useMemo(
     () => parseWordSeoHubRoute(location.pathname),
     [location.pathname],
@@ -468,6 +474,7 @@ function AppContent({
       case "fullVocabularyListSeo":
       case "nounListSeo":
       case "seoHub":
+      case "privacyPolicy":
       case "wordSeoHub":
       case "devSeoCefrPlaceholder":
         return null;
@@ -558,6 +565,7 @@ function AppContent({
         fullVocabularyListSeoRoute,
         nounListSeoRoute,
         seoHubRoute,
+        privacyPolicyRoute,
         wordSeoHubRoute,
         wordRoute,
       }),
@@ -571,6 +579,7 @@ function AppContent({
       fullVocabularyListSeoRoute,
       nounListSeoRoute,
       seoHubRoute,
+      privacyPolicyRoute,
       wordSeoHubRoute,
       wordRoute,
     ],
@@ -1697,6 +1706,20 @@ function AppContent({
         <Suspense fallback={<RouteLoadingFallback />}>
           <SeoHubPage uiLang={seoHubRoute} />
         </Suspense>
+        {accountOnboardingDialog}
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </div>
+    );
+  }
+
+  // /{ui}/privacy. The page sets its own metadata (from the document), so
+  // routeMetadata above is null for it, like the other localized SEO pages.
+  if (resolvedPage === "privacyPolicy" && privacyPolicyRoute) {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} />
+        <PrivacyPolicyPage uiLang={privacyPolicyRoute} />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
         {accountIntroDialog}
