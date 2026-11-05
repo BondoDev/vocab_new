@@ -6,16 +6,9 @@ export interface MockApi {
   handle?: (route: Route, path: string) => Promise<boolean>;
 }
 
+// Fonts and country flags are self-hosted, so the preview origin is the only
+// origin a page may contact; there are no external asset mocks.
 const localOrigin = 'http://127.0.0.1:4173';
-const fontStylesheet = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap';
-// Closed asset fixtures, never a CDN allowlist: every response is fulfilled locally.
-const assetMocks = new Map([
-  [fontStylesheet, { contentType: 'text/css', body: '' }],
-  ...['gb', 'es', 'fr', 'de', 'it', 'pt', 'ru'].map((code) => [
-    `https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/${code}.svg`,
-    { contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="16"><path fill="#777" d="M0 0h22v16H0z"/></svg>' },
-  ] as const),
-]);
 
 export const test = base.extend<{ mockApi: MockApi }>({
   mockApi: async ({ baseURL }, use) => {
@@ -29,7 +22,7 @@ export const test = base.extend<{ mockApi: MockApi }>({
     // Redirect requests may bypass route handlers; still record them as failures.
     // The dead external proxy prevents any such redirect from reaching a service.
     context.on('request', (request) => {
-      if (new URL(request.url()).origin !== localOrigin && !assetMocks.has(request.url())) {
+      if (new URL(request.url()).origin !== localOrigin) {
         unexpectedRequests.push(`${request.method()} ${request.url()}`);
       }
     });
@@ -49,8 +42,6 @@ export const test = base.extend<{ mockApi: MockApi }>({
         }
       } else if (url.origin === localOrigin && ['GET', 'HEAD'].includes(request.method())) {
         await route.continue();
-      } else if (assetMocks.has(request.url()) && request.method() === 'GET') {
-        await route.fulfill({ status: 200, ...assetMocks.get(request.url())! });
       } else {
         unexpectedRequests.push(`${request.method()} ${request.url()}`);
         await route.abort('blockedbyclient');

@@ -302,15 +302,14 @@ async function main() {
       assert.ok(auditCanonicalMap.get("script-src").has(csp.CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN));
       assert.equal(csp.CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN, "https://static.cloudflareinsights.com");
     });
-    test("img-src (both policies) allows exactly the jsDelivr country-flags path prefix used by LanguageSelector.tsx, nothing broader", () => {
+    test("img-src (both policies) is exactly 'self' + 'data:' — country flags are self-hosted, no jsDelivr allowance", () => {
       const languageSelectorSource = readFile("src/app/components/LanguageSelector.tsx");
       assert.ok(
-        languageSelectorSource.includes(csp.COUNTRY_FLAGS_IMG_SRC_PREFIX),
-        "csp.ts's COUNTRY_FLAGS_IMG_SRC_PREFIX no longer matches the literal URL prefix LanguageSelector.tsx " +
-          "actually uses — recheck the source and update the constant (and the pinned @main tag/path together).",
+        !languageSelectorSource.includes("cdn.jsdelivr.net"),
+        "LanguageSelector.tsx references jsDelivr again — flags must come from src/assets/flags/.",
       );
       for (const map of [auditCanonicalMap, enforcingCanonicalMap]) {
-        assert.ok(map.get("img-src").has(csp.COUNTRY_FLAGS_IMG_SRC_PREFIX));
+        assert.deepEqual([...map.get("img-src")].sort(), ["'self'", "data:"].sort());
       }
     });
     test("img-src (both policies) allows 'data:', for the flag-icons package's build-inlined SVG data URIs (Phase 2C.1)", () => {
@@ -323,19 +322,22 @@ async function main() {
       assert.ok(!auditCanonicalMap.get("default-src").has("data:"));
       assert.equal(enforcingCanonicalMap.has("default-src"), false);
     });
-    test("style-src (both policies) allows the Google Fonts stylesheet origin", () => {
+    test("style-src (both policies) is exactly 'self' + 'unsafe-inline' — fonts are self-hosted, no Google Fonts stylesheet origin", () => {
       for (const map of [auditCanonicalMap, enforcingCanonicalMap]) {
-        assert.ok(map.get("style-src").has("https://fonts.googleapis.com"));
+        assert.deepEqual([...map.get("style-src")].sort(), ["'self'", "'unsafe-inline'"].sort());
       }
     });
-    test("font-src (both policies) allows the Google Fonts file origin, not the stylesheet origin", () => {
+    test("font-src (both policies) is exactly 'self' — fonts are self-hosted from src/assets/fonts/", () => {
       for (const map of [auditCanonicalMap, enforcingCanonicalMap]) {
-        assert.ok(map.get("font-src").has("https://fonts.gstatic.com"));
-        assert.ok(!map.get("font-src").has("https://fonts.googleapis.com"));
+        assert.deepEqual([...map.get("font-src")], ["'self'"]);
       }
     });
-    test("script-src does NOT allow the Google Fonts origin (fonts are style/font-src concerns only)", () => {
-      assert.ok(![...auditCanonicalMap.get("script-src")].some((s) => s.includes("fonts.g")));
+    test("no directive in either policy allows a Google Fonts or jsDelivr origin", () => {
+      for (const map of [auditCanonicalMap, enforcingCanonicalMap]) {
+        for (const sources of map.values()) {
+          assert.ok(![...sources].some((s) => /fonts\.(googleapis|gstatic)\.com|jsdelivr/.test(s)));
+        }
+      }
     });
     test("frame-src and frame-ancestors are both 'none' in both policies", () => {
       for (const map of [auditCanonicalMap, enforcingCanonicalMap]) {

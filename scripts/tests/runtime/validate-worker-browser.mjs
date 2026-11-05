@@ -15,7 +15,8 @@ const CHROME_CANDIDATES = [
   "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
   "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
 ];
-const ALLOWED_EXTERNAL_HOSTS = new Set(["fonts.googleapis.com", "fonts.gstatic.com"]);
+// Fonts and flags are self-hosted, so no third-party host is expected.
+const ALLOWED_EXTERNAL_HOSTS = new Set();
 const INITIAL_HYDRATION_FORBIDDEN = [/\/assets\/vocabulary-[^/]+\.js/i];
 
 function mustEnv(name) {

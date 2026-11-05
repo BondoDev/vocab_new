@@ -28,4 +28,4 @@
 # noise. Re-enable it for a future audit by adding a second header line
 # here the same way the enforcing one is added below.
 /*
-  Content-Security-Policy: style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data: https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'

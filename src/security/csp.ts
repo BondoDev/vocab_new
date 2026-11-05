@@ -137,18 +137,13 @@ export const LANG_DETECT_SCRIPT_HASH = "sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/
 // production-live behavior, not just audit-policy visibility.
 export const CSP_ALLOWS_UNSAFE_INLINE_STYLES = true;
 
-// jsDelivr path prefix used for the two remote country-flag <img> sources
-// in src/app/components/LanguageSelector.tsx (confirmed the only
-// jsdelivr/remote-image usage in the codebase). Path-scoped (CSP source
-// lists support a path prefix when it ends in "/") to the exact
-// org/repo/tag/dir LanguageSelector.tsx hardcodes, rather than a bare
-// https://cdn.jsdelivr.net allowance that would permit any content jsDelivr
-// serves. Kept as one exported constant, matched byte-for-byte against
-// LanguageSelector.tsx's own URL template by
-// scripts/tests/security/test-csp-policy-parity.mjs, so a future change to
-// the pinned tag/path there can't silently drift from this allowance.
-export const COUNTRY_FLAGS_IMG_SRC_PREFIX =
-  "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/";
+// Fonts (src/styles/fonts.css → src/assets/fonts/) and LanguageSelector's
+// country flags (src/assets/flags/) are self-hosted, so style-src, font-src
+// and img-src deliberately carry no third-party origin: the former Google
+// Fonts (fonts.googleapis.com / fonts.gstatic.com) and jsDelivr
+// country-flags allowances were removed with those CDN dependencies.
+// scripts/tests/security/test-csp-policy-parity.mjs guards against their
+// return.
 
 // CSP Phase 2C.1 (partial-enforcement production validation) found a real
 // enforcing img-src violation on /explore: `data:image/svg+xml,...` flag
@@ -169,7 +164,10 @@ export const COUNTRY_FLAGS_IMG_SRC_PREFIX =
 // Cloudflare Zaraz frame sometimes appears in the browser's captured call
 // stack for this violation, but Zaraz does not create or own this asset —
 // it's an unrelated async task the browser happened to attribute the
-// image-load evaluation near, not the actual source.
+// image-load evaluation near, not the actual source. Since flag
+// self-hosting, LanguageSelector.tsx's smallest imported flag SVGs can also
+// be inlined by Vite as data: URIs (under its asset-inline size limit) —
+// equally static and build-time-fixed.
 export const IMG_SRC_ALLOWS_DATA_URIS = true;
 
 // Cloudflare Web Analytics' externally-hosted beacon script — confirmed
@@ -210,9 +208,9 @@ type DirectiveEntry = readonly [string, readonly string[]];
 // drift apart on the directives they're supposed to share; the enforcing
 // policy is this list and NOTHING else (see CSP_ENFORCING_DIRECTIVES).
 const SAFE_NON_SCRIPT_DIRECTIVES: readonly DirectiveEntry[] = [
-  ["style-src", ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"]],
-  ["img-src", ["'self'", "data:", COUNTRY_FLAGS_IMG_SRC_PREFIX]],
-  ["font-src", ["'self'", "https://fonts.gstatic.com"]],
+  ["style-src", ["'self'", "'unsafe-inline'"]],
+  ["img-src", ["'self'", "data:"]],
+  ["font-src", ["'self'"]],
   ["connect-src", ["'self'", SUPABASE_ORIGIN]],
   ["frame-src", ["'none'"]],
   ["frame-ancestors", ["'none'"]],

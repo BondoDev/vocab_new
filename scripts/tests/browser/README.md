@@ -38,11 +38,11 @@ Every test gets a fresh context; anonymous tests start without a session, while
 My Lists seeds a synthetic browser-only session. Before any page is created, the
 fixture installs context-wide HTTP and WebSocket interception and uncaught
 browser-error collection. Service workers are blocked. Only GET/HEAD requests
-to the exact preview origin pass through. The exact Google Fonts stylesheet
-in `index.html` receives a local empty CSS response; no font service is contacted.
-The seven exact country-flag SVG URLs used by the language picker receive a
-local placeholder SVG. These are closed response fixtures, not permission to
-contact a CDN. The loopback mock namespace is intercepted before ordinary local
+to the exact preview origin pass through. Fonts and the language picker's
+country flags are self-hosted (`src/assets/fonts/`, `src/assets/flags/`), so
+they load from the preview origin like any other bundled asset; there are no
+external asset fixtures, and no font service or CDN is contacted. The loopback
+mock namespace is intercepted before ordinary local
 assets: only a test's explicit method/path handlers may fulfill requests, and
 unknown mock requests abort and fail, including GETs. `mock-backend.ts` implements
 per-test in-memory auth/profile/list/membership responses; it never forwards a
