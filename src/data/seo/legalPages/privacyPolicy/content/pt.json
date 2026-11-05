@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Utilizamos a idade que você informa para aplicar o requisito de idade mínima. Também utilizamos sua idade, o mês e o dia do seu nascimento e a data em que você os informa ou confirma para calcular seu ano de nascimento, de modo que sua idade continue correta e aumente automaticamente no dia do seu aniversário. Se sua conta foi criada antes da introdução desse recurso, poderemos pedir que você confirme sua idade uma única vez. No futuro, também poderemos utilizar informações sobre a idade de forma agregada para entender melhor as características demográficas dos nossos usuários e aprimorar a plataforma. Atualmente, não realizamos essas análises demográficas nem enviamos informações sobre a idade aos nossos provedores de serviços de análise."
+            "Utilizamos a idade que você informa para aplicar o requisito de idade mínima. Também utilizamos sua idade, o mês e o dia do seu nascimento e a data em que você os informa ou confirma para calcular seu ano de nascimento, de modo que sua idade continue correta e aumente automaticamente no dia do seu aniversário. Se sua conta foi criada antes da introdução desse recurso, continuamos a usar a idade que você informou até que você atualize sua idade ou seu aniversário em Configurações. No futuro, também poderemos utilizar informações sobre a idade de forma agregada para entender melhor as características demográficas dos nossos usuários e aprimorar a plataforma. Atualmente, não realizamos essas análises demográficas nem enviamos informações sobre a idade aos nossos provedores de serviços de análise."
           ]
         },
         {

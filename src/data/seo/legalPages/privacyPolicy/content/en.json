@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "We use the age you provide to apply the minimum age requirement. We also use your age, your birth month and day, and the date on which you provide or confirm them to calculate your birth year, so that your age stays accurate and increases automatically on your birthday. If your account was created before we introduced this, we may ask you once to confirm your age. We may also use age information in the future, in aggregated form, to understand the demographics of our users and improve the platform. We do not currently produce such demographic analyses, and age information is not sent to our analytics providers."
+            "We use the age you provide to apply the minimum age requirement. We also use your age, your birth month and day, and the date on which you provide or confirm them to calculate your birth year, so that your age stays accurate and increases automatically on your birthday. If your account was created before we introduced this, we continue to use the age you entered until you update your age or birthday in Settings. We may also use age information in the future, in aggregated form, to understand the demographics of our users and improve the platform. We do not currently produce such demographic analyses, and age information is not sent to our analytics providers."
           ]
         },
         {

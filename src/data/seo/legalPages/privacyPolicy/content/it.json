@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Utilizziamo l'età che fornisci per applicare il requisito dell'età minima. Utilizziamo inoltre la tua età, il mese e il giorno di nascita e la data in cui li fornisci o li confermi per calcolare il tuo anno di nascita, in modo che la tua età resti corretta e aumenti automaticamente nel giorno del tuo compleanno. Se il tuo account è stato creato prima dell'introduzione di questa funzione, potremmo chiederti una sola volta di confermare la tua età. In futuro potremmo anche utilizzare le informazioni sull'età in forma aggregata per comprendere meglio le caratteristiche demografiche dei nostri utenti e migliorare la piattaforma. Attualmente non effettuiamo tali analisi demografiche e non trasmettiamo informazioni sull'età ai nostri fornitori di servizi di analisi."
+            "Utilizziamo l'età che fornisci per applicare il requisito dell'età minima. Utilizziamo inoltre la tua età, il mese e il giorno di nascita e la data in cui li fornisci o li confermi per calcolare il tuo anno di nascita, in modo che la tua età resti corretta e aumenti automaticamente nel giorno del tuo compleanno. Se il tuo account è stato creato prima dell'introduzione di questa funzione, continuiamo a utilizzare l'età che hai indicato finché non aggiorni la tua età o il tuo compleanno nelle Impostazioni. In futuro potremmo anche utilizzare le informazioni sull'età in forma aggregata per comprendere meglio le caratteristiche demografiche dei nostri utenti e migliorare la piattaforma. Attualmente non effettuiamo tali analisi demografiche e non trasmettiamo informazioni sull'età ai nostri fornitori di servizi di analisi."
           ]
         },
         {
