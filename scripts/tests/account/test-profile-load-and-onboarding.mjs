@@ -165,8 +165,10 @@ async function main() {
     assert.equal(shouldOpenAccountOnboarding(true, withField({ age: 9 })), true);
   });
 
-  test("age above the valid range (101): opens", () => {
-    assert.equal(shouldOpenAccountOnboarding(true, withField({ age: 101 })), true);
+  // The stored range is 10-130: the server-computed current age keeps
+  // growing past the 100 input maximum (automatic age, accountAge.ts).
+  test("age above the valid range (131): opens", () => {
+    assert.equal(shouldOpenAccountOnboarding(true, withField({ age: 131 })), true);
   });
 
   test("age given as a non-numeric value: opens", () => {

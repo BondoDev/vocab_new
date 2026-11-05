@@ -59,11 +59,13 @@ export function normalizeAge(value: unknown): number | null {
   }
 
   const rounded = Math.round(value);
-  // Deliberately the legacy 10-100 storage range, not the 16+ registration
+  // Deliberately the legacy 10+ storage minimum, not the 16+ registration
   // minimum (ONBOARDING_MIN_AGE): profiles created before the 16+ rule must
   // still read as complete, or those users would be pushed back into
-  // onboarding on sign-in.
-  if (rounded < 10 || rounded > 100) {
+  // onboarding on sign-in. The upper bound is above the 100 input maximum
+  // because the server-computed current_age keeps growing after a user
+  // declared 100 (automatic age, accountAge.ts).
+  if (rounded < 10 || rounded > 130) {
     return null;
   }
 
@@ -132,6 +134,12 @@ export function normalizeLanguageLevel(value: unknown): LanguageLevelCode | "" {
   return "";
 }
 
+// Inferred by the server (automatic age); null until the account declared or
+// confirmed its age after that feature shipped.
+export function normalizeBirthYear(value: unknown): number | null {
+  return typeof value === "number" && Number.isInteger(value) && value >= 1900 && value <= 2200 ? value : null;
+}
+
 export function normalizeTimezone(value: unknown): string | null {
   return typeof value === "string" && value.trim() ? value.trim() : null;
 }
@@ -177,6 +185,11 @@ export function normalizeUserProfile(value: Partial<UserProfile> | null | undefi
         : null,
     timezone: normalizeTimezone(value?.timezone),
     timezoneUpdatedAt: normalizeTimestamp(value?.timezoneUpdatedAt),
+    birthYear: normalizeBirthYear(value?.birthYear),
+    ageConfirmedAt: normalizeTimestamp(value?.ageConfirmedAt),
+    // Only meaningful while no birth year is known; a confirmed age clears it.
+    ageConfirmationRequired:
+      Boolean(value?.ageConfirmationRequired) && normalizeBirthYear(value?.birthYear) === null,
   };
 }
 

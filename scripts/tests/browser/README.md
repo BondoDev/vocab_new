@@ -135,6 +135,15 @@ synthetic accounts. Google's authorize redirect is answered by a page-level
 route, because the app resolves `/auth/v1/authorize` as an absolute path
 that drops the mock-backend prefix.
 
+`age-confirmation.spec.ts` covers automatic age against a mocked backend
+that mirrors the migration's rules through `src/app/utils/accountAge.ts`
+(fixed browser date 2026-10-15): the one-time confirmation for accounts
+without a birth year (prefilled values, Confirm, Later for the session, the
+prompt returning after a new sign-in), Settings showing the server-computed
+`current_age` and re-inferring the birth year on edits, impossible dates and
+February 29 checks, the legacy under-16 rule, and the fallback when the
+database lacks the migration (`42703`).
+
 Remaining limitations: live Supabase/database permissions, actual speech and
 OS keyboards, natural exhaustion of the entire corpus, visual parity,
 fonts/flags, browser SSR hydration, other browser engines, and deployment.

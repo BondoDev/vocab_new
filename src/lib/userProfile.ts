@@ -5,6 +5,7 @@ import {
   getStoredSupabaseSession,
   refreshSupabaseSession,
   supabaseRequest,
+  SupabaseRequestError,
   type StoredSupabaseSession,
 } from "./supabaseAuth";
 import { ClassifiedSupabaseError } from "./supabaseError";
@@ -54,6 +55,7 @@ import {
   normalizeLanguage,
   normalizeLanguageLevel,
   normalizeAge,
+  normalizeBirthYear,
   normalizeDailyGoal,
   normalizeTimezone,
   normalizeTimestamp,
@@ -62,6 +64,7 @@ import {
   isUserProfileComplete,
   startsWithLetter,
 } from "../app/utils/accountProfileCompleteness";
+import { ageOn, calendarDateInTimeZone } from "../app/utils/accountAge";
 
 export {
   DEFAULT_DAILY_GOAL,
@@ -88,6 +91,15 @@ export interface UserProfile {
   updatedAt: string | null;
   timezone: string | null;
   timezoneUpdatedAt: string | null;
+  // Automatic age (supabase/migrations/20261105160000_add_inferred_birth_year_and_current_age.sql,
+  // src/app/utils/accountAge.ts). `age` is the CURRENT age: the server's
+  // current_age when a birth year is known, otherwise the stored declared
+  // age. birthYear/ageConfirmedAt are null until the age was declared or
+  // confirmed after that migration; ageConfirmationRequired then asks an
+  // existing user once to confirm their age.
+  birthYear: number | null;
+  ageConfirmedAt: string | null;
+  ageConfirmationRequired: boolean;
 }
 
 export const EMPTY_USER_PROFILE: UserProfile = {
@@ -103,6 +115,9 @@ export const EMPTY_USER_PROFILE: UserProfile = {
   updatedAt: null,
   timezone: null,
   timezoneUpdatedAt: null,
+  birthYear: null,
+  ageConfirmedAt: null,
+  ageConfirmationRequired: false,
 };
 
 function canUseLocalStorage(): boolean {
@@ -127,6 +142,11 @@ interface UserProfilesRow {
   updated_at: string | null;
   timezone: string | null;
   timezone_updated_at: string | null;
+  // Absent when read with the legacy column list (database without the
+  // automatic-age migration).
+  birth_year?: number | null;
+  age_confirmed_at?: string | null;
+  current_age?: number | null;
 }
 
 function getAuthorizedHeaders(session: StoredSupabaseSession) {
@@ -179,7 +199,15 @@ function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partia
     nativeLanguage: normalizeLanguage(row.native_language),
     practiceLanguage: normalizeLanguage(row.learning_language),
     languageLevel: normalizeLanguageLevel(row.current_level),
-    age: normalizeAge(row.user_age),
+    // Server-computed current age when available; the declared age
+    // otherwise (existing users before confirmation, or a legacy read).
+    age: normalizeAge(typeof row.current_age === "number" ? row.current_age : row.user_age),
+    birthYear: normalizeBirthYear(row.birth_year),
+    ageConfirmedAt: normalizeTimestamp(row.age_confirmed_at),
+    // Only when the server supports automatic age (the column was returned)
+    // and this completed account has never confirmed its age.
+    ageConfirmationRequired:
+      "birth_year" in row && row.birth_year === null && Boolean(row.onboarding_completed),
     birthMonth:
       typeof row.birth_month === "number"
         ? String(row.birth_month).padStart(2, "0")
@@ -207,7 +235,18 @@ export function readStoredUserProfile(userId: string): UserProfile | null {
   }
 
   try {
-    return normalizeUserProfile(JSON.parse(rawValue) as Partial<UserProfile>);
+    const profile = normalizeUserProfile(JSON.parse(rawValue) as Partial<UserProfile>);
+    // A cache can outlive a birthday; recompute the displayed age from the
+    // stored birth year (device clock, display only - the next server read
+    // replaces it with the server's current_age).
+    if (profile.birthYear !== null && profile.birthMonth && profile.birthDay) {
+      const today = calendarDateInTimeZone(new Date(), profile.timezone);
+      return {
+        ...profile,
+        age: normalizeAge(ageOn(profile.birthYear, Number(profile.birthMonth), Number(profile.birthDay), today)),
+      };
+    }
+    return profile;
   } catch {
     window.localStorage.removeItem(buildStorageKey(userId));
     return null;
@@ -275,13 +314,29 @@ export async function readSupabaseUserProfile(
     return null;
   }
 
-  const rows = await supabaseProfileRequest<UserProfilesRow[]>(
-    session,
-    `/rest/v1/user_profiles?id=eq.${encodeURIComponent(userId)}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at,timezone,timezone_updated_at`,
-    {
-      method: "GET",
-    },
-  );
+  const id = encodeURIComponent(userId);
+  let rows: UserProfilesRow[];
+  try {
+    // current_age is a PostgREST computed field (server clock + profile
+    // time zone), so the age is correct on every read without any write.
+    rows = await supabaseProfileRequest<UserProfilesRow[]>(
+      session,
+      `/rest/v1/user_profiles?id=eq.${id}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at,timezone,timezone_updated_at,birth_year,age_confirmed_at,current_age`,
+      { method: "GET" },
+    );
+  } catch (error) {
+    // Undefined column (42703): the automatic-age migration is not applied
+    // yet. Fall back to the previous column list instead of failing the
+    // whole profile load (which would force users back into onboarding).
+    if (!(error instanceof SupabaseRequestError) || error.code !== "42703") {
+      throw error;
+    }
+    rows = await supabaseProfileRequest<UserProfilesRow[]>(
+      session,
+      `/rest/v1/user_profiles?id=eq.${id}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at,timezone,timezone_updated_at`,
+      { method: "GET" },
+    );
+  }
 
   if (!rows.length) {
     return null;
@@ -423,9 +478,12 @@ function fromCompleteUserProfileOnboardingResult(
     nativeLanguage: result.nativeLanguage,
     practiceLanguage: result.learningLanguage,
     languageLevel: result.currentLevel,
-    age: result.userAge,
+    age: result.currentAge ?? result.userAge,
     birthMonth: String(result.birthMonth).padStart(2, "0"),
     birthDay: String(result.birthDay).padStart(2, "0"),
+    birthYear: result.birthYear,
+    ageConfirmedAt: result.ageConfirmedAt,
+    ageConfirmationRequired: false,
     onboardingCompleted: result.onboardingCompleted,
     dailyGoal: result.dailyGoal,
     timezone: result.timezone,
@@ -456,6 +514,10 @@ export async function completeUserProfileOnboarding(
     throw new Error("Missing authenticated user.");
   }
 
+  // No time zone here on purpose: time-zone writes belong to
+  // initialize_user_timezone/update_user_timezone only. The server infers
+  // the birth year in the stored zone (UTC for a new profile), and
+  // initialize_user_timezone re-infers it once the first zone is stored.
   const rows = await supabaseProfileRequest<unknown[] | unknown>(
     session,
     "/rest/v1/rpc/complete_user_profile_onboarding",
@@ -610,10 +672,16 @@ function fromUpdateUserProfileDemographicsResult(
   result: UpdateUserProfileDemographicsResult,
 ): Partial<UserProfile> {
   return {
-    age: result.userAge,
+    age: result.currentAge ?? result.userAge,
     birthMonth: String(result.birthMonth).padStart(2, "0"),
     birthDay: String(result.birthDay).padStart(2, "0"),
     updatedAt: result.updatedAt,
+    // Every successful save re-infers the birth year server-side. A null
+    // birthYear here means the database predates automatic age; keep the
+    // confirmation prompt off in that case so it cannot loop.
+    ...(result.birthYear !== null
+      ? { birthYear: result.birthYear, ageConfirmedAt: result.ageConfirmedAt, ageConfirmationRequired: false }
+      : {}),
   };
 }
 

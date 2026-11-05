@@ -53,6 +53,7 @@
     "test:account-language-sync": "node --experimental-strip-types scripts/tests/account/test-account-language-sync.mjs",
     "test:account-intro-popup": "node --experimental-strip-types scripts/tests/account/test-account-intro-popup.mjs",
     "test:profile-load-and-onboarding": "node --experimental-strip-types scripts/tests/account/test-profile-load-and-onboarding.mjs",
+    "test:account-age": "node --experimental-strip-types scripts/tests/account/test-account-age.mjs",
     "test:exercise-id-contract": "node --experimental-strip-types scripts/tests/practice/test-exercise-id-contract.mjs",
     "test:practiced-word-counter": "node --experimental-strip-types scripts/tests/practice/test-practiced-word-counter.mjs",
     "test:filter-selection-summary": "node --experimental-strip-types scripts/tests/practice/test-filter-selection-summary.mjs",

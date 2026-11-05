@@ -11,6 +11,9 @@ interface UpdateUserProfileDemographicsRpcRow {
   birth_month?: unknown;
   birth_day?: unknown;
   updated_at?: unknown;
+  birth_year?: unknown;
+  age_confirmed_at?: unknown;
+  current_age?: unknown;
 }
 
 export interface UpdateUserProfileDemographicsResult {
@@ -18,6 +21,11 @@ export interface UpdateUserProfileDemographicsResult {
   birthMonth: number;
   birthDay: number;
   updatedAt: string;
+  // Automatic age (20261105160000 migration). Optional so a response from a
+  // database without that migration still parses.
+  birthYear: number | null;
+  ageConfirmedAt: string | null;
+  currentAge: number | null;
 }
 
 const RPC_NAME = "update_user_profile_demographics";
@@ -36,6 +44,10 @@ function requireIntegerInRange(value: unknown, fieldName: string, min: number, m
     );
   }
   return value;
+}
+
+function optionalIntegerInRange(value: unknown, fieldName: string, min: number, max: number): number | null {
+  return value === null || value === undefined ? null : requireIntegerInRange(value, fieldName, min, max);
 }
 
 function requireNonEmptyString(value: unknown, fieldName: string): string {
@@ -59,5 +71,11 @@ export function parseUpdateUserProfileDemographicsRow(row: unknown): UpdateUserP
     birthMonth: requireIntegerInRange(rpcRow.birth_month, "birth_month", 1, 12),
     birthDay: requireIntegerInRange(rpcRow.birth_day, "birth_day", 1, 31),
     updatedAt: requireNonEmptyString(rpcRow.updated_at, "updated_at"),
+    birthYear: optionalIntegerInRange(rpcRow.birth_year, "birth_year", 1900, 2200),
+    ageConfirmedAt:
+      rpcRow.age_confirmed_at === null || rpcRow.age_confirmed_at === undefined
+        ? null
+        : requireNonEmptyString(rpcRow.age_confirmed_at, "age_confirmed_at"),
+    currentAge: optionalIntegerInRange(rpcRow.current_age, "current_age", 10, 130),
   };
 }

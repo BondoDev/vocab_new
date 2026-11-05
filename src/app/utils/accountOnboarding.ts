@@ -3,12 +3,16 @@ import {
   type UserProfile,
 } from "../../lib/userProfile";
 import { getOnboardingAgeIssue } from "./accountOnboardingAge";
+import { calendarDateInTimeZone, getDeclaredAgeIssue, type CalendarDate } from "./accountAge";
+import { detectBrowserTimezone } from "./browserTimezone";
 
 interface PrepareAccountOnboardingSubmitParams {
   authUserId: string | null;
   userProfile: UserProfile;
   yourLanguage: string;
   practiceLanguage: string;
+  // Injectable for tests; defaults to today in the browser's time zone.
+  today?: CalendarDate;
 }
 
 type AccountOnboardingSubmitPreparation =
@@ -31,6 +35,7 @@ export function prepareAccountOnboardingSubmit({
   userProfile,
   yourLanguage,
   practiceLanguage,
+  today,
 }: PrepareAccountOnboardingSubmitParams): AccountOnboardingSubmitPreparation {
   const nickname = userProfile.nickname.trim();
   const age = userProfile.age;
@@ -74,6 +79,24 @@ export function prepareAccountOnboardingSubmit({
 
   if (!birthMonth || !birthDay) {
     return { ok: false, errorKey: "accountOnboarding.errors.birthDateRequired" };
+  }
+
+  // Early, specific feedback only; the server repeats both checks with its
+  // own clock (complete_user_profile_onboarding).
+  const birthDateIssue = getDeclaredAgeIssue(
+    age,
+    Number(birthMonth),
+    Number(birthDay),
+    today ?? calendarDateInTimeZone(new Date(), detectBrowserTimezone()),
+  );
+  if (birthDateIssue) {
+    return {
+      ok: false,
+      errorKey:
+        birthDateIssue === "invalidBirthDate"
+          ? "accountOnboarding.errors.birthDateInvalid"
+          : "accountOnboarding.errors.birthDateLeapDay",
+    };
   }
 
   if (!nativeLanguage || !nextPracticeLanguage) {

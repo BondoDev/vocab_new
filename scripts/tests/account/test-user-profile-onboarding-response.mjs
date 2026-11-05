@@ -74,6 +74,10 @@ test("3. A fully valid row parses to the expected typed result", () => {
     timezone: "Europe/Tbilisi",
     timezoneUpdatedAt: "2026-08-06T12:00:00.000Z",
     updatedAt: "2026-08-06T12:00:00.000Z",
+    // Automatic-age fields are optional (absent in this row).
+    birthYear: null,
+    ageConfirmedAt: null,
+    currentAge: null,
   });
 });
 

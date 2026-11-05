@@ -29,32 +29,12 @@ import {
   ONBOARDING_MIN_AGE,
   resolveOnboardingAgeDefault,
 } from "../../utils/accountOnboardingAge";
+import { birthDayForMonth, birthDayValuesForMonth, getBirthMonthOptions } from "../../utils/accountAge";
 
 // CEFR codes stay identical in every UI language; only the level names
 // (shared levels.<code>.name copy) are localized.
 const LANGUAGE_LEVEL_CODES = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
 
-const BIRTH_MONTH_VALUES = [
-  "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-] as const;
-
-// Month names come from Intl rather than locale JSON. A standalone
-// { month: "long" } format yields the nominative form (e.g. Russian
-// "январь", not the genitive "января"), which is what a dropdown needs.
-// Some locales lowercase month names, so the first letter is capitalized
-// for list display.
-function getBirthMonthOptions(uiLanguage: string) {
-  const formatter = new Intl.DateTimeFormat(uiLanguage, { month: "long", timeZone: "UTC" });
-  return BIRTH_MONTH_VALUES.map((value) => {
-    const name = formatter.format(new Date(Date.UTC(2000, Number(value) - 1, 1)));
-    return { value, label: name.charAt(0).toLocaleUpperCase(uiLanguage) + name.slice(1) };
-  });
-}
-
-const BIRTH_DAY_OPTIONS = Array.from({ length: 31 }, (_, index) => {
-  const value = String(index + 1).padStart(2, "0");
-  return { value, label: value };
-});
 
 type AccountOnboardingDialogProps = {
   open: boolean;
@@ -375,7 +355,9 @@ export function AccountOnboardingDialog({
                     <Select
                       value={profile.birthMonth}
                       onValueChange={(value) =>
-                        onProfileChange({ birthMonth: value })
+                        // A day the new month lacks (e.g. 31 -> April) is
+                        // cleared rather than silently kept invalid.
+                        onProfileChange({ birthMonth: value, birthDay: birthDayForMonth(value, profile.birthDay) })
                       }
                     >
                       <SelectTrigger className="h-11 min-w-0 gap-1 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-1.5 text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
@@ -413,13 +395,13 @@ export function AccountOnboardingDialog({
                         sideOffset={6}
                         className="w-[var(--radix-select-trigger-width)] rounded-2xl border-[#dcd1ff] bg-white p-1 shadow-[0_16px_36px_-24px_rgba(74,43,130,0.9)]"
                       >
-                        {BIRTH_DAY_OPTIONS.map((day) => (
+                        {birthDayValuesForMonth(profile.birthMonth).map((day) => (
                           <SelectItem
-                            key={day.value}
-                            value={day.value}
+                            key={day}
+                            value={day}
                             className="rounded-xl px-3 py-2.5 text-center text-sm text-[#261943]"
                           >
-                            {day.label}
+                            {day}
                           </SelectItem>
                         ))}
                       </SelectContent>

@@ -201,8 +201,18 @@
       "ageMinimum": "Devi avere almeno 16 anni per creare un account.",
       "ageOutOfRange": "Inserisci un'età compresa tra 16 e 100.",
       "birthDateRequired": "Scegli il mese e il giorno di nascita.",
+      "birthDateInvalid": "Scegli una data che esista nel calendario.",
+      "birthDateLeapDay": "Il 29 febbraio non corrisponde a questa età. Controlla la tua età e la data di nascita.",
       "languagesRequired": "Scegli entrambe le lingue."
     }
+  },
+  "ageConfirmation": {
+    "title": "Conferma la tua età",
+    "description": "Conferma la tua età attuale e il tuo compleanno. D'ora in poi la tua età verrà aggiornata automaticamente nel giorno del tuo compleanno.",
+    "confirm": "Conferma",
+    "later": "Più tardi",
+    "saving": "Salvataggio...",
+    "saveError": "Non siamo riusciti a salvare la tua età. Riprova."
   },
   "auth": {
     "loginError": "Email o password non corretti. Riprova.",

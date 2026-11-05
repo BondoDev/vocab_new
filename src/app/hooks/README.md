@@ -44,6 +44,9 @@ routes its effects touch), not where it happens to be called.
   route branch.
 - `useAccountLanguageConfirm` — drives a dialog gated on cross-cutting
   auth/profile/language state (see §9).
+- `useAgeConfirmation` — drives the one-time age confirmation for accounts
+  that predate automatic age; rendered from every route branch and kept
+  clear of the other account dialogs and learning sessions.
 
 **Cross-route language and routing coordination**
 - `useRouteLanguageSync` — syncs UI language from several unrelated route

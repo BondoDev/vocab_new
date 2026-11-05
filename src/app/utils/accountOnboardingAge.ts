@@ -49,11 +49,16 @@ export function getOnboardingAgeIssue(age: number): OnboardingAgeIssue | null {
   return null;
 }
 
-// Settings variant: an age within 16-100, or the caller's own unchanged
-// stored age (a pre-16-rule account editing only its birth date). Mirrors
-// update_user_profile_demographics' server-side rule exactly.
-export function isAllowedProfileAge(age: number, storedAge: number | null): boolean {
-  return getOnboardingAgeIssue(age) === null || (storedAge !== null && age === storedAge);
+// Settings / age-confirmation variant: an age within 16-100, or - only for
+// an account that is itself still below 16 (registered under the earlier 10+
+// rule) - a whole number not below that account's current age, so it can
+// confirm its true, higher age without any new under-16 value being
+// introduced. `currentAge` is the profile's current age (server current_age,
+// or the stored age before confirmation). Mirrors
+// update_user_profile_demographics (20261105160000 migration) exactly.
+export function isAllowedProfileAge(age: number, currentAge: number | null): boolean {
+  if (getOnboardingAgeIssue(age) === null) return true;
+  return currentAge !== null && Number.isInteger(age) && age >= currentAge && age < ONBOARDING_MIN_AGE;
 }
 
 export function resolveOnboardingAgeDefault(age: number | null): number {

@@ -87,6 +87,9 @@ interface CompleteUserProfileOnboardingRpcRow {
   timezone?: unknown;
   timezone_updated_at?: unknown;
   updated_at?: unknown;
+  birth_year?: unknown;
+  age_confirmed_at?: unknown;
+  current_age?: unknown;
 }
 
 export interface CompleteUserProfileOnboardingResult {
@@ -102,6 +105,11 @@ export interface CompleteUserProfileOnboardingResult {
   timezone: string | null;
   timezoneUpdatedAt: string | null;
   updatedAt: string;
+  // Automatic age (20261105160000 migration). Optional so a response from a
+  // database without that migration still parses.
+  birthYear: number | null;
+  ageConfirmedAt: string | null;
+  currentAge: number | null;
 }
 
 const RPC_NAME = "complete_user_profile_onboarding";
@@ -145,6 +153,10 @@ function requireIntegerInRange(value: unknown, fieldName: string, min: number, m
   return value;
 }
 
+function optionalIntegerInRange(value: unknown, fieldName: string, min: number, max: number): number | null {
+  return value === null || value === undefined ? null : requireIntegerInRange(value, fieldName, min, max);
+}
+
 function requireBoolean(value: unknown, fieldName: string): boolean {
   if (typeof value !== "boolean") {
     throw new ClassifiedSupabaseError(
@@ -184,5 +196,8 @@ export function parseCompleteUserProfileOnboardingRow(row: unknown): CompleteUse
     timezone: optionalNonEmptyString(rpcRow.timezone, "timezone"),
     timezoneUpdatedAt: optionalNonEmptyString(rpcRow.timezone_updated_at, "timezone_updated_at"),
     updatedAt: requireNonEmptyString(rpcRow.updated_at, "updated_at"),
+    birthYear: optionalIntegerInRange(rpcRow.birth_year, "birth_year", 1900, 2200),
+    ageConfirmedAt: optionalNonEmptyString(rpcRow.age_confirmed_at, "age_confirmed_at"),
+    currentAge: optionalIntegerInRange(rpcRow.current_age, "current_age", 10, 130),
   };
 }

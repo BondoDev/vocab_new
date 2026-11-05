@@ -17,6 +17,7 @@ itself, not one page, one feature, or one component.
 
 ```
 src/app/utils/
+  accountAge.ts
   accountLanguageSave.ts
   accountOnboarding.ts
   accountProfile.ts
@@ -59,7 +60,10 @@ why it is centralized rather than duplicated per consumer.
 merge, validation, and decision functions that sit above `lib/userProfile.ts`
 (the actual Supabase/localStorage data-access layer). They are shared
 across more than one account-related hook, which is what keeps them here
-instead of beside a single dialog.
+instead of beside a single dialog. `accountAge.ts` holds the calendar rules
+for automatic age (the TypeScript mirror of the SQL helpers that infer the
+birth year and compute `current_age`), shared by onboarding, Settings, the
+age-confirmation dialog, and `lib/userProfile.ts`'s profile cache.
 
 **Persisted-preference and redirect policy** —
 `practiceRouteCanonicalizationPolicy.ts`, `storedLanguageAutoRedirectPolicy.ts`,

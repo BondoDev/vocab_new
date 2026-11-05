@@ -12,6 +12,12 @@ import {
 } from "../../../../app/components/ui/select";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { detectBrowserTimezone } from "../../../../app/utils/browserTimezone";
+import {
+  birthDayForMonth,
+  birthDayValuesForMonth,
+  calendarDateInTimeZone,
+  getDeclaredAgeIssue,
+} from "../../../../app/utils/accountAge";
 import { getPendingEmailFromUser, isDuplicateEmailError, normalizeEmailInput } from "../../../../app/utils/settingsEmail";
 import { normalizeNicknameInput } from "../../../../app/utils/settingsNickname";
 import { normalizeNewPasswordInput } from "../../../../app/utils/settingsPassword";
@@ -83,6 +89,10 @@ export interface ProfileDemographicsChange {
   birthMonth: string;
   birthDay: string;
   updatedAt: string;
+  // Automatic age: present once the server inferred a birth year for this
+  // save (absent against a database without that migration).
+  birthYear?: number;
+  ageConfirmedAt?: string | null;
 }
 
 interface SettingsSectionProps {
@@ -159,7 +169,6 @@ const BIRTH_MONTH_OPTIONS = [
   { value: "12", labelKey: "userProfile.settingsSection.profileDetails.months.december" },
 ] as const;
 
-const BIRTH_DAY_OPTIONS = Array.from({ length: 31 }, (_, index) => String(index + 1).padStart(2, "0"));
 
 export function SettingsSection({
   userProfile,
@@ -526,6 +535,17 @@ export function SettingsSection({
   // update_user_profile_demographics on the server.
   const isAgeDraftValid =
     ageDraft.trim() !== "" && isAllowedProfileAge(parsedAgeDraft, userProfile.age);
+  // Impossible dates and a Feb 29 birthday that the entered age places in a
+  // non-leap year. Early feedback only; the server re-checks both.
+  const birthDateIssue =
+    isAgeDraftValid && birthMonthDraft && birthDayDraft
+      ? getDeclaredAgeIssue(
+          parsedAgeDraft,
+          Number(birthMonthDraft),
+          Number(birthDayDraft),
+          calendarDateInTimeZone(new Date(), userProfile.timezone),
+        )
+      : null;
   const confirmedAge = resolveOnboardingAgeDefault(userProfile.age);
   const isDemographicsUnchanged =
     isAgeDraftValid &&
@@ -538,6 +558,7 @@ export function SettingsSection({
     isAgeDraftValid &&
     Boolean(birthMonthDraft) &&
     Boolean(birthDayDraft) &&
+    birthDateIssue === null &&
     !isDemographicsUnchanged &&
     !isSavingDemographics;
 
@@ -567,6 +588,8 @@ export function SettingsSection({
       .then((result) => {
         const nextProfile = writeStoredUserProfile(authUserId, {
           ...userProfile,
+          // Includes birthYear/ageConfirmedAt when the server inferred them.
+          ...result,
           age: result.age ?? nextAge,
           birthMonth: result.birthMonth ?? birthMonthDraft,
           birthDay: result.birthDay ?? birthDayDraft,
@@ -577,6 +600,9 @@ export function SettingsSection({
           birthMonth: nextProfile.birthMonth || birthMonthDraft,
           birthDay: nextProfile.birthDay || birthDayDraft,
           updatedAt: nextProfile.updatedAt ?? result.updatedAt ?? "",
+          ...(nextProfile.birthYear !== null
+            ? { birthYear: nextProfile.birthYear, ageConfirmedAt: nextProfile.ageConfirmedAt }
+            : {}),
         });
         showDemographicsToast(t("userProfile.settingsSection.profileDetails.savedToast"));
       })
@@ -1295,7 +1321,11 @@ export function SettingsSection({
           <div className="settings-profile-details__birth-controls">
             <Select
               value={birthMonthDraft || undefined}
-              onValueChange={(value) => setBirthMonthDraft(value)}
+              onValueChange={(value) => {
+                setBirthMonthDraft(value);
+                // Clears a day the new month lacks (e.g. 31 -> April).
+                setBirthDayDraft((day) => birthDayForMonth(value, day));
+              }}
               disabled={isSavingDemographics || !authSession}
             >
               <SelectTrigger
@@ -1324,7 +1354,7 @@ export function SettingsSection({
                 <SelectValue placeholder={t("userProfile.settingsSection.profileDetails.day")} />
               </SelectTrigger>
               <SelectContent>
-                {BIRTH_DAY_OPTIONS.map((day) => (
+                {birthDayValuesForMonth(birthMonthDraft).map((day) => (
                   <SelectItem key={day} value={day}>
                     {day}
                   </SelectItem>
@@ -1354,9 +1384,16 @@ export function SettingsSection({
           </div>
         </div>
 
-        {!isAgeDraftValid || demographicsError ? (
+        {!isAgeDraftValid || birthDateIssue || demographicsError ? (
           <div role="alert" id="settings-profile-details-error" className="settings-inline-error">
-            {demographicsError ?? t("userProfile.settingsSection.profileDetails.ageInvalid")}
+            {demographicsError ??
+              (!isAgeDraftValid
+                ? t("userProfile.settingsSection.profileDetails.ageInvalid")
+                : t(
+                    birthDateIssue === "invalidBirthDate"
+                      ? "accountOnboarding.errors.birthDateInvalid"
+                      : "accountOnboarding.errors.birthDateLeapDay",
+                  ))}
           </div>
         ) : null}
 
