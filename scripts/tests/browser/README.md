@@ -124,6 +124,17 @@ Round 3 adds focused journeys:
   failed-load messaging with retry. The preview is client-only, so
   server-rendered markup is covered by `test:word-browse-pagination`.
 
+`logout-privacy.spec.ts` checks account-scoped browser data after sign-out:
+cached `app.userProfile.*` profiles and the `app.practiceListSession`
+snapshot are removed after header and profile-sidebar sign-out, cross-tab
+sign-out, a rejected refresh (expired session), onboarding cancel, a Google
+PKCE login/logout, and sequential or cross-tab account switches, while
+anonymous preferences, the `zaraz-consent` cookie, and unrelated storage keys
+survive and no server write is sent. Its per-test backend mocks several
+synthetic accounts. Google's authorize redirect is answered by a page-level
+route, because the app resolves `/auth/v1/authorize` as an absolute path
+that drops the mock-backend prefix.
+
 Remaining limitations: live Supabase/database permissions, actual speech and
 OS keyboards, natural exhaustion of the entire corpus, visual parity,
 fonts/flags, browser SSR hydration, other browser engines, and deployment.

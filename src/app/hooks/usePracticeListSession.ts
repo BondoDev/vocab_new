@@ -13,7 +13,7 @@
 // list-practice word set is a different kind of state (a concrete snapshot
 // tied to one specific list, not a standing filter preference), so it gets
 // its own narrowly-scoped owner rather than widening that hook's contract.
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { canUseLocalStorage } from "../utils/storage";
 
 const STORAGE_KEY = "app.practiceListSession";
@@ -64,7 +64,8 @@ export interface UsePracticeListSessionResult {
   // Pass null to clear (also removes the localStorage entry) — used once
   // a Practice List session is left (Back/Finish) so a later, unrelated
   // visit to the plain Exercises route never accidentally restricts to a
-  // stale list's words.
+  // stale list's words, and by App.tsx on sign-out/account switch because
+  // the stored list name and word ids belong to the signed-in account.
   setPracticeListSession: (session: PracticeListSession | null) => void;
 }
 
@@ -84,7 +85,9 @@ export function usePracticeListSession(): UsePracticeListSessionResult {
     }
   }, []);
 
-  const setPracticeListSession = (session: PracticeListSession | null) => {
+  // Stable identity: App.tsx's sign-out cleanup effect calls this and must
+  // not re-run just because App re-rendered.
+  const setPracticeListSession = useCallback((session: PracticeListSession | null) => {
     setPracticeListSessionState(session);
     if (!canUseLocalStorage()) {
       return;
@@ -94,7 +97,7 @@ export function usePracticeListSession(): UsePracticeListSessionResult {
     } else {
       window.localStorage.removeItem(STORAGE_KEY);
     }
-  };
+  }, []);
 
   return { practiceListSession, setPracticeListSession };
 }

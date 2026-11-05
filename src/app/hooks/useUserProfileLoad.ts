@@ -72,8 +72,12 @@ export function useUserProfileLoad({
     let cancelled = false;
     // A new authUserId means any previously loaded profile belongs to a
     // different account - it must not be treated as "loaded" for this one
-    // until its own fetch resolves.
+    // until its own fetch resolves. The in-memory profile is reset too, so a
+    // direct account switch (e.g. made in another tab) never displays the
+    // previous account's nickname/details while this one loads; after a
+    // normal sign-out it is already empty, so this is a no-op there.
     setIsProfileLoaded(false);
+    setUserProfile(EMPTY_USER_PROFILE);
     const storedProfile = readStoredUserProfile(authUserId);
 
     void (async () => {

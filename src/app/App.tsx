@@ -57,7 +57,12 @@ import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
-import { clearStoredUserProfile, type LanguageLevelCode, type UserProfile } from "../lib/userProfile";
+import {
+  clearStoredUserProfile,
+  clearStoredUserProfilesExcept,
+  type LanguageLevelCode,
+  type UserProfile,
+} from "../lib/userProfile";
 import { clearLocalSupabaseSession, signOutSupabase } from "../lib/supabaseAuth";
 import { consumeStayOnPageAfterOAuth } from "../lib/authStayOnPage";
 import { describeSupabaseError } from "../lib/supabaseError";
@@ -385,6 +390,28 @@ function AppContent({
     practiceListSession.listId === vocabularyListIdParam
       ? practiceListSession
       : null;
+  // Account-scoped browser data cleanup. Keyed on the resolved auth
+  // identity rather than on the Sign Out button, so it also covers onboarding
+  // cancel, a rejected/expired refresh token (supabaseAuth clears the
+  // session), and a sign-out or sign-in made in another tab (storage event).
+  // Signed out: remove every cached account profile and the practice-list
+  // snapshot. Signed in: remove other accounts' profile caches, and drop the
+  // practice-list snapshot only when the identity actually changed (a page
+  // refresh of the same account must keep it). Anonymous preferences (UI
+  // language, language pair, practice filters, account-intro cooldown) and
+  // the Zaraz consent cookie are intentionally untouched; nothing is
+  // deleted server-side. Gated on isAuthResolved because authUserId is null
+  // during the pre-hydration render, which is not a real sign-out.
+  const previousAuthUserIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!isAuthResolved) return;
+    const previousAuthUserId = previousAuthUserIdRef.current;
+    previousAuthUserIdRef.current = authUserId;
+    clearStoredUserProfilesExcept(authUserId);
+    if (!authUserId || (previousAuthUserId && previousAuthUserId !== authUserId)) {
+      setPracticeListSession(null);
+    }
+  }, [authUserId, isAuthResolved, setPracticeListSession]);
   const [openExploreLanguage, setOpenExploreLanguage] =
     useState<UILanguage | null>(null);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =

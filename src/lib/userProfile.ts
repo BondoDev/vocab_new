@@ -2,6 +2,7 @@ import type { UILanguage } from "../contexts/LanguageContext";
 import {
   ensureFreshSupabaseSession,
   getAuthHeaders,
+  getStoredSupabaseSession,
   refreshSupabaseSession,
   supabaseRequest,
   type StoredSupabaseSession,
@@ -216,24 +217,54 @@ export function readStoredUserProfile(userId: string): UserProfile | null {
 export function writeStoredUserProfile(userId: string, profile: Partial<UserProfile>): UserProfile {
   const nextProfile = buildStoredUserProfile(profile);
 
-  if (canUseLocalStorage()) {
+  // Only cache for the account that currently owns the stored session. A
+  // save that resolves after sign-out (or after another tab switched
+  // accounts) must not re-create a profile cache that the sign-out cleanup
+  // (clearStoredUserProfilesExcept, run from App.tsx) has just removed.
+  // The in-memory profile is still returned so the caller's flow completes.
+  if (canUseLocalStorage() && getStoredSupabaseSession()?.user?.id === userId) {
     window.localStorage.setItem(buildStorageKey(userId), JSON.stringify(nextProfile));
   }
 
   return nextProfile;
 }
 
-// Settings' account-deletion success path (and nothing else today) — removes
-// this account's cached profile from localStorage so a stale nickname/
-// language pair can never be read back for a since-deleted account. Narrow
-// on purpose: unlike signOutSupabase (src/lib/supabaseAuth.ts), an ordinary
-// sign-out deliberately leaves this cache in place (so the same account's
-// profile still shows instantly on the next sign-in) - only account deletion
-// needs it gone for good.
+// Account-deletion success path — removes this one account's cached
+// profile so a stale nickname/language pair can never be read back for a
+// since-deleted account. Ordinary sign-out and account switches are covered
+// more broadly by clearStoredUserProfilesExcept below.
 export function clearStoredUserProfile(userId: string): void {
   if (canUseLocalStorage()) {
     window.localStorage.removeItem(buildStorageKey(userId));
   }
+}
+
+// Removes every cached `app.userProfile.<userId>` entry (nickname, age,
+// birthday, languages, timezone) except the one for keepUserId; pass null
+// when signed out to remove all of them. Called by App.tsx whenever the
+// resolved auth identity changes, so a signed-out browser or a different
+// account never keeps another account's profile in storage. Sweeping by
+// prefix (rather than one known id) also removes caches left behind by
+// sign-outs that happened before this cleanup existed. Matches only this
+// app's own exact key prefix, so no unrelated storage is touched. Server
+// data is never affected; the profile is re-fetched from Supabase on the
+// next sign-in.
+export function clearStoredUserProfilesExcept(keepUserId: string | null): void {
+  if (!canUseLocalStorage()) {
+    return;
+  }
+
+  const prefix = `${USER_PROFILE_KEY_PREFIX}.`;
+  const keepKey = keepUserId ? buildStorageKey(keepUserId) : null;
+  // Collect first: removing while indexing localStorage.key(i) shifts indices.
+  const keysToRemove: string[] = [];
+  for (let index = 0; index < window.localStorage.length; index += 1) {
+    const key = window.localStorage.key(index);
+    if (key && key.startsWith(prefix) && key !== keepKey) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach((key) => window.localStorage.removeItem(key));
 }
 
 export async function readSupabaseUserProfile(
