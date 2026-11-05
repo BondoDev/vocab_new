@@ -96,7 +96,7 @@
           "items": [
             ["seu nome de usuário ou apelido;"],
             ["sua idade;"],
-            ["o mês e o dia do seu nascimento (não solicitamos o ano de nascimento);"],
+            ["o mês e o dia do seu nascimento e o ano de nascimento que calculamos a partir deles e da idade que você informa (não pedimos que você informe o ano de nascimento);"],
             ["sua língua materna e o idioma que você está aprendendo;"],
             ["seu nível de proficiência no idioma, de acordo com sua própria avaliação;"],
             ["seu objetivo diário de aprendizagem;"],
@@ -178,7 +178,7 @@
             ["criar, proteger e gerenciar sua conta e permitir que você faça login;"],
             ["salvar seu progresso de aprendizagem, programar revisões e exibir suas estatísticas, sequências de dias de estudo e objetivos;"],
             ["aplicar as preferências que você seleciona, como idiomas, nível, objetivo diário e fuso horário;"],
-            ["aplicar o requisito de idade mínima para o cadastro;"],
+            ["aplicar o requisito de idade mínima para o cadastro e manter sua idade atualizada;"],
             ["medir o uso e o desempenho do site, conforme descrito na seção 5;"],
             ["proteger o site e seus usuários contra abusos, fraudes e ameaças à segurança;"],
             ["responder às suas mensagens e solicitações;"],
@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Utilizamos a idade que você informa para aplicar o requisito de idade mínima. No futuro, também poderemos utilizar informações sobre a idade de forma agregada para entender melhor as características demográficas dos nossos usuários e aprimorar a plataforma. Atualmente, não realizamos essas análises demográficas nem enviamos informações sobre a idade aos nossos provedores de serviços de análise."
+            "Utilizamos a idade que você informa para aplicar o requisito de idade mínima. Também utilizamos sua idade, o mês e o dia do seu nascimento e a data em que você os informa ou confirma para calcular seu ano de nascimento, de modo que sua idade continue correta e aumente automaticamente no dia do seu aniversário. Se sua conta foi criada antes da introdução desse recurso, poderemos pedir que você confirme sua idade uma única vez. No futuro, também poderemos utilizar informações sobre a idade de forma agregada para entender melhor as características demográficas dos nossos usuários e aprimorar a plataforma. Atualmente, não realizamos essas análises demográficas nem enviamos informações sobre a idade aos nossos provedores de serviços de análise."
           ]
         },
         {

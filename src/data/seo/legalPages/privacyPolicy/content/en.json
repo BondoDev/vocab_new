@@ -96,7 +96,7 @@
           "items": [
             ["your nickname;"],
             ["your age;"],
-            ["your birth month and day (we do not ask for your birth year);"],
+            ["your birth month and day, and the birth year we calculate from them and the age you provide (we do not ask you to enter your birth year);"],
             ["your native language and the language you are learning;"],
             ["your self-assessed language level;"],
             ["your daily learning goal;"],
@@ -178,7 +178,7 @@
             ["create, secure, and manage your account and sign you in;"],
             ["save your learning progress, schedule reviews, and show your statistics, streaks, and goals;"],
             ["apply the settings you choose, such as your languages, level, daily goal, and time zone;"],
-            ["enforce our minimum registration age;"],
+            ["enforce our minimum registration age and keep your age up to date;"],
             ["measure how the website is used and how it performs, as described in Section 5;"],
             ["protect the website and its users against abuse, fraud, and security threats;"],
             ["respond to your messages and requests;"],
@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "We use the age you provide to apply the minimum age requirement. We may also use age information in the future, in aggregated form, to understand the demographics of our users and improve the platform. We do not currently produce such demographic analyses, and age information is not sent to our analytics providers."
+            "We use the age you provide to apply the minimum age requirement. We also use your age, your birth month and day, and the date on which you provide or confirm them to calculate your birth year, so that your age stays accurate and increases automatically on your birthday. If your account was created before we introduced this, we may ask you once to confirm your age. We may also use age information in the future, in aggregated form, to understand the demographics of our users and improve the platform. We do not currently produce such demographic analyses, and age information is not sent to our analytics providers."
           ]
         },
         {

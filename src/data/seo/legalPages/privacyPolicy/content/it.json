@@ -96,7 +96,7 @@
           "items": [
             ["il tuo nickname;"],
             ["la tua età;"],
-            ["il mese e il giorno della tua nascita (non richiediamo l'anno di nascita);"],
+            ["il mese e il giorno della tua nascita, oltre all'anno di nascita che calcoliamo a partire da questi dati e dall'età che indichi (non ti chiediamo di inserire l'anno di nascita);"],
             ["la tua lingua madre e la lingua che stai imparando;"],
             ["il tuo livello di conoscenza della lingua, secondo la tua autovalutazione;"],
             ["il tuo obiettivo giornaliero di apprendimento;"],
@@ -178,7 +178,7 @@
             ["creare, proteggere e gestire il tuo account e consentirti di accedere;"],
             ["salvare i tuoi progressi di apprendimento, programmare i ripassi e mostrare le tue statistiche, le serie di giorni consecutivi di studio e i tuoi obiettivi;"],
             ["applicare le preferenze che hai scelto, come le lingue, il livello, l'obiettivo giornaliero e il fuso orario;"],
-            ["far rispettare il requisito dell'età minima per la registrazione;"],
+            ["far rispettare il requisito dell'età minima per la registrazione e mantenere aggiornata la tua età;"],
             ["misurare l'utilizzo e le prestazioni del sito web, come descritto nella sezione 5;"],
             ["proteggere il sito web e i suoi utenti da abusi, frodi e minacce alla sicurezza;"],
             ["rispondere ai tuoi messaggi e alle tue richieste;"],
@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Utilizziamo l'età che fornisci per applicare il requisito dell'età minima. In futuro potremmo anche utilizzare le informazioni sull'età in forma aggregata per comprendere meglio le caratteristiche demografiche dei nostri utenti e migliorare la piattaforma. Attualmente non effettuiamo tali analisi demografiche e non trasmettiamo informazioni sull'età ai nostri fornitori di servizi di analisi."
+            "Utilizziamo l'età che fornisci per applicare il requisito dell'età minima. Utilizziamo inoltre la tua età, il mese e il giorno di nascita e la data in cui li fornisci o li confermi per calcolare il tuo anno di nascita, in modo che la tua età resti corretta e aumenti automaticamente nel giorno del tuo compleanno. Se il tuo account è stato creato prima dell'introduzione di questa funzione, potremmo chiederti una sola volta di confermare la tua età. In futuro potremmo anche utilizzare le informazioni sull'età in forma aggregata per comprendere meglio le caratteristiche demografiche dei nostri utenti e migliorare la piattaforma. Attualmente non effettuiamo tali analisi demografiche e non trasmettiamo informazioni sull'età ai nostri fornitori di servizi di analisi."
           ]
         },
         {

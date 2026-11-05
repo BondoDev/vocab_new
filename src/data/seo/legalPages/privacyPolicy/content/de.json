@@ -96,7 +96,7 @@
           "items": [
             ["Ihren Benutzernamen bzw. Spitznamen;"],
             ["Ihr Alter;"],
-            ["Ihren Geburtsmonat und Geburtstag (Ihr Geburtsjahr fragen wir nicht ab);"],
+            ["Ihren Geburtsmonat und Geburtstag sowie das Geburtsjahr, das wir daraus und aus Ihrer Altersangabe berechnen (Ihr Geburtsjahr fragen wir nicht ab);"],
             ["Ihre Muttersprache und die Sprache, die Sie lernen;"],
             ["Ihr selbst eingeschätztes Sprachniveau;"],
             ["Ihr tägliches Lernziel;"],
@@ -178,7 +178,7 @@
             ["Erstellung, Absicherung und Verwaltung Ihres Benutzerkontos sowie Ermöglichung Ihrer Anmeldung;"],
             ["Speicherung Ihres Lernfortschritts, Planung von Wiederholungen und Anzeige Ihrer Statistiken, Lernserien und Ziele;"],
             ["Anwendung Ihrer gewählten Einstellungen wie Sprachen, Sprachniveau, Tagesziel und Zeitzone;"],
-            ["Durchsetzung des Mindestalters für die Registrierung;"],
+            ["Durchsetzung des Mindestalters für die Registrierung und Aktualisierung Ihrer Altersangabe;"],
             ["Messung der Nutzung und Leistung der Website, wie in Abschnitt 5 beschrieben;"],
             ["Schutz der Website und ihrer Nutzer vor Missbrauch, Betrug und Sicherheitsbedrohungen;"],
             ["Beantwortung Ihrer Nachrichten und Anfragen;"],
@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Wir verwenden Ihr angegebenes Alter, um die Einhaltung des Mindestalters zu gewährleisten. In Zukunft könnten wir Altersangaben außerdem in zusammengefasster Form auswerten, um die Altersstruktur unserer Nutzer besser zu verstehen und die Plattform zu verbessern. Derzeit führen wir solche demografischen Auswertungen nicht durch und übermitteln keine Altersangaben an unsere Analysedienstleister."
+            "Wir verwenden Ihr angegebenes Alter, um die Einhaltung des Mindestalters zu gewährleisten. Außerdem berechnen wir aus Ihrem Alter, Ihrem Geburtsmonat und Geburtstag sowie dem Datum, an dem Sie diese Angaben machen oder bestätigen, Ihr Geburtsjahr, damit Ihr Alter korrekt bleibt und sich an Ihrem Geburtstag automatisch erhöht. Wenn Ihr Benutzerkonto vor Einführung dieser Funktion erstellt wurde, bitten wir Sie möglicherweise einmalig, Ihr Alter zu bestätigen. In Zukunft könnten wir Altersangaben außerdem in zusammengefasster Form auswerten, um die Altersstruktur unserer Nutzer besser zu verstehen und die Plattform zu verbessern. Derzeit führen wir solche demografischen Auswertungen nicht durch und übermitteln keine Altersangaben an unsere Analysedienstleister."
           ]
         },
         {

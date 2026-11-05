@@ -96,7 +96,7 @@
           "items": [
             ["votre pseudonyme ;"],
             ["votre âge ;"],
-            ["votre mois et votre jour de naissance (nous ne demandons pas votre année de naissance) ;"],
+            ["votre mois et votre jour de naissance, ainsi que l'année de naissance que nous calculons à partir de ces informations et de l'âge que vous indiquez (nous ne vous demandons pas de saisir votre année de naissance) ;"],
             ["votre langue maternelle et la langue que vous apprenez ;"],
             ["votre niveau de langue tel que vous l'avez vous-même évalué ;"],
             ["votre objectif d'apprentissage quotidien ;"],
@@ -178,7 +178,7 @@
             ["créer, sécuriser et gérer votre compte, et vous permettre de vous connecter ;"],
             ["enregistrer votre progression, programmer les révisions et afficher vos statistiques, vos séries de jours d'apprentissage et vos objectifs ;"],
             ["appliquer vos préférences, notamment les langues, le niveau, l'objectif quotidien et le fuseau horaire ;"],
-            ["faire respecter l'âge minimum requis pour l'inscription ;"],
+            ["faire respecter l'âge minimum requis pour l'inscription et maintenir votre âge à jour ;"],
             ["mesurer l'utilisation et les performances du site, comme expliqué à la section 5 ;"],
             ["protéger le site et ses utilisateurs contre les abus, la fraude et les menaces de sécurité ;"],
             ["répondre à vos messages et à vos demandes ;"],
@@ -212,7 +212,7 @@
         {
           "type": "paragraph",
           "content": [
-            "Nous utilisons l'âge que vous indiquez pour appliquer l'âge minimum requis. À l'avenir, nous pourrions également utiliser des données relatives à l'âge sous forme agrégée afin de mieux comprendre les caractéristiques démographiques de nos utilisateurs et d'améliorer la plateforme. Nous ne réalisons pas actuellement de telles analyses démographiques et ne transmettons aucune information relative à l'âge à nos fournisseurs de services d'analyse."
+            "Nous utilisons l'âge que vous indiquez pour appliquer l'âge minimum requis. Nous utilisons également votre âge, votre mois et votre jour de naissance ainsi que la date à laquelle vous les indiquez ou les confirmez pour calculer votre année de naissance, afin que votre âge reste exact et augmente automatiquement le jour de votre anniversaire. Si votre compte a été créé avant l'introduction de cette fonctionnalité, nous pouvons vous demander une seule fois de confirmer votre âge. À l'avenir, nous pourrions également utiliser des données relatives à l'âge sous forme agrégée afin de mieux comprendre les caractéristiques démographiques de nos utilisateurs et d'améliorer la plateforme. Nous ne réalisons pas actuellement de telles analyses démographiques et ne transmettons aucune information relative à l'âge à nos fournisseurs de services d'analyse."
           ]
         },
         {
