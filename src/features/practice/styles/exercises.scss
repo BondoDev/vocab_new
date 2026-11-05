@@ -572,7 +572,7 @@ $practice-page-backdrop: radial-gradient(
 // The inflected target word in the example sentence (a <strong> emitted by
 // highlightInflectedWords) is set extra-bold and upright against the
 // regular-weight italic sentence so it stands out without a container.
-// Sora is used because index.html loads Manrope only up to 700, so an 800
+// Sora is used because src/styles/fonts.css loads Manrope only up to 700, so an 800
 // Manrope weight would render no heavier than the default bold.
 .practice-card-disclosure .exercise-sentence-content strong {
   color: var(--pc-ink, #2f2755);

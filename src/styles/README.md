@@ -27,10 +27,13 @@ src/styles/
 
 ### `fonts.css`
 
-Documents the font-loading policy. Fonts themselves are loaded through
-`<link>` elements in `index.html`, not through this file. It intentionally
-does not contain a render-blocking remote `@import` — that trade-off is the
-reason this file exists and stays a comment rather than an actual `@import`.
+Owns the font-loading policy: the self-hosted `@font-face` declarations for
+Manrope and Sora. The WOFF2 files (and their OFL licenses) live in
+`src/assets/fonts/` and are bundled by Vite through this file's `url()`s.
+No font is loaded from a third-party origin and `index.html` carries no font
+`<link>`; see the file header for the per-weight `@font-face`,
+`unicode-range`, and subset invariants that keep rendering identical to the former Google Fonts
+setup.
 
 ### `tailwind.css`
 

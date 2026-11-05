@@ -54,29 +54,33 @@ console.log("\n[2] Font loading");
 {
   const html = await readHtml("index.html");
 
+  // Fonts are self-hosted (src/styles/fonts.css): no Google Fonts origin may
+  // appear in the HTML shell or the bundled CSS.
   assert(
-    html.includes('rel="preconnect" href="https://fonts.googleapis.com"'),
-    "preconnect for fonts.googleapis.com is in homepage HTML",
-  );
-  assert(
-    html.includes('href="https://fonts.gstatic.com"'),
-    "preconnect for fonts.gstatic.com is in homepage HTML",
-  );
-  assert(
-    html.includes('fonts.googleapis.com/css2?family=Manrope') &&
-      html.includes('rel="stylesheet"'),
-    "Google Fonts stylesheet link is in homepage HTML (not @import in CSS)",
+    !/fonts\.(googleapis|gstatic)\.com/.test(html),
+    "Homepage HTML has no Google Fonts link or preconnect",
   );
 
-  // CSS bundle must not contain the @import for Google Fonts
-  const cssFiles = (await fs.readdir(path.join(DIST, "assets")))
-    .filter((f) => f.startsWith("index-") && f.endsWith(".css"));
+  const assetFiles = await fs.readdir(path.join(DIST, "assets"));
+  const cssFiles = assetFiles.filter((f) => f.startsWith("index-") && f.endsWith(".css"));
   assert(cssFiles.length > 0, "Main CSS bundle exists in dist/assets");
   if (cssFiles.length > 0) {
     const css = await fs.readFile(path.join(DIST, "assets", cssFiles[0]), "utf8");
     assert(
-      !css.includes("fonts.googleapis.com"),
-      "Main CSS bundle does not contain Google Fonts @import",
+      !/fonts\.(googleapis|gstatic)\.com/.test(css),
+      "Main CSS bundle does not reference Google Fonts",
+    );
+    for (const family of ["Manrope", "Sora"]) {
+      assert(
+        new RegExp(`@font-face\\{[^}]*font-family:\\s*"?${family}"?[^}]*\\.woff2`).test(css),
+        `Main CSS bundle declares a self-hosted ${family} @font-face`,
+      );
+    }
+    const fontUrls = [...css.matchAll(/url\(["']?\/?assets\/([^"')]+\.woff2)/g)].map((m) => m[1]);
+    assert(fontUrls.length > 0, "Main CSS bundle references local /assets/*.woff2 files");
+    assert(
+      fontUrls.every((file) => assetFiles.includes(file)),
+      "Every @font-face woff2 referenced by the CSS bundle exists in dist/assets",
     );
   }
 }
