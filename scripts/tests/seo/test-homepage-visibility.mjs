@@ -76,7 +76,8 @@ console.log("\n[2] Font loading");
         `Main CSS bundle declares a self-hosted ${family} @font-face`,
       );
     }
-    const fontUrls = [...css.matchAll(/url\(["']?\/?assets\/([^"')]+\.woff2)/g)].map((m) => m[1]);
+    // Any Vite `base` prefix is allowed (CI builds use /<repo>/ under GITHUB_ACTIONS).
+    const fontUrls = [...css.matchAll(/url\(["']?[^"')]*?\bassets\/([^"')/]+\.woff2)/g)].map((m) => m[1]);
     assert(fontUrls.length > 0, "Main CSS bundle references local /assets/*.woff2 files");
     assert(
       fontUrls.every((file) => assetFiles.includes(file)),
