@@ -140,6 +140,14 @@ SPA, so production's asset-first `410 Gone` for routes without a static shell
 is guarded by `test:interactive-contracts` and
 `test:prerendered-html-integrity` instead.
 
+`toast-navigation.spec.ts` checks the shared toast after in-app navigation:
+with a mocked session it reaches the 100-nouns page from Learning Resources
+by link, adds and later removes a word through "Add to list" (mocked list
+RPCs), and expects the toast to show and auto-dismiss, with exactly one live
+region after navigating to the full vocabulary list and back. The toast's
+hydration-safe first render needs server markup, which this client-only
+preview lacks; `test:toast-hydration` covers it.
+
 `logout-privacy.spec.ts` checks account-scoped browser data after sign-out:
 cached `app.userProfile.*` profiles and the `app.practiceListSession`
 snapshot are removed after header and profile-sidebar sign-out, cross-tab

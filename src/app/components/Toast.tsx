@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 const DEFAULT_DURATION_MS = 3000;
+const subscribeToNothing = () => () => {};
 
 // Shared across app/feature owners for local-only "saved" / "selected"
 // style confirmations. Each caller owns its own message state — this is a
@@ -43,10 +44,15 @@ export function useAutoDismissMessage(durationMs: number = DEFAULT_DURATION_MS) 
 // single feature folder to own an SCSS file.
 export function Toast({ message }: { message: string | null }) {
   // document.body doesn't exist during SSR/prerendering (entry-server.tsx
-  // has no DOM), and /profile — which always mounts a Toast via
-  // DailyGoalSelector's LearningSection — is a prerendered route. Skip the
-  // portal there; the client hydrates and mounts it normally afterward.
-  if (typeof document === "undefined") {
+  // has no DOM), so the server renders nothing here. The first client render
+  // of a hydrating tree must render nothing as well: a portal there makes
+  // React try to match its <div> against the server markup, fail (#418), and
+  // throw away the whole route's prerendered HTML (the full vocabulary list
+  // and 100-noun pages, which mount a Toast, visibly re-rendered on load).
+  // The server snapshot (false) is used for the server and hydration render;
+  // the portal mounts right after. Client-only mounts get true immediately.
+  const canPortal = useSyncExternalStore(subscribeToNothing, () => true, () => false);
+  if (!canPortal) {
     return null;
   }
 

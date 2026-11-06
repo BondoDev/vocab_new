@@ -133,11 +133,21 @@ async function writeRouteHtml(route, html) {
   await fs.writeFile(path.join(targetDir, "index.html"), html, "utf8");
 }
 
+// Each lazy route chunk can ship its own stylesheet (About-*.css, Help-*.css,
+// LevelCategorySelection-*.css). The prerendered markup of those routes
+// depends on it, but Vite only injects it once the JS chunk has loaded, so
+// without a <link> the server HTML first paints unstyled and then re-lays
+// out (a large visible shift). Linking it in <head> makes the first paint
+// final; Vite's preload helper skips a stylesheet already linked, so it is
+// never loaded twice.
 async function buildLazyPreloadMap() {
   const assetsDir = path.join(DIST_DIR, "assets");
   const files = await fs.readdir(assetsDir);
-  const find = (prefix) =>
-    files.find((f) => f.startsWith(prefix) && f.endsWith(".js")) ?? null;
+  const find = (prefix) => {
+    const js = files.find((f) => f.startsWith(prefix) && f.endsWith(".js"));
+    if (!js) return null;
+    return { js, css: files.filter((f) => f.startsWith(prefix) && f.endsWith(".css")) };
+  };
   return {
     About: find("About-"),
     Help: find("Help-"),
@@ -187,9 +197,13 @@ async function main() {
           let html = injectRenderedPage(template, page);
           const lazyChunk = getLazyChunkForRoute(route, chunkMap);
           if (lazyChunk) {
+            const links = [
+              ...lazyChunk.css.map((file) => `<link rel="stylesheet" href="/assets/${file}">`),
+              `<link rel="modulepreload" href="/assets/${lazyChunk.js}">`,
+            ];
             html = html.replace(
               "</head>",
-              `  <link rel="modulepreload" href="/assets/${lazyChunk}">\n  </head>`,
+              `${links.map((link) => `  ${link}\n`).join("")}  </head>`,
             );
           }
           await writeRouteHtml(route, html);

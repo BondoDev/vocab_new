@@ -88,7 +88,7 @@ flowchart TD
 | React application | `src/app/`, `src/contexts/`, `src/features/`, `src/lib/` | `dist/`, `server-build/` (gitignored) | `npx tsc --noEmit`, `npm run build` |
 | Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`, `vocabularyLevels/vocabularyLevelRoutes.ts`/`shared/hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
 | SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/hubMetadata.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/listPages/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/wordMetadata.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates}.ts` — `hubTemplates.ts`, `wordTemplates.ts`, and `shared/seoAlternates.ts` are lower-level helpers those modules import internally, not re-exported by the facade itself) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
-| Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity`, `test:prerendered-html-integrity` |
+| Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity`, `test:prerendered-html-integrity`, `test:prerender-route-css` |
 | Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (core/CEFR/verb-list families; word pages intentionally excluded — see "Prerendering vs. sitemap") | `test:sitemap-structure`, `test:sitemap-vocabulary-route-source`, `test:sitemap-lastmod` |
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |
 | Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `vocabularyLevels/level-explorer/`, `listPages/verbLists/shared/common100VerbLookup/` | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
@@ -362,7 +362,9 @@ Guard/test scripts (actual `package.json` names): `test:word-ssr-http`,
 `test:prerendered-html-integrity` (every `dist/` page: strict UTF-8, no NUL
 or control bytes, canonical word-link hrefs — guards the React 18.3.1
 `renderToPipeableStream` NUL-padding defect; `render()` uses
-`renderToReadableStream`, like the Worker), `test:sitemap-structure`,
+`renderToReadableStream`, like the Worker), `test:prerender-route-css`
+(lazy route chunks' own stylesheets are linked once in the prerendered
+`<head>` of About, Help, and the filters page), `test:sitemap-structure`,
 `test:sitemap-vocabulary-route-source` (verifies `sitemap-cefr.xml`
 vocabulary-level routes against `getAllLocalizedVocabularyRoutes()`),
 `test:sitemap-lastmod`, `test:seo-core-routes`, `test:html-lang-init` —
