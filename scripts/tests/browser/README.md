@@ -87,9 +87,16 @@ observable state, never fixed sleeps. No production source is altered.
 Typing does not display a separate wrong-answer banner: incorrect input retains
 Skip and disallows Enter advancement; a correct answer exposes Next and removes
 hint/reveal controls. The selection UI prevents removing its last exercise
-rather than letting a visitor create an empty selection. Back from a running
-session and Home from results both return to Custom Practice under the existing
-contract, despite the Back button's accessible label being "Back to filters".
+rather than letting a visitor create an empty selection. The running session's
+"Filters" button opens the detailed filters page, whose "Back to Custom
+Practice" returns to the preserved setup; Home from results returns to Custom
+Practice directly. In a Practice List session the same card button reads "Back
+to My Lists" and returns to the originating list. The setup page opens the
+detailed filters page through "More detailed filters"; topics and word types
+there are inline chip groups, not dialogs. Practiced words are listed inline
+on the results screen and include only words the learner wrote, not words
+revealed with Show me word. The card's decorative arrow is excluded from the
+Next/Skip accessible names, so tests match them exactly.
 
 Round 3 adds focused journeys:
 

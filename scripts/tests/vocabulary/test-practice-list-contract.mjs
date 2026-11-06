@@ -151,7 +151,12 @@ test("Valid setup selections reach App's existing route and engine with the orig
   const activeList = { id: "list /one", name: "My list", targetLanguage: "de" };
   const navigations = [];
   const state = {};
+  // Records calls only: the real helper touches document.fullscreenElement,
+  // which a Node sandbox doesn't have. What matters here is that the Start
+  // click (the user activation) requests fullscreen, and an empty start doesn't.
+  const fullscreenRequests = [];
   const handleStartPracticeList = evaluateInitializer(appSource, "handleStartPracticeList", {
+    requestSessionFullscreen: () => { fullscreenRequests.push(true); return Promise.resolve(true); },
     setPracticeLanguage: (value) => { state.language = value; },
     setSelectedExercises: (value) => { state.exercises = value; },
     setPracticeListSession: (value) => { state.session = value; },
@@ -187,6 +192,7 @@ test("Valid setup selections reach App's existing route and engine with the orig
     onStartPracticeList() { assert.fail("missing lists must not launch practice"); },
   })(config);
   assert.equal(navigations.length, 1, "empty selections must not navigate");
+  assert.equal(fullscreenRequests.length, 1, "only the valid Start requests session fullscreen");
 });
 
 test("Back and completion exits return to the originating detail and clear the restricted session", () => {
@@ -213,10 +219,18 @@ test("Back and completion exits return to the originating detail and clear the r
   evaluate(jsxProp(header, "onFinishTest"), { handleFinishTest })();
   assert.deepEqual(completion, [true, "complete"], "Finish completes the session before the user exits results");
   assert.equal(jsxProp(header, "onBack").getText(), "onBack");
-  const exitButtons = jsxElements(practiceHeaderSource, "button").filter((element) =>
+  // The running rail has no Back button any more: it shows Finish plus the
+  // fullscreen toggle, and the results rail's Home button is the one exit
+  // that goes through onBack (the leavePracticeList contract checked above).
+  const buttonsWithHandler = (handler) => jsxElements(practiceHeaderSource, "button").filter((element) =>
     element.attributes.properties.some((property) => property.name?.getText() === "onClick" &&
-      property.initializer?.expression?.getText() === "onBack"));
-  assert.equal(exitButtons.length, 2, "active Back and completed Home both use the same exit contract");
+      property.initializer?.expression?.getText() === handler));
+  const exitButtons = buttonsWithHandler("onBack");
+  assert.equal(exitButtons.length, 1, "the results Home button is the single onBack exit");
+  assert.match(exitButtons[0].parent.getText(), /t\("practice\.home"\)/);
+  assert.equal(buttonsWithHandler("onFinishTest").length, 1, "the running session exposes Finish");
+  assert.match(practiceHeaderSource, /sessionComplete \? \([\s\S]*?onBack[\s\S]*?\) : \(\s*<SessionFullscreenToggle \/>\s*\)/,
+    "the fullscreen toggle replaces Home while the session runs");
 });
 
 console.log("\n=== Setup dialog: compact, no forbidden filters, quantity/order/exercises ===\n");

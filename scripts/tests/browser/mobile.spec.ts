@@ -25,22 +25,24 @@ for (const width of [375, 390]) {
       await page.getByRole('button', { name: 'Start Practicing', exact: true }).tap();
       await selectLanguages(page);
       await expectNoOverflow(page);
-      await page.getByRole('button', { name: 'Customize Filters', exact: true }).tap();
-      await page.getByRole('button', { name: 'Tap to filter practice topics', exact: true }).tap();
-      const topics = page.getByRole('dialog', { name: 'Topics to Practice', exact: true });
-      await expect(topics).toBeVisible();
+      await page.getByRole('button', { name: 'More detailed filters', exact: true }).tap();
+      // Topics and word types are inline chip groups; the expanded topic
+      // list must still fit the viewport without horizontal overflow.
+      const topics = page.getByRole('group', { name: 'Topics', exact: true });
+      await page.getByRole('button', { name: /^Show all topics/ }).tap();
       const astronomy = topics.getByRole('button', { name: 'Astronomy', exact: true });
       await astronomy.scrollIntoViewIfNeeded();
       await expect(astronomy).toBeInViewport();
       await expectNoOverflow(page);
-      await topics.getByRole('button', { name: 'Close', exact: true }).tap();
-      await expect(topics).toHaveCount(0);
-      await page.getByRole('button', { name: 'Tap to filter grammar types', exact: true }).tap();
-      const types = page.getByRole('dialog', { name: 'Word Types', exact: true });
-      await expect(types).toBeVisible();
-      await types.getByRole('button', { name: 'Noun', exact: true }).tap();
-      await types.getByRole('button', { name: 'Clear', exact: true }).tap();
-      await types.getByRole('button', { name: 'Apply', exact: true }).tap();
+      await page.getByRole('button', { name: 'Show fewer topics', exact: true }).tap();
+      await expect(astronomy).toHaveCount(0);
+      const types = page.getByRole('group', { name: 'Word Types', exact: true });
+      const noun = types.getByRole('button', { name: 'Noun', exact: true });
+      await noun.tap();
+      await expect(noun).toHaveAttribute('aria-pressed', 'true');
+      await types.getByRole('button', { name: 'All word types', exact: true }).tap();
+      await expect(noun).toHaveAttribute('aria-pressed', 'false');
+      await expectNoOverflow(page);
       await page.getByRole('button', { name: 'Apply Filters', exact: true }).tap();
       await selectTypingOnly(page);
       await expectNoOverflow(page);
@@ -61,7 +63,12 @@ for (const width of [375, 390]) {
       await next.tap();
       await expect(page.getByRole('heading', { name: 'encima de', exact: true })).toBeVisible();
       await expect(input).toHaveValue('');
-      await page.getByRole('button', { name: 'Back to filters', exact: true }).tap();
+      // In-session "Filters" opens the detailed filters page; its Back
+      // control then returns to the Custom Practice setup.
+      await page.getByRole('button', { name: 'Filters', exact: true }).tap();
+      await expect(page).toHaveURL(/\/languages\/filters/);
+      await expectNoOverflow(page);
+      await page.getByRole('button', { name: 'Back to Custom Practice', exact: true }).tap();
       await expect(page).toHaveURL('http://127.0.0.1:4173/custom-practice');
     });
   });

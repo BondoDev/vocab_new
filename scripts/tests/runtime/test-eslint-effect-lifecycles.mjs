@@ -155,10 +155,18 @@ function effectProbe(source, marker) {
   for (const setter of ["setWordChunks", "setShuffledChunks", "setPlacedChunks", "setPlacedChunkIndices", "setUsedChunks",
     "setLockedSlots", "setUsedHintForBrokenWord", "setShowIncorrectFeedback", "setUsedShowWord", "setIsCorrect", "setLineCount"]) params[setter] = noop;
   params.setWordChunks = (chunks) => { initializedChunks = chunks; };
+  // A new word also drops any "Practice again" retry lock and the wrote-word
+  // flag (handleRetry sets both); the same init effect owns that reset.
+  const retryLockResets = [];
+  params.setRetryLockedStatus = (value) => { retryLockResets.push(value); };
+  params.wroteWordRef = { current: true };
   const draw = (props) => update({ ...props, initializeBrokenWord: memo("initializeBrokenWord", props) }, true);
   draw(params);
+  assert.deepEqual(retryLockResets, [null], "a new word clears the retry-locked status");
+  assert.equal(params.wroteWordRef.current, false, "a new word clears the wrote-word flag");
   draw({ ...params, placedChunks: ["ap"] });
   assert.equal(shuffles, 1, "typing/placement renders cannot reset the exercise");
+  assert.equal(retryLockResets.length, 1, "typing/placement renders cannot clear a retry lock");
   assert.deepEqual(initializedChunks, ["ap", "pl", "e"]);
   draw({ ...params, currentWord: { word_lemma: "banana" } });
   assert.equal(shuffles, 2, "a new word initializes once");
@@ -192,10 +200,20 @@ function effectProbe(source, marker) {
     cardSwitchTimeoutRef: { current: null }, setIsCardSwitching: noop, setCardBlinkKey: noop,
     window: { clearTimeout: noop, setTimeout: (callback, delay) => { assert.equal(delay, 180); timeout = callback; return 1; } } };
   const handler = memo("handleNext", nextParams);
-  const keyListener = effectProbe(source, 'addEventListener("keydown"');
-  assert.equal(keyListener({ ...nextParams, handleNext: handler }), true);
-  assert.equal(keyListener({ ...nextParams, handleNext: memo("handleNext", { ...nextParams }) }), false,
-    "unchanged action inputs cannot churn the Enter listener");
+  assert.equal(memo("handleNext", { ...nextParams }), handler, "unchanged action inputs keep handleNext stable");
+  // Enter = Next lives in the shared useEnterToAdvance hook: its listener
+  // subscribes on `enabled` only and reads the latest callback through a ref,
+  // so a new handleNext can never churn the window listener.
+  const enterHook = nodesMatching(source, (node) => ts.isCallExpression(node) && node.expression.getText() === "useEnterToAdvance");
+  assert.equal(enterHook.length, 1, "VocabularyPractice wires Enter through the shared hook once");
+  assert.equal(enterHook[0].arguments[1].getText(), "handleNext");
+  const keyListener = effectProbe(read("src/features/practice/utils/useEnterToAdvance.ts"), 'addEventListener("keydown"');
+  const enabled = evaluate(enterHook[0].arguments[0], nextParams);
+  assert.equal(keyListener({ enabled, onAdvance: handler }), true);
+  assert.equal(keyListener({ enabled, onAdvance: memo("handleNext", { ...nextParams, runNextStep: noop }) }), false,
+    "a new advance callback cannot churn the Enter listener");
+  assert.equal(keyListener({ enabled: evaluate(enterHook[0].arguments[0], { ...nextParams, isCardSwitching: true }) }), true,
+    "card switching disables Enter-to-advance");
   handler();
   memo("handleNext", { ...nextParams, runNextStep: (skip) => advances.push(["replacement", skip]) });
   timeout();

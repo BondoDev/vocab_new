@@ -761,8 +761,12 @@ $practice-page-backdrop: radial-gradient(
     border-color 150ms ease,
     color 150ms ease;
 
+  // Decorative arrow: the `/ ""` alt text keeps it out of the accessible
+  // name, so the button is announced as "Next"/"Skip", not "Next →".
+  // The plain declaration is the fallback for engines without alt text.
   &::after {
     content: "→";
+    content: "→" / "";
     font-weight: 500;
   }
 

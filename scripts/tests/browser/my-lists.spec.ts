@@ -68,7 +68,7 @@ test('mocked My Lists CRUD, membership, search/sort, and detail-only practice wi
   await expect(page.getByRole('textbox')).toBeVisible();
   await expect(page.getByRole('heading', { name: /^(manzana|plátano)$/ })).toBeVisible();
   await expect(page).toHaveURL(/practice.*source=vocabulary-list/);
-  await page.getByRole('button', { name: 'Back to filters', exact: true }).click();
+  await page.getByRole('button', { name: 'Back to My Lists', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Study Words', exact: true })).toBeVisible();
   for (const word of ['apple', 'banana']) {
     await page.getByRole('button', { name: `More actions - ${word}`, exact: true }).click();

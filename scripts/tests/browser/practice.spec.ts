@@ -5,7 +5,7 @@ test.describe.configure({ timeout: 90_000 });
 test('language changes, duplicate guard, reversal, and navigation retain selections', async ({ page }) => {
   await openPracticeSetup(page);
   await expect(page.getByRole('button', { name: 'Start Practicing', exact: true })).toBeDisabled();
-  await expect(page.getByRole('button', { name: 'Customize Filters', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'More detailed filters', exact: true })).toBeDisabled();
   await selectLanguages(page);
   const languages = languageRegion(page);
   await languages.getByRole('button', { name: 'Spanish', exact: true }).click();
@@ -17,7 +17,7 @@ test('language changes, duplicate guard, reversal, and navigation retain selecti
   await expect(languages.getByRole('button', { name: 'French', exact: true })).toBeVisible();
   await languages.getByRole('button', { name: 'Reverse languages', exact: true }).click();
   await expect.poll(() => page.evaluate(() => [localStorage.getItem('app.yourLanguage'), localStorage.getItem('app.practiceLanguage')])).toEqual(['fr', 'de']);
-  await page.getByRole('button', { name: 'Customize Filters', exact: true }).click();
+  await page.getByRole('button', { name: 'More detailed filters', exact: true }).click();
   await expect(page).toHaveURL(/\/languages\/filters/);
   await page.getByRole('button', { name: 'Back to Custom Practice', exact: true }).click();
   await expect(languages.getByRole('button', { name: 'French', exact: true })).toBeVisible();
@@ -50,33 +50,50 @@ test('filters and exercise guards configure a real filtered session and preserve
   await expect(typing).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Start Practicing', exact: true })).toBeEnabled();
 
-  await page.getByRole('button', { name: 'Customize Filters', exact: true }).click();
+  await page.getByRole('button', { name: 'More detailed filters', exact: true }).click();
   await page.getByRole('button', { name: /^A1\b/ }).dblclick();
   await page.getByRole('button', { name: /^A2\b/ }).click();
   await page.getByRole('button', { name: /^A2\b/ }).click();
-  await page.getByRole('button', { name: /Show all topics/ }).click();
-  const topics = page.getByRole('dialog', { name: 'Topics to Practice', exact: true });
-  await expect(topics).toBeVisible();
-  await topics.getByRole('button', { name: 'Food', exact: true }).click();
-  await topics.getByRole('button', { name: 'Clear', exact: true }).click();
-  await topics.getByRole('button', { name: 'Food', exact: true }).click();
-  await topics.getByRole('button', { name: 'Apply', exact: true }).click();
-  await expect(topics).toHaveCount(0);
-  await page.getByRole('button', { name: /^Noun\b/ }).click();
+  // Topics are an inline chip group; the expander reveals the rest and
+  // "All topics" clears the selection (no modal any more).
+  const topics = page.getByRole('group', { name: 'Topics', exact: true });
+  const expandTopics = page.getByRole('button', { name: /^Show all topics/ });
+  await expandTopics.click();
+  await expect(page.getByRole('button', { name: 'Show fewer topics', exact: true })).toHaveAttribute('aria-expanded', 'true');
+  const food = topics.getByRole('button', { name: 'Food', exact: true });
+  const allTopics = topics.getByRole('button', { name: 'All topics', exact: true });
+  await food.click();
+  await expect(food).toHaveAttribute('aria-pressed', 'true');
+  await expect(allTopics).toHaveAttribute('aria-pressed', 'false');
+  await allTopics.click();
+  await expect(food).toHaveAttribute('aria-pressed', 'false');
+  await expect(allTopics).toHaveAttribute('aria-pressed', 'true');
+  await food.click();
+  await expect(food).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('group', { name: 'Word Types', exact: true }).getByRole('button', { name: 'Noun', exact: true }).click();
   await page.getByRole('button', { name: 'Apply Filters', exact: true }).click();
+  // The setup page shows every level as a tile, so check pressed state
+  // rather than text that is always present.
   const summary = page.getByRole('region', { name: 'Vocabulary Filters', exact: true });
-  await expect(summary).toContainText('A1');
+  await expect(summary.getByRole('button', { name: /^A1\b/ })).toHaveAttribute('aria-pressed', 'true');
+  await expect(summary.getByRole('button', { name: /^A2\b/ })).toHaveAttribute('aria-pressed', 'false');
   await expect(summary).toContainText('Food');
   await expect(summary).toContainText('Noun');
-  await page.getByRole('button', { name: 'Customize Filters', exact: true }).click();
+  await page.getByRole('button', { name: 'More detailed filters', exact: true }).click();
   await page.getByRole('button', { name: /^A2\b/ }).click();
   await page.getByRole('button', { name: 'Back to Custom Practice', exact: true }).click();
-  await expect(summary).toContainText('A2');
+  await expect(summary.getByRole('button', { name: /^A2\b/ })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Start Practicing', exact: true }).click();
   await expect(page).toHaveURL(/\/es-en\/practice/);
   await expect(page.getByRole('heading', { name: 'manzana', exact: true })).toBeVisible();
   await expect(page.getByRole('textbox')).toBeVisible();
-  await page.getByRole('button', { name: 'Back to filters', exact: true }).click();
+  // In-session "Filters" opens the detailed filters page with the live
+  // selection; backing out from there returns to the preserved setup.
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  await expect(page).toHaveURL(/\/languages\/filters/);
+  await expect(page.getByRole('group', { name: 'Topics', exact: true }).getByRole('button', { name: 'Food', exact: true }))
+    .toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Back to Custom Practice', exact: true }).click();
   await expect(page).toHaveURL('http://127.0.0.1:4173/custom-practice');
   await expect(summary).toContainText('Food');
   await expect(typing).toHaveAttribute('aria-pressed', 'true');
@@ -123,12 +140,14 @@ test('typing feedback, click and Enter advancement, skip, reveal, finish, and re
   await page.getByRole('button', { name: 'Finish', exact: true }).click();
   await page.getByRole('button', { name: 'Maybe later', exact: true }).click();
   await expect(page.getByRole('table')).toBeVisible();
-  await page.getByRole('button', { name: 'Practiced words', exact: true }).click();
-  await expect(page.getByRole('cell', { name: 'about', exact: true })).toBeVisible();
-  await expect(page.getByRole('cell', { name: 'above', exact: true })).toBeVisible();
-  await expect(page.getByRole('cell', { name: 'action', exact: true })).toBeVisible();
-  await expect(page.getByRole('cell', { name: 'activity', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Close practiced words', exact: true }).click();
+  // Practiced words are listed inline on the results screen (no modal). A
+  // word counts only once the learner wrote it: "activity" was only revealed
+  // with Show me word, so it is excluded (see practicedWordCount).
+  const practiced = page.getByRole('region', { name: 'Practiced words', exact: true });
+  const practicedRow = (word: string) =>
+    practiced.getByRole('listitem').filter({ has: page.getByRole('link', { name: word, exact: true }) });
+  for (const word of ['about', 'above', 'action']) await expect(practicedRow(word)).toBeVisible();
+  await expect(practicedRow('activity')).toHaveCount(0);
   await page.getByRole('button', { name: 'Home', exact: true }).click();
   await expect(page).toHaveURL('http://127.0.0.1:4173/custom-practice');
   await expect(languageRegion(page).getByRole('button', { name: 'Spanish', exact: true })).toBeVisible();

@@ -106,13 +106,30 @@ test("no repository documentation instructs contributors to commit local agent s
 
 console.log("\n=== credential-safety guards ===\n");
 
+// These folders are git-ignored, so a clean CI checkout has none of them and
+// this scan only ever sees a developer's local tooling. Unambiguous secret
+// names are flagged anywhere. "token" is ambiguous: installed skill bundles
+// (a directory holding SKILL.md, e.g. .claude/skills/design-system/) ship
+// design-token scripts, docs and templates such as validate-tokens.cjs, so
+// inside a bundle "token" alone is not treated as a credential signal.
+const HARD_CREDENTIAL_NAME = /credential|secret|auth\.json|\.pem$|\.key$|api[-_]?key/;
+const AMBIGUOUS_CREDENTIAL_NAME = /token/;
+
+function isInsideSkillBundle(file, folderRoot) {
+  for (let dir = path.dirname(file); dir.startsWith(folderRoot) && dir !== folderRoot; dir = path.dirname(dir)) {
+    if (fs.existsSync(path.join(dir, "SKILL.md"))) return true;
+  }
+  return false;
+}
+
 test("no credential-looking file exists under .agents/, .claude/, or .codex/", () => {
   const offenders = [];
   for (const folder of AGENT_FOLDERS) {
-    const files = walkFiles(path.join(ROOT_DIR, folder));
-    for (const file of files) {
+    const folderRoot = path.join(ROOT_DIR, folder);
+    for (const file of walkFiles(folderRoot)) {
       const base = path.basename(file).toLowerCase();
-      if (/credential|secret|token|auth\.json|\.pem$|\.key$|api[-_]?key/.test(base)) {
+      if (HARD_CREDENTIAL_NAME.test(base) ||
+        (AMBIGUOUS_CREDENTIAL_NAME.test(base) && !isInsideSkillBundle(file, folderRoot))) {
         offenders.push(path.relative(ROOT_DIR, file));
       }
     }
