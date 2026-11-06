@@ -158,6 +158,13 @@ async function buildLazyPreloadMap() {
   };
 }
 
+// Vite's `base` ("/" for the Cloudflare build, "/<repo>/" under GitHub
+// Actions; see vite.config.ts), read from the built template's entry script
+// so injected links point where Vite actually emitted the assets.
+function readAssetBase(template) {
+  return template.match(/<script\b[^>]*\bsrc="([^"]*)assets\/index-[^"]*\.js"/)?.[1] ?? "/";
+}
+
 function getLazyChunkForRoute(route, chunkMap) {
   if (route === "/about" || route.startsWith("/about/")) return chunkMap.About;
   if (route === "/help" || route.startsWith("/help/")) return chunkMap.Help;
@@ -173,6 +180,7 @@ async function main() {
 
   try {
     const template = await fs.readFile(TEMPLATE_PATH, "utf8");
+    const assetBase = readAssetBase(template);
     const [{ getPrerenderRoutes, render }, chunkMap] = await Promise.all([
       loadServerBundle(),
       buildLazyPreloadMap(),
@@ -198,8 +206,8 @@ async function main() {
           const lazyChunk = getLazyChunkForRoute(route, chunkMap);
           if (lazyChunk) {
             const links = [
-              ...lazyChunk.css.map((file) => `<link rel="stylesheet" href="/assets/${file}">`),
-              `<link rel="modulepreload" href="/assets/${lazyChunk.js}">`,
+              ...lazyChunk.css.map((file) => `<link rel="stylesheet" href="${assetBase}assets/${file}">`),
+              `<link rel="modulepreload" href="${assetBase}assets/${lazyChunk.js}">`,
             ];
             html = html.replace(
               "</head>",

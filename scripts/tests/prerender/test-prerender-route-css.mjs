@@ -8,7 +8,8 @@
  *
  * Checks, against dist/:
  *   1. Each of those routes links its chunk's stylesheet exactly once, in
- *      <head>, as a root-relative /assets/ path to a file that exists, and
+ *      <head>, as a path under the build's Vite base ("/" or "/<repo>/" in
+ *      CI) to a file that exists, and
  *      with no duplicate stylesheet href anywhere in the document.
  *   2. The linked stylesheets cover every CSS file Vite itself loads for that
  *      chunk's dynamic import (read from the client entry's preload map), so
@@ -60,7 +61,11 @@ const linkHrefs = (html, rel) =>
     .map(([tag]) => tag)
     .filter((tag) => new RegExp(`\\brel="${rel}"`).test(tag))
     .map((tag) => tag.match(/\bhref="([^"]*)"/)?.[1] ?? "");
-const assetExists = (href) => href.startsWith("/assets/") && assetFiles.includes(href.slice("/assets/".length));
+// Vite base of this build (vite.config.ts: "/" locally and on Cloudflare,
+// "/<repo>/" under GitHub Actions), read from the template's entry script.
+const template = fs.readFileSync(path.join(DIST_DIR, "index.html"), "utf8");
+const ASSET_PREFIX = `${template.match(/<script\b[^>]*\bsrc="([^"]*)assets\/index-[^"]*\.js"/)?.[1] ?? "/"}assets/`;
+const assetExists = (href) => href.startsWith(ASSET_PREFIX) && assetFiles.includes(href.slice(ASSET_PREFIX.length));
 
 // The CSS Vite loads for each dynamic import, from the client entry's
 // __vite__mapDeps table: import("./X-hash.js"),__vite__mapDeps([i, ...]).
@@ -73,14 +78,14 @@ function readViteCssDeps() {
   const deps = JSON.parse(table[1]);
   const byChunk = new Map();
   for (const [, file, indexes] of source.matchAll(/import\("\.\/([^"]+\.js)"\),__vite__mapDeps\(\[([\d,]*)\]\)/g)) {
-    const css = indexes.split(",").map(Number).map((i) => deps[i]).filter((dep) => dep.endsWith(".css")).map((dep) => `/${dep}`);
+    const css = indexes.split(",").map(Number).map((i) => deps[i]).filter((dep) => dep.endsWith(".css")).map((dep) => ASSET_PREFIX + dep.slice("assets/".length));
     byChunk.set(file, css);
   }
   return byChunk;
 }
 const viteCssDeps = readViteCssDeps();
 
-const mainCss = assetFiles.filter((file) => /^index-[^.]+\.css$/.test(file)).map((file) => `/assets/${file}`);
+const mainCss = assetFiles.filter((file) => /^index-[^.]+\.css$/.test(file)).map((file) => ASSET_PREFIX + file);
 assert.equal(mainCss.length, 1, `expected one main stylesheet, found ${mainCss.join(", ")}`);
 
 console.log("\n=== routes with chunk CSS ===\n");
@@ -88,7 +93,7 @@ for (const { route, chunk } of ROUTES_WITH_CHUNK_CSS) {
   const html = readRoute(route);
   const head = html.slice(0, html.indexOf("</head>"));
   const stylesheets = linkHrefs(html, "stylesheet");
-  const chunkCss = stylesheets.filter((href) => href.startsWith(`/assets/${chunk}-`));
+  const chunkCss = stylesheets.filter((href) => href.startsWith(`${ASSET_PREFIX}${chunk}-`));
 
   test(`${route}: links the ${chunk} stylesheet once, in <head>, to an existing asset`, () => {
     assert.equal(chunkCss.length, 1, `found ${JSON.stringify(stylesheets)}`);
@@ -103,10 +108,10 @@ for (const { route, chunk } of ROUTES_WITH_CHUNK_CSS) {
   });
 
   test(`${route}: covers all CSS Vite loads for the chunk and keeps its modulepreload`, () => {
-    const preloads = linkHrefs(html, "modulepreload").filter((href) => href.startsWith(`/assets/${chunk}-`));
+    const preloads = linkHrefs(html, "modulepreload").filter((href) => href.startsWith(`${ASSET_PREFIX}${chunk}-`));
     assert.equal(preloads.length, 1, `modulepreload for ${chunk} missing or duplicated`);
     assert.ok(assetExists(preloads[0]), `${preloads[0]} is not a file in dist/assets`);
-    const expected = viteCssDeps.get(preloads[0].slice("/assets/".length));
+    const expected = viteCssDeps.get(preloads[0].slice(ASSET_PREFIX.length));
     assert.ok(expected, `no Vite preload entry for ${preloads[0]}`);
     assert.ok(expected.length > 0, `Vite maps no CSS to ${chunk}; this route no longer needs to be listed here`);
     for (const href of expected) assert.ok(stylesheets.includes(href), `${href} (loaded by Vite for ${chunk}) is not linked`);
