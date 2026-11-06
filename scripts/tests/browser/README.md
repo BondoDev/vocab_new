@@ -131,6 +131,15 @@ Round 3 adds focused journeys:
   failed-load messaging with retry. The preview is client-only, so
   server-rendered markup is covered by `test:word-browse-pagination`.
 
+`learning-routes.spec.ts` covers `/learning/new-words` and `/learning/review`
+at desktop and 390px mobile: with a mocked session each opens directly and
+survives a reload; signed out, each redirects to Custom Practice without
+showing the learning page; and in-app navigation from the profile's Learning
+section survives reload and Back. The preview answers every path with the
+SPA, so production's asset-first `410 Gone` for routes without a static shell
+is guarded by `test:interactive-contracts` and
+`test:prerendered-html-integrity` instead.
+
 `logout-privacy.spec.ts` checks account-scoped browser data after sign-out:
 cached `app.userProfile.*` profiles and the `app.practiceListSession`
 snapshot are removed after header and profile-sidebar sign-out, cross-tab

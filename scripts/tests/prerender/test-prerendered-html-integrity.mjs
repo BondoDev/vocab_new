@@ -255,6 +255,32 @@ try {
       assert.ok(html.includes(`>${text}</a>`), `${page} does not render the anchor text "${text}"`);
     });
   }
+
+  // Production serves assets first and sends misses to the word Worker
+  // (410 Gone for non-word paths), so signed-in app routes need a static
+  // shell to survive direct loads and refreshes. The shell is rendered
+  // without a session, so it must stay noindex, unlisted and data-free.
+  console.log("\n=== signed-in app shells (direct load / refresh) ===\n");
+  for (const route of ["/profile", "/learning/new-words", "/learning/review"]) {
+    test(`${route} has a noindex, data-free prerendered shell outside the sitemap`, () => {
+      const html = htmlByPath.get(route);
+      assert.ok(html, `${route} was not prerendered: production would answer it with the Worker's 410`);
+      assert.match(html, /<meta name="robots" content="noindex, [a-z]+"/, `${route} must be noindex`);
+      assert.ok(!/<link rel="canonical"/.test(html), `${route} must not declare a canonical URL`);
+      assert.ok(!sitemapPaths.has(route), `${route} must not be listed in the sitemap`);
+      // Session markers, and any email address other than the UI copy's
+      // "you@example.com" placeholder (the shell embeds interface strings).
+      assert.ok(!/access_token|refresh_token|supabase\.auth\.session/.test(html), `${route} shell must not embed session data`);
+      const emails = [...new Set(html.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z.]{2,}/g) ?? [])]
+        .filter((email) => email !== "you@example.com");
+      assert.deepEqual(emails, [], `${route} shell must not embed account email addresses`);
+    });
+  }
+  test("unrouted paths under /learning stay unprerendered and keep their 410", () => {
+    for (const route of ["/learning", "/learning/index", "/learning/new-word"]) {
+      assert.ok(!htmlByPath.has(route), `${route} must not be prerendered`);
+    }
+  });
 } finally {
   compiled.cleanup();
 }

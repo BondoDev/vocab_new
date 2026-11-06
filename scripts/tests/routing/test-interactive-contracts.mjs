@@ -87,6 +87,25 @@ test("src/app/App.tsx ROUTES contains exactly the expected primary interactive r
   );
 });
 
+// Production serves static assets first and sends every miss to the word
+// Worker, which returns 410 Gone for non-word paths. So each fixed interactive
+// route (and each legacy alias pageFromPath still accepts) needs a prerendered
+// shell, or direct loads and refreshes break while in-app navigation works.
+// Unrouted paths must stay unprerendered so they keep their 410.
+test("every fixed interactive route has a prerendered shell (direct load/refresh must not 410)", () => {
+  const entryServerSource = readFile("src/entry-server.tsx");
+  const blockMatch = entryServerSource.match(/const CORE_PRERENDER_ROUTES = \[([\s\S]*?)\] as const;/);
+  assert.ok(blockMatch, 'could not find "const CORE_PRERENDER_ROUTES = [ ... ] as const;" in src/entry-server.tsx');
+  const prerendered = new Set([...blockMatch[1].matchAll(/"([^"]*)"/g)].map((match) => match[1]));
+  const legacyAliases = ["/languages", "/languages/filters/exercises"];
+  const routePaths = [...extractRouteObject(appTsxSource, "ROUTES").values()];
+  const missing = [...routePaths, ...legacyAliases].filter((route) => !prerendered.has(route));
+  assert.deepEqual(missing, [], `interactive route(s) without a prerendered shell: ${missing.join(", ")}`);
+  for (const unrouted of ["/learning", "/dashboard"]) {
+    assert.ok(!prerendered.has(unrouted), `${unrouted} is not a client route and must keep its 410`);
+  }
+});
+
 test("src/app/App.tsx ROUTES has no duplicate path values", () => {
   const routes = extractRouteObject(appTsxSource, "ROUTES");
   const values = [...routes.values()];

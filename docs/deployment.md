@@ -151,6 +151,11 @@ Local development
 - Removed/invalid word URLs: `410 Gone` (text/plain) from the Worker.
 - Unknown non-word paths that miss the asset directory also fall through to
   the Worker and currently return `410 Gone` (verified live 2026-07-13).
+  Every interactive client route therefore needs a prerendered shell in
+  `CORE_PRERENDER_ROUTES` (`src/entry-server.tsx`), or direct loads and
+  refreshes of it return `410` even though in-app navigation works.
+  `/learning/new-words` and `/learning/review` were missing until
+  2026-11-06; `test:interactive-contracts` now guards the full route map.
 - `404` is returned only for missing browse-shard JSON lookups.
 - Sitemap/robots content types come from Static Assets MIME mapping
   (verified live: `application/xml` for `/sitemap.xml` and `/sitemaps/*`,

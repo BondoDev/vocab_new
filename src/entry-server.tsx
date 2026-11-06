@@ -105,6 +105,14 @@ const CORE_PRERENDER_ROUTES = [
   "/languages/level-test",
   "/about",
   "/help",
+  // Signed-in learning sessions. Production serves static assets first and
+  // sends every miss to the word Worker, which answers non-word paths with
+  // 410 Gone, so an interactive route without a prerendered shell breaks on
+  // direct load and refresh. These shells contain no user data (SSR has no
+  // session); the client's protected-page guard redirects signed-out
+  // visitors, exactly as for /profile. Metadata is noindex (routeMetadataPolicy).
+  "/learning/new-words",
+  "/learning/review",
 ] as const;
 const PRACTICE_ROUTE_UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"] as const;
 const vocabularyModules = import.meta.glob("./data/vocabulary/*/vocabulary.json") as Record<
