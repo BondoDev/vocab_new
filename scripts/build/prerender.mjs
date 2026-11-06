@@ -165,6 +165,20 @@ function readAssetBase(template) {
   return template.match(/<script\b[^>]*\bsrc="([^"]*)assets\/index-[^"]*\.js"/)?.[1] ?? "/";
 }
 
+// The homepage's LCP element is the hero photo, a CSS background
+// (src/app/pages/home/new-home-page.scss) that the browser otherwise finds
+// only after the stylesheet is parsed. Preload the AVIF the CSS image-set()
+// picks first, so it downloads in parallel with the CSS and JS. One format
+// only: `type` makes browsers without AVIF skip the hint (they still get
+// WebP/PNG from the CSS), and preloading every format would download
+// duplicates. The URL must match the CSS exactly to reuse the response.
+function getRouteImagePreloads(route, assetBase) {
+  if (route !== "/") return [];
+  return [
+    `<link rel="preload" as="image" href="${assetBase}images/home/homepage-image.avif" type="image/avif" fetchpriority="high">`,
+  ];
+}
+
 function getLazyChunkForRoute(route, chunkMap) {
   if (route === "/about" || route.startsWith("/about/")) return chunkMap.About;
   if (route === "/help" || route.startsWith("/help/")) return chunkMap.Help;
@@ -204,10 +218,16 @@ async function main() {
           const page = await render(route, SITE_ORIGIN);
           let html = injectRenderedPage(template, page);
           const lazyChunk = getLazyChunkForRoute(route, chunkMap);
-          if (lazyChunk) {
+          const imagePreloads = getRouteImagePreloads(route, assetBase);
+          if (lazyChunk || imagePreloads.length > 0) {
             const links = [
-              ...lazyChunk.css.map((file) => `<link rel="stylesheet" href="${assetBase}assets/${file}">`),
-              `<link rel="modulepreload" href="${assetBase}assets/${lazyChunk.js}">`,
+              ...imagePreloads,
+              ...(lazyChunk
+                ? [
+                    ...lazyChunk.css.map((file) => `<link rel="stylesheet" href="${assetBase}assets/${file}">`),
+                    `<link rel="modulepreload" href="${assetBase}assets/${lazyChunk.js}">`,
+                  ]
+                : []),
             ];
             html = html.replace(
               "</head>",

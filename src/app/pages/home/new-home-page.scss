@@ -42,7 +42,20 @@
     min-height: 28rem;
     padding: 1.75rem var(--homepage-page-gutter) 0;
     background-color: #f2effa;
+    // The hero photo (the homepage LCP element). Same 2172x724 artwork in
+    // three encodings: browsers with image-set() type() support pick AVIF
+    // (~55 KB), else WebP (~90 KB); older browsers ignore that declaration
+    // and keep the PNG one above it (~1.9 MB original). Only the winning
+    // declaration is fetched. scripts/build/prerender.mjs preloads the AVIF
+    // in the prerendered homepage, so keep its file name in sync. No smaller
+    // resolution: `cover` is height-driven here, so phones and tablets
+    // already upscale the full-width artwork.
     background-image: url("/images/home/homepage-image.png");
+    background-image: image-set(
+      url("/images/home/homepage-image.avif") type("image/avif"),
+      url("/images/home/homepage-image.webp") type("image/webp"),
+      url("/images/home/homepage-image.png") type("image/png")
+    );
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
