@@ -1,9 +1,4 @@
-import {
-  lazy,
-  Suspense,
-  type ComponentType,
-  type LazyExoticComponent,
-} from "react";
+import { Suspense, useState, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import {
   getNounList,
@@ -11,7 +6,7 @@ import {
   getNounListPath,
 } from "../../../../../data/seo/listPages/nounLists";
 import {
-  loadNounDetails,
+  readNounDetails,
   type NounDetailsFile,
 } from "../../../../../data/seo/listPages/nounLists/common100Nouns/common100NounDetails";
 import { getFullVocabularyListPath } from "../../../../../data/seo/listPages/fullVocabularyList";
@@ -39,36 +34,38 @@ import {
 import "./noun-list-intro.scss";
 
 type LoadedNounListTableProps = Omit<NounListTableProps, "groups"> & {
+  listId: string;
   buildGroups: (details: NounDetailsFile | null) => NounListTableGroup[];
 };
 
-// One lazy table per list, created once and cached at module level so its
-// component identity is stable across renders. Its chunk is the list's
-// generated details file (see common100NounDetails.ts): the table renders
-// once that file has loaded — during prerendering, before the HTML is
-// collected; on the client, before hydrating the server-rendered table.
-const loadedTables = new Map<
-  string,
-  LazyExoticComponent<ComponentType<LoadedNounListTableProps>>
->();
-
-function getLoadedNounListTable(listId: string) {
-  let LoadedTable = loadedTables.get(listId);
-  if (!LoadedTable) {
-    LoadedTable = lazy(async () => {
-      const details = await loadNounDetails(listId);
-      return {
-        default: function LoadedNounListTable({
-          buildGroups,
-          ...props
-        }: LoadedNounListTableProps) {
-          return <NounListTable {...props} groups={buildGroups(details)} />;
-        },
-      };
-    });
-    loadedTables.set(listId, LoadedTable);
+// The table, rendered from the list's generated details file (see
+// common100NounDetails.ts), which it reads synchronously and suspends only
+// while it is still loading. A failed download renders the table without
+// details (the same "—" rows as stale details) instead of unmounting the
+// whole app. Where it suspends is decided by NounListSeoPage — see
+// tableNeedsBoundary there.
+function LoadedNounListTable({ listId, buildGroups, ...props }: LoadedNounListTableProps) {
+  const state = readNounDetails(listId);
+  if (state.status === "pending") {
+    throw state.promise;
   }
-  return LoadedTable;
+  if (state.status === "failed") {
+    console.warn(`NounListSeoPage: could not load the ${listId} noun details.`, state.error);
+  }
+  return (
+    <NounListTable
+      {...props}
+      groups={buildGroups(state.status === "loaded" ? state.details : null)}
+    />
+  );
+}
+
+function TableBoundary({ enabled, children }: { enabled: boolean; children: ReactNode }) {
+  return enabled ? (
+    <Suspense fallback={<div className="nlt nlt-pending" aria-busy="true" />}>{children}</Suspense>
+  ) : (
+    <>{children}</>
+  );
 }
 
 interface NounListSeoPageProps {
@@ -104,6 +101,26 @@ export function NounListSeoPage({
     pathname,
   });
   const { message: toastMessage, show: showToast } = useAutoDismissMessage();
+  // The table gets its own Suspense boundary only when this mount starts in
+  // the browser with the details still downloading (client-side
+  // navigation), so just the table shows a placeholder. The server render
+  // and hydration have none, and this must stay that way:
+  //   - Prerendering: the table's suspension is caught by App's route
+  //     boundary, which the prerender waits for (stream.allReady), so the
+  //     finished table is in the HTML without a nested boundary.
+  //   - Hydration: src/entry-client.tsx loads the details BEFORE hydrateRoot,
+  //     so the table never suspends. React 18 hydrates every server-rendered
+  //     Suspense boundary later, at idle priority; App's mount effects (auth
+  //     and profile state) re-render the page first, and a nested boundary
+  //     reached by that update while still dehydrated is discarded and
+  //     client-rendered (React #421). With the old React.lazy table and
+  //     its own boundary, that replaced the prerendered table on ~1 in 8
+  //     production loads.
+  // Decided once per mount (App keys this page by list and language), so the
+  // tree never changes shape under a mounted page.
+  const [tableNeedsBoundary] = useState(
+    () => typeof window !== "undefined" && readNounDetails(listId).status === "pending",
+  );
   const content = getNounListContent(listId, uiLang);
   const list = getNounList(listId);
 
@@ -172,8 +189,6 @@ export function NounListSeoPage({
     }
     return tableGroups;
   };
-  const LoadedNounListTable = getLoadedNounListTable(listId);
-
   return (
     <main className="min-h-screen bg-background px-4 py-6 md:px-8 md:py-8">
       <SEOHead metadata={seoMetadata} />
@@ -183,12 +198,11 @@ export function NounListSeoPage({
             <h1 className="nli-heading">{content.hero.heading}</h1>
             <p className="nli-intro">{content.hero.intro}</p>
           </header>
-          {/* The fallback only shows on client-side navigation to the page;
-              prerendered HTML already contains the table. */}
-          <Suspense
-            fallback={<div className="nlt nlt-pending" aria-busy="true" />}
-          >
+          {/* The placeholder only shows on client-side navigation to the
+              page; prerendered HTML already contains the table. */}
+          <TableBoundary enabled={tableNeedsBoundary}>
             <LoadedNounListTable
+              listId={listId}
               buildGroups={buildTableGroups}
               showTranslations={showTranslations}
               wordLang={list.speechLang}
@@ -210,7 +224,7 @@ export function NounListSeoPage({
                 addToListWord: content.table.addToListWord,
               }}
             />
-          </Suspense>
+          </TableBoundary>
         </div>
 
         <div className="space-y-8 md:space-y-10">

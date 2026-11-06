@@ -3,6 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./app/App";
 import { resolvePrivacyPolicyRoute } from "./data/seo/legalPages/privacyPolicy/privacyPolicyRoutes";
 import { loadPrivacyPolicyDocument } from "./data/seo/legalPages/privacyPolicy/privacyPolicyContent";
+import { resolveNounListRoute } from "./data/seo/listPages/nounLists/common100Nouns/common100NounRegistry";
+import { loadNounDetails } from "./data/seo/listPages/nounLists/common100Nouns/common100NounDetails";
 import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
 
@@ -11,14 +13,24 @@ import "./styles/index.css";
 // React.lazy on the client needs to load the chunk before hydration or it
 // throws #421. Starting the import here gives the module a head-start so
 // it is often already cached by the time hydrateRoot encounters the boundary.
-const { pathname } = window.location;
+// App routes are matched without Vite's base ("/" in production, "/<repo>/"
+// in CI builds), as BrowserRouter's basename does below.
+const basePrefix = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pathname =
+  basePrefix && window.location.pathname.startsWith(`${basePrefix}/`)
+    ? window.location.pathname.slice(basePrefix.length)
+    : window.location.pathname;
 const privacyPolicyLanguage = resolvePrivacyPolicyRoute(pathname);
+const nounListRoute = resolveNounListRoute(pathname);
 const _lazyChunkPreload: Promise<unknown> | null =
-  // Privacy Policy: load the document itself (not just a chunk) so
-  // PrivacyPolicyPage renders it synchronously and never suspends during
-  // hydration; see the comment in src/app/pages/legal/PrivacyPolicyPage.tsx.
+  // Privacy Policy and 100-noun pages: load the data itself (not just a
+  // chunk) so the page renders it synchronously and never suspends during
+  // hydration; see src/app/pages/legal/PrivacyPolicyPage.tsx and
+  // src/app/pages/list-pages/noun-lists/common100Nouns/NounListSeoPage.tsx.
   privacyPolicyLanguage
     ? loadPrivacyPolicyDocument(privacyPolicyLanguage)
+    : nounListRoute
+    ? loadNounDetails(nounListRoute.listId)
     : pathname === "/about" || pathname.startsWith("/about/")
     ? import("./app/pages/about/About")
     : pathname === "/help" || pathname.startsWith("/help/")
