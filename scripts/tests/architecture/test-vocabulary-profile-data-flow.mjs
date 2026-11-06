@@ -205,14 +205,15 @@ test("9. Vocabulary profile writes cannot smuggle timezone through either narrow
   const languagesFnMatch = userProfileLib.match(/export async function updateUserProfileLanguages\(([\s\S]*?)\r?\n\}/);
   assert.ok(onboardingFnMatch, "completeUserProfileOnboarding must exist");
   assert.ok(languagesFnMatch, "updateUserProfileLanguages must exist");
-  const onboardingBodyMatch = onboardingFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
   const languagesBodyMatch = languagesFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
-  assert.ok(onboardingBodyMatch, "completeUserProfileOnboarding must send a JSON request body");
+  assert.match(onboardingFnMatch[1], /body:\s*JSON\.stringify\(/, "completeUserProfileOnboarding must send a JSON request body");
   assert.ok(languagesBodyMatch, "updateUserProfileLanguages must send a JSON request body");
+  // p_timezone is an inference-only input that the RPC never stores
+  // (20261106120000; pinned by test:account-age's SQL contract).
   assert.doesNotMatch(
-    onboardingBodyMatch[1],
-    /\btimezone\b|timezone_updated_at|p_timezone/i,
-    "the onboarding RPC's request body must not include any timezone field",
+    onboardingFnMatch[1],
+    /\b(timezone|timezone_updated_at)\s*:/i,
+    "the onboarding RPC's request body must not include a stored timezone field",
   );
   assert.doesNotMatch(
     languagesBodyMatch[1],

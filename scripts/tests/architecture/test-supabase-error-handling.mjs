@@ -311,6 +311,16 @@ test("15. Supabase-error refactor guard does not own unrelated timezone migratio
     if (file === "supabase/migrations/20260808130000_add_vocabulary_growth_events_rpc.sql") {
       return false;
     }
+    // Same carve-out: the onboarding birth-year time-zone fix replaces only
+    // complete_user_profile_onboarding (plus a pure date helper) and is
+    // verified by its own pgTAP suite (supabase/tests/database/) and
+    // test:account-age; it changes no learning-write RPC or review/study
+    // state machine. It is the first migration reviewed on a feature branch,
+    // where this guard diffs the whole branch against master. Exact filename
+    // only, same reasoning as above.
+    if (file === "supabase/migrations/20261106120000_fix_onboarding_leap_day_utc_boundary.sql") {
+      return false;
+    }
 
     return (
       file.startsWith("supabase/migrations/") ||
