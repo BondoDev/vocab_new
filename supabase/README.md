@@ -2635,6 +2635,74 @@ Account deletion is deliberately **not** exercised end-to-end by this suite
 (`ACCOUNT_DELETION_ENABLED=true` against a real deployed Edge Function) is
 not tested here.
 
+## Onboarding birth year in the browser's time zone (2026-11-06)
+
+`migrations/20261106120000_fix_onboarding_leap_day_utc_boundary.sql`
+changes only `complete_user_profile_onboarding` and adds one helper.
+
+- **Bug.** A new profile has no time zone during onboarding, so the birth
+  year was inferred from the UTC date while the client validated the age
+  against the browser's date. For a Feb 29 birthday, when the two dates fall
+  on opposite sides of the age change (Feb 29 in leap years, March 1
+  otherwise), the honest age implied a non-leap birth year in UTC and
+  registration was rejected ("February 29 does not exist ..."): west of UTC
+  on the evening of Feb 28, east of UTC on the local birthday itself,
+  including the 16th birthday.
+- **Fix.** The RPC gains a trailing `p_timezone text DEFAULT NULL`, the
+  browser IANA zone the client validated with. "Today" comes from
+  `onboarding_reference_date(stored zone, supplied zone, instant)`: the
+  stored zone wins; otherwise the supplied zone; missing or unknown
+  identifiers fall back to UTC (`pg_timezone_names`, as `user_local_date`).
+  `p_timezone` is never stored: time-zone writes stay with
+  `initialize_user_timezone`/`update_user_timezone`. The helper exists so
+  the date boundary can be tested with explicit instants; only `postgres`
+  and `service_role` may execute it.
+- **Unchanged.** The 16-100 rule, real-date and Feb 29 consistency checks,
+  "Feb 29 ages on March 1 in non-leap years", return columns, other RPCs,
+  and every existing row (no data change, no column, no constraint).
+- **Signature.** The 7-argument function is dropped and the 8-argument one
+  created in the same transaction (keeping both would make PostgREST's
+  named-argument resolution ambiguous, PGRST203). A DO block aborts the
+  migration unless exactly the new signature remains. 7-argument callers
+  keep the previous behavior through the `NULL` default.
+- **Deploy order.** Apply the migration first, then deploy the app. If the
+  app reaches an unmigrated database, PostgREST answers PGRST202 naming
+  `p_timezone`; `completeUserProfileOnboarding` retries once with the seven
+  arguments for exactly that error and nothing else.
+- **Not applied automatically.** Apply in the SQL Editor after review. It
+  does not re-run `20261105160000`.
+- **Tests.** Real PostgreSQL: `tests/database/onboarding_leap_day_time_zone.test.sql`
+  (see "Database tests"). Client and source contracts: section [9] of
+  `scripts/tests/account/test-account-age.mjs`.
+- **Rollback.** In one transaction: drop
+  `complete_user_profile_onboarding(text, text, text, text, integer, integer, integer, text)`
+  and `onboarding_reference_date(text, text, timestamptz)`, re-run the
+  `complete_user_profile_onboarding` block and its REVOKE/GRANT lines from
+  `20261105160000`, then `notify pgrst, 'reload schema';`. The app falls
+  back automatically (PGRST202).
+
+## Database tests (pgTAP)
+
+`tests/` holds pgTAP suites that run against a real, disposable local
+Supabase Postgres 17, never the hosted project:
+
+```bash
+# Requires Docker and Supabase CLI 2.122.1 (the version CI pins):
+#   npx supabase@2.122.1 <command>
+supabase db start           # local container; auth schema, then every file in migrations/
+supabase test db --local    # runs tests/**/*.sql with pg_prove
+supabase stop       # optional cleanup
+```
+
+Each file runs in one transaction that it rolls back, with synthetic
+`auth.users` rows only. `.github/workflows/database-tests.yml` runs the same
+two commands with the same pinned CLI on GitHub's Ubuntu runner (which has Docker) for changes under
+`supabase/` only; it uses no secrets and never links a project. The local
+replay starts from the catalog baseline, so it proves the migration chain
+and the SQL, not the absence of dashboard drift in production: before
+applying a migration, compare the live function definitions read-only
+(`pg_get_functiondef`) with the previous migration.
+
 ## What happens next
 
 Corrective changes are separate, individually-reviewed follow-up migrations

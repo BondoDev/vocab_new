@@ -1,0 +1,52 @@
+name: Database tests
+
+# Real-PostgreSQL gate for supabase/. Starts a disposable local Supabase
+# Postgres 17 container on the runner (Docker), applies every migration in
+# supabase/migrations from scratch, then runs the pgTAP suite in
+# supabase/tests with pg_prove. No hosted project, no link, no secrets: the
+# production database is never contacted. Path filters keep frontend-only
+# changes from paying for a database start (CI's ci.yml covers those).
+# How to run the same locally: supabase/README.md, "Database tests".
+
+on:
+  pull_request:
+    paths:
+      - "supabase/**"
+      - ".github/workflows/database-tests.yml"
+  push:
+    branches: [master]
+    paths:
+      - "supabase/**"
+      - ".github/workflows/database-tests.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: database-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  pgtap:
+    name: Migrations + pgTAP (local Supabase Postgres)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up the Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          # Pinned: v3 (2026-11-02) changed command targeting and config
+          # loading. 2.122.1 is the latest 2.x; bump deliberately.
+          version: 2.122.1
+
+      # db start: Postgres container, GoTrue's auth migrations, then every
+      # file in supabase/migrations and the seed (CLI 2.122.1 behavior).
+      - name: Start a local database and apply all migrations
+        run: supabase db start
+
+      - name: Run pgTAP tests
+        run: supabase test db --local

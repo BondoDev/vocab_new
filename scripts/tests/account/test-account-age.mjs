@@ -296,24 +296,78 @@ await test("cached profile recomputes the age from the birth year (cache cannot 
   const today = calendarDateInTimeZone(new Date(), "UTC");
   assert.equal(profile.readStoredUserProfile("user-1").age, ageOn(2000, 1, 1, today));
 });
-await test("onboarding request carries no time-zone field (time-zone writes stay with the time-zone RPCs)", async () => {
+const onboardingRow = {
+  nickname: "Ann", native_language: "en", learning_language: "es", current_level: "A1", user_age: 20,
+  birth_month: 8, birth_day: 20, onboarding_completed: true, daily_goal: 15, timezone: null,
+  timezone_updated_at: null, updated_at: "2026-11-05T10:00:00Z", birth_year: 2006,
+  age_confirmed_at: "2026-11-05T10:00:00Z", current_age: 20,
+};
+const onboardingInput = {
+  nickname: "Ann", nativeLanguage: "en", practiceLanguage: "es", languageLevel: "A1",
+  age: 20, birthMonth: "08", birthDay: "20", timeZone: "Pacific/Honolulu",
+};
+// Replays the given responses in order and records every request body.
+const scriptOnboardingResponses = (...responses) => {
   const bodies = [];
   globalThis.fetch = async (_url, init) => {
     bodies.push(JSON.parse(init.body));
-    return { ok: true, status: 200, json: async () => [{
-      nickname: "Ann", native_language: "en", learning_language: "es", current_level: "A1", user_age: 20,
-      birth_month: 8, birth_day: 20, onboarding_completed: true, daily_goal: 15, timezone: null,
-      timezone_updated_at: null, updated_at: "2026-11-05T10:00:00Z", birth_year: 2006,
-      age_confirmed_at: "2026-11-05T10:00:00Z", current_age: 20,
-    }] };
+    const { status, body } = responses[Math.min(bodies.length - 1, responses.length - 1)];
+    return { ok: status < 300, status, json: async () => body };
   };
-  const result = await profile.completeUserProfileOnboarding(session, {
-    nickname: "Ann", nativeLanguage: "en", practiceLanguage: "es", languageLevel: "A1",
-    age: 20, birthMonth: "08", birthDay: "20",
-  });
-  assert.equal(Object.keys(bodies[0]).some((key) => /timezone/i.test(key)), false);
+  return bodies;
+};
+const pgrst202 = (signature) => ({
+  status: 404,
+  body: {
+    code: "PGRST202",
+    message: `Could not find the function public.complete_user_profile_onboarding(${signature}) in the schema cache`,
+    details: "Searched for the function with the given parameters, but no matches were found in the schema cache.",
+    hint: null,
+  },
+});
+const SIGNATURE_WITH_ZONE = "p_birth_day, p_birth_month, p_current_level, p_learning_language, p_native_language, p_nickname, p_timezone, p_user_age";
+const SIGNATURE_WITHOUT_ZONE = "p_birth_day, p_birth_month, p_current_level, p_learning_language, p_native_language, p_nickname, p_user_age";
+
+await test("onboarding sends the validated zone as p_timezone and no stored time-zone field", async () => {
+  const bodies = scriptOnboardingResponses({ status: 200, body: [onboardingRow] });
+  const result = await profile.completeUserProfileOnboarding(session, onboardingInput);
+  assert.equal(bodies.length, 1);
+  assert.equal(bodies[0].p_timezone, "Pacific/Honolulu");
+  assert.deepEqual(Object.keys(bodies[0]).filter((key) => /timezone/i.test(key)), ["p_timezone"]);
   assert.equal(result.age, 20);
   assert.equal(result.birthYear, 2006);
+});
+await test("an unknown browser zone is sent as null (server: stored zone, else UTC)", async () => {
+  const bodies = scriptOnboardingResponses({ status: 200, body: [onboardingRow] });
+  await profile.completeUserProfileOnboarding(session, { ...onboardingInput, timeZone: null });
+  assert.equal(bodies[0].p_timezone, null);
+});
+await test("database without the migration (PGRST202 naming p_timezone): one retry with seven arguments", async () => {
+  const bodies = scriptOnboardingResponses(pgrst202(SIGNATURE_WITH_ZONE), { status: 200, body: [onboardingRow] });
+  const result = await profile.completeUserProfileOnboarding(session, onboardingInput);
+  assert.equal(bodies.length, 2);
+  assert.equal("p_timezone" in bodies[1], false);
+  assert.deepEqual(Object.keys(bodies[1]).sort(), Object.keys(bodies[0]).filter((key) => key !== "p_timezone").sort());
+  assert.equal(result.birthYear, 2006);
+});
+await test("the retry happens at most once (PGRST202 again is thrown)", async () => {
+  const bodies = scriptOnboardingResponses(pgrst202(SIGNATURE_WITH_ZONE), pgrst202(SIGNATURE_WITHOUT_ZONE));
+  await assert.rejects(profile.completeUserProfileOnboarding(session, onboardingInput), (error) => error.code === "PGRST202");
+  assert.equal(bodies.length, 2);
+});
+await test("unrelated errors are never retried", async () => {
+  for (const response of [
+    pgrst202("p_nickname"), // PGRST202 that does not name p_timezone
+    { status: 404, body: { code: "PGRST202", message: "Could not find the function public.other_rpc(p_timezone) in the schema cache" } },
+    { status: 400, body: { code: "22023", message: "complete_user_profile_onboarding: p_user_age must be between 16 and 100" } },
+    { status: 400, body: { code: "22023", message: "complete_user_profile_onboarding: February 29 does not exist in the birth year implied by p_user_age" } },
+    { status: 300, body: { code: "PGRST203", message: "Could not choose the best candidate function between: public.complete_user_profile_onboarding(p_timezone ...)" } },
+    { status: 500, body: { message: "internal error" } },
+  ]) {
+    const bodies = scriptOnboardingResponses(response);
+    await assert.rejects(profile.completeUserProfileOnboarding(session, onboardingInput));
+    assert.equal(bodies.length, 1, response.body.message);
+  }
 });
 await test("a voluntary Settings save initializes automatic age for an existing user", async () => {
   const bodies = [];
@@ -434,6 +488,170 @@ await test("no anon access to any new or changed function; schema cache reloaded
     assert.match(sql, new RegExp(`revoke execute on function public\\.${name}\\([^)]*\\) from public, anon;`), name);
   }
   assert.match(sql, /notify pgrst, 'reload schema';/);
+});
+
+console.log("\n[9] Onboarding in the browser's validated time zone (20261106120000)\n");
+
+// The database behavior itself is verified by the pgTAP suite
+// (supabase/tests/database/onboarding_leap_day_time_zone.test.sql, run by
+// .github/workflows/database-tests.yml). This section covers the client
+// (one zone for validation and request) and pins the SQL, pgTAP, and CI
+// files as source text. Instants and zones are explicit.
+
+const onboardingBundlePath = path.join(bundleDir, "accountOnboarding.mjs");
+await build({
+  entryPoints: [path.join(ROOT_DIR, "src/app/utils/accountOnboarding.ts")],
+  bundle: true,
+  format: "esm",
+  platform: "neutral",
+  mainFields: ["module", "main"],
+  outfile: onboardingBundlePath,
+  logLevel: "warning",
+  define: {
+    "import.meta.env": JSON.stringify({ VITE_SUPABASE_URL: "https://example.invalid", VITE_SUPABASE_ANON_KEY: "anon" }),
+  },
+});
+const { prepareAccountOnboardingSubmit } = await import(pathToFileURL(onboardingBundlePath).href);
+const prepare = (age, birthMonth, birthDay, extra) => prepareAccountOnboardingSubmit({
+  authUserId: "user-1",
+  userProfile: {
+    nickname: "Ann", nativeLanguage: "en", practiceLanguage: "es", languageLevel: "A1",
+    age, birthMonth, birthDay, onboardingCompleted: false,
+  },
+  yourLanguage: "en",
+  practiceLanguage: "es",
+  ...extra,
+});
+const localDate = (iso, zone) => calendarDateInTimeZone(new Date(iso), zone);
+
+await test("Honolulu, Feb 28 -> Mar 1: validated on the local date and that zone is returned for the request", () => {
+  const today = localDate("2026-03-01T06:00:00Z", "Pacific/Honolulu");
+  assert.deepEqual(today, d(2026, 2, 28));
+  const result = prepare(17, "02", "29", { timeZone: "Pacific/Honolulu", today });
+  assert.equal(result.ok, true);
+  assert.equal(result.timeZone, "Pacific/Honolulu");
+  assert.equal(inferBirthYear(17, 2, 29, today), 2008);
+});
+await test("Tokyo, 16th birthday on Feb 29: accepted with that zone", () => {
+  const today = localDate("2028-02-28T15:30:00Z", "Asia/Tokyo");
+  assert.deepEqual(today, d(2028, 2, 29));
+  const result = prepare(16, "02", "29", { timeZone: "Asia/Tokyo", today });
+  assert.equal(result.ok, true);
+  assert.equal(result.timeZone, "Asia/Tokyo");
+});
+await test("under 16 rejected; claiming 16 the day before a Feb 29 16th birthday is rejected", () => {
+  assert.equal(prepare(15, "06", "15", { timeZone: "UTC", today: d(2026, 11, 6) }).errorKey, "accountOnboarding.errors.ageMinimum");
+  const today = localDate("2028-02-29T06:00:00Z", "Pacific/Honolulu"); // Feb 28, 20:00 locally
+  assert.equal(prepare(16, "02", "29", { timeZone: "Pacific/Honolulu", today }).errorKey, "accountOnboarding.errors.birthDateLeapDay");
+});
+await test("the zone is detected once when not injected, and null passes through", () => {
+  assert.equal(prepare(30, "06", "15", { today: d(2026, 6, 15) }).timeZone, Intl.DateTimeFormat().resolvedOptions().timeZone);
+  assert.equal(prepare(30, "06", "15", { timeZone: null, today: d(2026, 6, 15) }).timeZone, null);
+  const source = read("src/app/utils/accountOnboarding.ts");
+  assert.equal(source.match(/detectBrowserTimezone\(\)/g)?.length, 1, "one detection");
+  assert.match(source, /calendarDateInTimeZone\(new Date\(\), timeZone\)/, "validation uses that value");
+  assert.match(read("src/app/hooks/useAccountOnboarding.ts"), /timeZone: submitPreparation\.timeZone/, "the request uses that value");
+});
+await test("UTC midnight, positive/negative offsets, Dec 31 -> Jan 1 (client calendar)", () => {
+  assert.deepEqual(localDate("2026-02-28T23:59:59.999Z", "UTC"), d(2026, 2, 28));
+  assert.deepEqual(localDate("2026-03-01T00:00:00.000Z", "UTC"), d(2026, 3, 1));
+  assert.deepEqual(localDate("2026-02-28T10:00:00Z", "Pacific/Kiritimati"), d(2026, 3, 1));
+  assert.deepEqual(localDate("2026-03-01T11:59:00Z", "Etc/GMT+12"), d(2026, 2, 28));
+  assert.equal(ageOn(2010, 1, 1, localDate("2026-12-31T20:00:00Z", "Asia/Tokyo")), 17);
+  assert.equal(ageOn(2010, 1, 1, localDate("2026-12-31T20:00:00Z", "America/New_York")), 16);
+});
+await test("TS mirror: an honest declaration validated in any zone infers the true birth year on that zone's date", () => {
+  const HOUR = 3_600_000;
+  const zones = ["Pacific/Kiritimati", "Pacific/Auckland", "Asia/Tokyo", "Asia/Kolkata", "Europe/Berlin", "UTC",
+    "America/Sao_Paulo", "America/New_York", "Pacific/Honolulu", "Pacific/Pago_Pago", "Etc/GMT+12"];
+  let checked = 0;
+  for (const [birthYear, month, day, from, to] of [
+    [2008, 2, 29, "2026-02-27T00:00:00Z", "2026-03-03T00:00:00Z"],
+    [2012, 2, 29, "2028-02-27T00:00:00Z", "2028-03-03T00:00:00Z"],
+    [2010, 1, 1, "2026-12-30T00:00:00Z", "2027-01-02T00:00:00Z"],
+    [2009, 6, 15, "2026-06-13T00:00:00Z", "2026-06-17T00:00:00Z"],
+  ]) {
+    for (let ms = Date.parse(from); ms <= Date.parse(to); ms += HOUR) {
+      for (const zone of zones) {
+        const local = calendarDateInTimeZone(new Date(ms), zone);
+        const age = ageOn(birthYear, month, day, local);
+        if (age < 16) continue;
+        checked += 1;
+        assert.equal(getDeclaredAgeIssue(age, month, day, local), null);
+        assert.equal(inferBirthYear(age, month, day, local), birthYear, `${zone} ${new Date(ms).toISOString()}`);
+      }
+    }
+  }
+  assert.ok(checked > 1000);
+});
+
+const fixSql = read("supabase/migrations/20261106120000_fix_onboarding_leap_day_utc_boundary.sql").replace(/\r\n/g, "\n");
+const fixFn = fixSql.match(/create or replace function public\.complete_user_profile_onboarding\([\s\S]*?\$function\$;/)?.[0];
+const helperFn = fixSql.match(/create or replace function public\.onboarding_reference_date\([\s\S]*?\$function\$;/)?.[0];
+const NEW_SIGNATURE = "text, text, text, text, integer, integer, integer, text";
+await test("migration: old 7-argument function dropped, 8-argument one with p_timezone DEFAULT NULL", () => {
+  assert.ok(fixFn && helperFn);
+  assert.match(fixSql, /drop function if exists public\.complete_user_profile_onboarding\(text, text, text, text, integer, integer, integer\);/);
+  assert.ok(fixSql.indexOf("drop function if exists public.complete_user_profile_onboarding") < fixSql.indexOf(fixFn));
+  assert.match(fixFn, /p_birth_day integer,\n {2}p_timezone text default null\n\)/);
+});
+await test("migration: applied body otherwise byte-identical (only the v_today source changes)", () => {
+  const original = fn("complete_user_profile_onboarding").replace(/\r\n/g, "\n");
+  const reverted = fixFn
+    .replace("  p_birth_day integer,\n  p_timezone text default null\n)", "  p_birth_day integer\n)")
+    .replace(
+      /  -- Stored zone first[^\n]*\n  -- else UTC[^\n]*\n  v_today := public\.onboarding_reference_date\(v_stored_timezone, p_timezone, v_now\);/,
+      "  v_today := public.user_local_date(v_stored_timezone);",
+    );
+  assert.equal(reverted, original);
+});
+await test("migration: helper takes an explicit instant; stored zone wins, then supplied, unknown -> UTC", () => {
+  assert.match(helperFn, /p_stored_timezone text,\s*p_timezone text,\s*p_at timestamptz/);
+  assert.match(helperFn, /p_at at time zone coalesce\(/);
+  assert.match(helperFn, /where tzn\.name = coalesce\(p_stored_timezone, p_timezone\)/);
+  assert.match(helperFn, /'UTC'\)\)::date/);
+  assert.doesNotMatch(helperFn, /now\(\)|user_profiles|insert|update/i);
+});
+await test("migration: p_timezone is never written; age and Feb 29 checks untouched", () => {
+  assert.doesNotMatch(fixFn, /set_config|timezone =|timezone_updated_at =/);
+  assert.doesNotMatch(fixFn.match(/insert into public\.user_profiles \(([\s\S]*?)\)/)[1], /timezone/);
+  assert.match(fixFn, /p_user_age < 16 or p_user_age > 100/);
+  assert.match(fixFn, /February 29 does not exist in the birth year implied by p_user_age/);
+  assert.doesNotMatch(fixSql, /alter table|add column|update public\.|delete from|truncate/i);
+});
+await test("migration: privileges; helper not callable by anon/authenticated", () => {
+  assert.match(fixSql, new RegExp(`revoke execute on function public\\.complete_user_profile_onboarding\\(${NEW_SIGNATURE}\\) from public, anon;`));
+  assert.match(fixSql, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${NEW_SIGNATURE}\\) to postgres, authenticated, service_role;`));
+  assert.match(fixSql, /revoke execute on function public\.onboarding_reference_date\(text, text, timestamptz\) from public, anon, authenticated;/);
+  assert.match(fixSql, /grant execute on function public\.onboarding_reference_date\(text, text, timestamptz\) to postgres, service_role;/);
+  assert.match(fixFn, /security definer/);
+});
+await test("migration: one transaction; aborts unless exactly the new signature remains", () => {
+  const statements = fixSql.split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("--"));
+  assert.equal(statements[0], "begin;");
+  assert.equal(statements.at(-1), "commit;");
+  assert.equal((fixSql.match(/^\s*(begin|commit);/gim) ?? []).length, 2);
+  assert.match(fixSql, /p_user_age integer, p_birth_month integer, p_birth_day integer, p_timezone text'\n {2}\] then\n {4}raise exception/);
+  assert.ok(fixSql.indexOf("raise exception 'complete_user_profile_onboarding: unexpected signatures") < fixSql.lastIndexOf("notify pgrst, 'reload schema';"));
+  assert.ok(fixSql.indexOf("notify pgrst, 'reload schema';") < fixSql.lastIndexOf("commit;"));
+});
+await test("pgTAP suite exists, is self-contained, and rolls back", () => {
+  const tap = read("supabase/tests/database/onboarding_leap_day_time_zone.test.sql");
+  assert.match(tap, /^begin;$/m);
+  assert.match(tap, /select \* from finish\(\);\s*rollback;\s*$/);
+  for (const needle of ["Pacific/Honolulu", "Asia/Tokyo", "Pacific/Kiritimati", "Etc/GMT+12", "Not/AZone",
+    "exactly one complete_user_profile_onboarding", "seven-argument call still works", "stored zone takes precedence",
+    "under 16 is rejected", "anon may not call the RPC", "anon may not call the helper"]) {
+    assert.ok(tap.includes(needle), needle);
+  }
+  assert.doesNotMatch(tap, /supabase\.co|service_role_key|password/i, "no hosted project or secrets");
+});
+await test("CI: database tests run only for supabase/ changes, locally, with no secrets", () => {
+  const workflow = read(".github/workflows/database-tests.yml");
+  assert.match(workflow, /paths:\n\s+- "supabase\/\*\*"/);
+  assert.match(workflow, /supabase db start/);
+  assert.match(workflow, /supabase test db/);
+  assert.doesNotMatch(workflow, /secrets\.|SUPABASE_ACCESS_TOKEN|SUPABASE_DB_PASSWORD|db push|--linked|link /);
 });
 
 console.log(`\n${passed} passed, ${failed} failed\n`);

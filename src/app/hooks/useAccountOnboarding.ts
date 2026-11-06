@@ -94,7 +94,9 @@ export function useAccountOnboarding({
       // never touches daily_goal or either timezone column, instead of
       // this component re-sending the whole cached profile like the
       // previous broad upsert did. submitPreparation.ok === true above
-      // already guarantees every field below is non-empty.
+      // already guarantees every field below is non-empty. timeZone is the
+      // zone the age was just validated in; the RPC uses it only to infer
+      // the birth year and never stores it.
       const onboardingInput: CompleteUserProfileOnboardingInput = {
         nickname: profileToSave.nickname,
         nativeLanguage: profileToSave.nativeLanguage as CompleteUserProfileOnboardingInput["nativeLanguage"],
@@ -103,6 +105,7 @@ export function useAccountOnboarding({
         age: profileToSave.age as number,
         birthMonth: profileToSave.birthMonth,
         birthDay: profileToSave.birthDay,
+        timeZone: submitPreparation.timeZone,
       };
       const supabaseProfile = authSession
         ? await completeUserProfileOnboarding(authSession, onboardingInput)

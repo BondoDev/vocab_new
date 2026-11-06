@@ -106,11 +106,14 @@ test("7. Neither narrow profile RPC's request body sends timezone fields (Profil
   const languagesFnMatch = userProfileSource.match(/export async function updateUserProfileLanguages\(([\s\S]*?)\r?\n\}/);
   assert.ok(onboardingFnMatch, "completeUserProfileOnboarding must exist");
   assert.ok(languagesFnMatch, "updateUserProfileLanguages must exist");
-  const onboardingBodyMatch = onboardingFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
   const languagesBodyMatch = languagesFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
-  assert.ok(onboardingBodyMatch, "completeUserProfileOnboarding must send a JSON request body");
+  assert.match(onboardingFnMatch[1], /body:\s*JSON\.stringify\(/, "completeUserProfileOnboarding must send a JSON request body");
   assert.ok(languagesBodyMatch, "updateUserProfileLanguages must send a JSON request body");
-  assert.doesNotMatch(onboardingBodyMatch[1], /\btimezone\b|timezone_updated_at|p_timezone/i);
+  // Onboarding sends p_timezone as an inference-only input (the RPC never
+  // stores it; pinned by test:account-age's SQL contract), but no key may
+  // name a stored time-zone column.
+  assert.doesNotMatch(onboardingFnMatch[1], /\b(timezone|timezone_updated_at)\s*:/i);
+  assert.match(onboardingFnMatch[1], /p_timezone: input\.timeZone/);
   assert.doesNotMatch(languagesBodyMatch[1], /\btimezone\b|timezone_updated_at|p_timezone/i);
 });
 
