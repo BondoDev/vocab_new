@@ -496,6 +496,21 @@ export interface CompleteUserProfileOnboardingInput {
   // request body sent to the RPC below.
   birthMonth: string;
   birthDay: string;
+  // The browser IANA zone the age was validated in (null when unknown).
+  // Sent as p_timezone for the server's birth-year inference only.
+  timeZone: string | null;
+}
+
+// PGRST202 means PostgREST found no function for the sent argument names.
+// Only the database-without-20261106120000 case is retried: PostgREST's
+// message/details then name this RPC together with p_timezone. Every other
+// error, including PGRST202 for the seven-argument call itself, is thrown.
+function isOnboardingTimezoneArgumentUnavailable(error: unknown): boolean {
+  if (!(error instanceof SupabaseRequestError) || error.code !== "PGRST202") {
+    return false;
+  }
+  const text = `${error.message} ${error.details ?? ""}`;
+  return /complete_user_profile_onboarding/.test(text) && /\bp_timezone\b/.test(text);
 }
 
 export async function completeUserProfileOnboarding(
@@ -507,26 +522,42 @@ export async function completeUserProfileOnboarding(
     throw new Error("Missing authenticated user.");
   }
 
-  // No time zone here on purpose: time-zone writes belong to
-  // initialize_user_timezone/update_user_timezone only. The server infers
-  // the birth year in the stored zone (UTC for a new profile), and
-  // initialize_user_timezone re-infers it once the first zone is stored.
-  const rows = await supabaseProfileRequest<unknown[] | unknown>(
-    session,
-    "/rest/v1/rpc/complete_user_profile_onboarding",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        p_nickname: input.nickname,
-        p_native_language: input.nativeLanguage,
-        p_learning_language: input.practiceLanguage,
-        p_current_level: input.languageLevel,
-        p_user_age: input.age,
-        p_birth_month: Number(input.birthMonth),
-        p_birth_day: Number(input.birthDay),
-      }),
-    },
-  );
+  // p_timezone is an inference input, not a write: the server infers the
+  // birth year in the stored zone, else this validated browser zone, else
+  // UTC, and never stores it (time-zone writes belong to
+  // initialize_user_timezone/update_user_timezone only; see
+  // 20261106120000_fix_onboarding_leap_day_utc_boundary.sql).
+  // initialize_user_timezone re-infers once the first zone is stored.
+  const onboardingFields = {
+    p_nickname: input.nickname,
+    p_native_language: input.nativeLanguage,
+    p_learning_language: input.practiceLanguage,
+    p_current_level: input.languageLevel,
+    p_user_age: input.age,
+    p_birth_month: Number(input.birthMonth),
+    p_birth_day: Number(input.birthDay),
+  };
+  const send = (withTimezone: boolean) =>
+    supabaseProfileRequest<unknown[] | unknown>(
+      session,
+      "/rest/v1/rpc/complete_user_profile_onboarding",
+      {
+        method: "POST",
+        body: JSON.stringify(withTimezone ? { ...onboardingFields, p_timezone: input.timeZone } : onboardingFields),
+      },
+    );
+
+  let rows: unknown[] | unknown;
+  try {
+    rows = await send(true);
+  } catch (error) {
+    // Database not yet migrated: one retry with the previous seven
+    // arguments (previous behavior: stored zone, else UTC).
+    if (!isOnboardingTimezoneArgumentUnavailable(error)) {
+      throw error;
+    }
+    rows = await send(false);
+  }
 
   if (Array.isArray(rows)) {
     if (rows.length !== 1) {

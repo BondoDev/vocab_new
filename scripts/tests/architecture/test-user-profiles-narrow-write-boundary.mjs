@@ -128,16 +128,20 @@ test("4. useAccountLanguageConfirm.ts (via accountLanguageSave.ts) calls updateU
   assert.deepEqual(offenders, [], `unexpected direct RPC endpoint reference outside userProfile.ts: ${offenders.join(", ")}`);
 });
 
-test("5. Neither the onboarding nor the language RPC's request body ever includes daily_goal or a timezone field", () => {
+test("5. Neither RPC's request body includes daily_goal; only onboarding sends p_timezone, as an inference-only input", () => {
   const userProfileSource = read("src/lib/userProfile.ts");
   const onboardingFnMatch = userProfileSource.match(/export async function completeUserProfileOnboarding\(([\s\S]*?)\r?\n\}/);
   const languagesFnMatch = userProfileSource.match(/export async function updateUserProfileLanguages\(([\s\S]*?)\r?\n\}/);
   assert.ok(onboardingFnMatch, "completeUserProfileOnboarding must exist");
   assert.ok(languagesFnMatch, "updateUserProfileLanguages must exist");
 
-  const onboardingBodyMatch = onboardingFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
+  // Since 20261106120000 the onboarding body is assembled from a fields
+  // object plus p_timezone (retried without it on PGRST202), so the whole
+  // function is the unit checked. The RPC never stores p_timezone (pinned
+  // by test:account-age's SQL contract).
+  assert.match(onboardingFnMatch[1], /body:\s*JSON\.stringify\(/, "completeUserProfileOnboarding must send a JSON request body");
+  const onboardingBodyMatch = [null, onboardingFnMatch[1]];
   const languagesBodyMatch = languagesFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
-  assert.ok(onboardingBodyMatch, "completeUserProfileOnboarding must send a JSON request body");
   assert.ok(languagesBodyMatch, "updateUserProfileLanguages must send a JSON request body");
 
   for (const [label, body] of [
@@ -145,8 +149,9 @@ test("5. Neither the onboarding nor the language RPC's request body ever include
     ["update_user_profile_languages", languagesBodyMatch[1]],
   ]) {
     assert.doesNotMatch(body, /p_daily_goal/i, `${label}'s request body must never include p_daily_goal`);
-    assert.doesNotMatch(body, /p_timezone/i, `${label}'s request body must never include p_timezone`);
   }
+  assert.doesNotMatch(languagesBodyMatch[1], /p_timezone/i, "update_user_profile_languages's request body must never include p_timezone");
+  assert.match(onboardingFnMatch[1], /p_timezone: input\.timeZone/);
 
   // Onboarding's exact expected field set (order-independent membership).
   assert.match(onboardingBodyMatch[1], /p_nickname:\s*input\.nickname/);
@@ -173,6 +178,7 @@ test("5. Neither the onboarding nor the language RPC's request body ever include
       "p_user_age",
       "p_birth_month",
       "p_birth_day",
+      "p_timezone",
     ].sort(),
   );
 

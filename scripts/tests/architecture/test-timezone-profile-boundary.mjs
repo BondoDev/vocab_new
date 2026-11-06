@@ -65,8 +65,9 @@ test("1. Runtime timezone writes go through initialize_user_timezone or update_u
   // parses complete_user_profile_onboarding's RETURNS TABLE row, which
   // legitimately echoes back the server-computed timezone/
   // timezone_updated_at values as part of the authoritative post-onboarding
-  // profile snapshot (never a client-supplied write — the RPC itself never
-  // accepts a p_timezone argument at all, see the migration). It never
+  // profile snapshot (never a client-supplied write). Since
+  // 20261106120000 the RPC accepts p_timezone as an inference-only input
+  // that it never stores; only userProfile.ts sends it. This file never
   // constructs a request body, so it cannot smuggle a timezone write; only
   // read-side parsing lives there.
   const readOnlyExceptions = new Set([
@@ -111,11 +112,12 @@ test("2. Neither narrow profile RPC can modify timezone (Profile Phase 1 removed
   const languagesFnMatch = userProfileSource.match(/export async function updateUserProfileLanguages\(([\s\S]*?)\r?\n\}/);
   assert.ok(onboardingFnMatch, "completeUserProfileOnboarding must exist");
   assert.ok(languagesFnMatch, "updateUserProfileLanguages must exist");
-  const onboardingBodyMatch = onboardingFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
   const languagesBodyMatch = languagesFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
-  assert.ok(onboardingBodyMatch, "completeUserProfileOnboarding must send a JSON request body");
+  assert.match(onboardingFnMatch[1], /body:\s*JSON\.stringify\(/, "completeUserProfileOnboarding must send a JSON request body");
   assert.ok(languagesBodyMatch, "updateUserProfileLanguages must send a JSON request body");
-  assert.doesNotMatch(onboardingBodyMatch[1], /\btimezone\b|timezone_updated_at|p_timezone/i);
+  // Onboarding's p_timezone is inference-only (never stored by the RPC;
+  // pinned by test:account-age's SQL contract); no stored-column key.
+  assert.doesNotMatch(onboardingFnMatch[1], /\b(timezone|timezone_updated_at)\s*:/i);
   assert.doesNotMatch(languagesBodyMatch[1], /\btimezone\b|timezone_updated_at|p_timezone/i);
   assert.match(migrationSource, /prevent_direct_user_timezone_write/);
 });

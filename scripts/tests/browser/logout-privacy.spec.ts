@@ -33,7 +33,7 @@ const sessionFor = (user: MockUser, expiresAt = farFuture) => ({
 const readOnlyRpcs = new Set(['/rest/v1/rpc/get_current_learning_date', '/rest/v1/rpc/read_vocabulary_growth_events']);
 
 function installBackend(api: MockApi) {
-  const state = { writes: [] as string[], logoutCalls: 0, onboarded: new Set<string>() };
+  const state = { writes: [] as string[], logoutCalls: 0, onboarded: new Set<string>(), onboardingTimezones: [] as (string | null)[] };
   const byToken = (route: Route) => {
     const token = (route.request().headers().authorization ?? '').replace(/^Bearer /, '');
     return users.find((user) => token === `at-${user.id}`) ?? null;
@@ -74,6 +74,13 @@ function installBackend(api: MockApi) {
     if (method === 'POST' && path === '/rest/v1/rpc/complete_user_profile_onboarding') {
       const user = byToken(route)!;
       const body = request.postDataJSON();
+      // Mirrors the 8-argument RPC (20261106120000): unknown argument names
+      // fail like PostgREST's PGRST202; p_timezone is recorded, never stored.
+      const allowed = ['p_nickname', 'p_native_language', 'p_learning_language', 'p_current_level', 'p_user_age', 'p_birth_month', 'p_birth_day', 'p_timezone'];
+      if (Object.keys(body).some((key) => !allowed.includes(key))) {
+        return json({ code: 'PGRST202', message: 'Could not find the function public.complete_user_profile_onboarding in the schema cache' }, 404);
+      }
+      state.onboardingTimezones.push(body.p_timezone ?? null);
       state.writes.push(`${method} ${path}`);
       state.onboarded.add(user.id);
       return json([{
@@ -315,6 +322,7 @@ test('onboarding: completion caches only the new account; cancel registration cl
   await expect.poll(() => profileCacheKeys(page)).toEqual([`app.userProfile.${olga.id}`]);
   expect(JSON.parse((await storageSnapshot(page))[`app.userProfile.${olga.id}`]!).nickname).toBe('Olga');
   expect(backend.writes).toEqual(['POST /rest/v1/rpc/complete_user_profile_onboarding']);
+  expect(backend.onboardingTimezones).toEqual([await page.evaluate(() => Intl.DateTimeFormat().resolvedOptions().timeZone)]);
 
   await signOutFromHeader(page, { ...olga, nickname: 'Olga' });
   await expectSignedOutStorageClean(page, context, baseline);

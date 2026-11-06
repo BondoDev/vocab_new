@@ -11,7 +11,9 @@ interface PrepareAccountOnboardingSubmitParams {
   userProfile: UserProfile;
   yourLanguage: string;
   practiceLanguage: string;
-  // Injectable for tests; defaults to today in the browser's time zone.
+  // Injectable for tests. The zone defaults to the browser's IANA zone and
+  // `today` to the current date in that zone.
+  timeZone?: string | null;
   today?: CalendarDate;
 }
 
@@ -28,6 +30,10 @@ type AccountOnboardingSubmitPreparation =
       profile: UserProfile;
       nativeLanguage: UserProfile["nativeLanguage"];
       practiceLanguage: UserProfile["practiceLanguage"];
+      // The zone the age/birthday was validated in. The caller passes it to
+      // the onboarding RPC so the server infers the birth year on the same
+      // date (completeUserProfileOnboarding's timeZone input).
+      timeZone: string | null;
     };
 
 export function prepareAccountOnboardingSubmit({
@@ -35,8 +41,11 @@ export function prepareAccountOnboardingSubmit({
   userProfile,
   yourLanguage,
   practiceLanguage,
+  timeZone: timeZoneOverride,
   today,
 }: PrepareAccountOnboardingSubmitParams): AccountOnboardingSubmitPreparation {
+  // Detected once: validation below and the RPC request use this one value.
+  const timeZone = timeZoneOverride === undefined ? detectBrowserTimezone() : timeZoneOverride;
   const nickname = userProfile.nickname.trim();
   const age = userProfile.age;
   const birthMonth = userProfile.birthMonth;
@@ -82,12 +91,13 @@ export function prepareAccountOnboardingSubmit({
   }
 
   // Early, specific feedback only; the server repeats both checks with its
-  // own clock (complete_user_profile_onboarding).
+  // own clock in the same zone (complete_user_profile_onboarding, unless the
+  // profile already stores a zone).
   const birthDateIssue = getDeclaredAgeIssue(
     age,
     Number(birthMonth),
     Number(birthDay),
-    today ?? calendarDateInTimeZone(new Date(), detectBrowserTimezone()),
+    today ?? calendarDateInTimeZone(new Date(), timeZone),
   );
   if (birthDateIssue) {
     return {
@@ -108,6 +118,7 @@ export function prepareAccountOnboardingSubmit({
     authUserId,
     nativeLanguage,
     practiceLanguage: nextPracticeLanguage,
+    timeZone,
     profile: {
       ...userProfile,
       nickname,
