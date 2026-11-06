@@ -5,6 +5,9 @@ import { resolvePrivacyPolicyRoute } from "./data/seo/legalPages/privacyPolicy/p
 import { loadPrivacyPolicyDocument } from "./data/seo/legalPages/privacyPolicy/privacyPolicyContent";
 import { resolveNounListRoute } from "./data/seo/listPages/nounLists/common100Nouns/common100NounRegistry";
 import { loadNounDetails } from "./data/seo/listPages/nounLists/common100Nouns/common100NounDetails";
+import { loadConjugatedVerbFormsRows } from "./data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbFormsData";
+import { loadSeoCefrContent } from "./app/pages/vocabulary/devSeoCefrPreviewData";
+import { parseConjugatedVerbFormsSeoRoute, parseVocabularyRoute } from "./app/utils/pageRouting";
 import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
 
@@ -22,15 +25,25 @@ const pathname =
     : window.location.pathname;
 const privacyPolicyLanguage = resolvePrivacyPolicyRoute(pathname);
 const nounListRoute = resolveNounListRoute(pathname);
+const conjugatedVerbFormsRoute = parseConjugatedVerbFormsSeoRoute(pathname);
 const _lazyChunkPreload: Promise<unknown> | null =
-  // Privacy Policy and 100-noun pages: load the data itself (not just a
-  // chunk) so the page renders it synchronously and never suspends during
-  // hydration; see src/app/pages/legal/PrivacyPolicyPage.tsx and
-  // src/app/pages/list-pages/noun-lists/common100Nouns/NounListSeoPage.tsx.
+  // Privacy Policy, 100-noun, CEFR vocabulary-level and conjugated-verb-forms
+  // pages: load the data itself (not just a chunk) so the page renders it
+  // synchronously and never suspends during hydration; see
+  // src/app/pages/legal/PrivacyPolicyPage.tsx,
+  // src/app/pages/list-pages/noun-lists/common100Nouns/NounListSeoPage.tsx,
+  // src/app/pages/vocabulary/devSeoCefrPreviewData.ts and
+  // src/app/pages/list-pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage.tsx.
+  // The route checks mirror App's own parsers, so a page preloads exactly
+  // the data it will read; every other route downloads none of it.
   privacyPolicyLanguage
     ? loadPrivacyPolicyDocument(privacyPolicyLanguage)
     : nounListRoute
     ? loadNounDetails(nounListRoute.listId)
+    : parseVocabularyRoute(pathname)
+    ? loadSeoCefrContent()
+    : conjugatedVerbFormsRoute
+    ? loadConjugatedVerbFormsRows(conjugatedVerbFormsRoute.targetLanguage)
     : pathname === "/about" || pathname.startsWith("/about/")
     ? import("./app/pages/about/About")
     : pathname === "/help" || pathname.startsWith("/help/")

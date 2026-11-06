@@ -1,4 +1,3 @@
-import sampleContent from "../../../data/seo/vocabularyLevels/seo-cefr-content.json";
 import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   isSupportedUiLanguage,
@@ -21,11 +20,52 @@ export type SeoCefrContentItem = {
   content: VocabularyLevelEditorialContent;
 };
 
-const previewItems = sampleContent as SeoCefrContentItem[];
-const defaultPreviewItem = previewItems[0];
+// seo-cefr-content.json (~1.7 MB, every CEFR page's editorial content) is a
+// lazy chunk, not a static import, so only CEFR pages download it instead
+// of every page carrying it in the entry bundle. Same hydration contract as
+// the noun details (common100NounDetails.ts): one shared promise plus a
+// synchronous view of the settled result. The getters below are render-time
+// reads — before the file has loaded they throw the pending promise, so the
+// caller suspends at the nearest Suspense boundary:
+//   - Prerendering: App's route boundary catches it and the prerender waits
+//     for it (entry-server's stream.allReady), so the HTML is complete.
+//   - Hydration: src/entry-client.tsx loads the file BEFORE hydrateRoot, so
+//     a CEFR page never suspends while hydrating (React #418/#421/#422).
+//   - Client-side navigation: App's route boundary shows its loading
+//     fallback until the chunk arrives.
+// Never call them outside render (e.g. in an event handler or effect).
+let loadedItems: SeoCefrContentItem[] | null = null;
+let pendingLoad: Promise<SeoCefrContentItem[]> | null = null;
+
+export function loadSeoCefrContent(): Promise<SeoCefrContentItem[]> {
+  if (!pendingLoad) {
+    pendingLoad = import("../../../data/seo/vocabularyLevels/seo-cefr-content.json").then(
+      (module) => {
+        loadedItems = module.default as SeoCefrContentItem[];
+        return loadedItems;
+      },
+      // Settled for this page load, like the noun details: render as "no
+      // content" (App's not-found decision) instead of unmounting the app;
+      // a reload retries.
+      (error: unknown) => {
+        console.warn("devSeoCefrPreviewData: could not load seo-cefr-content.json.", error);
+        loadedItems = [];
+        return loadedItems;
+      },
+    );
+  }
+  return pendingLoad;
+}
+
+function readPreviewItems(): SeoCefrContentItem[] {
+  if (loadedItems) {
+    return loadedItems;
+  }
+  throw loadSeoCefrContent();
+}
 
 export function getSeoCefrPreviewItems(): SeoCefrContentItem[] {
-  return previewItems;
+  return readPreviewItems();
 }
 
 const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> = {
@@ -52,12 +92,11 @@ export function normalizeTargetLanguage(targetLanguage: PreviewTargetLanguage): 
   throw new Error(`normalizeTargetLanguage: unsupported target language "${targetLanguage}"`);
 }
 
+// Dev-only hint shown by the /test preview. Fixed to the content file's
+// first entry (en / english / a1) rather than read from it, so building the
+// constant never needs the lazily loaded content.
 export const DEV_CEFR_PREVIEW_PATH =
-  `/test${buildLocalizedVocabularyPath(
-    defaultPreviewItem?.uiLanguage ?? "en",
-    normalizeTargetLanguage(defaultPreviewItem?.targetLanguage ?? "english"),
-    defaultPreviewItem?.level ?? "b1",
-  ) ?? "/en/english-b1-vocabulary-practice"}`;
+  `/test${buildLocalizedVocabularyPath("en", "english", "a1") ?? "/en/english-b1-vocabulary-practice"}`;
 
 export function findSeoCefrPreviewItem(params: {
   uiLanguage: UiLanguageCode;
@@ -65,7 +104,7 @@ export function findSeoCefrPreviewItem(params: {
   level: CefrLevelCode;
 }): SeoCefrContentItem | null {
   return (
-    previewItems.find(
+    readPreviewItems().find(
       (item) =>
         item.uiLanguage === params.uiLanguage &&
         normalizeTargetLanguage(item.targetLanguage) === params.targetLanguage &&

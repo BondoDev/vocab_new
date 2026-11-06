@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type Dispatch,
+  type ReactNode,
   type SetStateAction,
 } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -55,7 +56,7 @@ import {
 } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
-import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
+import { findSeoCefrPreviewItem, getSeoCefrPreviewItems } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
 import {
   clearStoredUserProfile,
@@ -168,6 +169,16 @@ function RouteLoadingFallback() {
       Loading...
     </div>
   );
+}
+
+// Defers a render callback until the lazily loaded CEFR content
+// (devSeoCefrPreviewData.ts) is available, so the vocabularyLevel route's
+// content lookup and not-found decision run under the route's Suspense
+// boundary instead of in AppContent (which has no boundary above it).
+// Rendering the callback here, not in AppContent, is what lets it suspend.
+function SeoCefrContentGate({ children }: { children: () => ReactNode }) {
+  getSeoCefrPreviewItems();
+  return <>{children()}</>;
 }
 
 // ROUTES must stay defined in this file as a literal `as const` block:
@@ -1683,26 +1694,15 @@ function AppContent({
   }
 
   if (resolvedPage === "vocabularyLevel") {
-    const jsonBackedVocabularyItem = vocabularyRoute
-      ? findSeoCefrPreviewItem({
-          uiLanguage: vocabularyRoute.uiLang,
-          targetLanguage: vocabularyRoute.targetLanguage,
-          level: vocabularyRoute.level,
-        })
-      : null;
-    // Content must also pass the legacy/v2 schema validation the page
-    // renders through (levelContent.ts); test:vocabulary-level-coverage
-    // guards that every entry does, so this is a safety net only.
-    const vocabularyLevelRenderDecision = resolveVocabularyLevelRenderDecision(
-      Boolean(vocabularyRoute),
-      Boolean(jsonBackedVocabularyItem && resolveVocabularyLevelPageModel(jsonBackedVocabularyItem.content)),
-    );
-
-    if (vocabularyLevelRenderDecision.kind === "not-found") {
+    // An unregistered route is rejected without loading any content.
+    if (!vocabularyRoute) {
+      const vocabularyLevelRenderDecision = resolveVocabularyLevelRenderDecision(false, false);
       return (
         <div className="min-h-screen flex flex-col bg-background">
           <Header {...sharedHeaderProps} activePage="notFound" />
-          <NotFoundPage message={vocabularyLevelRenderDecision.message} />
+          <NotFoundPage
+            message={vocabularyLevelRenderDecision.kind === "not-found" ? vocabularyLevelRenderDecision.message : undefined}
+          />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
           {accountIntroDialog}
@@ -1710,16 +1710,43 @@ function AppContent({
       );
     }
 
+    // The editorial content is a lazy chunk (devSeoCefrPreviewData.ts), so
+    // the lookup and the content check run inside SeoCefrContentGate, under
+    // the route boundary: the prerender waits for it, entry-client.tsx loads
+    // it before hydrating, and client-side navigation shows the fallback.
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
-          <DevSeoCefrPlaceholderPage
-            item={jsonBackedVocabularyItem}
-            onStartPractice={handleStartVocabularyPractice}
-            pathPrefix=""
-            initialExplorerData={initialLevelExplorerData}
-          />
+          <SeoCefrContentGate>
+            {() => {
+              const jsonBackedVocabularyItem = findSeoCefrPreviewItem({
+                uiLanguage: vocabularyRoute.uiLang,
+                targetLanguage: vocabularyRoute.targetLanguage,
+                level: vocabularyRoute.level,
+              });
+              // Content must also pass the legacy/v2 schema validation the
+              // page renders through (levelContent.ts);
+              // test:vocabulary-level-coverage guards that every entry does,
+              // so this is a safety net only. (Unlike the unregistered-route
+              // case above, the header here keeps its vocabularyLevel state.)
+              const vocabularyLevelRenderDecision = resolveVocabularyLevelRenderDecision(
+                true,
+                Boolean(jsonBackedVocabularyItem && resolveVocabularyLevelPageModel(jsonBackedVocabularyItem.content)),
+              );
+              if (vocabularyLevelRenderDecision.kind === "not-found") {
+                return <NotFoundPage message={vocabularyLevelRenderDecision.message} />;
+              }
+              return (
+                <DevSeoCefrPlaceholderPage
+                  item={jsonBackedVocabularyItem}
+                  onStartPractice={handleStartVocabularyPractice}
+                  pathPrefix=""
+                  initialExplorerData={initialLevelExplorerData}
+                />
+              );
+            }}
+          </SeoCefrContentGate>
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}

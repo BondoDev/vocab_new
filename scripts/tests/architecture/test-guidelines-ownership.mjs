@@ -158,8 +158,10 @@ test("devSeoCefrPreviewData.ts imports the relocated JSON, not the old guideline
     "devSeoCefrPreviewData.ts",
   );
   const content = fs.readFileSync(file, "utf8");
+  // A lazy `import("...")` since the content left the entry bundle; a
+  // static `from "..."` import is accepted too.
   assert.ok(
-    /from\s+["']\.\.\/\.\.\/\.\.\/data\/seo\/vocabularyLevels\/seo-cefr-content\.json["']/.test(content),
+    /(?:from\s+|import\(\s*)["']\.\.\/\.\.\/\.\.\/data\/seo\/vocabularyLevels\/seo-cefr-content\.json["']/.test(content),
     "devSeoCefrPreviewData.ts does not import ../../../data/seo/vocabularyLevels/seo-cefr-content.json",
   );
   assert.ok(!OLD_PATH_PATTERN.test(content), "devSeoCefrPreviewData.ts still references guidelines/");

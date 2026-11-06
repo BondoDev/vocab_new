@@ -22,6 +22,7 @@
     "test:word-hydration": "node scripts/tests/runtime/test-word-hydration.mjs",
     "test:toast-hydration": "node scripts/tests/runtime/test-toast-hydration.mjs",
     "test:noun-page-hydration": "node scripts/tests/runtime/test-noun-page-hydration.mjs",
+    "test:route-data-hydration": "node scripts/tests/runtime/test-route-data-hydration.mjs",
     "test:word-seo": "node scripts/tests/seo/test-word-seo-routes.mjs",
     "test:level-explorer-data": "node scripts/generation/generate-level-explorer-data.mjs --check",
     "test:level-explorer": "node scripts/tests/routing/test-level-explorer.mjs",

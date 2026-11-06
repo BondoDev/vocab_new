@@ -27,7 +27,10 @@ import type {
   ConjugatedVerbFormsTableColumns,
   ConjugatedVerbFormsTense,
 } from "../../../../../data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbRouteHelpers";
-import { getConjugatedVerbFormsRowsById } from "../../../../../data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbFormsData";
+import {
+  readConjugatedVerbFormsRows,
+  type ConjugatedVerbFormsRowsById,
+} from "../../../../../data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbFormsData";
 import { buildConjugatedVerbFormsSeoMetadata } from "../../../../../seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsMetadata";
 import { CONJUGATED_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE } from "../../../../../seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus";
 import { SEOHead, useSeoSiteOrigin } from "../../../../../seo/SeoContext";
@@ -88,11 +91,44 @@ function resolveInitialGroup(tenses: ConjugatedVerbFormsTense[], activeTenseKey:
   return tenses.find((tense) => tense.key === activeTenseKey)?.group ?? tenses[0]?.group ?? "";
 }
 
-export function ConjugatedVerbFormsSeoPage({
+// Reads the language's conjugation rows (a lazy per-language chunk, see
+// conjugated100VerbFormsData.ts) and suspends only while they download, so
+// the page renders the full table synchronously everywhere it matters:
+//   - Prerendering: the suspension is caught by App's route boundary, which
+//     the prerender waits for (stream.allReady), so the table is in the HTML.
+//   - Hydration: src/entry-client.tsx loads the rows BEFORE hydrateRoot, so
+//     this never suspends and no server-rendered boundary is re-rendered
+//     (React #418/#421/#422).
+//   - Client-side navigation: App's route boundary shows its loading
+//     fallback until the chunk arrives, like any lazy route.
+// No nested boundary here, for the same reason NounListSeoPage keeps none
+// during hydration. A failed download renders the page without table rows
+// instead of unmounting the app.
+export function ConjugatedVerbFormsSeoPage(props: ConjugatedVerbFormsSeoPageProps) {
+  const state = readConjugatedVerbFormsRows(props.targetLanguage);
+  if (state.status === "pending") {
+    throw state.promise;
+  }
+  if (state.status === "failed") {
+    console.warn(
+      `ConjugatedVerbFormsSeoPage: could not load the ${props.targetLanguage} conjugated verb forms.`,
+      state.error,
+    );
+  }
+  return (
+    <ConjugatedVerbFormsSeoPageContent
+      {...props}
+      formsById={state.status === "loaded" ? state.rows : null}
+    />
+  );
+}
+
+function ConjugatedVerbFormsSeoPageContent({
   uiLang,
   targetLanguage,
   onStartPractice,
-}: ConjugatedVerbFormsSeoPageProps) {
+  formsById,
+}: ConjugatedVerbFormsSeoPageProps & { formsById: ConjugatedVerbFormsRowsById | null }) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
 
@@ -112,7 +148,6 @@ export function ConjugatedVerbFormsSeoPage({
       return [];
     }
 
-    const formsById = getConjugatedVerbFormsRowsById(targetLanguage);
     if (!formsById) {
       return [];
     }
@@ -137,7 +172,7 @@ export function ConjugatedVerbFormsSeoPage({
       });
     }
     return result;
-  }, [activeTense, targetLanguage, uiLang]);
+  }, [activeTense, formsById, targetLanguage, uiLang]);
 
   const showMeaningColumn = TARGET_LANGUAGE_TO_UI_LANGUAGE[targetLanguage] !== uiLang;
   const [searchValue, setSearchValue] = useState("");

@@ -148,19 +148,17 @@
     {
       "id": "G11",
       "consumer": "src/data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbFormsData.ts",
-      "line": 19,
+      "line": 32,
       "pattern": "./conjugatedVerbs/*.json",
-      "options": {
-        "eager": true
-      },
+      "options": {},
       "resolvesTo": "src/data/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbs/*.json",
-      "runtime": "client + ssr (conjugated-verb-forms table, ConjugatedVerbFormsSeoPage.tsx; not the Worker)",
-      "eager": true,
+      "runtime": "client + ssr (conjugated-verb-forms table, read synchronously by ConjugatedVerbFormsSeoPage.tsx and preloaded before hydration by src/entry-client.tsx; not the Worker)",
+      "eager": false,
       "expectedCount": "grows over time, not fixed",
       "actualCount": 1,
       "namingContract": "{targetLanguage}.json (TargetLanguageSlug full name, e.g. english.json), hand-authored one language at a time; each file holds that language's full tense-grouped 100-verb conjugation array, rows keyed by word_id",
       "risk": "medium-hand-authored",
-      "riskReason": "Same risk shape as the retired G9 and G10 — no generator script writes this directory, and its match count is expected to grow (not a fixed contract), so it is intentionally excluded from test-import-boundaries.mjs's exact-count assertions. getConjugatedVerbFormsRowsById() returns null for any target language without a file yet, and conjugated100VerbTableConfig.ts derives isTableReady from that, so a missing file degrades to the table placeholder rather than a runtime error. The row-shaping logic is factored out into the import.meta-free conjugated100VerbFormsRowBuilder.ts in the same directory so it stays unit-testable under Node (see scripts/tests/seo/test-conjugated-verb-forms-page.mjs)."
+      "riskReason": "Same risk shape as the retired G9 and G10 — no generator script writes this directory, and its match count is expected to grow (not a fixed contract), so it is intentionally excluded from test-import-boundaries.mjs's exact-count assertions (its lazy status is guarded there). Lazy since 2026-11-06 (it was eager and put ~4 MB of tables in the client entry bundle): one chunk per target language, loaded through a shared promise with a synchronous cache like G13. hasConjugatedVerbFormsData() checks the glob's keys without downloading, conjugated100VerbTableConfig.ts derives isTableReady from that, and readConjugatedVerbFormsRows() yields null rows for a language without a file yet, so a missing file degrades to the table placeholder rather than a runtime error. The row-shaping logic is factored out into the import.meta-free conjugated100VerbFormsRowBuilder.ts in the same directory so it stays unit-testable under Node (see scripts/tests/seo/test-conjugated-verb-forms-page.mjs)."
     },
     {
       "id": "G12",
