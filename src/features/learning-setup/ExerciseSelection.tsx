@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./styles/exercise-selection.scss";
 import { motion } from "motion/react";
 import { ChevronLeft, X } from "lucide-react";
@@ -86,6 +86,53 @@ export function ExerciseSelection({
 }: ExerciseSelectionProps) {
   const { t } = useLanguage();
   const [helpExerciseId, setHelpExerciseId] = useState<string | null>(null);
+  // Exercise-help dialog focus: opening moves focus to its Close button,
+  // Tab/Shift+Tab stay inside (it is aria-modal), and Escape, Close or a
+  // backdrop click close it and return focus to the "?" button that
+  // opened it.
+  const helpReturnFocusRef = useRef<HTMLElement | null>(null);
+  const helpPanelRef = useRef<HTMLDivElement | null>(null);
+  const helpCloseButtonRef = useRef<HTMLButtonElement | null>(null);
+  const openHelp = (exerciseId: string) => {
+    const active = document.activeElement;
+    helpReturnFocusRef.current = active instanceof HTMLElement ? active : null;
+    setHelpExerciseId(exerciseId);
+  };
+  const closeHelp = () => {
+    setHelpExerciseId(null);
+    const returnTarget = helpReturnFocusRef.current;
+    helpReturnFocusRef.current = null;
+    window.requestAnimationFrame(() => {
+      if (returnTarget?.isConnected) returnTarget.focus();
+    });
+  };
+  useEffect(() => {
+    if (helpExerciseId) helpCloseButtonRef.current?.focus();
+  }, [helpExerciseId]);
+  const handleHelpKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      closeHelp();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusables = Array.from(
+      helpPanelRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ) ?? [],
+    );
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
   const nextButtonStarFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
@@ -157,9 +204,11 @@ export function ExerciseSelection({
           role="dialog"
           aria-modal="true"
           aria-label={t("exerciseSelection.helpTitle")}
-          onClick={() => setHelpExerciseId(null)}
+          onClick={closeHelp}
+          onKeyDown={handleHelpKeyDown}
         >
           <div
+            ref={helpPanelRef}
             className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-xl border border-border bg-card p-5 shadow-xl"
             onClick={(event) => event.stopPropagation()}
           >
@@ -168,9 +217,10 @@ export function ExerciseSelection({
                 {t(`exerciseSelection.exercise.${helpExerciseId}`)}
               </h3>
               <button
+                ref={helpCloseButtonRef}
                 type="button"
                 className="text-muted-foreground hover:text-foreground transition"
-                onClick={() => setHelpExerciseId(null)}
+                onClick={closeHelp}
                 aria-label={t("exerciseSelection.helpCloseAria")}
               >
                 <X className="h-5 w-5" />
@@ -241,7 +291,7 @@ export function ExerciseSelection({
           <ExerciseOptionTiles
             selectedExercises={selectedExercises}
             setSelectedExercises={setSelectedExercises}
-            onHelp={setHelpExerciseId}
+            onHelp={openHelp}
           />
         </div>
         {helpDialog}
@@ -333,7 +383,7 @@ export function ExerciseSelection({
             <ExerciseOptionTiles
               selectedExercises={selectedExercises}
               setSelectedExercises={setSelectedExercises}
-              onHelp={setHelpExerciseId}
+              onHelp={openHelp}
             />
           </motion.div>
 

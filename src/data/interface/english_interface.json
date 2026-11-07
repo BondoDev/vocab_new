@@ -1617,6 +1617,7 @@
     "halfWrittenInstruction": "Complete the missing part of the word.",
     "brokenWordInstruction": "Build the correct word from the given chunks.",
     "incorrectOrderTryAgain": "Incorrect order - try again",
+    "answerIncorrect": "Not correct - try again",
     "wordsLabel": "Words",
     "accuracyLabel": "Accuracy",
     "performanceMatrix": "Performance Matrix",

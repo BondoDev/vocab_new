@@ -1612,6 +1612,7 @@
     "halfWrittenInstruction": "Complete a parte faltante da palavra.",
     "brokenWordInstruction": "Monte a palavra correta com os blocos fornecidos.",
     "incorrectOrderTryAgain": "Ordem incorreta - tente novamente",
+    "answerIncorrect": "Não está correto - tente novamente",
     "wordsLabel": "Palavras",
     "accuracyLabel": "Precisão",
     "performanceMatrix": "Matriz de desempenho",

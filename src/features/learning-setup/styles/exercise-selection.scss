@@ -58,9 +58,32 @@
     box-shadow: 0 4px 10px rgba(99, 102, 241, 0.12);
   }
 
-  .exercise-card:focus-visible {
+  // The card is a container (ExerciseOptionTiles.tsx); keyboard focus is on
+  // its full-card toggle button, and the card draws the same ring as before.
+  .exercise-card:has(> .exercise-card-toggle:focus-visible) {
     outline: 2px solid rgba(99, 102, 241, 0.35);
     outline-offset: 2px;
+  }
+
+  // Transparent toggle covering the whole card (border included), under the
+  // corner controls. Where :has() is unsupported it keeps its own outline.
+  .exercise-card-toggle {
+    position: absolute;
+    inset: -3px;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    cursor: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @supports selector(:has(*)) {
+    .exercise-card-toggle:focus-visible {
+      outline: none;
+    }
   }
 
   .exercise-card.is-selected {
@@ -124,12 +147,20 @@
 
   .exercise-card-corners {
     position: absolute;
+    // Above the full-card toggle so the help button stays clickable.
+    z-index: 2;
     top: 0.62rem;
     left: 0.68rem;
     right: 0.68rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    pointer-events: none;
+  }
+
+  // The check badge is decoration: clicks on it fall through to the toggle
+  // underneath (it used to sit inside the toggle button itself).
+  .exercise-card-corners .exercise-check {
     pointer-events: none;
   }
 

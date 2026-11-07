@@ -45,7 +45,8 @@ for (const name of names.slice(1)) {
       await expect(page.getByRole('heading', { name: 'acción', exact: true })).toBeVisible();
     } else {
       const listening = name === 'Listening';
-      const audio = page.getByRole('button', { name: 'Play word audio', exact: true, disabled: false });
+      // Each audio option has a distinct positional name ("Play word audio 2 of 4").
+      const audio = page.getByRole('button', { name: /^Play word audio \d+ of \d+$/, disabled: false });
       await expect(page.getByRole('button', { name: 'sobre', exact: true })).toBeVisible();
       if (listening) await audio.nth(0).click();
       else await page.getByRole('button', { name: 'about', exact: true }).click();

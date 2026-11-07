@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { shuffleArray } from "../../../utils/shuffleArray";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { useExerciseAnnouncer } from "./useExerciseAnnouncer";
 
 interface ConnectWordsExerciseProps {
   words: any[];
@@ -48,6 +50,29 @@ export function ConnectWordsExercise({
   const shouldReduceMotion = useReducedMotion();
   const isComplete = connectPairs.length === 4;
   const hasActiveSelection = selectedWord !== null;
+  const { t } = useLanguage();
+  const { announce, clear: clearAnnouncement, liveRegion } = useExerciseAnnouncer();
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  // A matched pair (or a reset after a wrong pick) disables the focused
+  // button, which would drop keyboard focus to the page. Put it back on a
+  // word that can still be chosen — the given one if it is available —
+  // but only when focus was in this grid, so pointer users see no change.
+  const restoreWordFocus = (wordIndex?: number) => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const active = document.activeElement;
+    if (active && active !== document.body && !grid.contains(active)) return;
+    window.requestAnimationFrame(() => {
+      const current = gridRef.current;
+      if (!current) return;
+      const preferred =
+        wordIndex === undefined
+          ? null
+          : current.querySelector<HTMLButtonElement>(`[data-word-index="${wordIndex}"]:not(:disabled)`);
+      (preferred ?? current.querySelector<HTMLButtonElement>("[data-word-index]:not(:disabled)"))?.focus();
+    });
+  };
   const pairedWordIndexSet = useMemo(
     () => new Set(connectPairs.map((pair) => pair.wordIndex)),
     [connectPairs],
@@ -174,19 +199,26 @@ export function ConnectWordsExercise({
       }, 140);
       flashTimeoutsRef.current.push(timeoutId);
       setSelectedWord(null);
+      announce(t("practice.correct"));
+      restoreWordFocus();
     } else {
       setIncorrectPair({
         wordIndex: selectedWord,
         meaningIndex,
       });
+      announce(t("practice.answerIncorrect"));
+      const wrongWordIndex = selectedWord;
       setTimeout(() => {
         setIncorrectPair(null);
         setSelectedWord(null);
+        clearAnnouncement();
+        restoreWordFocus(wrongWordIndex);
       }, 600);
     }
   };
   return (
     <div className="exercise-connect-root w-full space-y-4">
+      {liveRegion}
       <style>{`
         @keyframes shakeX {
           0% { transform: translateX(0); }
@@ -252,7 +284,7 @@ export function ConnectWordsExercise({
             </div>
           </motion.div>
         ) : (
-        <div className="exercise-connect-grid grid grid-cols-2 gap-x-3 gap-y-3 w-full mx-auto items-center">
+        <div ref={gridRef} className="exercise-connect-grid grid grid-cols-2 gap-x-3 gap-y-3 w-full mx-auto items-center">
             {connectWords.map((_, wordIndex) => {
               const meaningIndex = wordIndex;
               const word = connectWords[wordIndex];
@@ -275,6 +307,11 @@ export function ConnectWordsExercise({
                     <motion.button
                       onClick={() => handleWordSelect(wordIndex)}
                       disabled={isPaired}
+                      // Selecting a word is a toggle (choose it, then its
+                      // meaning), exposed as a pressed state.
+                      aria-pressed={isSelected}
+                      data-exercise-option=""
+                      data-word-index={wordIndex}
                       className={`exercise-connect-button exercise-pair-tile w-full self-center px-4 py-2.5 text-base md:text-lg font-semibold rounded-xl border transition-all text-left focus:outline-none ${
                         isPaired
                           ? isFlashing

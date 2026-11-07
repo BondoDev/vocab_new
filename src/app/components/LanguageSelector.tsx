@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import deFlag from "../../assets/flags/de.svg";
 import esFlag from "../../assets/flags/es.svg";
@@ -56,6 +56,23 @@ export function LanguageSelector({
   const [isMobilePicker, setIsMobilePicker] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
+  // Disclosure pattern: the trigger exposes aria-expanded/aria-controls, the
+  // panel (desktop dropdown or mobile sheet) holds a labelled search field
+  // and ordinary option buttons, the selected one marked aria-current.
+  // Escape and a selection close it and return focus to the trigger.
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const mobileCloseRef = useRef<HTMLButtonElement>(null);
+  const mobileSheetRef = useRef<HTMLDivElement>(null);
+  const panelId = useId();
+  // The visible placeholder ends in "..."; the field's name should not.
+  const searchLabel = t("languageSelector.search").replace(/\s*(\.\.\.|…)$/, "");
+  const closeLabel = t("languageContinuePopup.close");
+
+  const closeAndReturnFocus = () => {
+    setIsOpen(false);
+    setSearchQuery("");
+    triggerRef.current?.focus();
+  };
 
   // Detect mobile sizes where selector should open as popup sheet.
   useEffect(() => {
@@ -90,13 +107,40 @@ export function LanguageSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobilePicker]);
 
-  // Escape closes mobile popup.
+  // Escape closes the mobile popup and returns focus to the trigger. On
+  // open, focus moves into the sheet (its Close button, not the search
+  // field, so no on-screen keyboard opens by itself). The sheet is a modal
+  // dialog covering the page, so Tab/Shift+Tab wrap inside it instead of
+  // reaching controls behind it.
   useEffect(() => {
     if (!isOpen || !isMobilePicker) return;
 
+    mobileCloseRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsOpen(false);
+        setSearchQuery("");
+        triggerRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !mobileSheetRef.current) return;
+
+      const focusable = Array.from(
+        mobileSheetRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]):not([tabindex="-1"]), input:not([disabled])',
+        ),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      const inside = mobileSheetRef.current.contains(active);
+      if (event.shiftKey && (active === first || !inside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !inside)) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
@@ -115,8 +159,8 @@ export function LanguageSelector({
   const handleSelect = (code: string) => {
     if (!disabledLanguages.includes(code)) {
       onChange(code);
-      setIsOpen(false);
-      setSearchQuery("");
+      // The chosen option unmounts with the panel; keep focus on the trigger.
+      closeAndReturnFocus();
     }
   };
 
@@ -134,6 +178,7 @@ export function LanguageSelector({
               type="button"
               onClick={() => handleSelect(lang.code)}
               disabled={isDisabled}
+              aria-current={isSelected ? "true" : undefined}
               className={`w-full px-4 py-3 text-left transition-colors ${
                 isSelected
                   ? "bg-primary/10 text-primary font-medium"
@@ -171,14 +216,41 @@ export function LanguageSelector({
   );
 
   return (
-    <div className="flex flex-col gap-2 w-full" ref={dropdownRef}>
+    <div
+      className="flex flex-col gap-2 w-full"
+      ref={dropdownRef}
+      // Desktop dropdown: Escape closes it (focus back on the trigger) and
+      // it closes when keyboard focus leaves the picker. The mobile sheet
+      // handles Escape in its own effect above.
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && isOpen && !isMobilePicker) {
+          event.preventDefault();
+          event.stopPropagation();
+          closeAndReturnFocus();
+        }
+      }}
+      onBlur={(event) => {
+        if (
+          isOpen &&
+          !isMobilePicker &&
+          event.relatedTarget &&
+          !event.currentTarget.contains(event.relatedTarget as Node)
+        ) {
+          setIsOpen(false);
+          setSearchQuery("");
+        }
+      }}
+    >
       <label className="text-sm md:text-base text-foreground/80 font-bold">
         {label}
       </label>
       <div className="relative">
         {/* Selected language display */}
         <button
+          ref={triggerRef}
           type="button"
+          aria-expanded={isOpen}
+          aria-controls={isOpen ? panelId : undefined}
           onClick={() => setIsOpen(!isOpen)}
           className="language-selector-trigger w-full bg-input-background border border-border rounded-lg px-4 py-3 md:px-6 md:py-5 md:text-lg pr-10 cursor-pointer hover:border-primary/40 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-left"
         >
@@ -196,7 +268,7 @@ export function LanguageSelector({
               className={
                 selectedLanguage
                   ? "language-selector-trigger-text truncate"
-                  : "language-selector-trigger-text truncate text-sm text-muted-foreground/70"
+                  : "language-selector-trigger-text truncate text-sm text-muted-foreground"
               }
             >
               {selectedLanguage?.name || placeholder || "Select..."}
@@ -207,13 +279,14 @@ export function LanguageSelector({
 
         {/* Desktop dropdown */}
         {isOpen && !isMobilePicker && (
-          <div className="absolute z-50 w-full mt-2 bg-card border border-border rounded-lg shadow-lg overflow-hidden">
+          <div id={panelId} className="absolute z-50 w-full mt-2 bg-card border border-border rounded-lg shadow-lg overflow-hidden">
             {/* Search input */}
             <div className="p-3 border-b border-border">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label={searchLabel}
                 placeholder={t("languageSelector.search")}
                 className="language-selector-search-input w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
@@ -227,26 +300,32 @@ export function LanguageSelector({
         {/* Mobile popup */}
         {isOpen && isMobilePicker && (
           <div
+            id={panelId}
+            ref={mobileSheetRef}
             className="language-selector-mobile-popup fixed inset-0 z-[70]"
             role="dialog"
             aria-modal="true"
-            aria-label={`${label} picker`}
+            aria-label={label}
           >
+            {/* Tap-outside-to-close only; the labelled Close button below is
+                the keyboard and screen-reader way out. */}
             <button
               type="button"
               className="language-selector-mobile-backdrop absolute inset-0"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close language picker"
+              onClick={closeAndReturnFocus}
+              tabIndex={-1}
+              aria-hidden="true"
             />
             <div className="language-selector-mobile-sheet absolute left-3 right-3 bottom-4 rounded-2xl border border-border bg-card shadow-2xl overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                 <span className="font-semibold text-foreground">{label}</span>
                 <button
+                  ref={mobileCloseRef}
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeAndReturnFocus}
                   className="px-2 py-1 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted"
                 >
-                  Close
+                  {closeLabel}
                 </button>
               </div>
               <div className="p-3 border-b border-border">
@@ -254,6 +333,7 @@ export function LanguageSelector({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  aria-label={searchLabel}
                   placeholder={t("languageSelector.search")}
                   className="language-selector-search-input w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
                 />

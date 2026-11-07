@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Mic } from "lucide-react";
 import { shuffleArray } from "../../../utils/shuffleArray";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useExerciseAnnouncer } from "./useExerciseAnnouncer";
 
 interface ListeningExerciseProps {
   words: any[];
@@ -54,6 +55,36 @@ export function ListeningExercise({
   const flashTimeoutsRef = useRef<number[]>([]);
   const hasActiveSelection = selectedLeft !== null;
   const isComplete = pairs.length === 4;
+  const { announce, clear: clearAnnouncement, liveRegion } = useExerciseAnnouncer();
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  // Distinct names by position only ("Play word audio 2 of 4"), so the
+  // options can be told apart without revealing which word each one plays.
+  // Reuses the localized "{selected} of {total}" template.
+  const getAudioLabel = (rowIndex: number) =>
+    `${t("practice.playWordAudio")} ${t("levelCategory.filtersPage.summary.ofTotal")
+      .replace("{selected}", String(rowIndex + 1))
+      .replace("{total}", String(leftItems.length))}`;
+
+  // A matched pair (or a reset after a wrong pick) disables the focused
+  // button, which would drop keyboard focus to the page. Put it back on an
+  // audio option that can still be chosen — the given one if available —
+  // but only when focus was in this grid, so pointer users see no change.
+  const restoreAudioFocus = (rowIndex?: number) => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const active = document.activeElement;
+    if (active && active !== document.body && !grid.contains(active)) return;
+    window.requestAnimationFrame(() => {
+      const current = gridRef.current;
+      if (!current) return;
+      const preferred =
+        rowIndex === undefined
+          ? null
+          : current.querySelector<HTMLButtonElement>(`[data-audio-index="${rowIndex}"]:not(:disabled)`);
+      (preferred ?? current.querySelector<HTMLButtonElement>("[data-audio-index]:not(:disabled)"))?.focus();
+    });
+  };
   const pairedLeftIndexSet = useMemo(
     () => new Set(pairs.map((pair) => pair.leftIndex)),
     [pairs],
@@ -174,18 +205,25 @@ export function ListeningExercise({
       }, 140);
       flashTimeoutsRef.current.push(timeoutId);
       setSelectedLeft(null);
+      announce(t("practice.correct"));
+      restoreAudioFocus();
       return;
     }
 
     setIncorrectPair({ leftIndex: selectedLeft, rightIndex });
+    announce(t("practice.answerIncorrect"));
+    const wrongLeftIndex = selectedLeft;
     setTimeout(() => {
       setIncorrectPair(null);
       setSelectedLeft(null);
+      clearAnnouncement();
+      restoreAudioFocus(wrongLeftIndex);
     }, 600);
   };
 
   return (
     <div className="w-full space-y-4">
+      {liveRegion}
       <style>{`
         @keyframes shakeX {
           0% { transform: translateX(0); }
@@ -238,7 +276,7 @@ export function ListeningExercise({
             </div>
           </div>
         ) : (
-        <div className="exercise-listening-grid w-full grid grid-cols-2 gap-x-3 gap-y-3 max-w-2xl mx-auto items-center">
+        <div ref={gridRef} className="exercise-listening-grid w-full grid grid-cols-2 gap-x-3 gap-y-3 max-w-2xl mx-auto items-center">
             {leftItems.map((leftItem, rowIndex) => {
               const rightIndex = rowIndex;
               const rightItem = rightItems[rowIndex];
@@ -278,7 +316,12 @@ export function ListeningExercise({
                             ? "bg-white text-slate-900/70 opacity-80"
                             : "bg-white text-slate-900"
                     }`}
-                    aria-label={t("practice.playWordAudio")}
+                    aria-label={getAudioLabel(rowIndex)}
+                    // Choosing an audio clip is a toggle (choose it, then
+                    // its meaning), exposed as a pressed state.
+                    aria-pressed={isLeftSelected}
+                    data-exercise-option=""
+                    data-audio-index={rowIndex}
                   >
                     <Mic className="exercise-listening-mic-icon mx-auto h-6 w-6" />
                   </button>

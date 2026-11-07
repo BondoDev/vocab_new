@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   UniversalExerciseCaret,
   UniversalExerciseInput,
@@ -10,6 +10,7 @@ import { type KeyboardLanguage } from "./layouts";
 import { isCompletedWrongAttempt } from "./completedWrongAttempt";
 import { ExerciseRetryButton } from "./ExerciseRetryButton";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useExerciseAnnouncer } from "./useExerciseAnnouncer";
 
 interface WordTypingExerciseProps {
   currentWord: any;
@@ -75,6 +76,8 @@ export function WordTypingExercise({
   const inputAnchorRef = useRef<HTMLDivElement | null>(null);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const templateWord = currentWord?.word_lemma ?? "";
+  const instructionId = useId();
+  const { announce, liveRegion } = useExerciseAnnouncer();
 
   const resolveKeyboardLanguage = (language: string): KeyboardLanguage => {
     const normalized = language.trim().toLowerCase();
@@ -239,6 +242,23 @@ export function WordTypingExercise({
     inputRef.current?.blur();
   }, [isCorrect]);
 
+  // Screen-reader feedback. "Correct!" only for an answer the learner wrote
+  // (Show me word also completes the field but is not an answer). "Not
+  // correct" only once the field is full and wrong — never for partial
+  // input — and only after a short delay: the answer is validated in a
+  // separate effect, so a full, correct answer flips isCorrect a render
+  // later and this effect's cleanup cancels the pending message.
+  useEffect(() => {
+    if (isCorrect && !usedShowWord) announce(t("practice.correct"));
+  }, [isCorrect, usedShowWord, announce, t]);
+
+  const answerLength = currentWord?.word_lemma?.length ?? 0;
+  useEffect(() => {
+    if (isCorrect || usedShowWord || answerLength === 0 || userInput.length < answerLength) return;
+    const timeoutId = window.setTimeout(() => announce(t("practice.answerIncorrect")), 400);
+    return () => window.clearTimeout(timeoutId);
+  }, [userInput, isCorrect, usedShowWord, answerLength, announce, t]);
+
   useEffect(() => {
     if (!isCorrect || hasAutoPlayedCorrectAudioRef.current) return;
     hasAutoPlayedCorrectAudioRef.current = true;
@@ -374,6 +394,10 @@ export function WordTypingExercise({
 
   return (
     <div className="w-full flex flex-col items-center">
+      <span id={instructionId} className="sr-only">
+        {t("practice.wordTypingInstruction")}
+      </span>
+      {liveRegion}
       <div ref={inputAnchorRef} className="w-full">
       <UniversalExerciseInput
         isCorrect={isCorrect}
@@ -540,6 +564,10 @@ export function WordTypingExercise({
             inputRef.current = null;
           },
           maxLength: currentWord.word_lemma.length,
+          // The visible prompt word names the field; the exercise
+          // instruction describes it. No visible label is added.
+          "aria-label": currentPrompt,
+          "aria-describedby": instructionId,
           autoCapitalize: "off",
           autoCorrect: "off",
           inputMode: isMobileViewport ? "none" : "text",

@@ -210,8 +210,14 @@ export function UniversalExerciseInput({
   return (
     <div ref={rootRef} className="relative w-full flex justify-center">
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
+        {/* Visually hidden (opacity 0) until the answer is correct, so it is
+            also disabled and hidden from assistive tech until then: an
+            invisible control must not take Tab focus or Enter/Space. */}
         <motion.button
+          type="button"
           onClick={onSpeakWord}
+          disabled={!isCorrect}
+          aria-hidden={isCorrect ? undefined : true}
           className="exercise-speak-button p-2 rounded-full transition-colors"
           aria-label={t("practice.listenToPronunciation")}
           animate={{

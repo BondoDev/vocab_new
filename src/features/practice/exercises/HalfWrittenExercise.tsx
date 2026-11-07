@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   UniversalExerciseCaret,
   UniversalExerciseInput,
@@ -10,6 +10,7 @@ import { type KeyboardLanguage } from "./layouts";
 import { isCompletedWrongAttempt } from "./completedWrongAttempt";
 import { ExerciseRetryButton } from "./ExerciseRetryButton";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useExerciseAnnouncer } from "./useExerciseAnnouncer";
 
 interface HalfWrittenExerciseProps {
   currentWord: any;
@@ -75,6 +76,8 @@ export function HalfWrittenExercise({
   const inputAnchorRef = useRef<HTMLDivElement | null>(null);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const missingTemplate = normalizedWord.substring(visibleLetterCount);
+  const instructionId = useId();
+  const { announce, liveRegion } = useExerciseAnnouncer();
 
   const resolveKeyboardLanguage = (language: string): KeyboardLanguage => {
     const normalized = language.trim().toLowerCase();
@@ -262,6 +265,21 @@ export function HalfWrittenExercise({
     }
   }, [isCorrect]);
 
+  // Screen-reader feedback; same rules as WordTypingExercise: "Correct!"
+  // only for a written answer, "Not correct" only once the missing part is
+  // full and wrong, after a short delay that a just-validated correct answer
+  // cancels (validation runs in a separate effect).
+  useEffect(() => {
+    if (isCorrect && !usedShowWord) announce(t("practice.correct"));
+  }, [isCorrect, usedShowWord, announce, t]);
+
+  const answerLength = missingTemplate.length;
+  useEffect(() => {
+    if (isCorrect || usedShowWord || answerLength === 0 || userInput.length < answerLength) return;
+    const timeoutId = window.setTimeout(() => announce(t("practice.answerIncorrect")), 400);
+    return () => window.clearTimeout(timeoutId);
+  }, [userInput, isCorrect, usedShowWord, answerLength, announce, t]);
+
   useEffect(() => {
     if (!isCorrect || hasAutoPlayedCorrectAudioRef.current) return;
     hasAutoPlayedCorrectAudioRef.current = true;
@@ -370,6 +388,10 @@ export function HalfWrittenExercise({
 
   return (
     <div className="w-full flex flex-col items-center">
+      <span id={instructionId} className="sr-only">
+        {t("practice.halfWrittenInstruction")}
+      </span>
+      {liveRegion}
       <div ref={inputAnchorRef} className="w-full">
         <UniversalExerciseInput
           isCorrect={isCorrect}
@@ -543,6 +565,10 @@ export function HalfWrittenExercise({
               inputRef.current = null;
             },
             maxLength: normalizedWord.length - visibleLetterCount,
+            // The visible prompt word names the field; the exercise
+            // instruction describes it. No visible label is added.
+            "aria-label": currentPrompt,
+            "aria-describedby": instructionId,
             autoCapitalize: "off",
             autoCorrect: "off",
             inputMode: isMobileViewport ? "none" : "text",

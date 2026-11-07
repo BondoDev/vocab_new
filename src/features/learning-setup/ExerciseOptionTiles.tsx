@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -33,6 +34,9 @@ export function ExerciseOptionTiles({
   onHelp,
 }: ExerciseOptionTilesProps) {
   const { t } = useLanguage();
+  // Unique per rendered tile set (the setup page and filters can both mount
+  // one), for the label/description ids the toggle buttons reference.
+  const idPrefix = useId();
   const toggleExercise = (exerciseId: string) => {
     // Prevent deselecting the last exercise
     if (
@@ -66,11 +70,19 @@ export function ExerciseOptionTiles({
           "--exercise-card-icon": exerciseCardIconColors[exercise.id] ?? "#6B58C8",
         };
 
+        const exerciseName = t(`exerciseSelection.exercise.${exercise.id}`);
+        const labelId = `${idPrefix}-${exercise.id}-label`;
+        const descriptionId = `${idPrefix}-${exercise.id}-description`;
+
+        // The card is a container, not a button: a transparent full-card
+        // toggle button and the "?" help button are siblings inside it, so
+        // help is never nested in the toggle (and stays usable on the locked
+        // last-selected card, whose toggle is disabled). All card classes,
+        // styles and motion stay on the container, so its look is unchanged;
+        // the toggle's focus ring is drawn on the card (exercise-selection.scss).
         return (
-          <motion.button
+          <motion.div
             key={exercise.id}
-            onClick={() => toggleExercise(exercise.id)}
-            aria-pressed={isSelected}
             style={cardStyle}
             className={`exercise-card p-5 rounded-lg border-2 transition-all ${
               isSelected
@@ -93,35 +105,33 @@ export function ExerciseOptionTiles({
                 ? { scale: 0.99 }
                 : undefined
             }
-            disabled={isLastSelected}
-            >
+          >
+            <button
+              type="button"
+              className="exercise-card-toggle"
+              onClick={() => toggleExercise(exercise.id)}
+              aria-pressed={isSelected}
+              aria-labelledby={labelId}
+              aria-describedby={descriptionId}
+              disabled={isLastSelected}
+            />
             <span className="exercise-card-corners">
-              <span className={`exercise-check ${isSelected ? "is-visible" : ""}`}>
+              <span className={`exercise-check ${isSelected ? "is-visible" : ""}`} aria-hidden="true">
                 <Check className="w-4 h-4" />
               </span>
-              <span
+              <button
+                type="button"
                 className="exercise-help-button"
-                role="button"
-                tabIndex={0}
                 aria-label={t("exerciseSelection.helpButtonAria")}
-                onPointerDown={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }}
-                onClick={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  onHelp?.(exercise.id);
-                }}
-                onKeyDown={(event) => {
-                  if (event.key !== "Enter" && event.key !== " ") return;
-                  event.preventDefault();
-                  event.stopPropagation();
-                  onHelp?.(exercise.id);
-                }}
+                // Which exercise it explains, as a description (so the name
+                // stays short and distinct from the card's own toggle).
+                aria-describedby={labelId}
+                // Keeps the card's press animation (whileTap) from firing.
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={() => onHelp?.(exercise.id)}
               >
                 ?
-              </span>
+              </button>
             </span>
 
             <span className="exercise-card-icon" aria-hidden="true">
@@ -129,18 +139,16 @@ export function ExerciseOptionTiles({
             </span>
 
             <span className="exercise-card-content text-left">
-              <span className="exercise-card-label block text-base text-foreground">
-                {t(
-                  `exerciseSelection.exercise.${exercise.id}`,
-                )}
+              <span id={labelId} className="exercise-card-label block text-base text-foreground">
+                {exerciseName}
               </span>
-              <span className="exercise-card-description block text-sm text-muted-foreground">
+              <span id={descriptionId} className="exercise-card-description block text-sm text-muted-foreground">
                 {t(
                   `exerciseSelection.exerciseDescription.${exercise.id}`,
                 )}
               </span>
             </span>
-          </motion.button>
+          </motion.div>
         );
       })}
     </>

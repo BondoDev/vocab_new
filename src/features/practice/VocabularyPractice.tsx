@@ -850,6 +850,65 @@ export function VocabularyPractice({
 
   useEnterToAdvance(isNextActionAvailable && !isCardSwitching, handleNext);
 
+  // Keyboard focus for each new exercise card (session start, Next/Skip,
+  // switching Listening to Connect words). The card remounts per exercise
+  // (practiceCardKey), so without this focus fell to the page body and
+  // keyboard users had to tab back in for every word. The target depends on
+  // the exercise: its answer field, else its first available option, else
+  // the prompt word. Text fields are skipped on touch screens (and the
+  // read-only ones the in-app keyboard uses there), so focus never opens a
+  // keyboard on its own.
+  // Some exercises build their options in an effect after mounting (broken
+  // word chunks, connect/listening pairs), so the target is retried for a
+  // few frames before falling back to the prompt word.
+  const practiceCardRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (isLoading || sessionComplete || words.length === 0) return;
+    let attempts = 0;
+    let timeoutId: number | null = null;
+    const tryFocus = () => {
+      const card = practiceCardRef.current;
+      if (!card) return;
+      const isCoarsePointer = window.matchMedia?.("(pointer: coarse)").matches ?? false;
+      const answerField = isCoarsePointer
+        ? null
+        : card.querySelector<HTMLInputElement>(
+            'input[type="text"]:not([readonly]):not([disabled]):not([aria-hidden="true"])',
+          );
+      const firstOption = card.querySelector<HTMLElement>("[data-exercise-option]:not(:disabled)");
+      const target = answerField ?? firstOption;
+      if (target) {
+        target.focus();
+        return;
+      }
+      attempts += 1;
+      if (attempts < 6) {
+        timeoutId = window.setTimeout(tryFocus, 50);
+        return;
+      }
+      card.querySelector<HTMLElement>("[data-exercise-prompt]")?.focus();
+    };
+    const raf = window.requestAnimationFrame(tryFocus);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+    };
+  }, [practiceCardKey, isLoading, sessionComplete, words.length]);
+
+  // When an exercise is completed by an action that removes the focused
+  // control (the last broken-word chunk, the last connect/listening pair),
+  // focus would be left on the page body; hand it to Next instead. Focus
+  // that is still on a control (e.g. a typing field) is left alone.
+  useEffect(() => {
+    if (!exerciseStatus.isCorrect) return;
+    const raf = window.requestAnimationFrame(() => {
+      const active = document.activeElement;
+      if (active && active !== document.body && active.isConnected) return;
+      practiceCardRef.current?.querySelector<HTMLButtonElement>(".practice-next-button:not(:disabled)")?.focus();
+    });
+    return () => window.cancelAnimationFrame(raf);
+  }, [exerciseStatus.isCorrect]);
+
   const handleFinishTest = () => {
     setSessionComplete(true);
     onSessionComplete?.();
@@ -1186,6 +1245,7 @@ export function VocabularyPractice({
               {currentWord && (
                 <motion.div
                     key={practiceCardKey}
+                    ref={practiceCardRef}
                     className={`practice-card practice-card--surface bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
                       isCardSwitching ? "practice-card-switching" : ""
                     }`}
@@ -1238,7 +1298,14 @@ export function VocabularyPractice({
                       {!isFourWordExercise(currentExerciseType) && (
                         <div className="exercise-guess-word-container min-h-[60px] flex items-center justify-center">
                           <div className="text-center">
-                            <h2 className="exercise-guess-word practice-card-word text-4xl md:text-5xl font-bold">
+                            {/* Programmatic focus target (tabIndex -1, not in
+                                tab order) when an exercise has no field or
+                                option to focus, e.g. typing on touch screens. */}
+                            <h2
+                              tabIndex={-1}
+                              data-exercise-prompt=""
+                              className="exercise-guess-word practice-card-word text-4xl md:text-5xl font-bold outline-none"
+                            >
                               {currentPrompt}
                             </h2>
                           </div>

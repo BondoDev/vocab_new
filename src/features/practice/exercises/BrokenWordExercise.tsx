@@ -4,6 +4,7 @@ import { UniversalExerciseInput } from "./UniversalExerciseInput";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { ExerciseRetryButton } from "./ExerciseRetryButton";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useExerciseAnnouncer } from "./useExerciseAnnouncer";
 
 interface BrokenWordExerciseProps {
   currentWord: any;
@@ -48,7 +49,22 @@ export function BrokenWordExercise({
   const wroteWordRef = useRef(false);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
+  const chunkListRef = useRef<HTMLDivElement | null>(null);
+  const { announce, clear: clearAnnouncement, liveRegion } = useExerciseAnnouncer();
   const rawWord: string = currentWord?.word_lemma ?? "";
+
+  // A chosen chunk disables itself, which would drop keyboard focus to the
+  // page; keep it on the chunk list instead (first chunk still available).
+  // Only when focus was in the list, so pointer users see no change.
+  const keepFocusInChunkList = () => {
+    const list = chunkListRef.current;
+    if (!list) return;
+    const active = document.activeElement;
+    if (active && active !== document.body && !list.contains(active)) return;
+    window.requestAnimationFrame(() => {
+      chunkListRef.current?.querySelector<HTMLButtonElement>("button:not(:disabled)")?.focus();
+    });
+  };
   // Multi-word answers size the field as `max-content`, but the overlay is
   // absolutely positioned and contributes no width, so without auto-fit the
   // field falls back to the hidden <input>'s intrinsic (size=20) width.
@@ -201,10 +217,15 @@ export function BrokenWordExercise({
     if (isCorrectOrder) {
       setIsCorrect(true);
       setShowIncorrectFeedback(false);
+      announce(t("practice.correct"));
     } else {
       setShowIncorrectFeedback(true);
+      // Same text as the visible message, which is not itself a live region.
+      announce(t("practice.incorrectOrderTryAgain"));
       setTimeout(() => {
         clearBrokenWordSlots();
+        clearAnnouncement();
+        keepFocusInChunkList();
       }, 800);
     }
   };
@@ -235,6 +256,8 @@ export function BrokenWordExercise({
 
     if (newPlacedChunks.length === wordChunks.length) {
       checkBrokenWordAnswer(newPlacedChunks);
+    } else {
+      keepFocusInChunkList();
     }
   };
 
@@ -330,6 +353,7 @@ export function BrokenWordExercise({
 
   return (
     <div className="space-y-6">
+      {liveRegion}
       <UniversalExerciseInput
         isCorrect={isCorrect}
         onSpeakWord={speakWord}
@@ -448,10 +472,13 @@ export function BrokenWordExercise({
       {!isCorrect && (
         <>
           <div className="flex justify-center">
-            <div className="flex flex-wrap gap-2 justify-center max-w-md">
+            <div ref={chunkListRef} className="flex flex-wrap gap-2 justify-center max-w-md">
               {shuffledChunks.map((chunk, chunkIndex) => (
                 <button
                   key={chunkIndex}
+                  // First enabled option receives focus when a new exercise
+                  // starts (VocabularyPractice.tsx, focusExerciseStart).
+                  data-exercise-option=""
                   onClick={() => handleChunkSelect(chunkIndex)}
                   disabled={usedChunks[chunkIndex] || usedShowWord}
                   className={`exercise-broken-chunk-button px-2.5 py-1 text-lg font-medium rounded-lg border-2 transition-all ${

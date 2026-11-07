@@ -554,18 +554,30 @@ export function Header({
     setIsAuthSubmitting(false);
   };
 
+  // The control that opened the auth dialog, refocused when it closes
+  // (DialogContent onCloseAutoFocus below). Captured synchronously in each
+  // open path, before Radix moves focus into the dialog.
+  const authDialogReturnFocusRef = useRef<HTMLElement | null>(null);
+  const rememberAuthDialogTrigger = () => {
+    const active = typeof document === "undefined" ? null : document.activeElement;
+    authDialogReturnFocusRef.current =
+      active instanceof HTMLElement && active !== document.body ? active : null;
+  };
+
   const openLoginDialog = () => {
     switchAuthMode("login");
     stayOnPageAfterAuthRef.current = false;
     setAuthEmail("");
     setIsMenuOpen(false);
     setIsDesktopMoreOpen(false);
+    rememberAuthDialogTrigger();
     setIsAuthDialogOpen(true);
   };
 
   const openSignupDialog = () => {
     switchAuthMode("signup");
     stayOnPageAfterAuthRef.current = false;
+    rememberAuthDialogTrigger();
     setIsAuthDialogOpen(true);
   };
 
@@ -631,6 +643,7 @@ export function Header({
 
     switchAuthMode("login");
     setAuthError(authRedirectError);
+    rememberAuthDialogTrigger();
     setIsAuthDialogOpen(true);
     onAuthRedirectErrorHandled?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1380,7 +1393,32 @@ export function Header({
             phone the dialog (~610px tall) would otherwise extend past the
             viewport, and as a fixed, scroll-locked layer its title, Close
             button and "Sign Up" switch were unreachable (WCAG 1.4.10). */}
-        <DialogContent className="max-h-[calc(100dvh-2rem)] w-[min(92vw,28rem)] max-w-none overflow-y-auto overscroll-contain rounded-3xl border-white/15 bg-[#fffdfd] p-0 shadow-[0_24px_80px_rgba(18,12,38,0.32)] sm:w-[26rem]">
+        <DialogContent
+          className="max-h-[calc(100dvh-2rem)] w-[min(92vw,28rem)] max-w-none overflow-y-auto overscroll-contain rounded-3xl border-white/15 bg-[#fffdfd] p-0 shadow-[0_24px_80px_rgba(18,12,38,0.32)] sm:w-[26rem]"
+          // Return focus to the control that opened the dialog. Radix's own
+          // restore landed on <body> here (the dialog is opened from state,
+          // not a DialogTrigger). If that control is gone or hidden — the
+          // mobile menu closes when its Log in item opens the dialog, and a
+          // sign-in swaps Log in for the account button — fall back to the
+          // visible header auth/account button, then the mobile menu toggle.
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            const isUsable = (element: HTMLElement | null | undefined): element is HTMLElement =>
+              Boolean(
+                element &&
+                  element.isConnected &&
+                  element.getClientRects().length > 0 &&
+                  !element.closest('[aria-hidden="true"]'),
+              );
+            const remembered = authDialogReturnFocusRef.current;
+            authDialogReturnFocusRef.current = null;
+            const headerAuthButton = headerRef.current?.querySelector<HTMLElement>(
+              ".header-desktop-actions button",
+            );
+            const target = [remembered, headerAuthButton, menuToggleRef.current].find(isUsable);
+            target?.focus();
+          }}
+        >
           <div className="overflow-hidden rounded-3xl">
             <div className="bg-[radial-gradient(circle_at_top,rgba(120,90,255,0.18),rgba(255,255,255,0)_58%),linear-gradient(135deg,#ffffff_0%,#f7f2ff_100%)] px-6 pb-6 pt-7">
               <DialogHeader className="gap-2 text-left">

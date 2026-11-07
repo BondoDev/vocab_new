@@ -460,6 +460,7 @@
     "halfWrittenInstruction": "Допишите недостающую часть слова.",
     "brokenWordInstruction": "Соберите правильное слово из предложенных частей.",
     "incorrectOrderTryAgain": "Неверный порядок — попробуйте снова",
+    "answerIncorrect": "Неверно — попробуйте снова",
     "wordsLabel": "Слова",
     "accuracyLabel": "Точность",
     "performanceMatrix": "Матрица результатов",
