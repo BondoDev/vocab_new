@@ -1119,3 +1119,34 @@
     font-size: 0.64rem !important;
   }
 }
+
+// Keyboard focus indicators (WCAG 2.4.7). Several header rules above swap the
+// outline for a barely visible background tint on :focus-visible, which left
+// Home / Practice / More / Log in / account / language controls with no
+// perceptible focus state on the purple header. This ring is drawn outside
+// the control (offset), on the header's own purple, so it stays visible next
+// to both the translucent pills and the light Log in / account buttons.
+// :focus-visible only, so mouse/touch users see no change; hover and active
+// styles are untouched. Higher specificity than those rules, no !important.
+.header-shell :is(a, button):focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.header-shell .header-desktop-more-item:focus-visible {
+  outline-offset: 1px;
+}
+
+// Options of the interface-language listbox (portaled to <body>, so outside
+// .header-shell). Arrow keys move focus between them, which needs a clearly
+// visible focused option: white on the dark desktop popup, the menu's own
+// focus purple on the light mobile drawer popup.
+.ui-language-dropdown [role="option"]:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+
+.ui-language-dropdown--drawer [role="option"]:not(:disabled):focus-visible {
+  outline: 2px solid #7850ad;
+  outline-offset: -2px;
+}

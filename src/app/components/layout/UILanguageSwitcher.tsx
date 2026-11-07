@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect, useId } from "react";
 import { createPortal } from "react-dom";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
@@ -60,6 +60,86 @@ export function UILanguageSwitcher({
   const currentLanguage =
     languages.find((lang) => lang.code === uiLanguage) ||
     languages[0];
+
+  // Listbox pattern (WAI-ARIA APG "collapsible listbox"): the trigger opens a
+  // role="listbox" whose options use a roving tabindex. The popup is portaled
+  // to <body> (it must escape the header's stacking context), so it is NOT
+  // next to the trigger in tab order: focus is moved into it on open and
+  // handed back to the trigger on Escape or a selection (Tab / Shift+Tab
+  // continue from the trigger to its neighbours) — otherwise a keyboard user
+  // would have to tab through the whole page to reach it.
+  const listboxId = useId();
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const selectedIndex = Math.max(
+    0,
+    languages.findIndex((lang) => lang.code === currentLanguage.code),
+  );
+
+  const openListbox = (index = selectedIndex) => {
+    setActiveIndex(index);
+    setIsOpen(true);
+  };
+
+  const closeListbox = () => {
+    setIsOpen(false);
+    buttonRef.current?.focus({ preventScroll: true });
+  };
+
+  // Focus the active option once the portal has rendered (and whenever the
+  // arrow keys move the active option).
+  useEffect(() => {
+    if (!isOpen) return;
+    optionRefs.current[activeIndex]?.focus({ preventScroll: false });
+  }, [isOpen, activeIndex]);
+
+  const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const last = languages.length - 1;
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault();
+        setActiveIndex((index) => (index >= last ? 0 : index + 1));
+        break;
+      case "ArrowUp":
+        event.preventDefault();
+        setActiveIndex((index) => (index <= 0 ? last : index - 1));
+        break;
+      case "Home":
+        event.preventDefault();
+        setActiveIndex(0);
+        break;
+      case "End":
+        event.preventDefault();
+        setActiveIndex(last);
+        break;
+      case "Escape":
+        // preventDefault also tells the mobile menu's document-level key
+        // handler (Header.tsx) that this key has been handled here, so only
+        // the listbox closes.
+        event.preventDefault();
+        event.stopPropagation();
+        closeListbox();
+        break;
+      case "Tab":
+        // Close and hand focus back to the trigger WITHOUT cancelling the
+        // key: the browser's default Tab / Shift+Tab then continues from the
+        // trigger, so focus lands on the control after (or before) it in
+        // one press, as if the portaled popup were not there. Left
+        // uncancelled on purpose, so the open mobile menu's focus wrap
+        // (Header.tsx) still applies when the drawer trigger is its last item.
+        closeListbox();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleTriggerKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      openListbox(event.key === "ArrowUp" ? languages.length - 1 : selectedIndex);
+    }
+  };
 
   // Calculate dropdown position when opened
   useEffect(() => {
@@ -247,7 +327,18 @@ export function UILanguageSwitcher({
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsOpen(!isOpen);
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      openListbox();
+    }
+  };
+
+  // A selection closes the listbox and returns focus to the trigger (if the
+  // header survives the language/route change; otherwise focus is harmless).
+  const handleOptionSelect = (code: LanguageCode) => {
+    handleSelect(code);
+    buttonRef.current?.focus({ preventScroll: true });
   };
 
   // The mobile drawer's language row (variant="centered-modal") gets its own
@@ -268,8 +359,14 @@ export function UILanguageSwitcher({
             ? "ui-language-switcher-trigger ui-language-switcher-trigger--drawer"
             : "ui-language-switcher-trigger group flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 bg-white/10 text-white/90 shadow-[0_10px_24px_rgba(10,4,30,0.25)] backdrop-blur-sm transition hover:bg-white/15 hover:text-white"
         }
-        aria-label={isDrawer ? `${t("header.interfaceLanguage")}: ${currentLanguage.name}` : "Change interface language"}
+        // No aria-label on either variant: the accessible name is the
+        // visible text itself (plus a visually hidden localized prefix /
+        // separator), so it always contains exactly what is on screen at the
+        // current breakpoint (WCAG 2.5.3) — e.g. "Interface Language: English".
+        aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-controls={isOpen ? listboxId : undefined}
+        onKeyDown={handleTriggerKeyDown}
         type="button"
       >
         {isDrawer ? (
@@ -283,6 +380,7 @@ export function UILanguageSwitcher({
               <span suppressHydrationWarning className="header-mobile-lang-label">
                 {t("header.interfaceLanguage")}
               </span>
+              <span className="sr-only">: </span>
               <span suppressHydrationWarning className="ui-lang-name">
                 {currentLanguage.name}
               </span>
@@ -294,7 +392,10 @@ export function UILanguageSwitcher({
           </>
         ) : (
           <>
-            <Globe className="w-4 h-4 text-white/80" />
+            <Globe className="w-4 h-4 text-white/80" aria-hidden="true" />
+            <span suppressHydrationWarning className="sr-only">
+              {`${t("header.interfaceLanguage")}: `}
+            </span>
             <span suppressHydrationWarning className="ui-lang-code-mobile text-[11px] font-semibold tracking-[0.2em] text-white/90 md:hidden">
               {currentLanguage.code.toUpperCase()}
             </span>
@@ -305,6 +406,7 @@ export function UILanguageSwitcher({
               {currentLanguage.code.toUpperCase()}
             </span>
             <ChevronDown
+              aria-hidden="true"
               className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
             />
           </>
@@ -346,17 +448,29 @@ export function UILanguageSwitcher({
                     }
               }
             >
-              <div className="max-h-64 overflow-y-auto p-1">
-                {languages.map((lang) => {
+              <div
+                id={listboxId}
+                role="listbox"
+                aria-label={t("header.interfaceLanguage")}
+                onKeyDown={handleListboxKeyDown}
+                className="max-h-64 overflow-y-auto p-1"
+              >
+                {languages.map((lang, index) => {
                   const isSelected = lang.code === uiLanguage;
                   return (
                     <button
                       key={lang.code}
+                      ref={(node) => {
+                        optionRefs.current[index] = node;
+                      }}
                       type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      tabIndex={index === activeIndex ? 0 : -1}
                       onClick={(e) => {
                         e.stopPropagation();
                         if (!lang.enabled) return;
-                        handleSelect(lang.code);
+                        handleOptionSelect(lang.code);
                       }}
                       disabled={!lang.enabled}
                       className={
@@ -397,7 +511,11 @@ export function UILanguageSwitcher({
                         </span>
                       )}
                       {isSelected && (
+                        // Visual badge only: aria-selected conveys the state,
+                        // and this English word would otherwise leak into the
+                        // option's name in every UI language.
                         <span
+                          aria-hidden="true"
                           className={
                             isDrawer
                               ? "ui-language-option-active ml-auto text-[10px] uppercase tracking-[0.18em]"

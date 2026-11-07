@@ -15,12 +15,14 @@ for (const width of [375, 390]) {
       await page.goto('/');
       await expect(page.getByRole('heading', { level: 1, name: 'Learn Vocabulary Your Way' })).toBeVisible();
       await expectNoOverflow(page);
-      const menu = page.getByRole('button', { name: 'Open navigation menu', exact: true });
+      // The toggle keeps one localized name ("Menu"); aria-expanded carries
+      // the open/closed state.
+      const menu = page.getByRole('button', { name: 'Menu', exact: true });
       await menu.focus();
       await page.keyboard.press('Enter');
-      await expect(page.getByRole('button', { name: 'Close navigation menu', exact: true })).toHaveAttribute('aria-expanded', 'true');
+      await expect(menu).toHaveAttribute('aria-expanded', 'true');
       await expect(page.getByRole('link', { name: 'Practice', exact: true })).toBeVisible();
-      await page.getByRole('button', { name: 'Close navigation menu', exact: true }).tap();
+      await menu.tap();
       await expect(menu).toHaveAttribute('aria-expanded', 'false');
       await page.getByRole('button', { name: 'Start Practicing', exact: true }).tap();
       await selectLanguages(page);

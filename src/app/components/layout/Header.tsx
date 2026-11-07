@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   BookOpenText,
   ChartSpline,
@@ -361,6 +361,60 @@ export function Header({
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
+  const desktopMoreButtonRef = useRef<HTMLButtonElement>(null);
+  const desktopMorePanelId = useId();
+  const headerRef = useRef<HTMLElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuContentRef = useRef<HTMLDivElement>(null);
+  const mobileMenuId = useId();
+
+  // While the mobile menu is open it covers the page, so keyboard focus is
+  // kept within the visible header controls plus the menu itself (Tab and
+  // Shift+Tab wrap), and Escape closes it and returns focus to the toggle.
+  // Keys already handled elsewhere (defaultPrevented) are left alone: the
+  // interface-language listbox is portaled to <body> and handles its own
+  // Escape/Tab, and the auth dialog (Radix) traps focus itself — opening it
+  // closes this menu first (openLoginDialog), which removes this listener.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const isVisible = (element: HTMLElement) =>
+      element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden";
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsMenuOpen(false);
+        menuToggleRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusables = [headerRef.current, mobileMenuContentRef.current]
+        .flatMap((container) =>
+          container
+            ? Array.from(
+                container.querySelectorAll<HTMLElement>(
+                  'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+                ),
+              )
+            : [],
+        )
+        .filter(isVisible);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      const inside = active ? focusables.includes(active) : false;
+      if (event.shiftKey && (active === first || !inside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !inside)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMenuOpen]);
   // Mobile counterpart of the desktop "More" dropdown: an expandable row
   // under Help in the mobile menu. Collapsed again whenever the menu closes.
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
@@ -945,6 +999,7 @@ export function Header({
     <>
       <div className="header-spacer" aria-hidden="true" />
       <header
+        ref={headerRef}
         style={starFieldStyle}
         className={`header-shell w-full px-4 py-3 md:px-8 md:py-3 top-0 z-50 shadow-[0_8px_18px_rgba(20,10,45,0.25)] overflow-visible ${
           isHeaderHidden ? "is-hidden" : ""
@@ -965,7 +1020,9 @@ export function Header({
                 href={NAV_HREFS.language}
                 onClick={createNavClickHandler(onLanguages)}
                 className="hover:text-white transition"
-                aria-label={t("header.home")}
+                // Starts with the visible wordmark so voice-control users can
+                // say what they see (WCAG 2.5.3); the brand is not translated.
+                aria-label={`FluentStellar ${t("header.home")}`}
               >
                 FLUENTSTELLAR
               </a>
@@ -992,16 +1049,33 @@ export function Header({
                 <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.practice")}
               </a>
+              {/* Disclosure, not an ARIA menu: the panel holds ordinary links
+                  reached with Tab, so the button only exposes aria-expanded +
+                  aria-controls. Escape closes it and returns focus to the
+                  button; it also closes once focus leaves the whole group. */}
               <div
                 className="header-desktop-more relative"
                 onMouseLeave={() => setIsDesktopMoreOpen(false)}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape" && isDesktopMoreOpen) {
+                    event.preventDefault();
+                    setIsDesktopMoreOpen(false);
+                    desktopMoreButtonRef.current?.focus();
+                  }
+                }}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                    setIsDesktopMoreOpen(false);
+                  }
+                }}
               >
                 <button
+                  ref={desktopMoreButtonRef}
                   type="button"
                   onClick={() => setIsDesktopMoreOpen((open) => !open)}
                   className={getDesktopNavClassName("about", "help")}
-                  aria-haspopup="menu"
                   aria-expanded={isDesktopMoreOpen}
+                  aria-controls={desktopMorePanelId}
                   suppressHydrationWarning
                 >
                   {moreLabel}
@@ -1011,7 +1085,7 @@ export function Header({
                   />
                 </button>
                 {isDesktopMoreOpen ? (
-                  <div className="header-desktop-more-panel absolute left-1/2 z-50 w-max min-w-40 -translate-x-1/2 rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
+                  <div id={desktopMorePanelId} className="header-desktop-more-panel absolute left-1/2 z-50 w-max min-w-40 -translate-x-1/2 rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
                     <a
                       href={NAV_HREFS.about}
                       onClick={createNavClickHandler(onAbout)}
@@ -1153,11 +1227,17 @@ export function Header({
           </div>
 
           <button
+            ref={menuToggleRef}
             type="button"
             className="header-menu-toggle md:hidden order-1 p-1 text-white"
             onClick={() => setIsMenuOpen((v) => !v)}
-            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            // One localized name for both states; aria-expanded conveys
+            // open/closed (APG disclosure pattern). Reuses the existing
+            // "Menu" string from all seven locale files (practice.menu),
+            // which this header now depends on.
+            aria-label={t("practice.menu")}
             aria-expanded={isMenuOpen}
+            aria-controls={mobileMenuId}
           >
             {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
@@ -1166,11 +1246,13 @@ export function Header({
       </header>
 
       <div
+        id={mobileMenuId}
         className={`header-mobile-menu ${isMenuOpen ? "is-open" : ""}`}
         aria-hidden={!isMenuOpen}
         onClick={() => setIsMenuOpen(false)}
       >
         <div
+          ref={mobileMenuContentRef}
           className="header-mobile-menu-content"
           onClick={(event) => event.stopPropagation()}
         >
@@ -1294,7 +1376,11 @@ export function Header({
           }
         }}
       >
-        <DialogContent className="w-[min(92vw,28rem)] max-w-none rounded-3xl border-white/15 bg-[#fffdfd] p-0 shadow-[0_24px_80px_rgba(18,12,38,0.32)] sm:w-[26rem]">
+        {/* max-h + overflow-y-auto: at 200% zoom or on a short landscape
+            phone the dialog (~610px tall) would otherwise extend past the
+            viewport, and as a fixed, scroll-locked layer its title, Close
+            button and "Sign Up" switch were unreachable (WCAG 1.4.10). */}
+        <DialogContent className="max-h-[calc(100dvh-2rem)] w-[min(92vw,28rem)] max-w-none overflow-y-auto overscroll-contain rounded-3xl border-white/15 bg-[#fffdfd] p-0 shadow-[0_24px_80px_rgba(18,12,38,0.32)] sm:w-[26rem]">
           <div className="overflow-hidden rounded-3xl">
             <div className="bg-[radial-gradient(circle_at_top,rgba(120,90,255,0.18),rgba(255,255,255,0)_58%),linear-gradient(135deg,#ffffff_0%,#f7f2ff_100%)] px-6 pb-6 pt-7">
               <DialogHeader className="gap-2 text-left">
