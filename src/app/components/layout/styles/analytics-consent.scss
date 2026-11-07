@@ -262,8 +262,10 @@ body.has-consent-banner .scroll-top-button {
     text-underline-offset: 2px;
   }
 
+  // --ring (#a0aec0) is only ~2:1 on the footer background; the brand
+  // indigo keeps the focus outline above the 3:1 non-text minimum.
   &:focus-visible {
-    outline: 2px solid var(--ring);
+    outline: 2px solid var(--primary);
     outline-offset: 1px;
   }
 

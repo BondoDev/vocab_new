@@ -1,3 +1,4 @@
+import { useId, useState } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { computeWordsLearnedSummary } from "../../../../data/learning/wordsLearnedSummary";
 import type { VocabularyGrowthDayCounts } from "../../../../data/learning/vocabularyGrowth";
@@ -20,11 +21,28 @@ const WEEKDAY_SHORT_KEYS = [
 // Learning page's Daily Streak card
 // (userProfile.learningSection.dailyStreak.weekdays.*) — reused as-is
 // rather than adding a second copy of the same 7 short-day strings.
-function weekdayShortKeyFor(dateISO: string): (typeof WEEKDAY_SHORT_KEYS)[number] {
+const WEEKDAY_LONG_KEYS = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+] as const;
+
+function mondayFirstIndexFor(dateISO: string): number {
   const [year, month, day] = dateISO.split("-").map(Number);
   const jsDay = new Date(Date.UTC(year, month - 1, day)).getUTCDay(); // 0=Sun..6=Sat
-  const mondayFirstIndex = jsDay === 0 ? 6 : jsDay - 1;
-  return WEEKDAY_SHORT_KEYS[mondayFirstIndex];
+  return jsDay === 0 ? 6 : jsDay - 1;
+}
+
+function weekdayShortKeyFor(dateISO: string): (typeof WEEKDAY_SHORT_KEYS)[number] {
+  return WEEKDAY_SHORT_KEYS[mondayFirstIndexFor(dateISO)];
+}
+
+function weekdayLongKeyFor(dateISO: string): (typeof WEEKDAY_LONG_KEYS)[number] {
+  return WEEKDAY_LONG_KEYS[mondayFirstIndexFor(dateISO)];
 }
 
 interface WordsLearnedCardProps {
@@ -49,6 +67,10 @@ export function WordsLearnedCard({
   onRetry,
 }: WordsLearnedCardProps) {
   const { t } = useLanguage();
+  // The bar tooltips are hover-only (the bars are not tab stops), so this
+  // one disclosure is how sighted keyboard users read the daily counts.
+  const [isDailyDetailsOpen, setIsDailyDetailsOpen] = useState(false);
+  const dailyDetailsId = useId();
 
   const isLoading =
     status === "loading" ||
@@ -147,7 +169,10 @@ export function WordsLearnedCard({
           >
             {chartDays.map((day) => (
               <div key={day.dateISO} className="words-learned-card__bar-col">
-                <div className="words-learned-card__bar-group" tabIndex={0}>
+                {/* Not focusable: the parent role="img" makes these children
+                    presentational, so tab stops here announced nothing. Its
+                    aria-label already carries every day's values. */}
+                <div className="words-learned-card__bar-group">
                   <div className="words-learned-card__bar-track" title={`${day.count} ${wordsUnit}`}>
                     <div
                       className="words-learned-card__bar-fill words-learned-card__bar-fill--learned"
@@ -186,6 +211,33 @@ export function WordsLearnedCard({
                 </span>
               </div>
             ))}
+          </div>
+
+          <button
+            type="button"
+            className="dashboard-card__link-button words-learned-card__details-toggle"
+            aria-expanded={isDailyDetailsOpen}
+            aria-controls={dailyDetailsId}
+            onClick={() => setIsDailyDetailsOpen((open) => !open)}
+          >
+            {t(
+              isDailyDetailsOpen
+                ? "userProfile.dashboardPage.supportingCards.wordsLearned.hideDailyDetails"
+                : "userProfile.dashboardPage.supportingCards.wordsLearned.showDailyDetails",
+            )}
+          </button>
+          <div id={dailyDetailsId} className="words-learned-card__details" hidden={!isDailyDetailsOpen}>
+            <p className="words-learned-card__details-heading">
+              {t("userProfile.dashboardPage.supportingCards.wordsLearned.series.wordsLearned")}
+            </p>
+            <dl className="words-learned-card__details-list">
+              {chartDays.map((day) => (
+                <div key={day.dateISO} className="words-learned-card__details-row">
+                  <dt>{t(`userProfile.learningSection.dailyStreak.weekdays.${weekdayLongKeyFor(day.dateISO)}`)}</dt>
+                  <dd>{day.count}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </>
       )}

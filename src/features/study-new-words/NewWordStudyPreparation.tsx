@@ -172,7 +172,7 @@ export function NewWordStudyPreparation({
   }
 
   return (
-    <div className="study-new-words-page">
+    <main className="study-new-words-page">
       <div className="study-new-words-page-body">
         <button onClick={onBack} className="study-new-words-back-button">
           <ChevronLeft className="study-new-words-back-icon" aria-hidden="true" />
@@ -215,7 +215,7 @@ export function NewWordStudyPreparation({
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -14,12 +14,17 @@
   --card-foreground: #4a5568;
   --popover: #ffffff;
   --popover-foreground: #4a5568;
-  --primary: #6366f1;
+  /* WCAG AA: --primary is used as small text and behind white button text.
+     #6366f1 measured 4.47:1 on white (3.7–4.2:1 on tints); #4f46e5, the
+     site's existing strong indigo, is 6.29:1 on white and >=5.2:1 on the
+     muted/tinted surfaces. --muted-foreground likewise moved from #6b7280
+     (4.0–4.3:1 on --muted/--secondary/tints) to keep >=4.79:1 there. */
+  --primary: #4f46e5;
   --primary-foreground: #ffffff;
   --secondary: #f1f1f5;
   --secondary-foreground: #4a5568;
   --muted: #e8eaed;
-  --muted-foreground: #6b7280;
+  --muted-foreground: #5f6672;
   --accent: #e9ebef;
   --accent-foreground: #4a5568;
   --destructive: #d4183d;

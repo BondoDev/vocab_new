@@ -299,6 +299,8 @@
         "wordsLearned": {
           "title": "Progreso de vocabulario",
           "last7Days": "Últimos 7 días",
+          "showDailyDetails": "Ver detalles diarios",
+          "hideDailyDetails": "Ocultar detalles diarios",
           "emptyStateMessage": "Comienza una sesión de Estudiar palabras nuevas para aumentar tu progreso semanal.",
           "series": {
             "wordsLearned": "Palabras aprendidas"

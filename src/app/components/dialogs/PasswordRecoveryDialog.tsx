@@ -168,7 +168,7 @@ export function PasswordRecoveryDialog({
                     placeholder="Enter your new password"
                     autoComplete="new-password"
                     disabled={isSubmitting}
-                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#6f63a0]"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export function PasswordRecoveryDialog({
                     placeholder="Repeat your new password"
                     autoComplete="new-password"
                     disabled={isSubmitting}
-                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#6f63a0]"
                   />
                 </div>
 

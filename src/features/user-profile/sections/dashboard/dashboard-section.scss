@@ -1277,6 +1277,56 @@
    duplication."
    ------------------------------------------------------------ */
 .words-learned-card {
+  // Keyboard-reachable alternative to the hover-only bar tooltips.
+  &__details-toggle {
+    align-self: flex-start;
+    margin-top: 0.6rem;
+
+    &:focus-visible {
+      box-shadow: none;
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
+
+  // No display rule here, so the [hidden] attribute keeps working.
+  &__details {
+    margin-top: 0.5rem;
+  }
+
+  &__details-heading {
+    margin: 0 0 0.3rem;
+    color: var(--muted-foreground);
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  &__details-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: 0.15rem 1rem;
+    margin: 0;
+  }
+
+  &__details-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+
+    dt {
+      color: var(--muted-foreground);
+    }
+
+    dd {
+      margin: 0;
+      color: var(--foreground);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
   &__empty-message {
     margin: 0 0 0.6rem;
     color: var(--muted-foreground);
@@ -1310,14 +1360,8 @@
     width: 100%;
     height: 100%;
 
-    &:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--ring);
-      border-radius: 2px;
-    }
-
-    &:hover,
-    &:focus-visible {
+    // Hover-only: bar groups are not focusable (see WordsLearnedCard.tsx).
+    &:hover {
       .words-learned-card__tooltip {
         opacity: 1;
         visibility: visible;
@@ -1376,25 +1420,29 @@
     display: inline-flex;
     align-items: center;
     gap: 0.28rem;
+    // Label text stays neutral (the series green/amber are ~2:1 as small
+    // text); only the swatch carries the series color, as in the Study
+    // Activity legend.
+    color: var(--foreground);
 
     &::before {
       content: "";
       width: 0.55rem;
       height: 0.55rem;
       border-radius: 2px;
-      background: currentColor;
+      background: var(--legend-swatch);
     }
 
     &--learned {
-      color: var(--primary);
+      --legend-swatch: var(--primary);
     }
 
     &--known {
-      color: #22c55e;
+      --legend-swatch: #22c55e;
     }
 
     &--mastered {
-      color: #f59e0b;
+      --legend-swatch: #f59e0b;
     }
   }
 

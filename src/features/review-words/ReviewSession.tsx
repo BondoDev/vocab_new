@@ -315,7 +315,7 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
   const handleBoundaryError = () => dispatch({ type: "EXERCISE_ERROR" });
 
   return (
-    <div className="review-session">
+    <main className="review-session">
       <div className="review-session-body">
         {!isSessionComplete && (
           // Shared session header (same rail as Custom Practice). No
@@ -505,6 +505,6 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
           </SessionCountFooter>
         )}
       </div>
-    </div>
+    </main>
   );
 }

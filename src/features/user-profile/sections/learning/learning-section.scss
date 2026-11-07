@@ -310,7 +310,8 @@
 
 .daily-goal-selector__recommended {
   margin: 0.125rem 0 0;
-  color: color-mix(in srgb, var(--primary) 80%, transparent);
+  // Full-strength primary: an 80% mix measured ~4.2:1, short of AA for 10px text.
+  color: var(--primary);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.04em;

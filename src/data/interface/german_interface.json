@@ -299,6 +299,8 @@
         "wordsLearned": {
           "title": "Wortschatzfortschritt",
           "last7Days": "Letzte 7 Tage",
+          "showDailyDetails": "Tagesdetails anzeigen",
+          "hideDailyDetails": "Tagesdetails ausblenden",
           "emptyStateMessage": "Starte eine Sitzung von Neue Wörter lernen, um deinen Wochenfortschritt aufzubauen.",
           "series": {
             "wordsLearned": "Gelernte Wörter"

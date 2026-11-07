@@ -260,7 +260,7 @@ export function NewWordStudySession({
   };
 
   return (
-    <div className="new-word-study-session">
+    <main className="new-word-study-session">
       <div className="new-word-study-session-body">
         {!isSessionComplete && (
           // Shared session header (same rail as Custom Practice and Review
@@ -419,6 +419,6 @@ export function NewWordStudySession({
       </AlertDialog>
 
       <Toast message={wordLearnedToast} />
-    </div>
+    </main>
   );
 }

@@ -123,7 +123,7 @@ export function ReviewWordsPreparation({
   }
 
   return (
-    <div className="review-words-page">
+    <main className="review-words-page">
       <div className="review-words-page-body">
         <button onClick={onBack} className="review-words-back-button">
           <ChevronLeft className="review-words-back-icon" aria-hidden="true" />
@@ -164,7 +164,7 @@ export function ReviewWordsPreparation({
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

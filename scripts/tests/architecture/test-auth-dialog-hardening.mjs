@@ -347,7 +347,7 @@ console.log("\n--- F-1: live-region/alert semantics ---\n");
 test("19. Header.tsx's auth error is role=\"alert\" and its info/success message is a polite status live region", () => {
   assert.match(
     header,
-    /\{authError \? \(\s*<div\s*\n\s*role="alert"\s*\n\s*className="rounded-xl border border-red-200 bg-red-50[^"]*"\s*\n\s*>\s*\{authError\}/,
+    /\{authError \? \(\s*<div\s*\n\s*(?:id="auth-error"\s*\n\s*)?role="alert"\s*\n\s*className="rounded-xl border border-red-200 bg-red-50[^"]*"\s*\n\s*>\s*\{authError\}/,
   );
   assert.match(
     header,
@@ -487,7 +487,7 @@ test("31. The length gate is scoped to signup mode only - login keeps its unchan
 });
 
 test("32. The signup length-gate error reuses the existing Settings passwordTooShort translation key rather than a new, duplicate hardcoded string", () => {
-  assert.match(header, /setAuthError\(t\("userProfile\.settingsSection\.account\.passwordTooShort"\)\);/);
+  assert.match(header, /(?:setAuthError\(|showFieldAuthError\("password", )t\("userProfile\.settingsSection\.account\.passwordTooShort"\)\);/);
 });
 
 test("33. The signup password field renders a live requirement hint (signup mode only), driven by a PASSWORD_MIN_LENGTH-derived boolean, never a second hardcoded minimum", () => {
@@ -499,7 +499,7 @@ test("33. The signup password field renders a live requirement hint (signup mode
 test("34. The password input is described by the requirement hint via aria-describedby (signup mode only) - not an aria-live region, so the status is never re-announced on every keystroke", () => {
   assert.match(
     header,
-    /aria-describedby=\{authMode === "signup" \? "auth-password-requirement" : undefined\}/,
+    /authMode === "signup" \? "auth-password-requirement" : (?:undefined|null)/,
   );
   const startIdx = header.indexOf('id="auth-password-requirement"');
   assert.ok(startIdx > -1, "expected the requirement hint paragraph");
@@ -538,7 +538,7 @@ test("37. No invented password-complexity requirements exist in the signup UI co
 
 test("38. The pre-existing confirm-password field and its mismatch check are untouched by this task", () => {
   assert.match(header, /id="auth-confirm-password"/);
-  assert.match(header, /setAuthError\("Passwords do not match\."\);/);
+  assert.match(header, /(?:setAuthError\(|showFieldAuthError\("confirm", )"Passwords do not match\."\);/);
 });
 
 console.log("\n--- Live confirm-password match feedback (2026-08-18) ---\n");
@@ -595,11 +595,19 @@ test("44. The match/mismatch status is never conveyed by color alone: a differen
   assert.match(statusBlock, /<XCircle size=\{14\} aria-hidden="true" \/>/);
 });
 
+test("45a. Client-side field validation errors set aria-invalid on their input and reference the auth-error alert", () => {
+  assert.match(header, /<div\s*\n\s*id="auth-error"\s*\n\s*role="alert"/);
+  for (const field of ["email", "password", "confirm"]) {
+    assert.match(header, new RegExp(`aria-invalid=\\{\\s*invalidAuthField === "${field}"`));
+    assert.match(header, new RegExp(`invalidAuthField === "${field}" \\? "auth-error"`));
+  }
+});
+
 test("45. The confirm-password input references its status text via aria-describedby (only once there is a status to describe) - not an aria-live region, matching the password-requirement hint's own established pattern", () => {
   const inputBlockMatch = header.match(/<Input\s+id="auth-confirm-password"[\s\S]*?\/>/);
   assert.match(
     inputBlockMatch[0],
-    /aria-describedby=\{\s*\n\s*confirmPasswordMatchState !== "neutral" \? "auth-confirm-password-status" : undefined\s*\n\s*\}/,
+    /aria-describedby=\{[\s\S]*?confirmPasswordMatchState !== "neutral" \? "auth-confirm-password-status" : (?:undefined|null)/,
   );
   const statusBlock = confirmStatusBlock();
   assert.doesNotMatch(statusBlock, /aria-live/);

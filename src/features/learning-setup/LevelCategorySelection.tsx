@@ -210,7 +210,7 @@ export function LevelCategorySelection({
   const unavailableHint = pageText("unavailable");
 
   return (
-    <div className="filters-page">
+    <main className="filters-page">
       {/* Outside the centered column so desktop can align it with the logo. */}
       <div className="filters-page__back-row">
         <button type="button" onClick={onBack} className="filters-page__back">
@@ -460,6 +460,6 @@ export function LevelCategorySelection({
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

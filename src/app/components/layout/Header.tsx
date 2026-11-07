@@ -430,6 +430,15 @@ export function Header({
   const [authPassword, setAuthPassword] = useState("");
   const [authConfirmPassword, setAuthConfirmPassword] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
+  // Which input a client-side validation error belongs to, stored with the
+  // message it was raised with. Every other setAuthError call (clears,
+  // Supabase/Google errors) replaces the message without touching this, so
+  // the message-equality check in render retires a stale field link
+  // automatically instead of requiring a reset at each of those sites.
+  const [authFieldError, setAuthFieldError] = useState<{
+    field: "email" | "password" | "confirm";
+    message: string;
+  } | null>(null);
   const [authInfo, setAuthInfo] = useState<string | null>(null);
   const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
   // Start null to match SSR output; the stored session propagates via the
@@ -480,6 +489,12 @@ export function Header({
   // value to judge) - sighted users see the same icon/text either way.
   const isSignupPasswordLengthValid = authPassword.length >= PASSWORD_MIN_LENGTH;
   const hasStartedTypingAuthPassword = authPassword.length > 0;
+  const invalidAuthField =
+    authError && authFieldError?.message === authError ? authFieldError.field : null;
+  const showFieldAuthError = (field: "email" | "password" | "confirm", message: string) => {
+    setAuthError(message);
+    setAuthFieldError({ field, message });
+  };
   // Live confirm-password match status - a separate concern from the length
   // check above (a too-short password can still "match" its own repeated
   // confirmation; the length hint stays independently invalid either way).
@@ -799,12 +814,12 @@ export function Header({
     setAuthInfo(null);
 
     if (!authEmail.trim()) {
-      setAuthError("Email is required.");
+      showFieldAuthError("email", "Email is required.");
       return;
     }
 
     if (!authPassword) {
-      setAuthError("Password is required.");
+      showFieldAuthError("password", "Password is required.");
       return;
     }
 
@@ -818,12 +833,12 @@ export function Header({
       // frontend doesn't know to check (see the reused translation key's own
       // header in settingsSection's locale entry).
       if (authPassword.length < PASSWORD_MIN_LENGTH) {
-        setAuthError(t("userProfile.settingsSection.account.passwordTooShort"));
+        showFieldAuthError("password", t("userProfile.settingsSection.account.passwordTooShort"));
         return;
       }
 
       if (authPassword !== authConfirmPassword) {
-        setAuthError("Passwords do not match.");
+        showFieldAuthError("confirm", "Passwords do not match.");
         return;
       }
     }
@@ -909,7 +924,7 @@ export function Header({
     setAuthInfo(null);
 
     if (!authEmail.trim()) {
-      setAuthError("Enter your email first.");
+      showFieldAuthError("email", "Enter your email first.");
       return;
     }
 
@@ -1188,14 +1203,14 @@ export function Header({
                         {accountDisplayName}
                       </span>
                       {accountMeta ? (
-                        <span className="mt-1 block text-[0.72rem] font-semibold normal-case tracking-normal text-[#8b7fb0]">
+                        <span className="mt-1 block text-[0.72rem] font-semibold normal-case tracking-normal text-[#6f63a0]">
                           {accountMeta}
                         </span>
                       ) : null}
                     </DropdownMenuLabel>
                     {ACCOUNT_NAV_GROUPS.map((group) => (
                       <div key={group.labelKey}>
-                        <div className="px-3 pb-1 pt-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#8b7fb0]">
+                        <div className="px-3 pb-1 pt-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#6f63a0]">
                           {t(group.labelKey)}
                         </div>
                         {group.items.map((item) => {
@@ -1456,7 +1471,7 @@ export function Header({
 
                 <div className="flex items-center gap-3 py-1">
                   <div className="h-px flex-1 bg-[#ddd4fb]" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8b7fb0]">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6f63a0]">
                     {t("auth.or")}
                   </span>
                   <div className="h-px flex-1 bg-[#ddd4fb]" />
@@ -1464,6 +1479,7 @@ export function Header({
 
                 {authError ? (
                   <div
+                    id="auth-error"
                     role="alert"
                     className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
                   >
@@ -1496,7 +1512,9 @@ export function Header({
                     placeholder={t("auth.emailPlaceholder")}
                     autoComplete="email"
                     disabled={isAuthSubmitting}
-                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                    aria-invalid={invalidAuthField === "email" ? true : undefined}
+                    aria-describedby={invalidAuthField === "email" ? "auth-error" : undefined}
+                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#6f63a0]"
                   />
                 </div>
 
@@ -1515,8 +1533,16 @@ export function Header({
                     placeholder={t("auth.passwordPlaceholder")}
                     autoComplete={authMode === "login" ? "current-password" : "new-password"}
                     disabled={isAuthSubmitting}
-                    aria-describedby={authMode === "signup" ? "auth-password-requirement" : undefined}
-                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                    aria-invalid={invalidAuthField === "password" ? true : undefined}
+                    aria-describedby={
+                      [
+                        invalidAuthField === "password" ? "auth-error" : null,
+                        authMode === "signup" ? "auth-password-requirement" : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" ") || undefined
+                    }
+                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#6f63a0]"
                   />
                   {authMode === "signup" ? (
                     // aria-describedby only (no aria-live): read once when the
@@ -1529,7 +1555,7 @@ export function Header({
                     <p
                       id="auth-password-requirement"
                       className={`flex items-center gap-1.5 text-xs font-medium ${
-                        isSignupPasswordLengthValid ? "text-emerald-600" : "text-[#8b7fb0]"
+                        isSignupPasswordLengthValid ? "text-emerald-700" : "text-[#6f63a0]"
                       }`}
                     >
                       {isSignupPasswordLengthValid ? (
@@ -1580,10 +1606,18 @@ export function Header({
                       placeholder={t("auth.confirmPasswordPlaceholder")}
                       autoComplete="new-password"
                       disabled={isAuthSubmitting}
-                      aria-describedby={
-                        confirmPasswordMatchState !== "neutral" ? "auth-confirm-password-status" : undefined
+                      aria-invalid={
+                        invalidAuthField === "confirm" || confirmPasswordMatchState === "mismatch" ? true : undefined
                       }
-                      className={`h-11 rounded-xl px-4 text-[#24163d] placeholder:text-[#8f85a8] ${
+                      aria-describedby={
+                        [
+                          invalidAuthField === "confirm" ? "auth-error" : null,
+                          confirmPasswordMatchState !== "neutral" ? "auth-confirm-password-status" : null,
+                        ]
+                          .filter(Boolean)
+                          .join(" ") || undefined
+                      }
+                      className={`h-11 rounded-xl px-4 text-[#24163d] placeholder:text-[#6f63a0] ${
                         confirmPasswordMatchState === "mismatch"
                           ? "border-red-300 bg-white/90"
                           : confirmPasswordMatchState === "match"
@@ -1605,7 +1639,7 @@ export function Header({
                       <p
                         id="auth-confirm-password-status"
                         className={`flex items-center gap-1.5 text-xs font-medium ${
-                          confirmPasswordMatchState === "match" ? "text-emerald-600" : "text-red-600"
+                          confirmPasswordMatchState === "match" ? "text-emerald-700" : "text-red-600"
                         }`}
                       >
                         {confirmPasswordMatchState === "match" ? (

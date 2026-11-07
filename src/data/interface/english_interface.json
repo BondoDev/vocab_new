@@ -299,6 +299,8 @@
         "wordsLearned": {
           "title": "Vocabulary Progress",
           "last7Days": "Last 7 Days",
+          "showDailyDetails": "View daily details",
+          "hideDailyDetails": "Hide daily details",
           "emptyStateMessage": "Start a Study New Words session to build your weekly progress.",
           "series": {
             "wordsLearned": "Words learned"

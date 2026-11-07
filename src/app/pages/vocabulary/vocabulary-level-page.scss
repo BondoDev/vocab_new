@@ -971,7 +971,9 @@ $heading-font: var(--font-family-heading);
   align-items: flex-start;
   gap: 1rem;
   border-radius: 0.875rem;
-  background: linear-gradient(120deg, #4f46e5 0%, var(--primary) 55%, #7850ad 100%);
+  // Start one step darker than --primary (#4f46e5) so the sweep stays
+  // visible; every stop keeps white text above 4.5:1 (7.9 / 6.3 / 5.9).
+  background: linear-gradient(120deg, #4338ca 0%, var(--primary) 55%, #7850ad 100%);
   padding: 1.25rem;
   color: #fff;
 
