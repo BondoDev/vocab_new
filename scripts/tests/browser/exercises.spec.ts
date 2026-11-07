@@ -32,9 +32,13 @@ for (const name of names.slice(1)) {
     } else if (name === 'Broken word assembling') {
       await expect(page.getByRole('heading', { name: 'sobre', exact: true })).toBeVisible();
       for (const chunk of ['t', 'ou', 'ab']) await page.getByRole('button', { name: chunk, exact: true }).click();
-      await expect(page.getByText('Incorrect order - try again', { exact: true })).toBeVisible();
+      // The message renders twice by design: the visible feedback and the
+      // screen-reader live region (role="status") repeating it.
+      const incorrectOrder = page.getByText('Incorrect order - try again', { exact: true });
+      await expect(incorrectOrder.and(page.locator(':not([role="status"])'))).toBeVisible();
+      await expect(page.getByRole('status').filter({ hasText: /^Incorrect order - try again$/ })).toHaveCount(1);
       await expect(next).toHaveCount(0);
-      await expect(page.getByText('Incorrect order - try again', { exact: true })).toHaveCount(0);
+      await expect(incorrectOrder).toHaveCount(0);
       for (const chunk of ['ab', 'ou', 't']) await page.getByRole('button', { name: chunk, exact: true }).click();
       await expect(next).toBeVisible();
       await next.click();

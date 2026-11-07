@@ -46,11 +46,44 @@ working in that folder.
   time without reducing real risk.
 - When checks are skipped, say so in one line in the final report so the
   user can request them.
-- Keep final reports proportional to the task: a few lines for small
-  changes; longer structured reports only for large features or when the
-  user asks for one.
+- Testing policy, in order:
+  1. Implement first; then run each relevant check once.
+  2. Run only checks covering the changed behavior — no unrelated or
+     full-suite runs locally; CI (`.github/workflows/ci.yml`) already runs
+     `tsc`, architecture guards, the build, and the SEO suite.
+  3. After a fix, re-run only the check that failed (for Playwright, only
+     the failing spec file), not the whole set.
+  4. Playwright specs are not in CI, so keep local browser verification
+     for interactions they cover; run the touched spec file(s) in one
+     `npm run test:browser -- <files>` call so they share one server.
+  5. No ad-hoc browser scripts or screenshots unless existing specs cannot
+     cover the behavior or the user asks; reuse port 4173's test build
+     rather than starting a second server.
+- Both slow checks are cached locally and safe to re-run: `tsc` is
+  incremental (cache in `node_modules/.cache/tsc/`), and the Playwright
+  server reuses `.playwright-build/` only when a content hash of its inputs
+  matches (`PLAYWRIGHT_FORCE_BUILD=1` forces a rebuild; CI always rebuilds).
+- Keep final reports proportional to the task. Default format: files
+  changed, what was implemented, checks run and results (and any skipped),
+  remaining issues. Longer structured reports only for large features or
+  when the user asks for one.
 
 Suggested warning: `This may require a broader scan/build and use more tokens. Proceed?`
+
+## Session handoff
+
+Start a new Claude Code session for each independent task; long sessions
+re-read their whole history on every tool call. Do not clear a session
+automatically. Begin the new session with a short handoff:
+
+```text
+Task: <one-line goal>
+State: <branch; committed/uncommitted work relevant to this task>
+Files: <paths to start from>
+Done/decided: <prior decisions or constraints, 1–3 bullets>
+Verify: <the specific checks to run; "none" if trivial>
+Out of scope: <what not to touch>
+```
 
 ## UI/UX design workflow
 

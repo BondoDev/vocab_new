@@ -22,10 +22,17 @@ On Linux, `npx playwright install --with-deps chromium` installs required OS
 libraries as well. Use the Playwright-managed browser; do not set a system
 browser channel or executable path.
 
-The server rebuilds the client into ignored `.playwright-build/` with the
+The server builds the client into ignored `.playwright-build/` with the
 existing React/Tailwind plugins and alias, then uses Vite preview at
-`http://127.0.0.1:4173` with `strictPort`. It never reuses another server or
-production `dist/`. Leave port 4173 free. It skips production prebuild and SSR.
+`http://127.0.0.1:4173` with `strictPort`. Locally, it skips the build when a
+SHA-256 content hash of every build input (`src/`, `public/`, `index.html`,
+`package-lock.json`, `postcss.config.mjs`, `tsconfig.json`, `serve.mjs`)
+matches the fingerprint saved by the last successful build; any edit,
+addition, or deletion there rebuilds. Set `PLAYWRIGHT_FORCE_BUILD=1` to force a
+rebuild; CI (`CI` set) always rebuilds. It never reuses another running server
+or production `dist/`. Run one browser-test process at a time: the server holds
+port 4173 from before the cache check, so a concurrent run fails immediately
+instead of reading or rebuilding the shared build. Leave port 4173 free. It skips production prebuild and SSR.
 The independent inline Vite config deliberately avoids the production config's
 `loadEnv`: `envDir: false` and an empty `envPrefix` prevent local `.env*` files or
 shell `VITE_*` values from entering the client. The build explicitly defines an
