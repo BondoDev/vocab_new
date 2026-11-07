@@ -444,7 +444,7 @@ export function HalfWrittenExercise({
                             : "text-foreground";
                         } else {
                           displayChar = "_";
-                          charStyle = "text-muted-foreground/50";
+                          charStyle = "text-muted-foreground/80";
                         }
 
                         const displayCaretIndex =

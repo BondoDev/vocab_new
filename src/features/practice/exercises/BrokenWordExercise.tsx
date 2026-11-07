@@ -415,7 +415,7 @@ export function BrokenWordExercise({
                           className={`exercise-answer-char text-xl md:text-2xl font-medium text-center whitespace-pre font-mono ${
                             hasPlacedChar
                               ? "text-foreground disabled:cursor-default"
-                              : "text-muted-foreground/50"
+                              : "text-muted-foreground/80"
                           }`}
                         >
                           {displayChar}

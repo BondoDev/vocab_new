@@ -1,5 +1,6 @@
 {
   "header": {
+    "skipToContent": "Перейти к основному содержимому",
     "home": "Главная",
     "about": "О нас",
     "languages": "Языки",
@@ -1079,6 +1080,8 @@
     "passwordRequirementMetSr": "Требование выполнено.",
     "passwordRequirementNotMetSr": "Требование пока не выполнено.",
     "passwordsMatch": "Пароли совпадают",
+    "passwordRequired": "Введите пароль.",
+    "resetEmailRequired": "Сначала введите адрес электронной почты.",
     "passwordsDoNotMatch": "Пароли не совпадают",
     "loginTitle": "С возвращением!",
     "continueWithGoogle": "Продолжить с Google",

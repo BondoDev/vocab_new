@@ -444,10 +444,11 @@ export function WordTypingExercise({
                       charStyle = isCorrect ? "text-primary" : "text-foreground";
                     } else if (isHintPosition) {
                       displayChar = letter;
-                      charStyle = "text-primary/60";
+                      // AA (5.1:1); indigo keeps hints distinct from the slate typed letters.
+                      charStyle = "text-primary/90";
                     } else {
                       displayChar = "_";
-                      charStyle = "text-muted-foreground/50";
+                      charStyle = "text-muted-foreground/80";
                     }
 
                     const showCaret = isInputFocused && caretIndex === index;

@@ -814,12 +814,12 @@ export function Header({
     setAuthInfo(null);
 
     if (!authEmail.trim()) {
-      showFieldAuthError("email", "Email is required.");
+      showFieldAuthError("email", t("userProfile.settingsSection.account.emailRequired"));
       return;
     }
 
     if (!authPassword) {
-      showFieldAuthError("password", "Password is required.");
+      showFieldAuthError("password", t("auth.passwordRequired"));
       return;
     }
 
@@ -838,7 +838,7 @@ export function Header({
       }
 
       if (authPassword !== authConfirmPassword) {
-        showFieldAuthError("confirm", "Passwords do not match.");
+        showFieldAuthError("confirm", t("auth.passwordsDoNotMatch"));
         return;
       }
     }
@@ -924,7 +924,7 @@ export function Header({
     setAuthInfo(null);
 
     if (!authEmail.trim()) {
-      showFieldAuthError("email", "Enter your email first.");
+      showFieldAuthError("email", t("auth.resetEmailRequired"));
       return;
     }
 
@@ -1025,6 +1025,31 @@ export function Header({
 
   return (
     <>
+      {/* Skip link: the Header is the one shared piece of chrome on every
+          page with repeated navigation, so it lives here instead of in each
+          page. Before hydration the href does native anchor navigation to
+          the static #main-content target rendered at the end of this
+          component. Once hydrated, the handler focuses the page's own
+          landmark instead: the first <main>, else the first <h1>.
+          tabindex="-1" makes that target focusable without adding it to the
+          Tab order. */}
+      <a
+        href="#main-content"
+        className="skip-link"
+        onClick={(event) => {
+          const target =
+            document.querySelector<HTMLElement>("main") ?? document.querySelector<HTMLElement>("h1");
+          if (!target) return;
+          event.preventDefault();
+          if (!target.hasAttribute("tabindex")) {
+            target.setAttribute("tabindex", "-1");
+            target.setAttribute("data-skip-target", "");
+          }
+          target.focus();
+        }}
+      >
+        {t("header.skipToContent")}
+      </a>
       <div className="header-spacer" aria-hidden="true" />
       <header
         ref={headerRef}
@@ -1708,6 +1733,12 @@ export function Header({
           </div>
         </DialogContent>
       </Dialog>
+      {/* Native skip-link target, so the link works in prerendered HTML
+          before hydration: it sits after all header chrome and before the
+          page's own content, so the next Tab lands in that content. Static
+          and identical on server and client (no hydration risk); not a
+          landmark, so each page keeps its single <main>. */}
+      <div id="main-content" tabIndex={-1} className="skip-link-target" />
     </>
   );
 }

@@ -1,5 +1,6 @@
 {
   "header": {
+    "skipToContent": "Saltar al contenido principal",
     "home": "Inicio",
     "about": "Acerca de",
     "languages": "Idiomas",
@@ -218,6 +219,8 @@
     "passwordRequirementMetSr": "Requisito cumplido.",
     "passwordRequirementNotMetSr": "Requisito aún no cumplido.",
     "passwordsMatch": "Las contraseñas coinciden",
+    "passwordRequired": "La contraseña es obligatoria.",
+    "resetEmailRequired": "Primero introduce tu correo electrónico.",
     "passwordsDoNotMatch": "Las contraseñas no coinciden",
     "loginTitle": "¡Qué bueno verte de nuevo!",
     "continueWithGoogle": "Continuar con Google",
@@ -399,10 +402,10 @@
           "sunShort": "D",
           "monday": "Lunes",
           "tuesday": "Martes",
-          "wednesday": "Miercoles",
+          "wednesday": "Miércoles",
           "thursday": "Jueves",
           "friday": "Viernes",
-          "saturday": "Sabado",
+          "saturday": "Sábado",
           "sunday": "Domingo"
         }
       },

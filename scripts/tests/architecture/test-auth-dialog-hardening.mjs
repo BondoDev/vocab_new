@@ -244,6 +244,10 @@ test("13. The new auth.* locale keys (including the neutral no-session copy) exi
     "loginDescription",
     // Minimum registration age 16 notice, shown in both dialog modes.
     "ageRequirement",
+    // Client-side validation errors (the empty-email one reuses
+    // userProfile.settingsSection.account.emailRequired).
+    "passwordRequired",
+    "resetEmailRequired",
   ].sort();
   for (const fileName of LOCALE_FILES) {
     const data = JSON.parse(read(`src/data/interface/${fileName}`));
@@ -538,7 +542,7 @@ test("37. No invented password-complexity requirements exist in the signup UI co
 
 test("38. The pre-existing confirm-password field and its mismatch check are untouched by this task", () => {
   assert.match(header, /id="auth-confirm-password"/);
-  assert.match(header, /(?:setAuthError\(|showFieldAuthError\("confirm", )"Passwords do not match\."\);/);
+  assert.match(header, /showFieldAuthError\("confirm", t\("auth\.passwordsDoNotMatch"\)\);/);
 });
 
 console.log("\n--- Live confirm-password match feedback (2026-08-18) ---\n");

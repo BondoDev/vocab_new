@@ -1,5 +1,6 @@
 {
   "header": {
+    "skipToContent": "Vai al contenuto principale",
     "home": "Home",
     "about": "Info",
     "languages": "Lingue",
@@ -218,6 +219,8 @@
     "passwordRequirementMetSr": "Requisito soddisfatto.",
     "passwordRequirementNotMetSr": "Requisito non ancora soddisfatto.",
     "passwordsMatch": "Le password corrispondono",
+    "passwordRequired": "La password è obbligatoria.",
+    "resetEmailRequired": "Inserisci prima la tua email.",
     "passwordsDoNotMatch": "Le password non corrispondono",
     "loginTitle": "Bentornato!",
     "continueWithGoogle": "Continua con Google",

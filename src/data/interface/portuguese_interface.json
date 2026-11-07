@@ -1,5 +1,6 @@
 {
   "header": {
+    "skipToContent": "Pular para o conteúdo principal",
     "home": "Início",
     "about": "Sobre",
     "languages": "Idiomas",
@@ -218,6 +219,8 @@
     "passwordRequirementMetSr": "Requisito cumprido.",
     "passwordRequirementNotMetSr": "Requisito ainda não cumprido.",
     "passwordsMatch": "As senhas coincidem",
+    "passwordRequired": "A senha é obrigatória.",
+    "resetEmailRequired": "Digite seu e-mail primeiro.",
     "passwordsDoNotMatch": "As senhas não coincidem",
     "loginTitle": "Boas-vindas de volta!",
     "continueWithGoogle": "Continuar com o Google",

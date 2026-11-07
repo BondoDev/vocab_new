@@ -1,3 +1,55 @@
+// Skip link (Header.tsx). Fixed and clipped while unfocused, so it never
+// takes layout space; on focus it appears top-left above the fixed header.
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 200;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: underline;
+  box-shadow: 0 6px 18px rgba(20, 10, 45, 0.25);
+
+  &:not(:focus) {
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+// Pre-hydration anchor target (Header.tsx). Absolutely positioned at its
+// static spot so it never adds layout or flex/grid gap; the scroll margin
+// keeps the landing point clear of the fixed header.
+.skip-link-target {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  scroll-margin-top: var(--site-header-height, 4.875rem);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// The <main>/<h1> the skip link focused programmatically: it is a landing
+// point, not a control, so it gets no outline box around the whole page.
+[data-skip-target]:focus {
+  outline: none;
+}
+
 .header-shell {
   position: fixed !important;
   top: 0;

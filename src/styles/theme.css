@@ -35,7 +35,10 @@
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #a0aec0;
+  /* Focus-indicator color (every --ring use is a focus style, often the only
+     indicator). #a0aec0 was ~2.1:1 on white; the brand indigo is 6.29:1
+     (>=5.2:1 on --muted), clearing the 3:1 non-text minimum. */
+  --ring: #4f46e5;
   --chart-1: #e89a3c;
   --chart-2: #60a5fa;
   --chart-3: #475569;
@@ -132,7 +135,9 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    /* Full-strength: elements without their own focus style fall back to
+       this outline color, and ring/50 would only be ~2.3:1. */
+    @apply border-border outline-ring;
   }
 
   html,

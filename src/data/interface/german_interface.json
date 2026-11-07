@@ -1,5 +1,6 @@
 {
   "header": {
+    "skipToContent": "Zum Hauptinhalt springen",
     "home": "Startseite",
     "about": "Über",
     "languages": "Sprachen",
@@ -218,6 +219,8 @@
     "passwordRequirementMetSr": "Anforderung erfüllt.",
     "passwordRequirementNotMetSr": "Anforderung noch nicht erfüllt.",
     "passwordsMatch": "Passwörter stimmen überein",
+    "passwordRequired": "Passwort ist erforderlich.",
+    "resetEmailRequired": "Gib zuerst deine E-Mail-Adresse ein.",
     "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
     "loginTitle": "Willkommen zurück",
     "continueWithGoogle": "Mit Google fortfahren",
