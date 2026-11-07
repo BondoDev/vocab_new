@@ -15,6 +15,11 @@ import tailwindcss from "@tailwindcss/vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Modules whose top-level side effects are client-only (see treeshake below).
+const WORKER_SIDE_EFFECT_FREE_MODULES = [
+  "/src/data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbFormsData.ts",
+];
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   // Vite's default publicDir behavior copies the repo's public/ directory
@@ -51,6 +56,19 @@ export default defineConfig({
       // never reproduced it. 20 is Rollup 3's former default; it only bounds
       // concurrency and does not change the bundle output.
       maxParallelFileOps: 20,
+      treeshake: {
+        // conjugated100VerbFormsData.ts runs a top-level fail-fast check over
+        // its lazy import.meta.glob's keys. That side effect alone keeps the
+        // glob object — and its seven per-language import() thunks — alive,
+        // so Rollup emitted ~2.5MB of conjugation JSON chunks into this build
+        // even though no Worker code path uses any of the module's exports
+        // (the Worker reaches it only through the verbLists barrel). Treating
+        // it as side-effect-free HERE lets Rollup drop it whenever none of
+        // its exports are used. Scoped to the Worker build only: the client
+        // and prerender builds keep the startup check, and if Worker code
+        // ever does use an export, Rollup includes the module as usual.
+        moduleSideEffects: (id) => !WORKER_SIDE_EFFECT_FREE_MODULES.some((suffix) => id.replace(/\\/g, "/").endsWith(suffix)),
+      },
     },
   },
   define: {

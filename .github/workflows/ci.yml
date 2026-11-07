@@ -65,3 +65,13 @@ jobs:
 
       - name: SEO, sitemap, and route policy regression tests
         run: npm run test:seo-output
+
+      # Bundles only the Worker entry (the Vite --ssr step of
+      # build:word-worker:full) and checks its output. Skips corpus generation
+      # and publishing, so it writes no tracked manifest; worker-dist-full/ is
+      # gitignored. Catches import-graph leaks such as lazy data chunks.
+      - name: Worker bundle-size guard
+        run: |
+          node_modules/.bin/vite build --config workers/word-ssr/build/vite.worker.config.mjs \
+            --ssr workers/word-ssr/src/index.full.ts --outDir workers/word-ssr/worker-dist-full
+          npm run -s test:word-worker:bundle-size
